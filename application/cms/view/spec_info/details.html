@@ -1,0 +1,144 @@
+{extend name='layouts/cms'}
+{block name='body-content'}
+
+<div class="layui-inline layui-form">
+    <form class="form-search" action="{:url('cms/specInfo/details')}" method="get">
+        <div class="layui-input-inline">
+            <input type="hidden" name="record_num" class="record_num" value="{$record_num}">
+            <input type="hidden" name="page_limit" class="page_limit" value="{$page_limit}">
+            <input type="hidden" name="curr_page" class="curr_page" value="1">
+            <input type="hidden" name="id" class="id" value="{$id}">
+            <input type="text" value="{$search}" name="str_search" placeholder="请输入规格名称"
+                   class="layui-input search_input">
+        </div>
+        <button class="layui-btn-warm btn-search-mz">
+            <i class="layui-icon">&#xe615;</i>
+        </button>
+    </form>
+</div>
+
+<table class="layui-table table-body" lay-skin="row">
+    <colgroup>
+        <col width="5%">
+        <col width="15%">
+        <col width="15%">
+        <col width="15%">
+        <col width="15%">
+        <col width="5%">
+        <col width="10%">
+        <col width="10%">
+    </colgroup>
+    <thead>
+    <tr>
+        <th>ID</th>
+        <th>名称</th>
+        <th>备注</th>
+        <th>排序</th>
+        <th>操作</th>
+    </tr>
+    </thead>
+    <tbody class="layui-form table-tbody-normal">
+    {volist name="details" id="vo"}
+    <tr class="tr-normal-{$vo.spec_id}">
+            <td>{$vo.spec_id}</td>
+            <td>
+                <input class="layui-input spec_name"
+                       value="{$vo.spec_name}"/>
+                <input type="hidden" name="spec_id" class="id" value="{$vo.spec_id}">
+            </td>
+        <td>
+            <input name="list_order"
+                   placeholder="请填写备注..."
+                   value="{$vo.mark_msg}" class="layui-input mark_msg"/>
+        </td>
+            <td>
+                <input name="list_order"
+                       value="{$vo.list_order}" class="layui-input list_order"/>
+            </td>
+            <td>
+                <button class="layui-btn layui-btn-sm" type="button" title="删除"
+                        onclick="delSpecInfo('{$vo.spec_id}')">
+                    <i class="layui-icon">&#xe640;</i>
+                </button>
+                <button class="layui-btn layui-btn-sm" type="button" title="更新"
+                        onclick="updateThemeGoods('{$vo.spec_id}')">
+                    <i class="layui-icon">&#xe669;</i>
+                </button>
+            </td>
+    </tr>
+    {/volist}
+    </tbody>
+</table>
+<div id="demo2-1"></div>
+<style>
+    .table-body {
+        width: 100%;
+        margin: 20px auto;
+        text-align: center;
+        font-weight: 700;
+    }
+    .spec_name{
+        background-color: #C9C5C5;
+        color: #7274A7;
+    }
+    .list_order{
+        color: #00a2d4;
+    }
+    .mark_msg{
+        color: #c17551;
+    }
+    .table-body tr,
+    .table-body th,
+    .table-body td{
+        border: 1px solid #ebccd1;
+    }
+</style>
+{/block}
+
+{block name='single-content'}
+<script src="__CMS__/js/spec_infos.js"></script>
+<script src="__CMS__/js/moZhang.js"></script>
+<script>
+    //根据菜单ID 删除菜单记录
+    function delSpecInfo(id) {
+        var toUrl = "{:url('cms/specInfo/edit',['id'=>'AID'])}";
+        toUrl = toUrl.replace('AID', id);
+        ToDelItem(id, toUrl, '.tr-normal-' + id);
+    }
+    //修改按钮的点击事件
+    function updateThemeGoods(id) {
+        var toUrl = "{:url('cms/specInfo/edit',['id'=>'AID'])}";
+        toUrl = toUrl.replace('AID', id);
+        var trClass = ".tr-normal-"+id;
+        var list_order = $(trClass+" .list_order").val();
+        var spec_name = $(trClass+" .spec_name").val();
+        var mark_msg = $(trClass+" .mark_msg").val();
+        var postData = {
+            id:id,
+            spec_name:spec_name,
+            mark_msg:mark_msg,
+            list_order:list_order,
+            level:2
+        };
+        $.post(
+            toUrl,
+            postData,
+            function (result) {
+                dialog.tip(result.message);
+            },"JSON");
+    }
+
+    //通过ajax 获取分页数据
+    function ajaxOpForPage(curr_page) {
+        var toUrl = "{:url('cms/specInfo/details')}";
+        $(".curr_page").val(curr_page);
+        var postData = $(".form-search").serialize();
+        ToAjaxOpForPageSpecDetails(toUrl, postData);
+    }
+
+</script>
+{/block}
+
+
+
+

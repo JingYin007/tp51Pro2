@@ -1,0 +1,78 @@
+{extend name='layouts/cms'}
+{block name='body-content'}
+<form class="layui-form form-op-normal layui-form-pane">
+    <div class="layui-form-item">
+        <label class="layui-form-label">属性名称：</label>
+        <div class="layui-input-inline">
+            <input type="text" name="spec_name" required lay-verify="required"
+                   value="{$specInfo['spec_name']}"
+                   placeholder="请输入名称" autocomplete="off" class="layui-input">
+        </div>
+    </div>
+
+    <div class="layui-form-item">
+        <label class="layui-form-label">所属分类：</label>
+        <div class="layui-input-inline">
+            <select id="toSelCatID" lay-filter="toSelCatID" name="toSelCatID" lay-search="">
+                <option value="">搜索或选择分类</option>
+                {volist name="categoryList" id="vo"}
+                {volist name="vo.children" id="vo2"}
+                <optgroup label="{$vo2['title']}">
+                    {volist name="vo2.children" id="vo3"}
+                    <option value="{$vo3.id}" {$specInfo['cat_id']==$vo3.id?"selected":""}>{$vo3.title}</option>
+                    {/volist}
+                </optgroup>
+                {/volist}
+                {/volist}
+            </select>
+        </div>
+    </div>
+
+    <div class="layui-form-item">
+        <label class="layui-form-label">排序权重：</label>
+        <div class="layui-input-inline">
+            <input type="number" name="list_order"
+                   value="{$specInfo['list_order']}" required lay-verify="required"
+                   placeholder="" autocomplete="off" class="layui-input">
+        </div>
+        <div class="layui-form-mid layui-word-aux">(数字越大，排序越靠前)</div>
+    </div>
+
+    <div class="layui-form-item">
+        <label class="layui-form-label">备注信息：</label>
+        <div class="layui-input-inline">
+            <input type="text" name="mark_msg" value="{$specInfo['mark_msg']}"
+                   placeholder="请输入...(建议五字以内)" autocomplete="off" class="layui-input">
+        </div>
+        <div class="layui-form-mid layui-word-aux">(主要为了区分识别，可不填)</div>
+    </div>
+
+    <input type="hidden" name="id" value="{$specInfo['spec_id']}">
+    {:token()}
+    <div class="layui-form-item">
+        <div class="layui-input-block div-form-op">
+            <button class="layui-btn" type="button" onclick="editSpecInfo({$specInfo['spec_id']})">提交</button>
+            <button type="reset" class="layui-btn layui-btn-primary">放弃</button>
+        </div>
+    </div>
+</form>
+
+{/block}
+
+{block name='single-content'}
+<script src="__CMS__/js/moZhang.js"></script>
+<script>
+    //修改按钮的点击事件
+    function editSpecInfo(id) {
+        var toUrl = "{:url('cms/specInfo/edit',['id'=>'AID'])}";
+        toUrl = toUrl.replace('AID', id);
+        var postData = $(".form-op-normal").serialize();
+        ToPostPopupsDeal(toUrl, postData);
+    }
+
+</script>
+{/block}
+
+
+
+

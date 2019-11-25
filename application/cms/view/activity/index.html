@@ -1,0 +1,174 @@
+{extend name="layouts/cms"}
+
+{block name="body-content"}
+
+<button class="layui-btn layui-btn-normal"
+        onclick="addActivity()">
+    <i class="layui-icon">&#xe608;</i> 添加活动
+</button>
+<div class="layui-inline layui-form">
+    <form class="form-search" action="{:url('cms/activity/index')}" method="get">
+        <div class="layui-input-inline">
+
+            <input type="hidden" name="record_num" class="record_num" value="<?php echo $record_num; ?>">
+            <input type="hidden" name="page_limit" class="page_limit" value="{$page_limit}">
+            <input type="hidden" name="curr_page" class="curr_page" value="1">
+            <input type="text" value="{$search}" name="str_search" placeholder="请输入关键字"
+                   class="layui-input search_input">
+        </div>
+        <div class="layui-input-inline" style="width: 120px">
+            <select name="OrderType">
+                <option value="W" {$OrderType=="W"?"selected":""}>▼排序权重</option>
+                <option value="A" {$OrderType=="A"?"selected":""}>▼添加时间</option>
+                <option value="D" {$OrderType=="D"?"selected":""}>▼更新时间</option>
+            </select>
+        </div>
+        <button class="layui-btn-warm btn-search-mz">
+            <i class="layui-icon">&#xe615;</i>
+        </button>
+    </form>
+</div>
+
+<table class="layui-table table-body" lay-even="" lay-skin="row">
+    <colgroup>
+        <col width="5%">
+        <col width="12%">
+        <col width="15%">
+        <col width="12%">
+        <col width="10%">
+        <col width="20%">
+        <col width="15%">
+        <col width="5%">
+        <col width="10%">
+    </colgroup>
+    <thead>
+    <tr>
+        <th>ID</th>
+        <th>活动标题</th>
+        <th>活动配图</th>
+        <th>标识字符串</th>
+        <th>活动类型</th>
+        <th>起始 —— 结束</th>
+        <th>前端显示</th>
+        <th>排序</th>
+        <th>操作</th>
+    </tr>
+    </thead>
+    <tbody class="table-tbody-normal layui-form">
+    {volist name="acts" id="vo"}
+    <tr class="tr-normal-{$vo['id']}">
+        <td>{$vo['id']}</td>
+        <td>{$vo['title']}</td>
+        <td class="td-activity"><img src="{$vo['act_img']}"></td>
+        <td class="td-act_tag">{$vo['act_tag']}</td>
+        <td>{php} echo $vo['type_tip']{/php}</td>
+        <td>{$vo['start_time']}
+            <hr/>
+            {$vo.end_time}
+        </td>
+        <td>
+            <input type="checkbox" class="switch_checked" lay-filter="switchActID"
+                   switch_act_id="{$vo['id']}" {$vo.status_checked}
+            lay-skin="switch" lay-text="显示|隐藏">
+        </td>
+        <td>{$vo['list_order']}</td>
+        <td>
+            <div class="layui-btn-group">
+                <button class="layui-btn layui-btn-sm" title="编辑活动"
+                        onclick="editActivity('{$vo.id}')">
+                    <i class="layui-icon">&#xe642;</i>
+                </button>
+                <button class="layui-btn layui-btn-sm" title="删除活动"
+                        onclick="delActivity('{$vo.id}')">
+                    <i class="layui-icon">&#xe640;</i>
+                </button>
+            </div>
+        </td>
+    </tr>
+    {/volist}
+    </tbody>
+</table>
+<div id="demo2-1"></div>
+<style>
+    .layui-table img {
+        max-width: 80%;
+    }
+
+    .td-act_tag {
+        color: #ff7800;
+    }
+</style>
+{/block}
+
+{block name="single-content"}
+<script src="__CMS__/js/activitys.js"></script>
+<script src="__CMS__/js/moZhang.js"></script>
+<script>
+    //根据活动ID 删除活动记录
+    function delActivity(id) {
+        var toUrl = "{:url('cms/activity/edit',['id'=>'AID'])}";
+        toUrl = toUrl.replace('AID', id);
+        ToDelItem(id, toUrl, '.tr-normal-' + id);
+    }
+
+    layui.use(['form'], function () {
+        var form = layui.form;
+        form.on('switch(switchActID)', function (data) {
+            //开关是否开启，true或者false
+            var checked = data.elem.checked;
+            var okStatus = 0;
+            if (checked) {
+                okStatus = 1
+            }
+            //获取所需属性值
+            var switch_act_id = data.elem.attributes['switch_act_id'].nodeValue;
+            //TODO 此时进行ajax的服务器访问，如果返回数据正常，则进行后面代码的调用
+            var toUrl = "{:url('cms/activity/ajaxForShow')}";
+            toUrl = toUrl.replace('AID', switch_act_id);
+            $.post(
+                toUrl,
+                {act_id: switch_act_id, okStatus: okStatus},
+                function (result) {
+                    if (result.status > 0) {
+                        data.elem.checked = checked;
+                        form.render();
+                    } else {
+                        //失败
+                        data.elem.checked = !checked;
+                        form.render();
+                        layer.msg(result.message);
+                    }
+                }, "JSON");
+        });
+    });
+</script>
+<script>
+
+    $(".btn-search-mz").on('click', function () {
+        $(".form-search").submit();
+    });
+
+    //通过ajax 获取分页数据
+    function ajaxOpForPage(curr_page) {
+        var toUrl = "{:url('cms/activity/index')}";
+        $(".curr_page").val(curr_page);
+        var postData = $(".form-search").serialize();
+        ToAjaxOpForPageActivitys(toUrl, postData);
+    }
+
+    //添加活动
+    function addActivity() {
+        var toUrl = "{:url('cms/activity/add')}";
+        ToOpenPopups(toUrl, '✚ 添加活动', '80%', '90%');
+    }
+
+    //根据活动ID修改信息
+    function editActivity(id) {
+        var toUrl = "{:url('cms/activity/edit',['id'=>'NMID'])}";
+        toUrl = toUrl.replace("NMID", id);
+        ToOpenPopups(toUrl, '✎ 活动修改', '80%', '90%');
+    }
+
+</script>
+
+{/block}

@@ -1,0 +1,88 @@
+{extend name="layouts/cms"}
+{block name="body-content"}
+<form class="layui-form form-op-normal layui-form-pane">
+    <div class="layui-form-item">
+        <label class="layui-form-label">权限名称：</label>
+        <div class="layui-input-inline">
+            <input type="text" name="name" required lay-verify="required"
+                   placeholder="请输入标题" autocomplete="off" class="layui-input">
+        </div>
+        <div class="layui-form-mid layui-word-aux">请七个字以内</div>
+    </div>
+
+    <div class="layui-form-item">
+        <label class="layui-form-label">权限路径：</label>
+        <div class="layui-input-inline">
+            <input type="text" name="action" required
+                   autocomplete="off" class="layui-input">
+        </div>
+        <div class="layui-form-mid layui-word-aux">(example:cms/menu/edit)</div>
+    </div>
+    <input type="hidden" class="post-url" value="{:url('cms/NavMenu/auth',['id'=>$parent_id])}">
+    {:token()}
+    <div class="layui-form-item">
+        <div class="layui-input-block div-form-op">
+            <button class="layui-btn" type="button" onclick="addNewNavMenu()"
+                    lay-submit lay-filter="formDemo">添加
+            </button>
+            <button type="reset" class="layui-btn layui-btn-primary">重置</button>
+        </div>
+    </div>
+</form>
+
+<table class="layui-table" lay-size="sm">
+    <colgroup>
+        <col width="41%">
+        <col width="43%">
+        <col>
+    </colgroup>
+    <thead>
+    <tr>
+        <th>权限名称</th>
+        <th>权限路径</th>
+        <th>删除</th>
+    </tr>
+    </thead>
+    <tbody class="table-tbody-normal">
+    {volist name="authMenus" id="vo"}
+    <tr class="tr-normal-{$vo.id}">
+        <td>{$vo.name}</td>
+        <td>{$vo.action}</td>
+        <td>
+            <div class="layui-btn-group">
+                <button class="layui-btn layui-btn-primary layui-btn-sm"
+                        onclick="delNavMenu('{$vo.id}')">
+                    <i class="layui-icon">&#xe640;</i>
+                </button>
+            </div>
+        </td>
+    </tr>
+    {/volist}
+    </tbody>
+</table>
+{/block}
+
+{block name="single-content"}
+<script src="__CMS__/js/moZhang.js"></script>
+<script>
+    /**
+     * 添加新的导航菜单
+     */
+    function addNewNavMenu() {
+        var postData = $(".form-op-normal").serialize();
+        var toUrl = $(".post-url").val();
+        ToPostPopupsDeal(toUrl, postData);
+    }
+
+    //根据菜单ID 删除菜单记录
+    function delNavMenu(id) {
+        var toUrl = "{:url('cms/navMenu/edit',['id'=>'NMID'])}";
+        toUrl = toUrl.replace("NMID", id);
+        ToDelItem(id, toUrl, '.tr-normal-' + id);
+    }
+</script>
+{/block}
+
+
+
+

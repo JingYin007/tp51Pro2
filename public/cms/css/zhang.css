@@ -1,0 +1,292 @@
+.layui-side-scroll .user-info {
+    width: 200px;
+    height: auto;
+    padding: 0px;
+    padding-top: 15px;
+    padding-bottom: 8px;
+}
+
+.layui-side-scroll .user-info .photo-view {
+    display: block;
+    width: 76px;
+    height: 76px;
+    margin-left: 50px;
+    padding: 0px;
+}
+
+.layui-side-scroll .user-info .photo-view img {
+    display: block;
+    width: 100%;
+    height: 100%;
+    border-radius: 50%;
+    -webkit-border-radius: 50%;
+    border: 4px solid #44576B;
+}
+
+.layui-side-scroll .user-info p {
+    display: block;
+    width: 100%;
+    height: 25px;
+    color: #ffffff;
+    font-size: 14px;
+    line-height: 25px;
+    text-align: center;
+    margin-top: 15px;
+}
+
+.layui-header .menu-switch {
+    display: block;
+    width: 27px;
+    height: 30px;
+    margin-left: -20px;
+    background: url(../images/icon/menu.png) center center no-repeat;
+    background-color: #ffffff;
+    background-size: 100%;
+    cursor: pointer;
+}
+
+.layui-tab-title {
+    border-bottom: 3px solid #009688;
+    width: 100%;
+}
+
+.layui-layout-body {
+    height: auto;
+}
+
+.iframe-body {
+    width: 100%;
+    height: 100%;
+    overflow: hidden;
+}
+
+.layui-tab-title .title-selected {
+    background-color: #009688;
+    color: white;
+    font-weight: 600;
+}
+
+.layui-nav-item .nav-icon {
+    width: 25px;
+    height: 25px;
+}
+
+.layui-nav-item .layui-nav-child .nav-icon {
+    width: 20px;
+    height: 20px;
+}
+
+.admin-header-lock {
+    width: 320px;
+    height: 170px;
+    padding: 20px;
+    position: relative;
+    text-align: center;
+}
+
+.admin-header-lock-input {
+    width: 170px;
+    color: #fff;
+    background-color: #009688;
+    float: left;
+    margin: 0 10px 0 40px;
+    border: none;
+}
+
+.admin-header-lock-img {
+    width: 60px;
+    height: 60px;
+    margin: 0 auto;
+}
+
+.admin-header-lock-img img {
+    width: 60px;
+    height: 60px;
+    border-radius: 100%;
+}
+
+.admin-header-lock-name {
+    color: #009688;
+    margin: 8px 0 15px 0;
+}
+
+.input_btn {
+    overflow: hidden;
+    margin-bottom: 10px;
+}
+
+#unlock {
+    float: left;
+}
+
+#lock-box p {
+    color: #e60000;
+}
+
+.layui-logo span {
+    color: white;
+}
+
+.table-body th, .table-body td {
+    text-align: center;
+}
+
+.layui-nav-child .mul-to-Url {
+    margin-left: 10px;
+}
+
+.layui-icon img {
+    width: 22px;
+    margin-right: 3px;
+}
+
+.div-body-show {
+    margin: 5px 5px;
+}
+
+.form-op-normal {
+    padding: 10px 0px;
+    background-color: #eeeeee;
+}
+
+.form-op-normal .div-form-op{
+    margin-right: 10px;
+    float: right;
+}
+
+.layui-inline .btn-search-mz {
+    width: 30px;
+    height: 30px;
+    border-radius: 30px
+}
+
+.layui-inline .btn-search-mz:hover {
+    background-color: #00aa00;
+}
+
+.form-op-normal .input-title-mz {
+    width: 500px;
+}
+
+.form-op-normal .img-upload-view {
+    width: 300px;
+    height: auto;
+}
+
+.form-op-normal .div-article-content {
+    width: 100%;
+}
+
+.table-nav-menus .td-menu-parent {
+    text-align: center;
+    vertical-align: middle;
+}
+
+.td-menu-parent .layui-form-switch {
+    margin-left: 0px;
+}
+
+.nav_weather {
+    margin-right: 20px;
+}
+
+#body-login .video-player {
+    background-color: transparent;
+    display: block;
+    position: absolute;
+    z-index: 1;
+    top: 0;
+    width: 100%;
+    height: 100%;
+}
+
+#body-login .video_mask {
+    width: 100%;
+    height: 100%;
+    position: absolute;
+    left: 0;
+    top: 0;
+    z-index: 90;
+    background-color: rgba(0, 0, 0, 0.5);
+}
+
+#body-login .div-login {
+    padding: 35px 0 0 0;
+    width: 450px;
+    border: 2px solid #00a7d0;
+    border-radius: 20px;
+    height: 180px;
+
+    background-color: rgba(0, 0, 0, 0.5);
+    position: absolute;
+    margin: auto;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    z-index: 99;
+}
+
+#body-login .div-login .layui-form-item {
+    width: 280px;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+#body-login .div-login .div-form-op {
+    float: right;
+}
+
+#body-login .div-login .layui-form-label {
+    width: 80px;
+}
+
+/*-START------------用于图片上传的预览效果------------------------*/
+.layui-upload .img-upload-preview-headshot {
+    width: 100px;
+    height: auto;
+    margin: -25px 0px 2px 150px;
+}
+
+.layui-upload .img-upload-preview-small {
+    width: 80px;
+    height: auto;
+    margin: -25px 0px 2px 150px;
+}
+
+.layui-upload .img-upload-preview-medium {
+    width: 300px;
+    height: auto;
+}
+
+.layui-upload .img-upload-preview {
+    width: 160px;
+    height: auto;
+}
+
+.layui-upload #div-multiple-img-upload-preview .layui-upload-img {
+    width: 120px;
+    height: auto;
+    padding-left: 5px;
+}
+
+.layui-upload #div-multiple-img-upload-preview .layui-upload-img:hover {
+    cursor: pointer;
+}
+
+/*-END--------------用于图片上传的预览效果------------------------*/
+
+.span-FF9233 {
+    color: #FF9233;
+}
+
+.span-7EC0EE {
+    color: #7EC0EE;
+}
+
+.table-tbody-normal tr,
+.table-tbody-normal th,
+.table-tbody-normal td {
+    border: 1px solid #ebccd1;
+    font-weight: 600;
+}
