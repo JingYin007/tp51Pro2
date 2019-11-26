@@ -46,7 +46,6 @@ class Activity extends CmsBase
             $list = $this->actModel->getActsForPage($curr_page,$this->page_limit,$search,$OrderType);
             return showMsg(1,'success',$list);
         }
-
     }
     /**
      * 增加标题 功能
