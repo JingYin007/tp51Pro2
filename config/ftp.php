@@ -6,9 +6,7 @@
  * Time: 11:11
  */
 return [
-
-    'server' => '10.xxx.xxx.xx', //内网IP
-    //'server' => '139.xxx.x.xxx',    //外网IP
+    'server' => '10.xxx.xxx.xx', //IP 如果满足内网IP条件，可大大提高传输效率
     'username' => 'xxxx',//ftp帐户
     'password' => 'xxxxxxxx',//ftp密码
     'port' => '21',//ftp端口,默认为21

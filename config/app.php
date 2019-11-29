@@ -14,6 +14,14 @@
 // +----------------------------------------------------------------------
 
 return [
+    //默认页面显示记录数目，用于分页展示
+    'CMS_PAGE_SIZE' => 7,
+    //TODO 是否启用FTP图片文件上传功能，默认不启动，如果启用请配置 config/ftp.php 文件
+    'FTP_USE' => false,
+
+    //TODO 本地测试一般不需要图片服务器 null，
+    //如果使用了图片服务器，需要进行对应更改，例：'http://img.xxxx.com/public'
+    'IMG_SERVER_PUBLIC' => null,
 
     // 应用调试模式
     'app_debug'              => true,
@@ -127,13 +135,4 @@ return [
     'show_error_msg'         => true,
     // 异常处理handle类 留空使用 \think\exception\Handle
     'exception_handle'       => '',
-    'CMS_PAGE_SIZE' => 7,
-    //代码环境 如果为线下则为 ”OFF_LINE“,线上则为 ”ON_LINE“
-    //和下面的 "IMG_SERVER_PUBLIC" 搭配使用,主要用于图片服务器的上传区别
-    'CODE_RUN' => 'OFF_LINE',
-
-    //本地测试版
-    'IMG_SERVER_PUBLIC' => '',
-    //线上发布版 图片服务器
-    //'IMG_SERVER_PUBLIC' => 'http://img.xxxx.com/public',
 ];

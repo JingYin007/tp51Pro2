@@ -75,7 +75,7 @@ function ftpImageToServerUE($str)
         if (startsWithStr($subDealStr, "upload")) {
             //进行FTP 图片上传操作
             $ftp = new \app\api\controller\Upload();
-            $ftp->ftpImageToServer($subDealStr, $remotefile, true);
+            $ftp->ftpImageToServer($subDealStr, $remotefile);
             //ftp_upload($remotefile, $subDealStr);
         }
     }
