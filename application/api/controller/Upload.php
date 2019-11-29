@@ -35,27 +35,26 @@ class Upload
     }
     /**
      * ftp 图片文件上传服务器操作
-     * @param $localfile 本地文件源地址
-     * @param $remotefile 服务器目的地址
+     * @param $local_file 本地文件源地址
+     * @param $remote_file 服务器目的地址
      * @param bool $opFlag 服务器目的地址
      * @return bool
      */
-    public function ftpImageToServer($localfile, $remotefile,$opFlag = false)
+    public function ftpImageToServer($local_file, $remote_file,$opFlag = false)
     {
         if (!$opFlag){
             return true;
         }else{
             $CODE_RUN = config('app.CODE_RUN');
-            if ($CODE_RUN == "TEST"){
+            if ($CODE_RUN == "OFF_LINE"){
                 return true;
             }else{
                 $ftpConf = config('ftp.');
                 $ftp = new FtpServer();
                 $info = $ftp->start($ftpConf);
                 if ($info) {
-
                     //上传文件
-                    if ($ftp->put($remotefile, $localfile)) {
+                    if ($ftp->put($remote_file, $local_file)) {
                         //echo "上传成功";
                         $ftp->close();
                         //删除本地图片

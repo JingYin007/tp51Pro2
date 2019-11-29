@@ -127,11 +127,10 @@ return [
     'show_error_msg'         => true,
     // 异常处理handle类 留空使用 \think\exception\Handle
     'exception_handle'       => '',
-
     'CMS_PAGE_SIZE' => 7,
-    //代码环境 如果为线下则为 ”TEST“,线上则为 ”LINE“
+    //代码环境 如果为线下则为 ”OFF_LINE“,线上则为 ”ON_LINE“
     //和下面的 "IMG_SERVER_PUBLIC" 搭配使用,主要用于图片服务器的上传区别
-    'CODE_RUN' => 'TEST',
+    'CODE_RUN' => 'OFF_LINE',
 
     //本地测试版
     'IMG_SERVER_PUBLIC' => '',

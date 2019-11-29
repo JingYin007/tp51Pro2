@@ -175,9 +175,9 @@ class Xarticles extends BaseModel
             $validateRes = ['tag' => 1, 'message' => '删除成功'];
         } else {
             $saveData = [
-                'title' => $input['title'],
-                'list_order' => $input['list_order'],
-                'content' => isset($input['content']) ? $input['content'] : '',
+                'title' => isset($input['title'])?$input['title']:'',
+                'list_order' => isset($input['list_order'])?$input['list_order']:0,
+                'content' => isset($input['content']) ? ftpImageToServerUE($input['content']) : '',
                 'updated_at' => date('Y-m-d H:i:s', time())
             ];
             $tokenData = ['__token__' => isset($input['__token__']) ? $input['__token__'] : '',];
@@ -190,9 +190,9 @@ class Xarticles extends BaseModel
                     Db::name('xarticle_points')
                         ->where('article_id', $id)
                         ->update([
-                            'picture' => $input['picture'] ? $input['picture'] : '',
-                            'abstract' => $input['abstract'],
-                            'status' => $input['status'],
+                            'picture' => isset($input['picture']) ? $input['picture'] : '',
+                            'abstract' => isset($input['abstract'])?$input['abstract']:'',
+                            'status' => isset($input['status'])?$input['status']:0,
                         ]);
                 }
                 $validateRes['tag'] = $saveTag;
@@ -214,7 +214,7 @@ class Xarticles extends BaseModel
         $addData = [
             'title' => isset($data['title'])?$data['title']:'',
             'list_order' => isset($data['list_order'])?$data['list_order']:0,
-            'content' => isset($data['content']) ? $data['content'] : '',
+            'content' => isset($data['content']) ? ftpImageToServerUE($data['content']) : '',
             'user_id' => 1,
             'created_at' => date('Y-m-d H:i:s', time()),
             'updated_at' => date('Y-m-d H:i:s', time())
@@ -226,9 +226,9 @@ class Xarticles extends BaseModel
             if ($tag) {
                 Db::name('xarticle_points')
                     ->data([
-                        'picture' => $data['picture'],
-                        'abstract' => $data['abstract'],
-                        'status' => $data['status'],
+                        'picture' => isset($data['picture'])?$data['picture']:'',
+                        'abstract' => isset($data['abstract'])?$data['abstract']:'',
+                        'status' => isset($data['status'])?$data['status']:0,
                         'article_id' => $this->getLastInsID(),
                     ])
                     ->insert();
