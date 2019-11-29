@@ -10,7 +10,7 @@ Target Server Type    : MYSQL
 Target Server Version : 50553
 File Encoding         : 65001
 
-Date: 2019-11-28 17:37:42
+Date: 2019-11-29 11:23:39
 */
 
 SET FOREIGN_KEY_CHECKS=0;
@@ -39,9 +39,9 @@ CREATE TABLE `tp5_xactivitys` (
 -- ----------------------------
 -- Records of tp5_xactivitys
 -- ----------------------------
-INSERT INTO `tp5_xactivitys` VALUES ('1', '特价商品推荐', '/cms/images/imgOne.png', 'TJSPTJ', '2', '1', '1', '0', '2019-11-28 11:09:52', '1574125637', '1575090450');
-INSERT INTO `tp5_xactivitys` VALUES ('2', '春季特惠商品', '/cms/images/imgTwo.png', 'CJTHSPA', '1', '2', '0', '0', '2019-11-28 11:10:07', '1574910600', '1575083403');
-INSERT INTO `tp5_xactivitys` VALUES ('3', '生活专区推荐', '/cms/images/imgThree.png', 'SHZQTJA', '1', '3', '1', '0', '2019-11-28 11:09:04', '1574910498', '1575083303');
+INSERT INTO `tp5_xactivitys` VALUES ('1', '特价商品推荐', '/cms/images/imgOne.jpg', 'TJSPTJ', '2', '1', '1', '0', '2019-11-29 11:15:33', '1574125637', '1575090450');
+INSERT INTO `tp5_xactivitys` VALUES ('2', '春季特惠商品', '/cms/images/imgTwo.jpg', 'CJTHSPA', '1', '2', '0', '0', '2019-11-29 11:15:38', '1574910600', '1575083403');
+INSERT INTO `tp5_xactivitys` VALUES ('3', '生活专区推荐', '/cms/images/imgThree.jpg', 'SHZQTJA', '1', '3', '1', '0', '2019-11-29 11:15:42', '1574910498', '1575083303');
 
 -- ----------------------------
 -- Table structure for tp5_xact_goods
@@ -53,35 +53,15 @@ CREATE TABLE `tp5_xact_goods` (
   `goods_id` int(11) DEFAULT '0' COMMENT '参加该活动的商品ID',
   `status` tinyint(2) DEFAULT '0' COMMENT '0 ：正常 -1：已删除',
   PRIMARY KEY (`id`)
-) ENGINE=MyISAM AUTO_INCREMENT=25 DEFAULT CHARSET=utf8 COMMENT='活动商品关联表\r\n\r\n';
+) ENGINE=MyISAM AUTO_INCREMENT=29 DEFAULT CHARSET=utf8 COMMENT='活动商品关联表\r\n\r\n';
 
 -- ----------------------------
 -- Records of tp5_xact_goods
 -- ----------------------------
-INSERT INTO `tp5_xact_goods` VALUES ('1', '1', '1', '-1');
-INSERT INTO `tp5_xact_goods` VALUES ('2', '1', '2', '-1');
-INSERT INTO `tp5_xact_goods` VALUES ('3', '1', '3', '-1');
-INSERT INTO `tp5_xact_goods` VALUES ('4', '2', '1', '-1');
-INSERT INTO `tp5_xact_goods` VALUES ('5', '2', '2', '-1');
-INSERT INTO `tp5_xact_goods` VALUES ('6', '2', '3', '-1');
-INSERT INTO `tp5_xact_goods` VALUES ('7', '3', '1', '0');
-INSERT INTO `tp5_xact_goods` VALUES ('8', '3', '2', '0');
-INSERT INTO `tp5_xact_goods` VALUES ('9', '3', '3', '-1');
-INSERT INTO `tp5_xact_goods` VALUES ('10', '1', '7', '-1');
-INSERT INTO `tp5_xact_goods` VALUES ('11', '1', '12', '-1');
-INSERT INTO `tp5_xact_goods` VALUES ('12', '1', '30', '-1');
-INSERT INTO `tp5_xact_goods` VALUES ('13', '1', '5', '-1');
-INSERT INTO `tp5_xact_goods` VALUES ('14', '1', '31', '-1');
-INSERT INTO `tp5_xact_goods` VALUES ('15', '6', '5', '0');
-INSERT INTO `tp5_xact_goods` VALUES ('16', '1', '13', '-1');
-INSERT INTO `tp5_xact_goods` VALUES ('17', '9', '18', '0');
-INSERT INTO `tp5_xact_goods` VALUES ('18', '9', '13', '0');
-INSERT INTO `tp5_xact_goods` VALUES ('19', '9', '19', '0');
-INSERT INTO `tp5_xact_goods` VALUES ('20', '5', '18', '0');
-INSERT INTO `tp5_xact_goods` VALUES ('21', '10', '19', '0');
-INSERT INTO `tp5_xact_goods` VALUES ('22', '10', '9', '0');
-INSERT INTO `tp5_xact_goods` VALUES ('23', '10', '31', '0');
-INSERT INTO `tp5_xact_goods` VALUES ('24', '2', '8', '0');
+INSERT INTO `tp5_xact_goods` VALUES ('25', '3', '1', '0');
+INSERT INTO `tp5_xact_goods` VALUES ('26', '2', '4', '0');
+INSERT INTO `tp5_xact_goods` VALUES ('27', '1', '6', '0');
+INSERT INTO `tp5_xact_goods` VALUES ('28', '1', '3', '0');
 
 -- ----------------------------
 -- Table structure for tp5_xadmins
@@ -148,10 +128,10 @@ CREATE TABLE `tp5_xad_lists` (
 -- ----------------------------
 -- Records of tp5_xad_lists
 -- ----------------------------
-INSERT INTO `tp5_xad_lists` VALUES ('1', '倒计时广告', '2019-07-02 00:00:00', '2019-07-06 00:00:00', '1', '/pages/goods/adlike', '/home/images/article2.png', '0', '0', '1', 'DJS');
-INSERT INTO `tp5_xad_lists` VALUES ('2', '首屏广告', '2019-07-01 00:00:00', '2019-07-06 00:00:00', '2', '/goodsearch/index', '/home/images/article1.png', '2', '0', '0', 'SP');
-INSERT INTO `tp5_xad_lists` VALUES ('3', '首屏广告', '2019-07-01 00:00:00', '2019-07-06 00:00:00', '0', '../goodsearch/index', '/home/images/article2.png', '0', '0', '1', 'SP');
-INSERT INTO `tp5_xad_lists` VALUES ('4', '首屏广告', '2019-07-02 00:00:00', '2019-07-11 00:00:00', '2', '../goodsearch/index1', '/home/images/article3.png', '0', '0', '1', 'SP');
+INSERT INTO `tp5_xad_lists` VALUES ('1', '倒计时广告', '2019-07-02 00:00:00', '2019-07-06 00:00:00', '1', '/pages/goods/adlike', '/cms/images/imgFour.jpg', '0', '0', '0', 'DJS');
+INSERT INTO `tp5_xad_lists` VALUES ('2', '首屏广告', '2019-07-01 00:00:00', '2019-07-06 00:00:00', '2', '/goodsearch/index', '/cms/images/imgOne.jpg', '2', '0', '0', 'SP');
+INSERT INTO `tp5_xad_lists` VALUES ('3', '首屏广告', '2019-07-01 00:00:00', '2019-07-06 00:00:00', '0', '../goodsearch/index', '/cms/images/imgTwo.jpg', '0', '0', '1', 'SP');
+INSERT INTO `tp5_xad_lists` VALUES ('4', '首屏广告', '2019-07-02 00:00:00', '2019-07-11 00:00:00', '2', '../goodsearch/index1', '/cms/images/imgThree.jpg', '0', '0', '1', 'SP');
 
 -- ----------------------------
 -- Table structure for tp5_xarticles
@@ -285,23 +265,22 @@ CREATE TABLE `tp5_xgoods` (
   `stock` int(11) NOT NULL DEFAULT '0' COMMENT '库存，注意退货未支付订单时的数目变化',
   `created_at` timestamp NOT NULL DEFAULT '0000-00-00 00:00:00' COMMENT '商品创建时间',
   `updated_at` timestamp NOT NULL DEFAULT '0000-00-00 00:00:00' ON UPDATE CURRENT_TIMESTAMP COMMENT '商品更新时间',
-  `act_type` varchar(2) NOT NULL DEFAULT '0' COMMENT '商品参加活动类型 0：默认',
   `status` tinyint(2) NOT NULL DEFAULT '0' COMMENT '状态 -1：删除 0：待上架 1：已上架 2：预售 ',
   `recommend` char(1) NOT NULL DEFAULT '0' COMMENT '推荐标志位',
   `admin_id` int(11) NOT NULL DEFAULT '1' COMMENT '上传该商品的管理员ID',
   PRIMARY KEY (`goods_id`)
-) ENGINE=MyISAM AUTO_INCREMENT=35 DEFAULT CHARSET=utf8mb4 COMMENT='商品表\r\n\r\n注意：status 的规定，app 上只显示上架的产品哦';
+) ENGINE=MyISAM AUTO_INCREMENT=36 DEFAULT CHARSET=utf8mb4 COMMENT='商品表\r\n\r\n注意：status 的规定，app 上只显示上架的产品哦';
 
 -- ----------------------------
 -- Records of tp5_xgoods
 -- ----------------------------
-INSERT INTO `tp5_xgoods` VALUES ('1', '一杯香茗', '9', '/cms/images/goods/teaImg.png', 'shijiezhenda', '1', '<p style=\"text-align: center;\">我也不想打酱油啊啊&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;&nbsp;<img src=\"http://img.baidu.com/hi/jx2/j_0022.gif\"/></p><p style=\"text-align: center;\"><br/></p>', '11.55', '8.90', '[{\"spec_id\":\"28\",\"spec_info\":[{\"spec_name\":\"小小小\",\"spec_id\":\"30\",\"specFstID\":\"28\"},{\"spec_name\":\"大大大\",\"spec_id\":\"29\",\"specFstID\":\"28\"}],\"spec_name\":\"大小\"},{\"spec_id\":\"11\",\"spec_info\":[{\"spec_name\":\"M(建议90-100斤)\",\"spec_id\":\"12\",\"specFstID\":\"11\"},{\"spec_name\":\"XL(建议110-120斤)\",\"spec_id\":\"14\",\"specFstID\":\"11\"},{\"spec_name\":\"S(建议80-90斤左右)\",\"spec_id\":\"16\",\"specFstID\":\"11\"}],\"spec_name\":\"尺码【连衣裙专用】\"}]', '391', '0000-00-00 00:00:00', '2019-11-14 19:08:15', '0', '1', '0', '1');
-INSERT INTO `tp5_xgoods` VALUES ('2', '风中仙子连衣裙', '9', '/cms/images/goods/dress.png', '只是一件裙子嘛', '2', '<p>dsss&nbsp;<img src=\"http://img.baidu.com/hi/jx2/j_0012.gif\"/></p>', '56.99', '55.99', '', '12', '2019-03-11 18:03:26', '2019-11-14 19:08:16', '0', '0', '0', '1');
-INSERT INTO `tp5_xgoods` VALUES ('3', '夏栀子连衣裙', '116', '/cms/images/goods/dress2.png', '别激动 ，你穿不下的', '0', '<p>似懂非懂</p>', '89.00', '68.98', '[{\"spec_id\":\"6\",\"spec_info\":[{\"spec_name\":\"XL42片\",\"spec_id\":\"10\",\"specFstID\":\"6\"}],\"spec_name\":\"规格\"}]', '23', '2019-03-12 17:03:39', '2019-11-25 14:21:15', '0', '0', '0', '1');
-INSERT INTO `tp5_xgoods` VALUES ('4', '热浪Caffee', '8', '/cms/images/goods/hotCoff.png', '好咖啡，有精神头', '2', '<p>不苦，有点甜...&nbsp;</p>', '5.60', '4.22', '[{\"spec_id\":\"59\",\"spec_info\":[{\"spec_name\":\"小杯\",\"spec_id\":\"60\",\"specFstID\":\"59\"},{\"spec_name\":\"中杯\",\"spec_id\":\"61\",\"specFstID\":\"59\"},{\"spec_name\":\"大杯\",\"spec_id\":\"62\",\"specFstID\":\"59\"}],\"spec_name\":\"容量【咖啡专用】\"}]', '72', '2019-03-14 11:03:58', '2019-11-14 19:08:16', '0', '1', '0', '1');
-INSERT INTO `tp5_xgoods` VALUES ('5', '萨缪尔红酒', '8', '/cms/images/goods/redWine.png', '不给你喝，哈哈哈哈', '1', '<p>ddd</p>', '4.33', '3.22', '[{\"spec_id\":\"59\",\"spec_info\":[{\"spec_name\":\"中杯\",\"spec_id\":\"61\",\"specFstID\":\"59\"}],\"spec_name\":\"容量【咖啡专用】\"}]', '15', '2019-03-18 17:03:17', '2019-11-14 19:08:17', '0', '0', '0', '1');
-INSERT INTO `tp5_xgoods` VALUES ('7', '卡通鲨 连衣裙SR', '116', '/cms/images/goods/dress3.png', '一条裙子', '0', '<p>有点意思！</p>', '55.33', '55.22', '[{\"spec_id\":\"6\",\"spec_info\":[{\"spec_name\":\"XL42片\",\"spec_id\":\"10\",\"specFstID\":\"6\"},{\"spec_name\":\"体验装L4片\",\"spec_id\":\"8\",\"specFstID\":\"6\"}],\"spec_name\":\"规格\"}]', '30', '2019-03-19 10:03:48', '2019-11-25 14:21:00', '0', '1', '0', '1');
-INSERT INTO `tp5_xgoods` VALUES ('8', '风中仙子连衣裙', '9', '/cms/images/goods/dress.png', 'HHEEE', '2', '<p>dsss&nbsp;<img src=\"http://img.baidu.com/hi/jx2/j_0012.gif\"/>&nbsp;</p><p></p>', '56.99', '55.99', '[{\"spec_id\":\"11\",\"spec_info\":[{\"spec_name\":\"S(建议80-90斤左右)\",\"spec_id\":\"16\",\"specFstID\":\"11\"},{\"spec_name\":\"M(建议90-100斤)\",\"spec_id\":\"12\",\"specFstID\":\"11\"},{\"spec_name\":\"L(建议100-110斤)\",\"spec_id\":\"13\",\"specFstID\":\"11\"},{\"spec_name\":\"XL(建议110-120斤)\",\"spec_id\":\"14\",\"specFstID\":\"11\"}],\"spec_name\":\"尺码【连衣裙专用】\"}]', '70', '2019-03-11 18:03:26', '2019-11-14 19:20:16', '0', '1', '0', '1');
+INSERT INTO `tp5_xgoods` VALUES ('1', '德芙 Dove分享碗 草莓白巧克力 221g（新旧包装随机发放）', '14', '/cms/images/goods/1/1.jpg', '办公室休闲零食 员工福利糖果巧克力 ', '1', '<p><img src=\"/cms/images/goods/1/5.jpg\" title=\"175706NDMzOTQwNDUzNTE4.jpg\" alt=\"O1CN014zzptX1rlMcSpY1yn_!!1748365671.jpg\"/></p>', '30.55', '32.90', '[]', '391', '2019-11-28 10:51:31', '2019-11-29 10:51:37', '1', '0', '1');
+INSERT INTO `tp5_xgoods` VALUES ('2', 'CandyLab【水晶棒棒糖组合】手工糖果创意水果味水晶棒棒糖定制', '14', '/cms/images/goods/2/1.jpg', '只是一件裙子嘛', '2', '<p><img src=\"/cms/images/goods/2/3.jpg\" title=\"100125MzY5NTI3NjY5OTU5.png\" alt=\"QQ截图20191129095547.png\"/></p>', '120.00', '105.00', '[]', '12', '2019-03-11 18:03:26', '2019-11-29 10:45:04', '1', '0', '1');
+INSERT INTO `tp5_xgoods` VALUES ('4', '买1箱送1箱法国进口红酒赤霞珠希雅特酒堡干红葡萄酒红酒特价整箱', '18', '/cms/images/goods/4/1.jpg', '好咖啡，有精神头', '2', '<p></p><p><img src=\"/cms/images/goods/4/5.jpg\" title=\"093713NzI5OTYxNjkzNzQ4.jpg\"/></p><p><br/></p>', '1980.00', '388.00', '[]', '72', '2019-03-14 11:03:58', '2019-11-29 10:47:39', '0', '0', '1');
+INSERT INTO `tp5_xgoods` VALUES ('5', '江小白白酒500ml40度8瓶青春版清香型国产大瓶整箱正品包邮送礼', '17', '/cms/images/goods/5/1.jpg', '不给你喝，哈哈哈哈', '1', '<p><img src=\"/cms/images/goods/5/4.jpg\" title=\"094745Mjc4NjQ4NzcwNDU1.jpg\" alt=\"TB2OrSAsiCYBuNkSnaVXXcMsVXa_!!2961619882.jpg\"/></p>', '1280.00', '536.00', '[]', '15', '2019-03-18 17:03:17', '2019-11-29 10:47:40', '1', '0', '1');
+INSERT INTO `tp5_xgoods` VALUES ('7', '纽仕兰牧场Theland新西兰进口全脂纯牛奶4.0蛋白质钙250ml*24盒箱', '10', '/cms/images/goods/7/1.jpg', '一条裙子', '0', '<p><img src=\"/cms/images/goods/7/3.jpg\" title=\"100629MTMzMzg3NDQ4MTA0.png\" alt=\"TB2pn9Tqk7mBKNjSZFyXXbydFXa_!!82033576.png\"/></p>', '129.00', '99.00', '[]', '30', '2019-03-19 10:03:48', '2019-11-29 10:47:42', '1', '0', '1');
+INSERT INTO `tp5_xgoods` VALUES ('3', '蒙牛纯甄小蛮腰酸牛奶原味红西柚味瓶装230g×10瓶学生酸奶', '10', '/cms/images/goods/3/1.jpg', '8月产蒙牛纯甄小蛮腰酸牛奶', '0', '<p><img src=\"/cms/images/goods/3/2.jpg\" title=\"094200Mjc1ODM2NzIyNTI5.jpg\" alt=\"O1CN01H5YnKT1QuzKuf9HCE_!!1584902037.jpg\"/></p>', '30.00', '29.88', '[]', '0', '2019-11-29 09:42:38', '2019-11-29 10:34:12', '1', '1', '3');
+INSERT INTO `tp5_xgoods` VALUES ('6', '马来西亚进口 零涩 蓝山风味速溶三合一咖啡 40条640g', '9', '/cms/images/goods/6/1.jpg', 'HHEEE', '2', '<p><img src=\"/cms/images/goods/6/4.jpg\" title=\"182640MTY0OTg5Njg2NTk0.jpg\"/></p><p><img src=\"/cms/images/goods/6/5.jpg\" title=\"182641OTc0ODMzMTk1Nzgy.jpg\"/></p><p><br/></p>', '28.99', '29.99', '[]', '70', '2019-03-11 18:03:26', '2019-11-29 10:47:40', '1', '0', '1');
 
 -- ----------------------------
 -- Table structure for tp5_xnav_menus
@@ -421,10 +400,10 @@ CREATE TABLE `tp5_xskus` (
 -- ----------------------------
 -- Records of tp5_xskus
 -- ----------------------------
-INSERT INTO `tp5_xskus` VALUES ('19', '2', '', '14,18', 'L(建议100-110斤),蓝色', '10.20', '5', '2', '2019-04-20 16:33:02', '0');
-INSERT INTO `tp5_xskus` VALUES ('20', '2', '', '15,16', 'L(建议100-110斤),银色', '20.00', '1', '42', '2019-04-20 16:33:08', '0');
-INSERT INTO `tp5_xskus` VALUES ('21', '2', '', '14,16', '2XL(建议120-130斤),蓝色', '30.00', '6', '12', '2019-04-20 16:33:04', '0');
-INSERT INTO `tp5_xskus` VALUES ('22', '2', '', '15,18', '2XL(建议120-130斤),银色', '12.00', '7', '42', '2019-04-20 16:33:06', '0');
+INSERT INTO `tp5_xskus` VALUES ('19', '2', '', '14,18', 'L(建议100-110斤),蓝色', '10.20', '5', '2', '2019-11-29 10:01:59', '0');
+INSERT INTO `tp5_xskus` VALUES ('20', '2', '', '15,16', 'L(建议100-110斤),银色', '20.00', '1', '42', '2019-11-29 10:01:59', '0');
+INSERT INTO `tp5_xskus` VALUES ('21', '2', '', '14,16', '2XL(建议120-130斤),蓝色', '30.00', '6', '12', '2019-11-29 10:01:59', '0');
+INSERT INTO `tp5_xskus` VALUES ('22', '2', '', '15,18', '2XL(建议120-130斤),银色', '12.00', '7', '42', '2019-11-29 10:01:59', '0');
 INSERT INTO `tp5_xskus` VALUES ('23', '48', '', '14,20', 'XL(建议110-120斤),蓝色', '2.00', '122', '21', '2019-04-08 20:31:28', '-1');
 INSERT INTO `tp5_xskus` VALUES ('24', '48', '', '14,19', 'XL(建议110-120斤),银色', '10.00', '41', '11', '2019-04-08 20:31:28', '-1');
 INSERT INTO `tp5_xskus` VALUES ('25', '48', '', '4,9', '小号,NB78片', '10.00', '30', '1', '2019-04-08 21:31:00', '-1');
@@ -451,28 +430,28 @@ INSERT INTO `tp5_xskus` VALUES ('45', '7', '', '19,16', '银色,S(建议80-90斤
 INSERT INTO `tp5_xskus` VALUES ('46', '7', '', '19,12', '银色,M(建议90-100斤)', '12.00', '3', '2', '2019-11-19 14:42:22', '-1');
 INSERT INTO `tp5_xskus` VALUES ('47', '7', '', '19,13', '银色,L(建议100-110斤)', '14.00', '6', '3', '2019-11-19 14:42:22', '-1');
 INSERT INTO `tp5_xskus` VALUES ('48', '7', '', '19,14', '银色,XL(建议110-120斤)', '22.00', '2', '2', '2019-11-19 14:42:22', '-1');
-INSERT INTO `tp5_xskus` VALUES ('49', '4', '', '60', '小杯', '12.00', '22', '1', '2019-08-14 17:08:17', '0');
-INSERT INTO `tp5_xskus` VALUES ('50', '4', '', '61', '中杯', '15.00', '20', '4', '2019-08-14 17:08:17', '0');
-INSERT INTO `tp5_xskus` VALUES ('51', '4', '', '62', '大杯', '18.00', '30', '6', '2019-08-14 17:08:17', '0');
-INSERT INTO `tp5_xskus` VALUES ('52', '5', '', '61', '中杯', '15.00', '15', '11', '2019-05-05 18:05:04', '0');
+INSERT INTO `tp5_xskus` VALUES ('49', '4', '', '60', '小杯', '12.00', '22', '1', '2019-11-29 10:36:52', '0');
+INSERT INTO `tp5_xskus` VALUES ('50', '4', '', '61', '中杯', '15.00', '20', '4', '2019-11-29 10:36:52', '0');
+INSERT INTO `tp5_xskus` VALUES ('51', '4', '', '62', '大杯', '18.00', '30', '6', '2019-11-29 10:36:52', '0');
+INSERT INTO `tp5_xskus` VALUES ('52', '5', '', '61', '中杯', '15.00', '15', '11', '2019-11-29 10:38:39', '0');
 INSERT INTO `tp5_xskus` VALUES ('53', '1', '', '60', '小杯', '22.00', '133', '11', '2019-07-12 16:56:18', '-1');
 INSERT INTO `tp5_xskus` VALUES ('54', '1', '/upload/20190712/6dc805ca6e5628fd9f88e95d980e37db.jpg', '61', '中杯', '25.00', '125', '22', '2019-07-12 16:56:18', '-1');
 INSERT INTO `tp5_xskus` VALUES ('55', '1', '/upload/20190712/6aa9c36bcf13b12d1705fb0cbf9efe09.jpg', '62', '大杯', '28.00', '133', '12', '2019-07-12 16:56:18', '-1');
-INSERT INTO `tp5_xskus` VALUES ('56', '8', '', '16', 'S(建议80-90斤左右)', '124.00', '13', '1', '2019-08-14 18:08:31', '0');
-INSERT INTO `tp5_xskus` VALUES ('57', '8', '', '12', 'M(建议90-100斤)', '124.00', '22', '2', '2019-08-14 18:08:31', '0');
-INSERT INTO `tp5_xskus` VALUES ('58', '8', '', '13', 'L(建议100-110斤)', '124.00', '23', '1', '2019-08-14 18:08:31', '0');
-INSERT INTO `tp5_xskus` VALUES ('59', '8', '', '14', 'XL(建议110-120斤)', '124.00', '12', '1', '2019-08-14 18:08:31', '0');
-INSERT INTO `tp5_xskus` VALUES ('60', '1', '', '30,12', '小小小,M(建议90-100斤)', '0.00', '0', '0', '2019-07-12 16:07:18', '0');
-INSERT INTO `tp5_xskus` VALUES ('61', '1', '', '30,14', '小小小,XL(建议110-120斤)', '0.00', '0', '0', '2019-07-12 16:07:18', '0');
-INSERT INTO `tp5_xskus` VALUES ('62', '1', '/upload/20190712/26b2b9da92187011ec79e1c31390f770.jpg', '30,16', '小小小,S(建议80-90斤左右)', '0.00', '0', '0', '2019-07-12 16:07:18', '0');
-INSERT INTO `tp5_xskus` VALUES ('63', '1', '/upload/20190712/cf4db060577cf108e27d9744d861bae6.jpg', '29,12', '大大大,M(建议90-100斤)', '0.00', '0', '0', '2019-07-12 16:07:18', '0');
-INSERT INTO `tp5_xskus` VALUES ('64', '1', '', '29,14', '大大大,XL(建议110-120斤)', '0.00', '0', '0', '2019-07-12 16:07:18', '0');
-INSERT INTO `tp5_xskus` VALUES ('65', '1', '', '29,16', '大大大,S(建议80-90斤左右)', '0.00', '0', '0', '2019-07-12 16:07:18', '0');
-INSERT INTO `tp5_xskus` VALUES ('66', '3', '', '10', 'XL42片', '0.00', '0', '0', '2019-11-15 18:03:02', '0');
+INSERT INTO `tp5_xskus` VALUES ('56', '8', '', '16', 'S(建议80-90斤左右)', '124.00', '13', '1', '2019-11-28 18:26:45', '0');
+INSERT INTO `tp5_xskus` VALUES ('57', '8', '', '12', 'M(建议90-100斤)', '124.00', '22', '2', '2019-11-28 18:26:45', '0');
+INSERT INTO `tp5_xskus` VALUES ('58', '8', '', '13', 'L(建议100-110斤)', '124.00', '23', '1', '2019-11-28 18:26:45', '0');
+INSERT INTO `tp5_xskus` VALUES ('59', '8', '', '14', 'XL(建议110-120斤)', '124.00', '12', '1', '2019-11-28 18:26:45', '0');
+INSERT INTO `tp5_xskus` VALUES ('60', '1', '', '30,12', '小小小,M(建议90-100斤)', '0.00', '0', '0', '2019-11-28 18:02:29', '0');
+INSERT INTO `tp5_xskus` VALUES ('61', '1', '', '30,14', '小小小,XL(建议110-120斤)', '0.00', '0', '0', '2019-11-28 18:02:29', '0');
+INSERT INTO `tp5_xskus` VALUES ('62', '1', '/upload/20190712/26b2b9da92187011ec79e1c31390f770.jpg', '30,16', '小小小,S(建议80-90斤左右)', '0.00', '0', '0', '2019-11-28 18:02:29', '0');
+INSERT INTO `tp5_xskus` VALUES ('63', '1', '/upload/20190712/cf4db060577cf108e27d9744d861bae6.jpg', '29,12', '大大大,M(建议90-100斤)', '0.00', '0', '0', '2019-11-28 18:02:29', '0');
+INSERT INTO `tp5_xskus` VALUES ('64', '1', '', '29,14', '大大大,XL(建议110-120斤)', '0.00', '0', '0', '2019-11-28 18:02:29', '0');
+INSERT INTO `tp5_xskus` VALUES ('65', '1', '', '29,16', '大大大,S(建议80-90斤左右)', '0.00', '0', '0', '2019-11-28 18:02:29', '0');
+INSERT INTO `tp5_xskus` VALUES ('66', '3', '', '10', 'XL42片', '0.00', '0', '0', '2019-11-29 10:34:12', '0');
 INSERT INTO `tp5_xskus` VALUES ('67', '34', '', '8', '体验装L4片', '0.00', '0', '0', '2019-11-15 18:06:05', '0');
 INSERT INTO `tp5_xskus` VALUES ('68', '34', '', '9', 'NB78片', '0.00', '0', '0', '2019-11-15 18:06:05', '0');
-INSERT INTO `tp5_xskus` VALUES ('69', '7', '', '10', 'XL42片', '0.00', '0', '0', '2019-11-19 14:42:22', '0');
-INSERT INTO `tp5_xskus` VALUES ('70', '7', '', '8', '体验装L4片', '0.00', '0', '0', '2019-11-19 14:42:22', '0');
+INSERT INTO `tp5_xskus` VALUES ('69', '7', '', '10', 'XL42片', '0.00', '0', '0', '2019-11-29 10:43:27', '0');
+INSERT INTO `tp5_xskus` VALUES ('70', '7', '', '8', '体验装L4片', '0.00', '0', '0', '2019-11-29 10:43:27', '0');
 
 -- ----------------------------
 -- Table structure for tp5_xspec_infos
@@ -534,7 +513,7 @@ CREATE TABLE `tp5_xtoday_words` (
   `status` tinyint(4) NOT NULL DEFAULT '1' COMMENT '状态，1：正常，-1：删除',
   `updated_at` timestamp NOT NULL DEFAULT '0000-00-00 00:00:00' ON UPDATE CURRENT_TIMESTAMP COMMENT '更新时间',
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=13 DEFAULT CHARSET=utf8mb4 COMMENT='今日赠言表';
+) ENGINE=InnoDB AUTO_INCREMENT=9 DEFAULT CHARSET=utf8mb4 COMMENT='今日赠言表';
 
 -- ----------------------------
 -- Records of tp5_xtoday_words
@@ -560,17 +539,29 @@ CREATE TABLE `tp5_xupload_imgs` (
   `type` tinyint(2) NOT NULL DEFAULT '0' COMMENT '类型 0：商品轮播图（app界面） 1: 评论订单中的图片',
   `status` tinyint(2) NOT NULL DEFAULT '1' COMMENT '状态  1：正常  -1：删除',
   PRIMARY KEY (`id`)
-) ENGINE=MyISAM AUTO_INCREMENT=29 DEFAULT CHARSET=utf8mb4 COMMENT='上传图片表\r\n\r\n用于保存商品轮播图或者订单评论中需要的图片，注意其 type的区分使用';
+) ENGINE=MyISAM AUTO_INCREMENT=51 DEFAULT CHARSET=utf8mb4 COMMENT='上传图片表\r\n\r\n用于保存商品轮播图或者订单评论中需要的图片，注意其 type的区分使用';
 
 -- ----------------------------
 -- Records of tp5_xupload_imgs
 -- ----------------------------
-INSERT INTO `tp5_xupload_imgs` VALUES ('1', '20', '/cms/images/goods/teaImg.png', '2019-03-17 20:29:48', '0', '1');
-INSERT INTO `tp5_xupload_imgs` VALUES ('2', '18', '/cms/images/goods/dress.png', '2019-03-17 20:29:24', '0', '1');
-INSERT INTO `tp5_xupload_imgs` VALUES ('3', '20', '/cms/images/goods/dress.png', '2019-03-17 20:34:39', '0', '-1');
-INSERT INTO `tp5_xupload_imgs` VALUES ('4', '18', '/cms/images/goods/teaImg.png', '2019-03-17 20:29:55', '0', '1');
-INSERT INTO `tp5_xupload_imgs` VALUES ('5', '20', '/cms/images/goods/dress2.png', '2019-03-17 20:34:39', '0', '1');
-INSERT INTO `tp5_xupload_imgs` VALUES ('6', '18', '/cms/images/goods/teaImg.png', '2019-03-17 20:29:55', '1', '1');
+INSERT INTO `tp5_xupload_imgs` VALUES ('30', '1', '/cms/images/goods/1/4.jpg', '2019-11-29 10:45:41', '0', '1');
+INSERT INTO `tp5_xupload_imgs` VALUES ('31', '1', '/cms/images/goods/1/3.jpg', '2019-11-29 10:45:37', '0', '1');
+INSERT INTO `tp5_xupload_imgs` VALUES ('32', '1', '/cms/images/goods/1/2.jpg', '2019-11-29 10:45:31', '0', '1');
+INSERT INTO `tp5_xupload_imgs` VALUES ('33', '1', '/cms/images/goods/1/1.jpg', '2019-11-29 10:36:18', '0', '1');
+INSERT INTO `tp5_xupload_imgs` VALUES ('36', '6', '/cms/images/goods/6/4.jpg', '2019-11-29 10:39:09', '0', '1');
+INSERT INTO `tp5_xupload_imgs` VALUES ('37', '6', '/cms/images/goods/6/2.jpg', '2019-11-29 10:39:59', '0', '1');
+INSERT INTO `tp5_xupload_imgs` VALUES ('38', '6', '/cms/images/goods/6/3.jpg', '2019-11-29 10:40:04', '0', '1');
+INSERT INTO `tp5_xupload_imgs` VALUES ('40', '4', '/cms/images/goods/4/4.jpg', '2019-11-29 10:35:05', '0', '1');
+INSERT INTO `tp5_xupload_imgs` VALUES ('41', '4', '/cms/images/goods/4/3.jpg', '2019-11-29 10:34:56', '0', '1');
+INSERT INTO `tp5_xupload_imgs` VALUES ('42', '4', '/cms/images/goods/4/2.jpg', '2019-11-29 10:35:43', '0', '1');
+INSERT INTO `tp5_xupload_imgs` VALUES ('43', '3', '/cms/images/goods/3/3.jpg', '2019-11-29 10:33:03', '0', '1');
+INSERT INTO `tp5_xupload_imgs` VALUES ('44', '3', '/cms/images/goods/3/2.jpg', '2019-11-29 10:33:00', '0', '1');
+INSERT INTO `tp5_xupload_imgs` VALUES ('45', '5', '/cms/images/goods/5/2.jpg', '2019-11-29 10:37:30', '0', '1');
+INSERT INTO `tp5_xupload_imgs` VALUES ('46', '5', '/cms/images/goods/5/3.jpg', '2019-11-29 10:37:38', '0', '1');
+INSERT INTO `tp5_xupload_imgs` VALUES ('47', '2', '/cms/images/goods/2/3.jpg', '2019-11-29 10:44:27', '0', '1');
+INSERT INTO `tp5_xupload_imgs` VALUES ('48', '2', '/cms/images/goods/2/2.jpg', '2019-11-29 10:44:36', '0', '1');
+INSERT INTO `tp5_xupload_imgs` VALUES ('49', '7', '/cms/images/goods/7/3.jpg', '2019-11-29 10:39:41', '0', '1');
+INSERT INTO `tp5_xupload_imgs` VALUES ('50', '7', '/cms/images/goods/7/2.jpg', '2019-11-29 10:39:34', '0', '1');
 
 -- ----------------------------
 -- Table structure for tp5_xusers
