@@ -21,7 +21,7 @@ return [
 
     //TODO 本地测试一般不需要图片服务器 null，
     //如果使用了图片服务器，需要进行对应更改，例：'http://img.xxxx.com/public'
-    'IMG_SERVER_PUBLIC' => null,
+    'IMG_SERVER_PUBLIC' => '',
 
     // 应用调试模式
     'app_debug'              => true,
