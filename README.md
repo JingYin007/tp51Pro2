@@ -76,8 +76,7 @@
 - 即打开的导航菜单更有不同，以避免权力的滥用，这部分的 `js` 代码写的最耗费时间
 ![](https://img-blog.csdnimg.cn/20191126093159804.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3UwMTE0MTU3ODI=,size_16,color_FFFFFF,t_70)
 
-## ④. 角色管理
-
+## ④. 权限配置
 > 此处，最近参考 `ThinkPHP` 之前框架对权限的设计，进行了补充优化
 ![](https://img-blog.csdnimg.cn/20191126093809534.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3UwMTE0MTU3ODI=,size_16,color_FFFFFF,t_70)
 - ***说明信息***
@@ -87,7 +86,6 @@
 > 3.注意，新补充的方法链接如果不做权限的添加，那很可能无法访问哦！
 ```
 ## ⑤. 文章管理
-
 > 这是常规的后台信息管理功能，其次还有个`“今日赠言”`，也是大同小异
 ![](https://img-blog.csdnimg.cn/2019112609395817.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3UwMTE0MTU3ODI=,size_16,color_FFFFFF,t_70)
 - 此处较为亮点的功能即为 `layer文件上传`、`UEditor富文本编辑器` 的使用
@@ -205,3 +203,15 @@ function captcha_img($id = '')
 ## ③. 功能扩展日志
 - `2018/12/03` 补充添加了 **登录验证码** 的功能 
 > 方法请参考： [***ThinkPHP5 验证码功能实现***](https://blog.csdn.net/u011415782/article/details/77367280),请自行补充`验证码点击刷新`功能的代码！
+
+## ④. FTP文件上传操作的扩展配置
+- 相信成型的网站基本都需要一个或几个图片资源服务器
+- 这时，考虑使用的便是 FTP文件上传功能的扩展
+```b
+- 本项目做了处理，如果道友已经创建好了FTP信息，可以打开文件 "/config/ftp.php"
+- 对应填写 FTP配置信息
+- 然后，打开 "/config/app.php" 文件
+- 设置 "FTP_USE" 参数为 true
+- 并配置 "IMG_SERVER_PUBLIC" 参数为图片服务器地址
+```
+![](https://img-blog.csdnimg.cn/20191129172531248.jpg)
