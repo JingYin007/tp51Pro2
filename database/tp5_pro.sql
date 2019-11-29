@@ -10,7 +10,7 @@ Target Server Type    : MYSQL
 Target Server Version : 50553
 File Encoding         : 65001
 
-Date: 2019-11-29 11:23:39
+Date: 2019-11-29 15:17:42
 */
 
 SET FOREIGN_KEY_CHECKS=0;
@@ -274,13 +274,13 @@ CREATE TABLE `tp5_xgoods` (
 -- ----------------------------
 -- Records of tp5_xgoods
 -- ----------------------------
-INSERT INTO `tp5_xgoods` VALUES ('1', '德芙 Dove分享碗 草莓白巧克力 221g（新旧包装随机发放）', '14', '/cms/images/goods/1/1.jpg', '办公室休闲零食 员工福利糖果巧克力 ', '1', '<p><img src=\"/cms/images/goods/1/5.jpg\" title=\"175706NDMzOTQwNDUzNTE4.jpg\" alt=\"O1CN014zzptX1rlMcSpY1yn_!!1748365671.jpg\"/></p>', '30.55', '32.90', '[]', '391', '2019-11-28 10:51:31', '2019-11-29 10:51:37', '1', '0', '1');
-INSERT INTO `tp5_xgoods` VALUES ('2', 'CandyLab【水晶棒棒糖组合】手工糖果创意水果味水晶棒棒糖定制', '14', '/cms/images/goods/2/1.jpg', '只是一件裙子嘛', '2', '<p><img src=\"/cms/images/goods/2/3.jpg\" title=\"100125MzY5NTI3NjY5OTU5.png\" alt=\"QQ截图20191129095547.png\"/></p>', '120.00', '105.00', '[]', '12', '2019-03-11 18:03:26', '2019-11-29 10:45:04', '1', '0', '1');
-INSERT INTO `tp5_xgoods` VALUES ('4', '买1箱送1箱法国进口红酒赤霞珠希雅特酒堡干红葡萄酒红酒特价整箱', '18', '/cms/images/goods/4/1.jpg', '好咖啡，有精神头', '2', '<p></p><p><img src=\"/cms/images/goods/4/5.jpg\" title=\"093713NzI5OTYxNjkzNzQ4.jpg\"/></p><p><br/></p>', '1980.00', '388.00', '[]', '72', '2019-03-14 11:03:58', '2019-11-29 10:47:39', '0', '0', '1');
-INSERT INTO `tp5_xgoods` VALUES ('5', '江小白白酒500ml40度8瓶青春版清香型国产大瓶整箱正品包邮送礼', '17', '/cms/images/goods/5/1.jpg', '不给你喝，哈哈哈哈', '1', '<p><img src=\"/cms/images/goods/5/4.jpg\" title=\"094745Mjc4NjQ4NzcwNDU1.jpg\" alt=\"TB2OrSAsiCYBuNkSnaVXXcMsVXa_!!2961619882.jpg\"/></p>', '1280.00', '536.00', '[]', '15', '2019-03-18 17:03:17', '2019-11-29 10:47:40', '1', '0', '1');
-INSERT INTO `tp5_xgoods` VALUES ('7', '纽仕兰牧场Theland新西兰进口全脂纯牛奶4.0蛋白质钙250ml*24盒箱', '10', '/cms/images/goods/7/1.jpg', '一条裙子', '0', '<p><img src=\"/cms/images/goods/7/3.jpg\" title=\"100629MTMzMzg3NDQ4MTA0.png\" alt=\"TB2pn9Tqk7mBKNjSZFyXXbydFXa_!!82033576.png\"/></p>', '129.00', '99.00', '[]', '30', '2019-03-19 10:03:48', '2019-11-29 10:47:42', '1', '0', '1');
-INSERT INTO `tp5_xgoods` VALUES ('3', '蒙牛纯甄小蛮腰酸牛奶原味红西柚味瓶装230g×10瓶学生酸奶', '10', '/cms/images/goods/3/1.jpg', '8月产蒙牛纯甄小蛮腰酸牛奶', '0', '<p><img src=\"/cms/images/goods/3/2.jpg\" title=\"094200Mjc1ODM2NzIyNTI5.jpg\" alt=\"O1CN01H5YnKT1QuzKuf9HCE_!!1584902037.jpg\"/></p>', '30.00', '29.88', '[]', '0', '2019-11-29 09:42:38', '2019-11-29 10:34:12', '1', '1', '3');
-INSERT INTO `tp5_xgoods` VALUES ('6', '马来西亚进口 零涩 蓝山风味速溶三合一咖啡 40条640g', '9', '/cms/images/goods/6/1.jpg', 'HHEEE', '2', '<p><img src=\"/cms/images/goods/6/4.jpg\" title=\"182640MTY0OTg5Njg2NTk0.jpg\"/></p><p><img src=\"/cms/images/goods/6/5.jpg\" title=\"182641OTc0ODMzMTk1Nzgy.jpg\"/></p><p><br/></p>', '28.99', '29.99', '[]', '70', '2019-03-11 18:03:26', '2019-11-29 10:47:40', '1', '0', '1');
+INSERT INTO `tp5_xgoods` VALUES ('1', '德芙 Dove分享碗 草莓白巧克力 221g（新旧包装随机发放）', '14', '/cms/images/goods/1/1.jpg', '办公室休闲零食 员工福利糖果巧克力 ', '1', '<p><img src=\"/cms/images/goods/1/5.jpg\" title=\"175706NDMzOTQwNDUzNTE4.jpg\" alt=\"O1CN014zzptX1rlMcSpY1yn_!!1748365671.jpg\"/></p>', '30.55', '32.90', '[{\"spec_id\":\"11\",\"spec_info\":[{\"spec_name\":\"221g\",\"spec_id\":\"12\",\"specFstID\":\"11\"},{\"spec_name\":\"300g\",\"spec_id\":\"13\",\"specFstID\":\"11\"}],\"spec_name\":\"重量【巧克力通用】\"}]', '5000', '2019-11-28 10:51:31', '2019-11-29 15:10:56', '1', '0', '1');
+INSERT INTO `tp5_xgoods` VALUES ('2', 'CandyLab【水晶棒棒糖组合】手工糖果创意水果味水晶棒棒糖定制', '14', '/cms/images/goods/2/1.jpg', '只是一件裙子嘛', '2', '<p><img src=\"/cms/images/goods/2/3.jpg\" title=\"100125MzY5NTI3NjY5OTU5.png\" alt=\"QQ截图20191129095547.png\"/></p>', '120.00', '105.00', '[{\"spec_id\":\"11\",\"spec_info\":[{\"spec_name\":\"300g\",\"spec_id\":\"13\",\"specFstID\":\"11\"}],\"spec_name\":\"重量【巧克力通用】\"}]', '600', '2019-03-11 18:03:26', '2019-11-29 15:14:48', '1', '0', '1');
+INSERT INTO `tp5_xgoods` VALUES ('4', '买1箱送1箱法国进口红酒赤霞珠希雅特酒堡干红葡萄酒红酒特价整箱', '18', '/cms/images/goods/4/1.jpg', '好咖啡，有精神头', '2', '<p><br/></p><p><img src=\"/cms/images/goods/4/5.jpg\" title=\"093713NzI5OTYxNjkzNzQ4.jpg\"/></p><p><br/></p>', '1980.00', '388.00', '[{\"spec_id\":\"18\",\"spec_info\":[{\"spec_name\":\"13%VOL\",\"spec_id\":\"19\",\"specFstID\":\"18\"}],\"spec_name\":\"酒精度\"},{\"spec_id\":\"21\",\"spec_info\":[{\"spec_name\":\"750ml*6\",\"spec_id\":\"23\",\"specFstID\":\"21\"},{\"spec_name\":\"750ml*12\",\"spec_id\":\"22\",\"specFstID\":\"21\"}],\"spec_name\":\"净含量\"}]', '5000', '2019-03-14 11:03:58', '2019-11-29 14:56:20', '0', '0', '1');
+INSERT INTO `tp5_xgoods` VALUES ('5', '江小白白酒500ml40度8瓶青春版清香型国产大瓶整箱正品包邮送礼', '17', '/cms/images/goods/5/1.jpg', '不给你喝，哈哈哈哈', '1', '<p><img src=\"/cms/images/goods/5/4.jpg\" title=\"094745Mjc4NjQ4NzcwNDU1.jpg\" alt=\"TB2OrSAsiCYBuNkSnaVXXcMsVXa_!!2961619882.jpg\"/></p>', '1280.00', '536.00', '[{\"spec_id\":\"4\",\"spec_info\":[{\"spec_name\":\"500ml\",\"spec_id\":\"5\",\"specFstID\":\"4\"}],\"spec_name\":\"容量【小瓶】\"},{\"spec_id\":\"7\",\"spec_info\":[{\"spec_name\":\"40度\",\"spec_id\":\"8\",\"specFstID\":\"7\"},{\"spec_name\":\"38度\",\"spec_id\":\"9\",\"specFstID\":\"7\"}],\"spec_name\":\"酒精度数【白酒类型】\"}]', '4121', '2019-03-18 17:03:17', '2019-11-29 15:13:48', '1', '0', '1');
+INSERT INTO `tp5_xgoods` VALUES ('7', '纽仕兰牧场Theland新西兰进口全脂纯牛奶4.0蛋白质钙250ml*24盒箱', '10', '/cms/images/goods/7/1.jpg', '一条裙子', '0', '<p><img src=\"/cms/images/goods/7/3.jpg\" title=\"100629MTMzMzg3NDQ4MTA0.png\" alt=\"TB2pn9Tqk7mBKNjSZFyXXbydFXa_!!82033576.png\"/></p>', '129.00', '99.00', '[{\"spec_id\":\"14\",\"spec_info\":[{\"spec_name\":\"250ml*24\",\"spec_id\":\"15\",\"specFstID\":\"14\"},{\"spec_name\":\"250ml*6\",\"spec_id\":\"16\",\"specFstID\":\"14\"}],\"spec_name\":\"规格【牛奶】\"}]', '2399', '2019-03-19 10:03:48', '2019-11-29 15:12:31', '1', '0', '1');
+INSERT INTO `tp5_xgoods` VALUES ('3', '蒙牛纯甄小蛮腰酸牛奶原味红西柚味瓶装230g×10瓶学生酸奶', '10', '/cms/images/goods/3/1.jpg', '8月产蒙牛纯甄小蛮腰酸牛奶', '0', '<p><img src=\"/cms/images/goods/3/2.jpg\" title=\"094200Mjc1ODM2NzIyNTI5.jpg\" alt=\"O1CN01H5YnKT1QuzKuf9HCE_!!1584902037.jpg\"/></p>', '30.00', '29.88', '[{\"spec_id\":\"14\",\"spec_info\":[{\"spec_name\":\"230g*10\",\"spec_id\":\"24\",\"specFstID\":\"14\"}],\"spec_name\":\"规格【牛奶】\"}]', '700', '2019-11-29 09:42:38', '2019-11-29 15:16:51', '1', '1', '3');
+INSERT INTO `tp5_xgoods` VALUES ('6', '马来西亚进口 零涩 蓝山风味速溶三合一咖啡 40条640g', '9', '/cms/images/goods/6/1.jpg', 'HHEEE', '2', '<p><img src=\"/cms/images/goods/6/4.jpg\" title=\"182640MTY0OTg5Njg2NTk0.jpg\"/></p><p><img src=\"/cms/images/goods/6/5.jpg\" title=\"182641OTc0ODMzMTk1Nzgy.jpg\"/></p><p><br/></p>', '28.99', '29.99', '[{\"spec_id\":\"1\",\"spec_info\":[{\"spec_name\":\"640g\",\"spec_id\":\"2\",\"specFstID\":\"1\"}],\"spec_name\":\"容量【速溶咖啡】\"}]', '500', '2019-03-11 18:03:26', '2019-11-29 15:14:17', '1', '0', '1');
 
 -- ----------------------------
 -- Table structure for tp5_xnav_menus
@@ -395,63 +395,22 @@ CREATE TABLE `tp5_xskus` (
   `updated_at` timestamp NOT NULL DEFAULT '0000-00-00 00:00:00' ON UPDATE CURRENT_TIMESTAMP COMMENT '创建时间',
   `status` tinyint(2) NOT NULL DEFAULT '0' COMMENT '状态  0:显示（正常） -1：删除（失效）',
   PRIMARY KEY (`sku_id`)
-) ENGINE=MyISAM AUTO_INCREMENT=71 DEFAULT CHARSET=utf8mb4 COMMENT='商品 SKU 库存表\r\n\r\n用于存储商品不同属性搭配的数目、价格等';
+) ENGINE=MyISAM AUTO_INCREMENT=82 DEFAULT CHARSET=utf8mb4 COMMENT='商品 SKU 库存表\r\n\r\n用于存储商品不同属性搭配的数目、价格等';
 
 -- ----------------------------
 -- Records of tp5_xskus
 -- ----------------------------
-INSERT INTO `tp5_xskus` VALUES ('19', '2', '', '14,18', 'L(建议100-110斤),蓝色', '10.20', '5', '2', '2019-11-29 10:01:59', '0');
-INSERT INTO `tp5_xskus` VALUES ('20', '2', '', '15,16', 'L(建议100-110斤),银色', '20.00', '1', '42', '2019-11-29 10:01:59', '0');
-INSERT INTO `tp5_xskus` VALUES ('21', '2', '', '14,16', '2XL(建议120-130斤),蓝色', '30.00', '6', '12', '2019-11-29 10:01:59', '0');
-INSERT INTO `tp5_xskus` VALUES ('22', '2', '', '15,18', '2XL(建议120-130斤),银色', '12.00', '7', '42', '2019-11-29 10:01:59', '0');
-INSERT INTO `tp5_xskus` VALUES ('23', '48', '', '14,20', 'XL(建议110-120斤),蓝色', '2.00', '122', '21', '2019-04-08 20:31:28', '-1');
-INSERT INTO `tp5_xskus` VALUES ('24', '48', '', '14,19', 'XL(建议110-120斤),银色', '10.00', '41', '11', '2019-04-08 20:31:28', '-1');
-INSERT INTO `tp5_xskus` VALUES ('25', '48', '', '4,9', '小号,NB78片', '10.00', '30', '1', '2019-04-08 21:31:00', '-1');
-INSERT INTO `tp5_xskus` VALUES ('26', '48', '', '4,10', '小号,XL42片', '20.00', '41', '2', '2019-04-08 21:31:00', '-1');
-INSERT INTO `tp5_xskus` VALUES ('27', '48', '', '3,9', '中号,NB78片', '40.00', '2', '2', '2019-04-08 21:31:00', '-1');
-INSERT INTO `tp5_xskus` VALUES ('28', '48', '', '3,10', '中号,XL42片', '50.00', '110', '2', '2019-04-08 21:31:00', '-1');
-INSERT INTO `tp5_xskus` VALUES ('29', '48', '', '5', '特大号', '110.00', '110', '11', '2019-04-11 17:04:48', '0');
-INSERT INTO `tp5_xskus` VALUES ('30', '48', '', '4', '小号', '120.00', '12', '1112', '2019-04-11 17:04:48', '0');
-INSERT INTO `tp5_xskus` VALUES ('31', '49', '', '5', '特大号', '10.00', '11', '1', '2019-05-05 15:05:11', '0');
-INSERT INTO `tp5_xskus` VALUES ('32', '49', '', '4', '小号', '20.00', '11', '22', '2019-05-05 15:05:11', '0');
-INSERT INTO `tp5_xskus` VALUES ('33', '13', '', '4,9', '小号,NB78片', '120.00', '11', '11', '2019-04-12 08:04:24', '0');
-INSERT INTO `tp5_xskus` VALUES ('34', '13', '', '4,8', '小号,体验装L4片', '10.00', '10', '22', '2019-04-26 12:05:56', '0');
-INSERT INTO `tp5_xskus` VALUES ('35', '13', '', '4,7', '小号,体验装S4片', '20.00', '10', '2', '2019-04-26 12:05:54', '0');
-INSERT INTO `tp5_xskus` VALUES ('36', '13', '', '3,9', '中号,NB78片', '30.00', '41', '2', '2019-04-12 08:04:25', '0');
-INSERT INTO `tp5_xskus` VALUES ('37', '13', '', '3,8', '中号,体验装L4片', '40.00', '32', '1', '2019-04-12 08:04:25', '0');
-INSERT INTO `tp5_xskus` VALUES ('38', '13', '', '3,7', '中号,体验装S4片', '101.02', '21', '1', '2019-04-09 12:57:29', '0');
-INSERT INTO `tp5_xskus` VALUES ('39', '5', '', '12', 'M(建议90-100斤)', '0.00', '3', '0', '2019-05-05 18:20:04', '-1');
-INSERT INTO `tp5_xskus` VALUES ('40', '5', '', '15', '2XL(建议120-130斤)', '0.00', '34', '0', '2019-05-05 18:20:04', '-1');
-INSERT INTO `tp5_xskus` VALUES ('41', '7', '', '20,16', '蓝色,S(建议80-90斤左右)', '55.00', '3', '3', '2019-11-19 14:42:22', '-1');
-INSERT INTO `tp5_xskus` VALUES ('42', '7', '', '20,12', '蓝色,M(建议90-100斤)', '34.00', '2', '1', '2019-11-19 14:42:22', '-1');
-INSERT INTO `tp5_xskus` VALUES ('43', '7', '', '20,13', '蓝色,L(建议100-110斤)', '12.00', '3', '1', '2019-11-19 14:42:22', '-1');
-INSERT INTO `tp5_xskus` VALUES ('44', '7', '', '20,14', '蓝色,XL(建议110-120斤)', '11.00', '5', '1', '2019-11-19 14:42:22', '-1');
-INSERT INTO `tp5_xskus` VALUES ('45', '7', '', '19,16', '银色,S(建议80-90斤左右)', '11.00', '6', '1', '2019-11-19 14:42:22', '-1');
-INSERT INTO `tp5_xskus` VALUES ('46', '7', '', '19,12', '银色,M(建议90-100斤)', '12.00', '3', '2', '2019-11-19 14:42:22', '-1');
-INSERT INTO `tp5_xskus` VALUES ('47', '7', '', '19,13', '银色,L(建议100-110斤)', '14.00', '6', '3', '2019-11-19 14:42:22', '-1');
-INSERT INTO `tp5_xskus` VALUES ('48', '7', '', '19,14', '银色,XL(建议110-120斤)', '22.00', '2', '2', '2019-11-19 14:42:22', '-1');
-INSERT INTO `tp5_xskus` VALUES ('49', '4', '', '60', '小杯', '12.00', '22', '1', '2019-11-29 10:36:52', '0');
-INSERT INTO `tp5_xskus` VALUES ('50', '4', '', '61', '中杯', '15.00', '20', '4', '2019-11-29 10:36:52', '0');
-INSERT INTO `tp5_xskus` VALUES ('51', '4', '', '62', '大杯', '18.00', '30', '6', '2019-11-29 10:36:52', '0');
-INSERT INTO `tp5_xskus` VALUES ('52', '5', '', '61', '中杯', '15.00', '15', '11', '2019-11-29 10:38:39', '0');
-INSERT INTO `tp5_xskus` VALUES ('53', '1', '', '60', '小杯', '22.00', '133', '11', '2019-07-12 16:56:18', '-1');
-INSERT INTO `tp5_xskus` VALUES ('54', '1', '/upload/20190712/6dc805ca6e5628fd9f88e95d980e37db.jpg', '61', '中杯', '25.00', '125', '22', '2019-07-12 16:56:18', '-1');
-INSERT INTO `tp5_xskus` VALUES ('55', '1', '/upload/20190712/6aa9c36bcf13b12d1705fb0cbf9efe09.jpg', '62', '大杯', '28.00', '133', '12', '2019-07-12 16:56:18', '-1');
-INSERT INTO `tp5_xskus` VALUES ('56', '8', '', '16', 'S(建议80-90斤左右)', '124.00', '13', '1', '2019-11-28 18:26:45', '0');
-INSERT INTO `tp5_xskus` VALUES ('57', '8', '', '12', 'M(建议90-100斤)', '124.00', '22', '2', '2019-11-28 18:26:45', '0');
-INSERT INTO `tp5_xskus` VALUES ('58', '8', '', '13', 'L(建议100-110斤)', '124.00', '23', '1', '2019-11-28 18:26:45', '0');
-INSERT INTO `tp5_xskus` VALUES ('59', '8', '', '14', 'XL(建议110-120斤)', '124.00', '12', '1', '2019-11-28 18:26:45', '0');
-INSERT INTO `tp5_xskus` VALUES ('60', '1', '', '30,12', '小小小,M(建议90-100斤)', '0.00', '0', '0', '2019-11-28 18:02:29', '0');
-INSERT INTO `tp5_xskus` VALUES ('61', '1', '', '30,14', '小小小,XL(建议110-120斤)', '0.00', '0', '0', '2019-11-28 18:02:29', '0');
-INSERT INTO `tp5_xskus` VALUES ('62', '1', '/upload/20190712/26b2b9da92187011ec79e1c31390f770.jpg', '30,16', '小小小,S(建议80-90斤左右)', '0.00', '0', '0', '2019-11-28 18:02:29', '0');
-INSERT INTO `tp5_xskus` VALUES ('63', '1', '/upload/20190712/cf4db060577cf108e27d9744d861bae6.jpg', '29,12', '大大大,M(建议90-100斤)', '0.00', '0', '0', '2019-11-28 18:02:29', '0');
-INSERT INTO `tp5_xskus` VALUES ('64', '1', '', '29,14', '大大大,XL(建议110-120斤)', '0.00', '0', '0', '2019-11-28 18:02:29', '0');
-INSERT INTO `tp5_xskus` VALUES ('65', '1', '', '29,16', '大大大,S(建议80-90斤左右)', '0.00', '0', '0', '2019-11-28 18:02:29', '0');
-INSERT INTO `tp5_xskus` VALUES ('66', '3', '', '10', 'XL42片', '0.00', '0', '0', '2019-11-29 10:34:12', '0');
-INSERT INTO `tp5_xskus` VALUES ('67', '34', '', '8', '体验装L4片', '0.00', '0', '0', '2019-11-15 18:06:05', '0');
-INSERT INTO `tp5_xskus` VALUES ('68', '34', '', '9', 'NB78片', '0.00', '0', '0', '2019-11-15 18:06:05', '0');
-INSERT INTO `tp5_xskus` VALUES ('69', '7', '', '10', 'XL42片', '0.00', '0', '0', '2019-11-29 10:43:27', '0');
-INSERT INTO `tp5_xskus` VALUES ('70', '7', '', '8', '体验装L4片', '0.00', '0', '0', '2019-11-29 10:43:27', '0');
+INSERT INTO `tp5_xskus` VALUES ('73', '1', '', '12', '221g', '32.90', '3000', '11', '2019-11-29 15:10:56', '0');
+INSERT INTO `tp5_xskus` VALUES ('74', '1', '', '13', '300g', '50.00', '2000', '12', '2019-11-29 15:10:56', '0');
+INSERT INTO `tp5_xskus` VALUES ('75', '7', '', '15', '250ml*24', '99.00', '2099', '87', '2019-11-29 15:12:31', '0');
+INSERT INTO `tp5_xskus` VALUES ('76', '7', '', '16', '250ml*6', '52.00', '300', '77', '2019-11-29 15:12:31', '0');
+INSERT INTO `tp5_xskus` VALUES ('77', '5', '', '5,8', '500ml,40度', '536.00', '3099', '1', '2019-11-29 15:13:48', '0');
+INSERT INTO `tp5_xskus` VALUES ('78', '5', '', '5,9', '500ml,38度', '506.00', '1022', '112', '2019-11-29 15:13:48', '0');
+INSERT INTO `tp5_xskus` VALUES ('79', '6', '', '2', '640g', '29.99', '500', '0', '2019-11-29 15:14:17', '0');
+INSERT INTO `tp5_xskus` VALUES ('80', '2', '', '13', '300g', '105.00', '600', '3', '2019-11-29 15:14:48', '0');
+INSERT INTO `tp5_xskus` VALUES ('81', '3', '', '24', '230g*10', '29.88', '700', '12', '2019-11-29 15:16:51', '0');
+INSERT INTO `tp5_xskus` VALUES ('71', '4', '', '19,22', '13%VOL,750ml*12', '388.00', '0', '0', '2019-11-29 14:56:20', '0');
+INSERT INTO `tp5_xskus` VALUES ('72', '4', '', '19,23', '13%VOL,750ml*6', '199.00', '0', '0', '2019-11-29 14:56:20', '0');
 
 -- ----------------------------
 -- Table structure for tp5_xspec_infos
@@ -466,40 +425,35 @@ CREATE TABLE `tp5_xspec_infos` (
   `list_order` tinyint(4) NOT NULL DEFAULT '0' COMMENT '排序标识，越大越靠前',
   `mark_msg` varchar(100) CHARACTER SET utf8 NOT NULL COMMENT '备注信息 主要为了区分识别，可不填',
   PRIMARY KEY (`spec_id`)
-) ENGINE=MyISAM AUTO_INCREMENT=65 DEFAULT CHARSET=utf8mb4 COMMENT='商品属性细则表\r\n\r\n一般只存储两级属性，注意 parent_id = 0 表示初级数据\r\n同时，注意添加后不要修改和删除';
+) ENGINE=MyISAM AUTO_INCREMENT=25 DEFAULT CHARSET=utf8mb4 COMMENT='商品属性细则表\r\n\r\n一般只存储两级属性，注意 parent_id = 0 表示初级数据\r\n同时，注意添加后不要修改和删除';
 
 -- ----------------------------
 -- Records of tp5_xspec_infos
 -- ----------------------------
-INSERT INTO `tp5_xspec_infos` VALUES ('1', '号码', '3', '0', '1', '0', '');
-INSERT INTO `tp5_xspec_infos` VALUES ('2', '大号', '3', '1', '1', '0', '');
-INSERT INTO `tp5_xspec_infos` VALUES ('3', '中号', '3', '1', '1', '0', '');
-INSERT INTO `tp5_xspec_infos` VALUES ('4', '小号', '3', '1', '1', '0', '');
-INSERT INTO `tp5_xspec_infos` VALUES ('5', '特大号', '3', '1', '1', '0', '');
-INSERT INTO `tp5_xspec_infos` VALUES ('6', '规格', '116', '0', '1', '0', '');
-INSERT INTO `tp5_xspec_infos` VALUES ('7', '体验装S4片', '3', '6', '1', '0', '');
-INSERT INTO `tp5_xspec_infos` VALUES ('8', '体验装L4片', '3', '6', '1', '0', '');
-INSERT INTO `tp5_xspec_infos` VALUES ('9', 'NB78片', '3', '6', '1', '0', '');
-INSERT INTO `tp5_xspec_infos` VALUES ('10', 'XL42片', '3', '6', '1', '0', '');
-INSERT INTO `tp5_xspec_infos` VALUES ('11', '尺码', '9', '0', '1', '0', '连衣裙专用');
-INSERT INTO `tp5_xspec_infos` VALUES ('12', 'M(建议90-100斤)', '9', '11', '1', '9', '');
-INSERT INTO `tp5_xspec_infos` VALUES ('13', 'L(建议100-110斤)', '9', '11', '1', '8', '');
-INSERT INTO `tp5_xspec_infos` VALUES ('14', 'XL(建议110-120斤)', '9', '11', '1', '7', '');
-INSERT INTO `tp5_xspec_infos` VALUES ('15', '2XL(建议120-130斤)', '9', '11', '1', '6', '');
-INSERT INTO `tp5_xspec_infos` VALUES ('16', 'S(建议80-90斤左右)', '9', '11', '1', '10', '');
-INSERT INTO `tp5_xspec_infos` VALUES ('17', '颜色', '116', '0', '1', '0', '');
-INSERT INTO `tp5_xspec_infos` VALUES ('18', '金色', '9', '17', '1', '0', '');
-INSERT INTO `tp5_xspec_infos` VALUES ('19', '银色', '9', '17', '1', '0', '');
-INSERT INTO `tp5_xspec_infos` VALUES ('20', '蓝色', '9', '17', '1', '0', 'xxxxxx');
-INSERT INTO `tp5_xspec_infos` VALUES ('21', '卡其色', '9', '17', '1', '12', '');
-INSERT INTO `tp5_xspec_infos` VALUES ('28', '大小', '9', '0', '1', '0', '');
-INSERT INTO `tp5_xspec_infos` VALUES ('29', '大大大', '9', '28', '1', '0', '');
-INSERT INTO `tp5_xspec_infos` VALUES ('30', '小小小', '9', '28', '1', '0', '');
-INSERT INTO `tp5_xspec_infos` VALUES ('32', 'ddzzz', '113', '17', '-1', '0', 'sdasasaaaa');
-INSERT INTO `tp5_xspec_infos` VALUES ('59', '容量', '8', '0', '1', '0', '咖啡专用');
-INSERT INTO `tp5_xspec_infos` VALUES ('60', '小杯', '8', '59', '1', '3', '');
-INSERT INTO `tp5_xspec_infos` VALUES ('61', '中杯', '8', '59', '1', '2', '');
-INSERT INTO `tp5_xspec_infos` VALUES ('62', '大杯', '8', '59', '1', '1', '');
+INSERT INTO `tp5_xspec_infos` VALUES ('1', '容量', '9', '0', '1', '0', '速溶咖啡');
+INSERT INTO `tp5_xspec_infos` VALUES ('2', '640g', '0', '1', '1', '0', '小包装重量');
+INSERT INTO `tp5_xspec_infos` VALUES ('3', '1280g', '0', '1', '1', '2', '双份量装');
+INSERT INTO `tp5_xspec_infos` VALUES ('4', '容量', '17', '0', '1', '0', '小瓶');
+INSERT INTO `tp5_xspec_infos` VALUES ('5', '500ml', '0', '4', '1', '0', '江小白');
+INSERT INTO `tp5_xspec_infos` VALUES ('6', '380ml', '0', '4', '1', '0', '北京二锅头');
+INSERT INTO `tp5_xspec_infos` VALUES ('7', '酒精度数', '17', '0', '1', '0', '白酒类型');
+INSERT INTO `tp5_xspec_infos` VALUES ('8', '40度', '0', '7', '1', '0', '白酒');
+INSERT INTO `tp5_xspec_infos` VALUES ('9', '38度', '0', '7', '1', '0', '');
+INSERT INTO `tp5_xspec_infos` VALUES ('10', '52度', '0', '7', '1', '0', '景芝酱香酒');
+INSERT INTO `tp5_xspec_infos` VALUES ('11', '重量', '14', '0', '1', '0', '巧克力通用');
+INSERT INTO `tp5_xspec_infos` VALUES ('12', '221g', '0', '11', '1', '0', '');
+INSERT INTO `tp5_xspec_infos` VALUES ('13', '300g', '0', '11', '1', '0', '');
+INSERT INTO `tp5_xspec_infos` VALUES ('14', '规格', '10', '0', '1', '0', '牛奶');
+INSERT INTO `tp5_xspec_infos` VALUES ('15', '250ml*24', '0', '14', '1', '0', '盒装');
+INSERT INTO `tp5_xspec_infos` VALUES ('16', '250ml*6', '0', '14', '1', '0', '6包装');
+INSERT INTO `tp5_xspec_infos` VALUES ('17', '500ml*2', '0', '14', '1', '0', '双瓶装');
+INSERT INTO `tp5_xspec_infos` VALUES ('18', '酒精度', '18', '0', '1', '0', '');
+INSERT INTO `tp5_xspec_infos` VALUES ('19', '13%VOL', '0', '18', '1', '0', '普通酒度数');
+INSERT INTO `tp5_xspec_infos` VALUES ('20', '11%VOL', '0', '18', '1', '0', '度数');
+INSERT INTO `tp5_xspec_infos` VALUES ('21', '净含量', '18', '0', '1', '0', '');
+INSERT INTO `tp5_xspec_infos` VALUES ('22', '750ml*12', '0', '21', '1', '0', '12瓶装');
+INSERT INTO `tp5_xspec_infos` VALUES ('23', '750ml*6', '0', '21', '1', '0', '6瓶装');
+INSERT INTO `tp5_xspec_infos` VALUES ('24', '230g*10', '0', '14', '1', '0', '小蛮腰等');
 
 -- ----------------------------
 -- Table structure for tp5_xtoday_words
