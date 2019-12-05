@@ -105,7 +105,8 @@ Route::post('cms/adList/ajaxForShow','cms/adList/ajaxForShow');
 Route::any('cms/users/index','cms/users/index');
 Route::post('cms/users/ajaxUpdateUserStatus','cms/users/ajaxUpdateUserStatus');
 
-
+//统计分析
+Route::any('cms/analyze/goodsPricePie','cms/analyze/goodsPricePie');
 
 
 

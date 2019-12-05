@@ -10,7 +10,7 @@ Target Server Type    : MYSQL
 Target Server Version : 50553
 File Encoding         : 65001
 
-Date: 2019-11-29 15:17:42
+Date: 2019-12-05 16:08:04
 */
 
 SET FOREIGN_KEY_CHECKS=0;
@@ -103,7 +103,7 @@ CREATE TABLE `tp5_xadmin_roles` (
 -- ----------------------------
 -- Records of tp5_xadmin_roles
 -- ----------------------------
-INSERT INTO `tp5_xadmin_roles` VALUES ('1', '终级管理员', '1|7|6|2|3|73|4|5|93|49|48|50|67|61|76|', '2019-07-30 18:08:27', '1');
+INSERT INTO `tp5_xadmin_roles` VALUES ('1', '终级管理员', '1|7|6|2|3|73|4|5|93|49|48|50|67|61|76|133|134|', '2019-12-05 10:44:02', '1');
 INSERT INTO `tp5_xadmin_roles` VALUES ('2', '初级管理员', '1|6|2|3|4|5|', '2018-02-11 21:02:43', '1');
 
 -- ----------------------------
@@ -276,10 +276,10 @@ CREATE TABLE `tp5_xgoods` (
 -- ----------------------------
 INSERT INTO `tp5_xgoods` VALUES ('1', '德芙 Dove分享碗 草莓白巧克力 221g（新旧包装随机发放）', '14', '/cms/images/goods/1/1.jpg', '办公室休闲零食 员工福利糖果巧克力 ', '1', '<p><img src=\"/cms/images/goods/1/5.jpg\" title=\"175706NDMzOTQwNDUzNTE4.jpg\" alt=\"O1CN014zzptX1rlMcSpY1yn_!!1748365671.jpg\"/></p>', '30.55', '32.90', '[{\"spec_id\":\"11\",\"spec_info\":[{\"spec_name\":\"221g\",\"spec_id\":\"12\",\"specFstID\":\"11\"},{\"spec_name\":\"300g\",\"spec_id\":\"13\",\"specFstID\":\"11\"}],\"spec_name\":\"重量【巧克力通用】\"}]', '5000', '2019-11-28 10:51:31', '2019-11-29 15:10:56', '1', '0', '1');
 INSERT INTO `tp5_xgoods` VALUES ('2', 'CandyLab【水晶棒棒糖组合】手工糖果创意水果味水晶棒棒糖定制', '14', '/cms/images/goods/2/1.jpg', '只是一件裙子嘛', '2', '<p><img src=\"/cms/images/goods/2/3.jpg\" title=\"100125MzY5NTI3NjY5OTU5.png\" alt=\"QQ截图20191129095547.png\"/></p>', '120.00', '105.00', '[{\"spec_id\":\"11\",\"spec_info\":[{\"spec_name\":\"300g\",\"spec_id\":\"13\",\"specFstID\":\"11\"}],\"spec_name\":\"重量【巧克力通用】\"}]', '600', '2019-03-11 18:03:26', '2019-11-29 15:14:48', '1', '0', '1');
-INSERT INTO `tp5_xgoods` VALUES ('4', '买1箱送1箱法国进口红酒赤霞珠希雅特酒堡干红葡萄酒红酒特价整箱', '18', '/cms/images/goods/4/1.jpg', '好咖啡，有精神头', '2', '<p><br/></p><p><img src=\"/cms/images/goods/4/5.jpg\" title=\"093713NzI5OTYxNjkzNzQ4.jpg\"/></p><p><br/></p>', '1980.00', '388.00', '[{\"spec_id\":\"18\",\"spec_info\":[{\"spec_name\":\"13%VOL\",\"spec_id\":\"19\",\"specFstID\":\"18\"}],\"spec_name\":\"酒精度\"},{\"spec_id\":\"21\",\"spec_info\":[{\"spec_name\":\"750ml*6\",\"spec_id\":\"23\",\"specFstID\":\"21\"},{\"spec_name\":\"750ml*12\",\"spec_id\":\"22\",\"specFstID\":\"21\"}],\"spec_name\":\"净含量\"}]', '5000', '2019-03-14 11:03:58', '2019-11-29 14:56:20', '0', '0', '1');
+INSERT INTO `tp5_xgoods` VALUES ('4', '买1箱送1箱法国进口红酒赤霞珠希雅特酒堡干红葡萄酒红酒特价整箱', '18', '/cms/images/goods/4/1.jpg', '好咖啡，有精神头', '2', '<p><br/></p><p><img src=\"/cms/images/goods/4/5.jpg\" title=\"093713NzI5OTYxNjkzNzQ4.jpg\"/></p><p><br/></p>', '1980.00', '388.00', '[{\"spec_id\":\"18\",\"spec_info\":[{\"spec_name\":\"13%VOL\",\"spec_id\":\"19\",\"specFstID\":\"18\"}],\"spec_name\":\"酒精度\"},{\"spec_id\":\"21\",\"spec_info\":[{\"spec_name\":\"750ml*6\",\"spec_id\":\"23\",\"specFstID\":\"21\"},{\"spec_name\":\"750ml*12\",\"spec_id\":\"22\",\"specFstID\":\"21\"}],\"spec_name\":\"净含量\"}]', '5000', '2019-03-14 11:03:58', '2019-12-05 16:07:27', '1', '0', '1');
 INSERT INTO `tp5_xgoods` VALUES ('5', '江小白白酒500ml40度8瓶青春版清香型国产大瓶整箱正品包邮送礼', '17', '/cms/images/goods/5/1.jpg', '不给你喝，哈哈哈哈', '1', '<p><img src=\"/cms/images/goods/5/4.jpg\" title=\"094745Mjc4NjQ4NzcwNDU1.jpg\" alt=\"TB2OrSAsiCYBuNkSnaVXXcMsVXa_!!2961619882.jpg\"/></p>', '1280.00', '536.00', '[{\"spec_id\":\"4\",\"spec_info\":[{\"spec_name\":\"500ml\",\"spec_id\":\"5\",\"specFstID\":\"4\"}],\"spec_name\":\"容量【小瓶】\"},{\"spec_id\":\"7\",\"spec_info\":[{\"spec_name\":\"40度\",\"spec_id\":\"8\",\"specFstID\":\"7\"},{\"spec_name\":\"38度\",\"spec_id\":\"9\",\"specFstID\":\"7\"}],\"spec_name\":\"酒精度数【白酒类型】\"}]', '4121', '2019-03-18 17:03:17', '2019-11-29 15:13:48', '1', '0', '1');
 INSERT INTO `tp5_xgoods` VALUES ('7', '纽仕兰牧场Theland新西兰进口全脂纯牛奶4.0蛋白质钙250ml*24盒箱', '10', '/cms/images/goods/7/1.jpg', '一条裙子', '0', '<p><img src=\"/cms/images/goods/7/3.jpg\" title=\"100629MTMzMzg3NDQ4MTA0.png\" alt=\"TB2pn9Tqk7mBKNjSZFyXXbydFXa_!!82033576.png\"/></p>', '129.00', '99.00', '[{\"spec_id\":\"14\",\"spec_info\":[{\"spec_name\":\"250ml*24\",\"spec_id\":\"15\",\"specFstID\":\"14\"},{\"spec_name\":\"250ml*6\",\"spec_id\":\"16\",\"specFstID\":\"14\"}],\"spec_name\":\"规格【牛奶】\"}]', '2399', '2019-03-19 10:03:48', '2019-11-29 15:12:31', '1', '0', '1');
-INSERT INTO `tp5_xgoods` VALUES ('3', '蒙牛纯甄小蛮腰酸牛奶原味红西柚味瓶装230g×10瓶学生酸奶', '10', '/cms/images/goods/3/1.jpg', '8月产蒙牛纯甄小蛮腰酸牛奶', '0', '<p><img src=\"/cms/images/goods/3/2.jpg\" title=\"094200Mjc1ODM2NzIyNTI5.jpg\" alt=\"O1CN01H5YnKT1QuzKuf9HCE_!!1584902037.jpg\"/></p>', '30.00', '29.88', '[{\"spec_id\":\"14\",\"spec_info\":[{\"spec_name\":\"230g*10\",\"spec_id\":\"24\",\"specFstID\":\"14\"}],\"spec_name\":\"规格【牛奶】\"}]', '700', '2019-11-29 09:42:38', '2019-11-29 15:16:51', '1', '1', '3');
+INSERT INTO `tp5_xgoods` VALUES ('3', '蒙牛纯甄小蛮腰酸牛奶原味红西柚味瓶装230g×10瓶学生酸奶', '10', '/cms/images/goods/3/1.jpg', '8月产蒙牛纯甄小蛮腰酸牛奶', '0', '<p><img src=\"/cms/images/goods/3/2.jpg\" title=\"094200Mjc1ODM2NzIyNTI5.jpg\" alt=\"O1CN01H5YnKT1QuzKuf9HCE_!!1584902037.jpg\"/></p><p><br/></p>', '30.00', '29.88', '[{\"spec_id\":\"14\",\"spec_info\":[{\"spec_name\":\"230g*10\",\"spec_id\":\"24\",\"specFstID\":\"14\"}],\"spec_name\":\"规格【牛奶】\"}]', '700', '2019-11-29 09:42:38', '2019-11-29 17:04:59', '1', '1', '3');
 INSERT INTO `tp5_xgoods` VALUES ('6', '马来西亚进口 零涩 蓝山风味速溶三合一咖啡 40条640g', '9', '/cms/images/goods/6/1.jpg', 'HHEEE', '2', '<p><img src=\"/cms/images/goods/6/4.jpg\" title=\"182640MTY0OTg5Njg2NTk0.jpg\"/></p><p><img src=\"/cms/images/goods/6/5.jpg\" title=\"182641OTc0ODMzMTk1Nzgy.jpg\"/></p><p><br/></p>', '28.99', '29.99', '[{\"spec_id\":\"1\",\"spec_info\":[{\"spec_name\":\"640g\",\"spec_id\":\"2\",\"specFstID\":\"1\"}],\"spec_name\":\"容量【速溶咖啡】\"}]', '500', '2019-03-11 18:03:26', '2019-11-29 15:14:17', '1', '0', '1');
 
 -- ----------------------------
@@ -298,7 +298,7 @@ CREATE TABLE `tp5_xnav_menus` (
   `type` tinyint(2) NOT NULL DEFAULT '0' COMMENT '导航类型 0：菜单类  1：权限链接',
   PRIMARY KEY (`id`),
   KEY `id` (`id`,`name`) USING BTREE
-) ENGINE=MyISAM AUTO_INCREMENT=133 DEFAULT CHARSET=utf8mb4 COMMENT='菜单导航表';
+) ENGINE=MyISAM AUTO_INCREMENT=135 DEFAULT CHARSET=utf8mb4 COMMENT='菜单导航表';
 
 -- ----------------------------
 -- Records of tp5_xnav_menus
@@ -355,6 +355,8 @@ INSERT INTO `tp5_xnav_menus` VALUES ('94', '添加配置项', '93', 'cms/config/
 INSERT INTO `tp5_xnav_menus` VALUES ('95', '配置项修改', '93', 'cms/config/edit', '/', '1', '0', '2019-07-29 14:30:13', '1');
 INSERT INTO `tp5_xnav_menus` VALUES ('97', 'ajax 根据分类获取参加活动的商品', '61', 'cms/goods/ajaxGetCatGoodsForActivity', '/', '1', '0', '2019-08-16 09:31:52', '1');
 INSERT INTO `tp5_xnav_menus` VALUES ('99', '规格数据展示', '67', 'cms/specInfo/details', '/', '1', '0', '2019-11-14 16:08:47', '1');
+INSERT INTO `tp5_xnav_menus` VALUES ('133', '监控统计', '0', '/', '/cms/images/icon/cms_analyze.png', '1', '0', '2019-12-05 10:47:23', '0');
+INSERT INTO `tp5_xnav_menus` VALUES ('134', '商品价格分布饼图', '133', 'cms/analyze/goodsPricePie', '/cms/images/icon/cms_pie.png', '1', '0', '2019-12-05 10:49:53', '0');
 
 -- ----------------------------
 -- Table structure for tp5_xphotos
@@ -408,7 +410,7 @@ INSERT INTO `tp5_xskus` VALUES ('77', '5', '', '5,8', '500ml,40度', '536.00', '
 INSERT INTO `tp5_xskus` VALUES ('78', '5', '', '5,9', '500ml,38度', '506.00', '1022', '112', '2019-11-29 15:13:48', '0');
 INSERT INTO `tp5_xskus` VALUES ('79', '6', '', '2', '640g', '29.99', '500', '0', '2019-11-29 15:14:17', '0');
 INSERT INTO `tp5_xskus` VALUES ('80', '2', '', '13', '300g', '105.00', '600', '3', '2019-11-29 15:14:48', '0');
-INSERT INTO `tp5_xskus` VALUES ('81', '3', '', '24', '230g*10', '29.88', '700', '12', '2019-11-29 15:16:51', '0');
+INSERT INTO `tp5_xskus` VALUES ('81', '3', '', '24', '230g*10', '29.88', '700', '12', '2019-11-29 17:04:59', '0');
 INSERT INTO `tp5_xskus` VALUES ('71', '4', '', '19,22', '13%VOL,750ml*12', '388.00', '0', '0', '2019-11-29 14:56:20', '0');
 INSERT INTO `tp5_xskus` VALUES ('72', '4', '', '19,23', '13%VOL,750ml*6', '199.00', '0', '0', '2019-11-29 14:56:20', '0');
 

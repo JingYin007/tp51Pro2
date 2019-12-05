@@ -289,4 +289,32 @@ class Xgoods extends BaseModel
             ->select();
         return $goodsList ? $goodsList->toArray() : [];
     }
+
+    /**
+     * 获取商品售价数据
+     * @return array
+     */
+    public function getGoodsPriceData(){
+        $res = $this
+            ->alias('g')
+            ->field("FLOOR(s.selling_price/100) price,count(g.goods_id) count")
+            ->join('xskus s','s.goods_id = g.goods_id')
+            ->where([["g.status","=",1],["s.status",'=',0]])
+            ->group('price')
+            ->order('price','asc')
+            ->select();
+        $titleArr = [];
+        foreach ($res as $key => $value){
+            $price = $value['price'];
+            if ($price > 0){
+                $price_range = $price."00-".intval($price+1)."00(元)";
+            }else{
+                $price_range = "0-".intval($price+1)."00(元)";
+            }
+            $res[$key]['name'] = $price_range;
+            $res[$key]['value'] = $value['count'];
+            $titleArr[] = $price_range;
+        }
+        return ['opRes'=>$res,'titleArr'=>$titleArr];
+    }
 }
