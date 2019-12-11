@@ -10,7 +10,7 @@ Target Server Type    : MYSQL
 Target Server Version : 50553
 File Encoding         : 65001
 
-Date: 2019-12-05 16:08:04
+Date: 2019-12-11 08:59:06
 */
 
 SET FOREIGN_KEY_CHECKS=0;
@@ -264,7 +264,7 @@ CREATE TABLE `tp5_xgoods` (
   `attr_info` text NOT NULL COMMENT 'json形式保存的属性数据',
   `stock` int(11) NOT NULL DEFAULT '0' COMMENT '库存，注意退货未支付订单时的数目变化',
   `created_at` timestamp NOT NULL DEFAULT '0000-00-00 00:00:00' COMMENT '商品创建时间',
-  `updated_at` timestamp NOT NULL DEFAULT '0000-00-00 00:00:00' ON UPDATE CURRENT_TIMESTAMP COMMENT '商品更新时间',
+  `updated_at` timestamp NOT NULL DEFAULT '0000-00-00 00:00:00' COMMENT '商品更新时间',
   `status` tinyint(2) NOT NULL DEFAULT '0' COMMENT '状态 -1：删除 0：待上架 1：已上架 2：预售 ',
   `recommend` char(1) NOT NULL DEFAULT '0' COMMENT '推荐标志位',
   `admin_id` int(11) NOT NULL DEFAULT '1' COMMENT '上传该商品的管理员ID',
