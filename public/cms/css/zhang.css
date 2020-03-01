@@ -50,13 +50,12 @@
     width: 100%;
 }
 
-.layui-layout-body {
+.layui-bg-white{
     height: auto;
 }
 
 .iframe-body {
     width: 100%;
-    height: 100%;
     overflow: hidden;
 }
 
