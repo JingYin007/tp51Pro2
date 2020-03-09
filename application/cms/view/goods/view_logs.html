@@ -1,0 +1,37 @@
+{extend name="layouts/cms"}
+{block name='body-content'}
+<div class="div-logs-show">
+    <br>
+    <ul class="layui-timeline">
+        {volist name="logs" id="vo"}
+        <li class="layui-timeline-item">
+            <i class="layui-icon layui-timeline-axis"></i>
+            <div class="layui-timeline-content layui-text">
+                <p class="layui-timeline-title">{$vo.add_time}</p>
+                <p><span class="layui-badge">{$vo.user_name}</span></p>
+                <p><span class="layui-badge-dot layui-bg-green"></span>
+                    <span class="span-opMsg">{$vo.op_msg}</span></p>
+            </div>
+        </li>
+        {/volist}
+    </ul>
+</div>
+<style>
+
+    .layui-timeline-title {
+        color: #b94a48;
+    }
+    .span-opMsg{
+        color: #393D49;
+    }
+    .layui-timeline-content{
+        font-family: '楷体';
+        font-size: 17px;
+    }
+</style>
+{/block}
+
+{block name='single-content'}
+<script src="__CMS__/js/moZhang.js"></script>
+<script></script>
+{/block}

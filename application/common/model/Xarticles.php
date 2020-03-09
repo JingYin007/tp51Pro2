@@ -173,6 +173,7 @@ class Xarticles extends BaseModel
                 ->where('article_id', $id)
                 ->update(['status' => -1]);
             $validateRes = ['tag' => 1, 'message' => '删除成功'];
+            insertCmsOpLogs(1,'ARTICLE',$id,'文章删除操作');
         } else {
             $saveData = [
                 'title' => isset($input['title'])?$input['title']:'',
@@ -194,6 +195,7 @@ class Xarticles extends BaseModel
                             'abstract' => isset($input['abstract'])?$input['abstract']:'',
                             'status' => isset($input['status'])?$input['status']:0,
                         ]);
+                    insertCmsOpLogs($saveTag,'ARTICLE',$id,'文章更新');
                 }
                 $validateRes['tag'] = $saveTag;
                 $validateRes['message'] = $saveTag ? '修改成功' : '数据无变动';
@@ -232,6 +234,7 @@ class Xarticles extends BaseModel
                         'article_id' => $this->getLastInsID(),
                     ])
                     ->insert();
+                insertCmsOpLogs($tag,'ARTICLE',$this->getLastInsID(),'添加文章数据');
             }
             $validateRes['tag'] = $tag;
             $validateRes['message'] = $tag ? '添加成功' : '添加失败';
@@ -254,6 +257,9 @@ class Xarticles extends BaseModel
             ->update(['recommend' => $okStatus]);
         if (!$saveTag) {
             $message = "状态更改失败";
+        }else{
+            $opMsg = $okStatus?"推荐商品":"取消推荐";
+            insertCmsOpLogs($saveTag,'ARTICLE',$article_id,$opMsg);
         }
         return ['tag' => $saveTag, 'message' => $message];
     }

@@ -13,10 +13,12 @@ function ToAjaxOpForPageGoods(toUrl,postData) {
             if(result.status == 1){
                 var str_html = '';
                 $.each(result.data,function (i,e) {
+                    var tip = "";
+                    if(e.recommend == 1){tip = "<span class=\"layui-badge\">荐</span>&nbsp;"};
                     str_html +=
                         "<tr class=\"tr-normal-"+e.goods_id+"\">\n" +
                         "                <td>"+e.goods_id+"</td>\n" +
-                        "                <td class=\"td-goods_name-\">"+e.goods_name+"</td>\n" +
+                        "                <td class=\"td-goods_name\">"+tip+e.goods_name+"</td>\n" +
                         "                <td class=\"td-goods\"><img src='"+e.thumbnail+"'></td>\n" +
                         "                <td class=\"td-goods_name\">"+e.cat_name +"</td>\n" +
                         "                <td class=\"td-greyxx\">"+e.reference_price +"</td>\n" +
@@ -37,6 +39,10 @@ function ToAjaxOpForPageGoods(toUrl,postData) {
                         "                                onclick=\"delGoods('"+e.goods_id+"')\">\n" +
                         "                            <i class=\"layui-icon\">&#xe640;</i>\n" +
                         "                        </button>\n" +
+                        "<button class=\"layui-btn layui-btn-sm\" title=\"操作记录\"\n" +
+                        "                        onclick=\"viewLogs('"+e.goods_id+"')\">\n" +
+                        "                    <i class=\"layui-icon\">&#xe60e;</i>\n" +
+                        "                </button>"+
                         "                    </div>\n" +
                         "                </td>\n" +
                         "            </tr>";

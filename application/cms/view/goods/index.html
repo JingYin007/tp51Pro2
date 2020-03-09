@@ -111,6 +111,10 @@
                         onclick="delGoods('{$vo.goods_id}')">
                     <i class="layui-icon">&#xe640;</i>
                 </button>
+                <button class="layui-btn layui-btn-sm" title="操作记录"
+                        onclick="viewLogs('{$vo.goods_id}')">
+                    <i class="layui-icon">&#xe60e;</i>
+                </button>
             </div>
         </td>
     </tr>
@@ -162,7 +166,11 @@
         toUrl = toUrl.replace('AID', id);
         ToDelItem(id, toUrl, '.tr-normal-' + id);
     }
-
+    function viewLogs(id) {
+        var toUrl = "{:url('cms/goods/viewLogs',['id'=>'AID'])}";
+        toUrl = toUrl.replace('AID', id);
+        ToOpenPopups(toUrl, '☁ 操作日志', '46%', '92%');
+    }
 
     $(".btn-search-mz").on('click', function () {
         //var str_search = $(".search_input").val();

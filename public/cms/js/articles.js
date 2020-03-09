@@ -34,6 +34,10 @@ function ToAjaxOpForPageArticles(toUrl,postData) {
                         "                                onclick=\"delArticle('"+e.id+"')\">\n" +
                         "                            <i class=\"layui-icon\">&#xe640;</i>\n" +
                         "                        </button>\n" +
+                        "<button class=\"layui-btn layui-btn-sm\" title=\"操作记录\"\n" +
+                        "                        onclick=\"viewLogs('"+e.id+"')\">\n" +
+                        "                    <i class=\"layui-icon\">&#xe60e;</i>\n" +
+                        "                </button>"+
                         "                    </div>\n" +
                         "                </td>\n" +
                         "            </tr>";

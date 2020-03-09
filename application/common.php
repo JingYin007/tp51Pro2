@@ -102,3 +102,60 @@ function cmsAdminToLoginForPassword($input = '',$tag = 0){
     $makedStr = md5(base64_encode($input));
     return $makedStr;
 }
+
+/**
+ * 获取当前登录管理员ID
+ * @return mixed
+ */
+function getCmsCurrentAdminID(){
+    $cmsAID = \think\facade\Cookie::get('cmsMoTzxxAID');
+    return isset($cmsAID)?intval($cmsAID):0;
+}
+
+/**
+ * 操作日志 添加记录
+ * @param int $opStatus 操作标记位 ，非零则进行日志的记录
+ * @param string $opTag 所记录业务日志确定的标签
+ *               当前定义 ———— "ARTICLE": 文章操作业务；"TODAY":今日赠言业务；"GOODS":商品操作业务
+ * @param int $op_id 所操作的目标记录ID
+ * @param string $op_msg 记录操作信息
+ * @return bool|int|string
+ */
+function insertCmsOpLogs($opStatus = 0,$opTag = '',
+                                $op_id = 0,$op_msg = ''){
+    if (!$opStatus){
+        return false;
+    }else{
+        $opData = [
+            'op_id' => $op_id,
+            'tag' => $opTag,
+            'admin_id' => getCmsCurrentAdminID(),
+            'add_time' => date('Y-m-d H:i:s',time()),
+            'op_msg' => $op_msg
+        ];
+        if ($opTag){
+            $opStatus = \think\Db::name('xcmsLogs')
+                ->insert($opData);
+        }else{
+            return false;
+        }
+        return $opStatus;
+    }
+}
+
+/**
+ * 获取操作日志
+ * @param int $video_id
+ * @param string $opTag  所记录业务日志确定的标签
+ *               当前定义 ———— "ARTICLE": 文章操作业务；"TODAY":今日赠言业务；"GOODS":商品操作业务
+ * @return array|PDOStatement|string|\think\Collection
+ */
+function getCmsOpViewLogs($video_id = 0,$opTag = ''){
+    $logs = \think\Db::name('xcmsLogs l')
+        ->field('l.*,a.user_name')
+        ->join('xadmins a','a.id = l.admin_id')
+        ->where([['tag','=',$opTag],['op_id','=',$video_id]])
+        ->order('id','desc')
+        ->select();
+    return isset($logs)?$logs:[];
+}

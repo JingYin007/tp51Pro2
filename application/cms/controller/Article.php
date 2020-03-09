@@ -96,4 +96,14 @@ class Article extends CmsBase
         $opRes = $this->model->updateForRecommend($request->post('article_id'), $request->post('okStatus'));
         return showMsg($opRes['tag'], $opRes['message']);
     }
+
+    /**
+     * 文章操作日志列表
+     * @param $id
+     * @return \think\response\View
+     */
+    public function viewLogs($id){
+        $logs = getCmsOpViewLogs($id,'ARTICLE');
+        return view('view_logs',['logs' => $logs]);
+    }
 }

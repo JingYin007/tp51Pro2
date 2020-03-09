@@ -147,9 +147,10 @@ class Xgoods extends BaseModel
         $id = $input['id'];
         $opTag = isset($input['tag']) ? $input['tag'] : 'edit';
         if ($opTag == 'del') {
-            $this->where('goods_id', $id)
+            $status = $this->where('goods_id', $id)
                 ->update(['status' => -1]);
             $validateRes = ['tag' => 1, 'message' => '删除成功'];
+            insertCmsOpLogs($status,'GOODS',$id,'删除商品');
         } else {
             $saveData = [
                 'goods_name' => isset($input['goods_name']) ? $input['goods_name'] : '',
@@ -183,6 +184,7 @@ class Xgoods extends BaseModel
                     $sku_arr = isset($input['sku_arr']) ? $input['sku_arr'] : [];
                     $skuModle->opSKUforGoodsByID($id, $sku_arr);
                 }
+                insertCmsOpLogs($saveTag,'GOODS',$id,'商品修改成功');
             }
         }
         return $validateRes;
@@ -205,6 +207,7 @@ class Xgoods extends BaseModel
         }else{
             //0：待上架 1：已上架
             $message = $okStatus ? "商品上架":"商品下架";
+            insertCmsOpLogs($saveTag,'GOODS',$goods_id,$message);
         }
         return ['tag' => $saveTag, 'message' => $message];
     }
@@ -236,8 +239,7 @@ class Xgoods extends BaseModel
         $tokenData = ['__token__' => isset($data['__token__']) ? $data['__token__'] : '',];
         $validateRes = $this->validate($this->validate, $addData, $tokenData);
         if ($validateRes['tag']) {
-            $cmsAID = Cookie::get('cmsMoTzxxAID');
-            $addData['admin_id'] = isset($cmsAID)?intval($cmsAID):0;
+            $addData['admin_id'] = getCmsCurrentAdminID();
             $tag = $this->insert($addData);
             $validateRes['tag'] = $tag;
             $validateRes['message'] = $tag ? '添加成功' : '添加失败';
@@ -250,6 +252,7 @@ class Xgoods extends BaseModel
                 $skuModle = new Xskus();
                 $sku_arr = isset($data['sku_arr']) ? $data['sku_arr'] : [];
                 $skuModle->opSKUforGoodsByID($goodsId, $sku_arr);
+                insertCmsOpLogs($tag,'GOODS',$goodsId,'添加商品');
             }
         }
         return $validateRes;
@@ -317,4 +320,5 @@ class Xgoods extends BaseModel
         }
         return ['opRes'=>$res,'titleArr'=>$titleArr];
     }
+
 }

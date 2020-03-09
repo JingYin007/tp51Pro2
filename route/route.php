@@ -40,6 +40,7 @@ Route::any('cms/article/index','cms/article/index');
 Route::any('cms/article/add','cms/article/add');
 Route::any('cms/article/edit/:id','cms/article/edit');
 Route::post('cms/article/ajaxForRecommend','cms/article/ajaxForRecommend');
+Route::get('cms/article/viewLogs/:id','cms/article/viewLogs');
 
 //配置信息管理
 Route::any('cms/config/index','cms/config/index');
@@ -80,6 +81,7 @@ Route::any('cms/goods/edit/:id','cms/goods/edit');
 Route::post('cms/goods/ajaxPutaway','cms/goods/ajaxPutaway');
 Route::post('cms/goods/ajaxDelUploadImg','cms/goods/ajaxDelUploadImg');
 Route::post('cms/goods/ajaxGetCatGoodsForActivity','cms/goods/ajaxGetCatGoodsForActivity');
+Route::get('cms/goods/viewLogs/:id','cms/goods/viewLogs');
 
 //属性管理
 Route::any('cms/specInfo/index','cms/specInfo/index');

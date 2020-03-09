@@ -140,4 +140,14 @@ class Goods extends CmsBase
         }
         return showMsg($status, $message, $goodsList);
     }
+
+    /**
+     * 操作日志列表
+     * @param $id
+     * @return \think\response\View
+     */
+    public function viewLogs($id){
+        $logs = getCmsOpViewLogs($id,'GOODS');
+        return view('view_logs',['logs' => $logs]);
+    }
 }

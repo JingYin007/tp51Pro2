@@ -28,10 +28,10 @@
         <col width="10%">
         <col width="25%">
         <col width="10%">
+        <col width="5%">
         <col width="8%">
         <col width="10%">
-        <col width="10%">
-        <col width="15%">
+        <col width="20%">
     </colgroup>
     <thead>
     <tr>
@@ -74,6 +74,10 @@
                 <button class="layui-btn layui-btn-sm" title="删除文章"
                         onclick="delArticle('{$vo.id}')">
                     <i class="layui-icon">&#xe640;</i>
+                </button>
+                <button class="layui-btn layui-btn-sm" title="操作记录"
+                        onclick="viewLogs('{$vo.id}')">
+                    <i class="layui-icon">&#xe60e;</i>
                 </button>
             </div>
         </td>
@@ -165,6 +169,11 @@
         var toUrl = "{:url('cms/article/edit',['id'=>'AID'])}";
         toUrl = toUrl.replace('AID', id);
         ToDelItem(id, toUrl, '.tr-normal-' + id);
+    }
+    function viewLogs(article_id) {
+        var toUrl = "{:url('cms/article/viewLogs',['id'=>'AID'])}";
+        toUrl = toUrl.replace('AID', article_id);
+        ToOpenPopups(toUrl, '☁ 操作日志', '46%', '92%');
     }
 
     $(".btn-search-mz").on('click', function () {
