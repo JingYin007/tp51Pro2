@@ -161,12 +161,11 @@ class Xarticles extends BaseModel
     /**
      * 更新文章内容
      * @param $input
+     * @param int $id
      * @return array
      */
-    public function updateCmsArticleData($input)
+    public function updateCmsArticleData($input,$id = 0)
     {
-
-        $id = $input['id'];
         $opTag = isset($input['tag']) ? $input['tag'] : 'edit';
         if ($opTag == 'del') {
             Db::name('xarticle_points')

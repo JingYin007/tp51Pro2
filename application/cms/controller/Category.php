@@ -75,7 +75,7 @@ class Category extends CmsBase
     public function edit(Request $request, $id)
     {
         if ($request->isPost()) {
-            $opRes = $this->model->updateCmsCategoryData($request->post());
+            $opRes = $this->model->updateCmsCategoryData($request->post(),$id);
             return showMsg($opRes['tag'], $opRes['message']);
         } else {
             $cat = $this->model->getCmsCategoryByID($id);

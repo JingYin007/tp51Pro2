@@ -69,13 +69,12 @@ class Activity extends CmsBase
      * @return \think\response\View|void
      */
     public function edit(Request $request,$id){
-        if($id == 0) $id = $request->param('id');
         $actData = $this->actModel->getActByID($id);
         $actGoods = $this->actModel->getActGoods($id);
         if ($request->isPost()){
             //TODO 修改对应的菜单
             $input = $request->post();
-            $opRes = $this->actModel->editActivity($input['id'],$input);
+            $opRes = $this->actModel->editActivity($id,$input);
             return showMsg($opRes['tag'],$opRes['message']);
         }else{
             return view('edit',[

@@ -136,12 +136,11 @@ class Xcategorys extends BaseModel
     /**
      * 更新分类
      * @param $input
+     * @param int $id
      * @return array
      */
-    public function updateCmsCategoryData($input)
+    public function updateCmsCategoryData($input,$id=0)
     {
-
-        $id = $input['id'];
         $opTag = isset($input['tag']) ? $input['tag'] : 'edit';
         if ($opTag == 'del') {
             Db::name('xcategorys')

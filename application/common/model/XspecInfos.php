@@ -111,13 +111,13 @@ class XspecInfos extends BaseModel
 
     /**
      * 更新属性信息
+     * @param int $id
      * @param $input
      * @param int $level
      * @return array
      */
-    public function updateCmsSpecInfoData($input,$level = 1)
+    public function updateCmsSpecInfoData($id = 0,$input,$level = 1)
     {
-        $id = $input['id'];
         $opTag = isset($input['tag']) ? $input['tag'] : 'edit';
         if ($opTag == 'del') {
             $this

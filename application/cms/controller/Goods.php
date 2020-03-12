@@ -87,7 +87,7 @@ class Goods extends CmsBase
     public function edit(Request $request, $id)
     {
         if ($request->isPost()) {
-            $opRes = $this->model->updateCmsGoodsData($request->post());
+            $opRes = $this->model->updateCmsGoodsData($request->post(),$id);
             return showMsg($opRes['tag'], $opRes['message']);
         } else {
             $goodsMsg = $this->model->getCmsGoodsByID($id);

@@ -69,11 +69,10 @@ class AdList extends CmsBase
      * @return \think\response\View|void
      */
     public function edit(Request $request,$id){
-        if($id == 0) $id = $request->param('id');
         $actData = $this->adModel->getAdByID($id);
         if ($request->isPost()){
             $input = $request->post();
-            $opRes = $this->adModel->editAdvertisement($input['id'],$input);
+            $opRes = $this->adModel->editAdvertisement($id,$input);
             return showMsg($opRes['tag'],$opRes['message']);
         }else{
             return view('edit',[

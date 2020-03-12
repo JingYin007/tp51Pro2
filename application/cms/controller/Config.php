@@ -86,7 +86,7 @@ class Config extends CmsBase
         if ($request->isPost()){
             //TODO 修改对应的配置
             $input = $request->post();
-            $opRes = $this->confModel->editConfig($input['id'],$input);
+            $opRes = $this->confModel->editConfig($id,$input);
             return showMsg($opRes['tag'],$opRes['message']);
         }else{
             return view('edit',[

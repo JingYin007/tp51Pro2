@@ -138,13 +138,12 @@ class Xgoods extends BaseModel
 
     /**
      * 更新商品内容
-     * @param $input
+     * @param array $input
+     * @param int $id
      * @return array
      */
-    public function updateCmsGoodsData($input = [])
+    public function updateCmsGoodsData($input = [],$id = 0)
     {
-
-        $id = $input['id'];
         $opTag = isset($input['tag']) ? $input['tag'] : 'edit';
         if ($opTag == 'del') {
             $status = $this->where('goods_id', $id)

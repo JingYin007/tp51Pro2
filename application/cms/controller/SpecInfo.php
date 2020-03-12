@@ -83,7 +83,7 @@ class SpecInfo extends CmsBase
     {
         if ($request->isPost()) {
             $level = $request->post('level',1);
-            $opRes = $this->model->updateCmsSpecInfoData($request->post(),$level);
+            $opRes = $this->model->updateCmsSpecInfoData($id,$request->post(),$level);
             return showMsg($opRes['tag'], $opRes['message']);
         } else {
             $categoryList = $this->categoryModel->getCmsToSelCategoryList();
