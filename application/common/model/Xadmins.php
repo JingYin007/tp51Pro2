@@ -148,6 +148,7 @@ class Xadmins extends BaseModel
      */
     public function editCurrAdmin($id, $input, $cmsAID)
     {
+        $tag = 0;
         $saveData = [
             'user_name' => isset($input['user_name'])?$input['user_name']:null,
             'picture' => isset($input['picture'])?$input['picture']:'',
@@ -156,22 +157,31 @@ class Xadmins extends BaseModel
         $tokenData = ['__token__' => isset($input['__token__']) ? $input['__token__'] : '',];
         $validateRes = $this->validate($this->validate, $saveData, $tokenData, 'cms_admin');
         if ($validateRes['tag']) {
-            if ($input['password']) {
-                //TODO 如果输入了新密码
-                $saveData['password'] = cmsAdminToLoginForPassword($input['password']);
-            }
             if ($cmsAID && ($cmsAID != $id)) {
-                $validateRes['tag'] = 0;
-                $validateRes['message'] = "您没有权限进行修改";
+                $message = "您没有权限进行修改";
             } else {
-                $tag = $this
-                    ->where('id', $id)
-                    ->update($saveData);
-                $validateRes['tag'] = $tag;
-                $validateRes['message'] = $tag ? '信息修改成功' : '数据无变动，修改失败';
+                if ($input['password']) {
+                    //TODO 如果输入了新密码
+                    if ($input['password'] !== $input['re_password']){
+                        $message = "两次输入的密码不一样";
+                    }else{
+                        $saveData['password'] = cmsAdminToLoginForPassword($input['password']);
+                        $tag = $this
+                            ->where('id', $id)
+                            ->update($saveData);
+                        $message = $tag ? '信息修改成功' : '数据无变动，修改失败';
+                    }
+                }else{
+                    $tag = $this
+                        ->where('id', $id)
+                        ->update($saveData);
+                    $message = $tag ? '信息修改成功' : '数据无变动，修改失败';
+                }
             }
+        }else{
+            $message = $validateRes['message'];
         }
-        return $validateRes;
+        return ['tag' => $tag,'message' => $message];
     }
 
     /**
