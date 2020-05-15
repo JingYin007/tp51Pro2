@@ -37,11 +37,11 @@ class Index
     public function index()
     {
         //获取 登录的管理员有效期ID
-        $menuList = $this->menuModel->getNavMenusShow($this->cmsAID);
-        if (!$this->cmsAID || !$menuList) {
+        if (!$this->cmsAID) {
             //TODO 页面跳转至登录页
             return redirect('cms/login/index');
         } else {
+            $menuList = $this->menuModel->getNavMenusShow($this->cmsAID);
             $adminInfo = $this->adminModel->getAdminData($this->cmsAID);
             $data = [
                 'menus' => $menuList,

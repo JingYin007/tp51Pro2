@@ -30,7 +30,7 @@ class Login
      */
     public function index()
     {
-        if (Cookie::has('cmsMoTzxxAID')) {
+        if (Cookie::has('cmsMoTzxxAID') && Cookie::get('cmsMoTzxxAID')) {
             return redirect('cms/index/index');
         } else {
             return view('index');
