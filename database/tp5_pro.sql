@@ -10,7 +10,7 @@ Target Server Type    : MYSQL
 Target Server Version : 50553
 File Encoding         : 65001
 
-Date: 2020-03-09 18:12:58
+Date: 2020-05-15 17:37:07
 */
 
 SET FOREIGN_KEY_CHECKS=0;
@@ -39,9 +39,9 @@ CREATE TABLE `tp5_xactivitys` (
 -- ----------------------------
 -- Records of tp5_xactivitys
 -- ----------------------------
-INSERT INTO `tp5_xactivitys` VALUES ('1', '特价商品推荐', '/cms/images/imgOne.jpg', 'TJSPTJ', '2', '1', '1', '0', '2019-11-29 11:15:33', '1574125637', '1575090450');
+INSERT INTO `tp5_xactivitys` VALUES ('1', '特价商品推荐', '/cms/images/imgOne.jpg', 'TJSPTJ', '2', '1', '1', '0', '2020-03-12 18:16:45', '1574125637', '1575090450');
 INSERT INTO `tp5_xactivitys` VALUES ('2', '春季特惠商品', '/cms/images/imgTwo.jpg', 'CJTHSPA', '1', '2', '0', '0', '2019-11-29 11:15:38', '1574910600', '1575083403');
-INSERT INTO `tp5_xactivitys` VALUES ('3', '生活专区推荐', '/cms/images/imgThree.jpg', 'SHZQTJA', '1', '3', '1', '0', '2019-11-29 11:15:42', '1574910498', '1575083303');
+INSERT INTO `tp5_xactivitys` VALUES ('3', '生活专区推荐', '/cms/images/imgThree.jpg', 'SHZQTJA', '1', '3', '1', '0', '2020-03-12 18:08:40', '1574910498', '1575083303');
 
 -- ----------------------------
 -- Table structure for tp5_xact_goods
@@ -82,9 +82,9 @@ CREATE TABLE `tp5_xadmins` (
 -- ----------------------------
 -- Records of tp5_xadmins
 -- ----------------------------
-INSERT INTO `tp5_xadmins` VALUES ('1', 'niuNeng@admin', '/cms/images/headshot/niuNeng.png', '489a69905c665a5705eacaa333135af8', '1', '2019-11-28 11:12:13', '0', 'HELLO');
-INSERT INTO `tp5_xadmins` VALUES ('2', 'baZhaHei@admin', '/cms/images/headshot/baZhaHei.png', 'db69fc039dcbd2962cb4d28f5891aae1', '2', '2019-11-28 11:12:14', '1', 'HELLO');
-INSERT INTO `tp5_xadmins` VALUES ('3', 'moTzxx@admin', '/cms/images/headshot/wuHuang.png', 'db69fc039dcbd2962cb4d28f5891aae1', '1', '2019-11-28 11:12:15', '1', 'HELLO');
+INSERT INTO `tp5_xadmins` VALUES ('1', 'niuNeng@admin', '/cms/images/headshot/niuNeng.png', '985b175efe38cb26fabba4171bc24abd', '1', '2020-05-15 17:36:06', '0', 'HELLO');
+INSERT INTO `tp5_xadmins` VALUES ('2', 'baZhaHei@admin', '/cms/images/headshot/baZhaHei.png', '8fa7b3a3e2f6d44bd205ba89e3759e9f', '2', '2020-05-15 17:35:45', '1', 'HELLO');
+INSERT INTO `tp5_xadmins` VALUES ('3', 'moTzxx@admin', '/cms/images/headshot/wuHuang.png', 'a7cdaf1eabfadc1a8cddcba9bba8cc47', '1', '2020-05-15 17:35:21', '1', 'HELLO');
 INSERT INTO `tp5_xadmins` VALUES ('8', 'moTzxx@admin2', '/cms/images/headshot/baZhaHei.png', 'db69fc039dcbd2962cb4d28f5891aae1', '1', '2019-08-16 10:38:46', '-1', 'admin2');
 
 -- ----------------------------

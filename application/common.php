@@ -99,7 +99,8 @@ function startsWithStr($str, $char)
  * @return string
  */
 function cmsAdminToLoginForPassword($input = '',$tag = 0){
-    $makedStr = md5(base64_encode($input));
+    $pre_halt = '_#*moTzxx#mEx77BHGFSEDF';
+    $makedStr = md5(base64_encode($input).$pre_halt);
     return $makedStr;
 }
 
