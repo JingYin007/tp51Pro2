@@ -10,10 +10,6 @@ namespace app\common\controller;
 
 use app\api\controller\IAuth;
 use app\common\model\Xadmins;
-use think\Db;
-use think\facade\Cookie;
-use think\facade\Session;
-use think\Request;
 
 /**
  * 此类主要用于后台控制类的初始化操作

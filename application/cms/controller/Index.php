@@ -81,6 +81,5 @@ class Index
         }else{
             return showMsg(0,'You are offline,please logon again!');
         }
-
     }
 }
