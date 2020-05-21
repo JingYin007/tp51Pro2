@@ -18,13 +18,12 @@ return [
     'CMS_PAGE_SIZE' => 7,
     //TODO 是否启用FTP图片文件上传功能，默认不启动，如果启用请配置 config/ftp.php 文件
     'FTP_USE' => false,
-
     //TODO 本地测试一般不需要图片服务器 null，
     //如果使用了图片服务器，需要进行对应更改，例：'http://img.xxxx.com/public'
     'IMG_SERVER_PUBLIC' => '',
 
     // 应用调试模式
-    'app_debug'              => true,
+    'app_debug'              => false,
     // 应用Trace
     'app_trace'              => false,
     // 应用模式状态

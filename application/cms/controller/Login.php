@@ -2,6 +2,7 @@
 
 namespace app\cms\controller;
 
+use app\api\controller\IAuth;
 use app\common\model\Xadmins;
 use app\common\model\XnavMenus;
 use think\facade\Cookie;
@@ -30,7 +31,7 @@ class Login
      */
     public function index()
     {
-        if (Cookie::has('cmsMoTzxxAID') && Cookie::get('cmsMoTzxxAID')) {
+        if (IAuth::getAdminIDCurrLogged()) {
             return redirect('cms/index/index');
         } else {
             return view('index');
@@ -43,9 +44,7 @@ class Login
      */
     public function logout()
     {
-        if (Cookie::has('cmsMoTzxxAID')) {
-            Cookie::delete('cmsMoTzxxAID');
-        }
+        IAuth::logoutAdminCurrLogged();
         return redirect('cms/login/index');
     }
 
@@ -57,10 +56,7 @@ class Login
     {
         if ($request->isPost()) {
             $input = $request->post();
-            $tagRes = $this->adminModel->adminLogin($input);
-            if ($tagRes['tag']) {
-                Cookie::set('cmsMoTzxxAID', $tagRes['tag']);
-            }
+            $tagRes = $this->adminModel->checkAdminLogin($input);
             return showMsg($tagRes['tag'], $tagRes['message']);
         } else {
             return showMsg(0, 'sorry,您的请求不合法！');
@@ -74,7 +70,7 @@ class Login
     public function ajaxCheckLoginStatus(Request $request)
     {
         if ($request->isPost()) {
-            $cmsAID = Cookie::get('cmsMoTzxxAID');
+            $cmsAID = IAuth::getAdminIDCurrLogged();
             $nav_menu_id = $request->param('nav_menu_id');
             //TODO 判断当前菜单是否属于他的权限内
             $checkTag = $this->navMenuModel->checkNavMenuMan($nav_menu_id, $cmsAID);

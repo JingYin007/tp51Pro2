@@ -2,6 +2,7 @@
 
 namespace app\common\model;
 
+use app\api\controller\IAuth;
 use app\common\validate\Xadmin;
 use think\Db;
 use think\Model;
@@ -120,8 +121,8 @@ class Xadmins extends BaseModel
             $addData = [
                 'user_name' => $user_name,
                 'picture' => isset($input['picture']) ? $input['picture'] : '',
-                'password' => cmsAdminToLoginForPassword($input['password']),
-                're_password' => cmsAdminToLoginForPassword($input['re_password']),
+                'password' => IAuth::setAdminUsrPassword($input['password']),
+                're_password' => IAuth::setAdminUsrPassword($input['re_password']),
                 'created_at' => date("Y-m-d H:i:s", time()),
                 'role_id' => isset($input['role_id'])?intval($input['role_id']):0,
                 'status' => isset($input['status'])?intval($input['status']):0,
@@ -165,7 +166,7 @@ class Xadmins extends BaseModel
                     if ($input['password'] !== $input['re_password']){
                         $message = "两次输入的密码不一样";
                     }else{
-                        $saveData['password'] = cmsAdminToLoginForPassword($input['password']);
+                        $saveData['password'] = IAuth::setAdminUsrPassword($input['password']);
                         $tag = $this
                             ->where('id', $id)
                             ->update($saveData);
@@ -215,8 +216,8 @@ class Xadmins extends BaseModel
                 $tokenData = ['__token__' => isset($input['__token__']) ? $input['__token__'] : '',];
                 if ($input['password']) {
                     //TODO 如果输入了新密码
-                    $saveData['password'] = cmsAdminToLoginForPassword($input['password']);
-                    $saveData['re_password'] = cmsAdminToLoginForPassword($input['re_password']);
+                    $saveData['password'] = IAuth::setAdminUsrPassword($input['password']);
+                    $saveData['re_password'] = IAuth::setAdminUsrPassword($input['re_password']);
                     $validateRes = $this->validate($this->validate, $saveData, $tokenData);
                 } else {
                     $validateRes = $this->validate($this->validate, $saveData, $tokenData, 'edit_admin_no_pwd');
@@ -268,7 +269,7 @@ class Xadmins extends BaseModel
      * @param $input
      * @return bool|mixed
      */
-    public function adminLogin($input)
+    public function checkAdminLogin($input)
     {
         $flag = false;
         $message = "登录成功";
@@ -280,20 +281,22 @@ class Xadmins extends BaseModel
             $message = "验证码填写有误或已过期";
         } else {
             $res = $this
-                ->field('password,id')
+                ->field('password,id op_id')
                 ->where('user_name', $userName)
                 ->where('status', 1)
                 ->find();
             if ($res) {
-                if ($res->password == cmsAdminToLoginForPassword($pwd)) {
-                    $flag = $res->id;
+                if ($res->password == IAuth::setAdminUsrPassword($pwd)) {
+                    $flag = $res->op_id;
+                    IAuth::setSessionAdminCurrLogged($res->op_id);
                 } else {
-                    $message = "登录失败，请检查您的信息";
+                    $message = "登录失败，请检查您的密码";
                 }
             } else {
                 $message = "该用户名失效或不存在";
             }
         }
+
         return [
             'tag' => $flag,
             'message' => $message

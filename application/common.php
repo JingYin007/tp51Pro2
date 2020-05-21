@@ -93,27 +93,6 @@ function startsWithStr($str, $char)
 }
 
 /**
- * 设置后台管理员密码加密方式
- * @param string $input
- * @param int $tag 0：加密操作  1：解密操作
- * @return string
- */
-function cmsAdminToLoginForPassword($input = '',$tag = 0){
-    $pre_halt = '_#*moTzxx#mEx77BHGFSEDF';
-    $makedStr = md5(base64_encode($input).$pre_halt);
-    return $makedStr;
-}
-
-/**
- * 获取当前登录管理员ID
- * @return mixed
- */
-function getCmsCurrentAdminID(){
-    $cmsAID = \think\facade\Cookie::get('cmsMoTzxxAID');
-    return isset($cmsAID)?intval($cmsAID):0;
-}
-
-/**
  * 操作日志 添加记录
  * @param int $opStatus 操作标记位 ，非零则进行日志的记录
  * @param string $opTag 所记录业务日志确定的标签
@@ -130,7 +109,7 @@ function insertCmsOpLogs($opStatus = 0,$opTag = '',
         $opData = [
             'op_id' => $op_id,
             'tag' => $opTag,
-            'admin_id' => getCmsCurrentAdminID(),
+            'admin_id' => \app\api\controller\IAuth::getAdminIDCurrLogged(),
             'add_time' => date('Y-m-d H:i:s',time()),
             'op_msg' => $op_msg
         ];

@@ -2,10 +2,9 @@
 
 namespace app\cms\controller;
 
+use app\api\controller\IAuth;
 use app\common\model\XnavMenus;
 use app\common\model\Xadmins;
-use think\facade\Cookie;
-use think\facade\Session;
 use think\Request;
 
 /**
@@ -24,7 +23,7 @@ class Index
     {
         $this->menuModel = new XnavMenus();
         $this->adminModel = new Xadmins();
-        $this->cmsAID = Cookie::get('cmsMoTzxxAID');
+        $this->cmsAID = IAuth::getAdminIDCurrLogged();
         if (!$this->cmsAID) {
             return redirect('cms/login/index');
         }
@@ -69,16 +68,19 @@ class Index
     public function admin(Request $request, $id)
     {
         $adminModel = new Xadmins();
-        if ($request->isGet()) {
-            $adminData = $adminModel->getAdminData($id);
-            return view('admin', [
-                'admin' => $adminData,
-            ]);
-        } else {
-            //当前用户对个人账号的修改
-            $input = $request->post();
-            $opRes = $adminModel->editCurrAdmin($id, $input, $this->cmsAID);
-            return showMsg($opRes['tag'], $opRes['message']);
+        if ($this->cmsAID){
+            if ($request->isGet()) {
+                $adminData = $adminModel->getAdminData($id);
+                return view('admin', ['admin' => $adminData,]);
+            } else {
+                //当前用户对个人账号的修改
+                $input = $request->post();
+                $opRes = $adminModel->editCurrAdmin($id, $input, $this->cmsAID);
+                return showMsg($opRes['tag'], $opRes['message']);
+            }
+        }else{
+            return showMsg(0,'You are offline,please logon again!');
         }
+
     }
 }

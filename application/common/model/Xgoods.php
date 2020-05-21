@@ -2,6 +2,7 @@
 
 namespace app\common\model;
 
+use app\api\controller\IAuth;
 use app\common\validate\Xgood;
 use think\Db;
 use think\facade\Cookie;
@@ -238,7 +239,7 @@ class Xgoods extends BaseModel
         $tokenData = ['__token__' => isset($data['__token__']) ? $data['__token__'] : '',];
         $validateRes = $this->validate($this->validate, $addData, $tokenData);
         if ($validateRes['tag']) {
-            $addData['admin_id'] = getCmsCurrentAdminID();
+            $addData['admin_id'] = IAuth::getAdminIDCurrLogged();
             $tag = $this->insert($addData);
             $validateRes['tag'] = $tag;
             $validateRes['message'] = $tag ? '添加成功' : '添加失败';

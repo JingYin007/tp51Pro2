@@ -8,6 +8,7 @@
 
 namespace app\common\controller;
 
+use app\api\controller\IAuth;
 use app\common\model\Xadmins;
 use think\Db;
 use think\facade\Cookie;
@@ -37,11 +38,10 @@ class CmsBase extends Base
     public function initAuth()
     {
         $authFlag = false;
-        $hasCmsAID = Cookie::has('cmsMoTzxxAID');
-        if (!$hasCmsAID) {
+        $cmsAID = IAuth::getAdminIDCurrLogged();
+        if (!$cmsAID) {
             $message = "You are offline,please logon again!";
         } else {
-            $cmsAID = Cookie::get('cmsMoTzxxAID');
             //TODO 判断当前用户是否具有此操作权限
             $checkAuth = $this->checkCmsAdminAuth($cmsAID);
             $authFlag = $checkAuth;
