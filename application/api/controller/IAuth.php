@@ -35,7 +35,7 @@ class IAuth
      * @return string
      */
     public static function setAdminUsrPassword($password = ''){
-        $res = md5(base64_encode($password).self::$set_pwd_pre_halt);
+        $res = strrev(md5(base64_encode($password).self::$set_pwd_pre_halt));
         return $res;
     }
 
