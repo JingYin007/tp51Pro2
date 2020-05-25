@@ -8,7 +8,7 @@
 
 namespace app\common\controller;
 
-use app\api\controller\IAuth;
+use app\common\lib\IAuth;
 use app\common\model\Xadmins;
 
 /**

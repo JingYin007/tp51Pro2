@@ -2,6 +2,7 @@
 
 namespace app\api\controller;
 
+use app\common\lib\FtpServer;
 use think\Request;
 
 class Upload

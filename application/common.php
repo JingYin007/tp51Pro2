@@ -109,7 +109,7 @@ function insertCmsOpLogs($opStatus = 0,$opTag = '',
         $opData = [
             'op_id' => $op_id,
             'tag' => $opTag,
-            'admin_id' => \app\api\controller\IAuth::getAdminIDCurrLogged(),
+            'admin_id' => \app\common\lib\IAuth::getAdminIDCurrLogged(),
             'add_time' => date('Y-m-d H:i:s',time()),
             'op_msg' => $op_msg
         ];

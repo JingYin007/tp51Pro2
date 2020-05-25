@@ -6,7 +6,7 @@
  * Time: 10:59
  */
 
-namespace app\api\controller;
+namespace app\common\lib;
 use think\facade\Session;
 use think\Request;
 

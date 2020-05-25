@@ -8,7 +8,6 @@
 
 namespace app\cms\controller;
 
-
 use app\common\controller\CmsBase;
 use app\common\model\Xconfigs;
 use think\Request;
@@ -27,7 +26,7 @@ class Config extends CmsBase
     {
         parent::__construct();
         $this->confModel = new Xconfigs();
-        $this->page_limit = 1;//config('app.CMS_PAGE_SIZE');
+        $this->page_limit = config('app.CMS_PAGE_SIZE');
     }
 
     /**

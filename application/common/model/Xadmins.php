@@ -2,11 +2,9 @@
 
 namespace app\common\model;
 
-use app\api\controller\IAuth;
+use app\common\lib\IAuth;
 use app\common\validate\Xadmin;
 use think\Db;
-use think\Model;
-use think\Session;
 
 class Xadmins extends BaseModel
 {

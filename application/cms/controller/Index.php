@@ -2,7 +2,7 @@
 
 namespace app\cms\controller;
 
-use app\api\controller\IAuth;
+use app\common\lib\IAuth;
 use app\common\model\XnavMenus;
 use app\common\model\Xadmins;
 use think\Request;

@@ -6,7 +6,7 @@
  * Time: 10:30
  */
 
-namespace app\api\controller;
+namespace app\common\lib;
 
 
 class FtpServer

@@ -2,11 +2,8 @@
 
 namespace app\common\model;
 
-use app\api\controller\IAuth;
+use app\common\lib\IAuth;
 use app\common\validate\Xgood;
-use think\Db;
-use think\facade\Cookie;
-use \think\Model;
 
 /**
  * Created by PhpStorm.

@@ -5,8 +5,7 @@
  * Date: 2019/4/21
  * Time: 9:24
  */
-namespace app\api\controller;
-use think\Db;
+namespace app\common\lib;
 
 class MTPhpExcel
 {
