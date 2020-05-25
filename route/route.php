@@ -46,6 +46,7 @@ Route::get('cms/article/viewLogs/:id','cms/article/viewLogs');
 Route::any('cms/config/index','cms/config/index');
 Route::any('cms/config/add','cms/config/add');
 Route::any('cms/config/edit/:id','cms/config/edit');
+Route::post('cms/config/ajaxUpdateSwitchValue','cms/config/ajaxUpdateSwitchValue');
 
 //管理员
 Route::any('cms/admin/index','cms/admin/index');

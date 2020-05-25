@@ -112,11 +112,34 @@ class Xconfigs extends BaseModel
                 $msg = $v['value']?'开启':'关闭';
                 $bg_color = $v['value']?"green":"cyan";
                 $res[$key]['value_tip'] = "<span class=\"layui-badge layui-bg-".$bg_color."\">".$msg."</span>";
+
+                $id = $v['id'];
+                $checkTag = $v['value']?"checked":"";
+                $value_tip = "<input type=\"checkbox\" class=\"switch_checked\" lay-filter=\"switchConfigID\"
+                   switch_config_id=\"$id\" $checkTag lay-skin=\"switch\" lay-text=\"开启|关闭\">";
+                $res[$key]['value_tip'] = $value_tip;
             } else {
                 $res[$key]['value_tip'] = "<img src=\"".imgToServerView($v['value'])."\">";
             }
         }
         return $res;
+    }
+
+    /**
+     * 切换操作
+     * @param int $config_id
+     * @param int $okStatus
+     * @return array
+     */
+    public function updateSwitchValue($config_id = 0, $okStatus = 0)
+    {
+        $message = "切换成功";
+        $config_id = isset($config_id) ? intval($config_id) : 0;
+        $saveTag = $this
+            ->where('id', $config_id)
+            ->update(['value' => $okStatus]);
+        if (!$saveTag) {$message = "切换成功";}
+        return ['tag' => $saveTag, 'message' => $message];
     }
 
     /**

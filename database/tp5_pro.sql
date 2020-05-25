@@ -10,7 +10,7 @@ Target Server Type    : MYSQL
 Target Server Version : 50553
 File Encoding         : 65001
 
-Date: 2020-05-21 17:30:01
+Date: 2020-05-25 18:11:51
 */
 
 SET FOREIGN_KEY_CHECKS=0;
@@ -84,7 +84,7 @@ CREATE TABLE `tp5_xadmins` (
 -- ----------------------------
 INSERT INTO `tp5_xadmins` VALUES ('1', 'niuNeng@admin', '/cms/images/headshot/niuNeng.png', 'd37d4e98aa38d6fe8b53f79b7db8ef17', '1', '2020-05-20 18:01:52', '0', 'HELLO');
 INSERT INTO `tp5_xadmins` VALUES ('2', 'baZhaHei@admin', '/cms/images/headshot/baZhaHei.png', '8fa7b3a3e2f6d44bd205ba89e3759e9f', '2', '2020-05-15 17:35:45', '1', 'HELLO');
-INSERT INTO `tp5_xadmins` VALUES ('3', 'moTzxx@admin', '/cms/images/headshot/wuHuang.png', 'a7cdaf1eabfadc1a8cddcba9bba8cc47', '1', '2020-05-21 16:04:48', '1', 'HELLO');
+INSERT INTO `tp5_xadmins` VALUES ('3', 'moTzxx@admin', '/cms/images/headshot/wuHuang.png', '74cc8abb9abcddc8a1cdafbae1fadc7a', '1', '2020-05-22 14:45:28', '1', 'HELLO');
 INSERT INTO `tp5_xadmins` VALUES ('8', 'moTzxx@admin2', '/cms/images/headshot/baZhaHei.png', 'db69fc039dcbd2962cb4d28f5891aae1', '1', '2019-08-16 10:38:46', '-1', 'admin2');
 
 -- ----------------------------
@@ -268,7 +268,7 @@ CREATE TABLE `tp5_xconfigs` (
 -- Records of tp5_xconfigs
 -- ----------------------------
 INSERT INTO `tp5_xconfigs` VALUES ('1', '我是一个文本1', 'WSWENBEN1', 'XXEERRES', 'text', 'HELLO,不要乱改！', '0', '0', '2019-07-30 18:09:23');
-INSERT INTO `tp5_xconfigs` VALUES ('2', '我是一个开关', 'SWITCHTOYOU', '1', 'checkbox', 'HAHAHA', '0', '0', '2019-07-30 18:13:34');
+INSERT INTO `tp5_xconfigs` VALUES ('2', '我是一个开关', 'SWITCHTOYOU', '0', 'checkbox', 'HAHAHA', '0', '0', '2019-07-30 18:13:34');
 INSERT INTO `tp5_xconfigs` VALUES ('3', '我是一个图片', 'TUPIAN1', '/cms/images/icon/goods_manager.png', 'button', '注意图片不要太大', '3', '0', '2019-07-30 18:21:18');
 INSERT INTO `tp5_xconfigs` VALUES ('4', 'VIP会员费用', 'VIP_MONEY', '199', 'text', 'VIP 就是牛!', '-1', '0', '2019-07-30 18:59:31');
 
@@ -323,7 +323,7 @@ CREATE TABLE `tp5_xnav_menus` (
   `type` tinyint(2) NOT NULL DEFAULT '0' COMMENT '导航类型 0：菜单类  1：权限链接',
   PRIMARY KEY (`id`),
   KEY `id` (`id`,`name`) USING BTREE
-) ENGINE=MyISAM AUTO_INCREMENT=137 DEFAULT CHARSET=utf8mb4 COMMENT='菜单导航表';
+) ENGINE=MyISAM AUTO_INCREMENT=138 DEFAULT CHARSET=utf8mb4 COMMENT='菜单导航表';
 
 -- ----------------------------
 -- Records of tp5_xnav_menus
@@ -384,6 +384,7 @@ INSERT INTO `tp5_xnav_menus` VALUES ('99', '规格数据展示', '67', 'cms/spec
 INSERT INTO `tp5_xnav_menus` VALUES ('133', '监控统计', '0', '/', '/cms/images/icon/cms_analyze.png', '1', '0', '2019-12-05 10:47:23', '0');
 INSERT INTO `tp5_xnav_menus` VALUES ('134', '商品价格分布饼图', '133', 'cms/analyze/goodsPricePie', '/cms/images/icon/cms_pie.png', '1', '0', '2019-12-05 10:49:53', '0');
 INSERT INTO `tp5_xnav_menus` VALUES ('135', '查看文章操作日志', '5', 'cms/article/viewLogs', '', '1', '0', '2020-03-09 17:06:40', '1');
+INSERT INTO `tp5_xnav_menus` VALUES ('137', '动态配置开关状态', '93', 'cms/config/ajaxUpdateSwitchValue', '/', '1', '0', '2020-05-25 18:05:34', '1');
 
 -- ----------------------------
 -- Table structure for tp5_xphotos

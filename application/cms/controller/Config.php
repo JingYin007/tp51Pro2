@@ -27,7 +27,7 @@ class Config extends CmsBase
     {
         parent::__construct();
         $this->confModel = new Xconfigs();
-        $this->page_limit = config('app.CMS_PAGE_SIZE');
+        $this->page_limit = 1;//config('app.CMS_PAGE_SIZE');
     }
 
     /**
@@ -93,5 +93,15 @@ class Config extends CmsBase
                 'confData'   => $confData,
             ]);
         }
+    }
+
+    /**
+     * 动态更新开关状态
+     * @param Request $request
+     */
+    public function ajaxUpdateSwitchValue(Request $request){
+        $opRes = $this->confModel
+            ->updateSwitchValue($request->post('config_id'), $request->post('okStatus'));
+        return showMsg($opRes['tag'], $opRes['message']);
     }
 }
