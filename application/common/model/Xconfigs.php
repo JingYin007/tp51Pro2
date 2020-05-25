@@ -109,10 +109,6 @@ class Xconfigs extends BaseModel
             if ($v['type'] == "text") {
                 $res[$key]['value_tip'] = "<span class=\"span-7EC0EE\">".$v['value']."</span>";
             } elseif ($v['type'] == "checkbox") {
-                $msg = $v['value']?'开启':'关闭';
-                $bg_color = $v['value']?"green":"cyan";
-                $res[$key]['value_tip'] = "<span class=\"layui-badge layui-bg-".$bg_color."\">".$msg."</span>";
-
                 $id = $v['id'];
                 $checkTag = $v['value']?"checked":"";
                 $value_tip = "<input type=\"checkbox\" class=\"switch_checked\" lay-filter=\"switchConfigID\"
