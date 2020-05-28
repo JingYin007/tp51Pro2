@@ -13,8 +13,19 @@ use app\common\lib\IAuth;
 use think\Db;
 use think\Model;
 
+/**
+ * 系统配置操作类
+ * Class XsysConf
+ * @package app\common\model
+ */
 class XsysConf extends Model
 {
+    /**
+     * 更新登录认证配置数据
+     * @param string $authTag
+     * @param string $authVal
+     * @return array
+     */
     public function updateAuthConf($authTag = '',$authVal = ''){
         $opTag = false;
         if ($authVal == '' or empty($authVal)){

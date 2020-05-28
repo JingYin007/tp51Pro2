@@ -38,6 +38,12 @@ class SysConf extends CmsBase
             return view('auth',['authConf' => $authConf]);
         }
     }
+
+    /**
+     * FTP 操作指示
+     * @param Request $request
+     * @return \think\response\View|void
+     */
     public function ftp(Request $request){
         if ($request->isPost()){
             return showMsg(0,'请求不合法！');
@@ -47,7 +53,13 @@ class SysConf extends CmsBase
             return view('auth');
         }
     }
-    public function ip(Request $request){
+
+    /**
+     * IP白名单
+     * @param Request $request
+     * @return \think\response\View|void
+     */
+    public function ipWhite(Request $request){
         if ($request->isPost()){
             return showMsg(0,'请求不合法！');
         }else{

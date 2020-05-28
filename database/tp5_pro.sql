@@ -10,7 +10,7 @@ Target Server Type    : MYSQL
 Target Server Version : 50553
 File Encoding         : 65001
 
-Date: 2020-05-28 16:50:53
+Date: 2020-05-28 17:18:07
 */
 
 SET FOREIGN_KEY_CHECKS=0;
@@ -388,7 +388,7 @@ INSERT INTO `tp5_xnav_menus` VALUES ('137', '动态配置开关状态', '93', 'c
 INSERT INTO `tp5_xnav_menus` VALUES ('138', '系统配置', '0', '/', '/cms/images/icon/cms_config_system.png', '1', '0', '2020-05-27 16:24:28', '0');
 INSERT INTO `tp5_xnav_menus` VALUES ('139', '登录认证', '138', 'cms/sysConf/auth', '/cms/images/icon/cms_auth.png', '1', '1', '2020-05-27 16:41:18', '0');
 INSERT INTO `tp5_xnav_menus` VALUES ('140', 'FTP 配置', '138', 'cms/sysConf/ftp', '/cms/images/icon/cms_ftp.png', '1', '2', '2020-05-27 16:41:28', '0');
-INSERT INTO `tp5_xnav_menus` VALUES ('141', 'IP 白名单', '138', 'cms/sysConf/ip', '/cms/images/icon/cms_ip.png', '1', '3', '2020-05-27 16:41:36', '0');
+INSERT INTO `tp5_xnav_menus` VALUES ('141', 'IP 白名单', '138', 'cms/sysConf/ipWhite', '/cms/images/icon/cms_ip.png', '1', '3', '2020-05-28 17:17:54', '0');
 
 -- ----------------------------
 -- Table structure for tp5_xphotos
