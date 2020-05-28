@@ -12,9 +12,9 @@
 - 最新更新：
 
 ```php
-2019-11-25
- 	> 整体项目优化
-	> 集中处理了页面显示样式
+2020-05-21
+ 	> 优化用户登录信息的加密保存
+	> 设计商品、文章操作日志记录功能
 	> 整合公用 CSS、JS 代码
 	> 设计商品管理功能、优化 SKU编辑
 	> 完善代码注释，优化数据库,更新 .sql文件
@@ -42,7 +42,7 @@
 > 近期抽出时间，正在优化 ThinkPHP5  这个框架的代码，可用，也希望多给指点，进行后期的优化升级
 > 后期的更新优化记录，会补充到后面的附录中 ...
 ```
-![](https://img-blog.csdnimg.cn/20191126092549452.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3UwMTE0MTU3ODI=,size_16,color_FFFFFF,t_70)
+![](https://img-blog.csdnimg.cn/20200521171114356.jpg?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3UwMTE0MTU3ODI=,size_16,color_FFFFFF,t_70#pic_center)
 
 # ☁ 一 主要功能
 > 毕竟一个人瞎折腾，能力有限，暂且展示已完成的主要功能，欢迎指摘以及技术指导，道友参上！
@@ -65,7 +65,7 @@
 - ***说明信息***
 ```b
 > 对于密码的加密，一般每个开发者都有自己的想法，我的加密比较简单 md5+base64，可自行复杂性优化
-> 封装处理方法为：cmsAdminToLoginForPassword() 
+> 封装处理方法为：IAuth::setAdminUsrPassword()
 > 修改数据的时候，注意，如果不想改动密码，是无需进行填写的！
 ```
 
@@ -205,8 +205,7 @@ function captcha_img($id = '')
 > 方法请参考： [***ThinkPHP5 验证码功能实现***](https://blog.csdn.net/u011415782/article/details/77367280),请自行补充`验证码点击刷新`功能的代码！
 
 ## ④. FTP文件上传操作的扩展配置
-- 相信成型的网站基本都需要一个或几个图片资源服务器
-- 这时，考虑使用的便是 FTP文件上传功能的扩展
+- 相信成型的网站基本都需要一个或几个图片资源服务器，这时，考虑使用的便是 FTP文件上传功能的扩展
 ```b
 - 本项目做了处理，如果道友已经创建好了FTP信息，可以打开文件 "/config/ftp.php"
 - 对应填写 FTP配置信息
@@ -215,3 +214,17 @@ function captcha_img($id = '')
 - 并配置 "IMG_SERVER_PUBLIC" 参数为图片服务器地址
 ```
 ![](https://img-blog.csdnimg.cn/20191129172531248.jpg)
+## ⑤. 优化登录信息加密保存 [`2020-05-21`]
+- 相对而言，后台项目的开发触及数据的操作，对于登录信息的保存要求自然严格一些;
+  近期，优化设计了这一模块，可在后台进行配置
+  
+![](https://img-blog.csdnimg.cn/2020052817083945.jpg?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3UwMTE0MTU3ODI=,size_16,color_FFFFFF,t_70#pic_center)
+```b
+	> 其对应的配置文件为： "/config/sys_auth.php" ;
+	> 注意截图中的提示信息，方便后期安全性的更新操作！
+ ```
+【 **`补充`**】：
+- 管理员的登录失效时间，请到 `session.php` 配置文件中进行修改哦
+- 推荐参考【 [***php如何openssl_encrypt加密解密***](https://blog.csdn.net/zhemejinnameyuanxc/article/details/83383434)】
+ 文档—— [**`php openssl_encrypt`**](https://www.php.net/manual/zh/function.openssl-encrypt.php)
+ 
