@@ -111,16 +111,30 @@
 <script>
 
     $(".tr-normal .layui-input").click(function () {
-        var tr_tag = $(this).parent().parent().attr('tag');
-        console.log(tr_tag);
+        var auth_tag = $(this).parent().parent().attr('tag');
         $(".tr-normal input").css('background','#7274AB');
-        $(".tr-normal-"+tr_tag+" input").css('background','#fff');
-        if(tr_tag == 'PWD_PRE_HALT'){
+        $(".tr-normal-"+auth_tag+" input").css('background','#fff');
+        if(auth_tag == 'PWD_PRE_HALT'){
             var tipMsg = "注意！更新后,后台管理员暂时只能以【moTzxx@admin:admin】进行登录，后期密码需再次更新哦";
             layer.tips(tipMsg, '.tr-normal-PWD_PRE_HALT .layui-word-aux',{timer:8000});
         }
     });
 
+    /**
+     * 触发更新操作
+     */
+    $(".tr-normal button").click(function () {
+        var auth_tag = $(this).parent().parent().attr('tag');
+        var auth_val = $(".tr-normal-"+auth_tag+" .layui-input").val();
+        var toUrl = "{:url('cms/sysConf/auth')}";
+        var postData = {auth_tag:auth_tag,auth_val:auth_val};
+        $.post(
+            toUrl,
+            postData,
+            function (result) {
+                dialog.tip(result.message);
+            },"JSON");
+    });
 
 
 

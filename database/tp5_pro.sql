@@ -10,7 +10,7 @@ Target Server Type    : MYSQL
 Target Server Version : 50553
 File Encoding         : 65001
 
-Date: 2020-05-28 11:27:26
+Date: 2020-05-28 16:50:53
 */
 
 SET FOREIGN_KEY_CHECKS=0;
@@ -82,10 +82,9 @@ CREATE TABLE `tp5_xadmins` (
 -- ----------------------------
 -- Records of tp5_xadmins
 -- ----------------------------
-INSERT INTO `tp5_xadmins` VALUES ('1', 'niuNeng@admin', '/cms/images/headshot/niuNeng.png', 'd37d4e98aa38d6fe8b53f79b7db8ef17', '1', '2020-05-20 18:01:52', '0', 'HELLO');
+INSERT INTO `tp5_xadmins` VALUES ('1', 'moTzxx@admin', '/cms/images/headshot/wuHuang.png', '317c775b607a08e911a338826c459cf4', '1', '2020-05-28 16:49:47', '1', 'HELLO');
 INSERT INTO `tp5_xadmins` VALUES ('2', 'baZhaHei@admin', '/cms/images/headshot/baZhaHei.png', '8fa7b3a3e2f6d44bd205ba89e3759e9f', '2', '2020-05-15 17:35:45', '1', 'HELLO');
-INSERT INTO `tp5_xadmins` VALUES ('3', 'moTzxx@admin', '/cms/images/headshot/wuHuang.png', '74cc8abb9abcddc8a1cdafbae1fadc7a', '1', '2020-05-22 14:45:28', '1', 'HELLO');
-INSERT INTO `tp5_xadmins` VALUES ('8', 'moTzxx@admin2', '/cms/images/headshot/baZhaHei.png', 'db69fc039dcbd2962cb4d28f5891aae1', '1', '2019-08-16 10:38:46', '-1', 'admin2');
+INSERT INTO `tp5_xadmins` VALUES ('3', 'niuNengx@admin', '/cms/images/headshot/niuNeng.png', '74cc22bb9abcddc8a1cdafbae1fadc7a', '1', '2020-05-28 15:46:12', '1', 'HELLO');
 
 -- ----------------------------
 -- Table structure for tp5_xadmin_roles

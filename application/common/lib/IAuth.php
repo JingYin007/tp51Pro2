@@ -26,13 +26,18 @@ class IAuth
         $res = config("sys_auth.".$confTag);
         return $res;
     }
+
     /**
      * 设置后台管理员登录密码加密
      * @param string $password
+     * @param null $pws_pre_halt
      * @return string
      */
-    public static function setAdminUsrPassword($password = ''){
-        $res = strrev(md5(base64_encode($password).self::AUTH_CONF('PWD_PRE_HALT')));
+    public static function setAdminUsrPassword($password = '',$pws_pre_halt = null){
+        if (!$pws_pre_halt){
+            $pws_pre_halt = self::AUTH_CONF('PWD_PRE_HALT');
+        }
+        $res = strrev(md5(base64_encode($password).$pws_pre_halt));
         return $res;
     }
 
