@@ -15,14 +15,11 @@ use think\Request;
 class NavMenu extends CmsBase
 {
     protected $menuModel;
-    //定义每页的记录数
-    protected $page_limit;
 
     public function __construct()
     {
         parent::__construct();
         $this->menuModel = new XnavMenus();
-        $this->page_limit = config('app.CMS_PAGE_SIZE');
     }
 
     /**
@@ -100,15 +97,14 @@ class NavMenu extends CmsBase
      */
     public function edit(Request $request, $id)
     {
-        $rootMenus = $this->menuModel->getNavMenus();
-        if ($id == 0) $id = $request->param('id');
-        $menuData = $this->menuModel->getNavMenuByID($id);
         if ($request->isPost()) {
             //TODO 修改对应的菜单
             $input = $request->post();
-            $opRes = $this->menuModel->editNavMenu($input['id'], $input);
+            $opRes = $this->menuModel->editNavMenu($id, $input);
             return showMsg($opRes['tag'], $opRes['message']);
         } else {
+            $menuData = $this->menuModel->getNavMenuByID($id);
+            $rootMenus = $this->menuModel->getNavMenus();
             return view('edit', [
                 'rootMenus' => $rootMenus,
                 'menuData' => $menuData

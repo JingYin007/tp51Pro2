@@ -24,6 +24,37 @@ function showMsg($status,$message = '',$data = array()){
     );
     exit(json_encode($result));
 }
+
+/**
+ * 修改 CMS管理系统的配置函数
+ * @return bool 返回状态
+ * @param array $pat 配置前缀
+ * @param array $rep 数据变量
+ * @param string $confFileName 配置文件的名称
+ * @return bool
+ */
+function set_cms_config($pat =[], $rep =[],$confFileName = 'sys_auth')
+{
+    /**
+     * 原理就是 打开config配置文件 然后使用正则查找替换 然后在保存文件.
+     * 传递的参数为2个数组 前面的为配置 后面的为数值.  正则的匹配为单引号  如果你的是分号 请自行修改为分号
+     *  $pat[0] = 参数前缀;  例:   default_return_type
+        $rep[0] = 要替换的内容;    例:  json
+     */
+    if (is_array($pat) and is_array($rep)) {
+        for ($i = 0; $i < count($pat); $i++) {
+            $pats[$i] = '/\'' . $pat[$i] . '\'(.*?),/';
+            $reps[$i] = "'". $pat[$i]. "'". "=>" . "'".$rep[$i] ."',";
+        }
+        $file_url = "../config/$confFileName.php";
+        $string = file_get_contents($file_url); //加载配置文件
+        $re_string = preg_replace($pats, $reps, $string); // 正则查找然后替换
+        file_put_contents($file_url, $re_string); // 写入配置文件
+        return true;
+    } else {
+        return false;
+    }
+}
 /**
  * 进行图片数据的上传，写入表 xupload_imgs
  * @param string $slide_show

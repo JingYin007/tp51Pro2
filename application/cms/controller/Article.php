@@ -14,13 +14,11 @@ use think\Request;
 class Article extends CmsBase
 {
     protected $model;
-    protected $page_limit;
 
     public function __construct()
     {
         parent::__construct();
         $this->model = new Xarticles();
-        $this->page_limit = config('app.CMS_PAGE_SIZE');
     }
 
     /**

@@ -18,7 +18,7 @@ class Xconfig extends Validate
         'title'         =>  'require|max:100',
         'tag'         =>  'require|max:50|unique:xconfigs',
         'value'         =>  'require|max:100',
-        'type'         =>  'require|max:20',
+        'input_type'         =>  'require|max:20',
         'tip'         =>  'require|max:100',
         '__token__'    =>  'require|token',
     ];
@@ -30,8 +30,8 @@ class Xconfig extends Validate
         'tag.unique'          =>  '此标识字符串已存在',
         'value.require'          =>  '取值信息未添加',
         'value.max'      =>  '取值信息不能超过100个字符',
-        'type.require'          =>  '配置类型未添加',
-        'type.max'    => '类型长度已超',
+        'input_type.require'          =>  '配置类型未添加',
+        'input_type.max'    => '类型长度已超',
         'tip.require'    => '提示信息不能为空',
         'tip.max'      =>  '提示信息不能超过100个字符',
         '__token__.require'     =>  'Token不能为空',
@@ -43,7 +43,7 @@ class Xconfig extends Validate
      * @var array
      */
     protected $scene = [
-        'default'  =>  ['title','tag','value','type','tip'],
+        'default'  =>  ['title','tag','value','input_type','tip'],
         'token'    =>  ['__token__'],
     ];
 }

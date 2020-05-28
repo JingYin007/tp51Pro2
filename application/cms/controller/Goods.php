@@ -14,13 +14,11 @@ class Goods extends CmsBase
     protected $model;
     protected $categoryModel;
     protected $brandModel;
-    protected $page_limit;
     public function __construct()
     {
         parent::__construct();
         $this->model = new Xgoods();
         $this->categoryModel = new Xcategorys();
-        $this->page_limit = config('app.CMS_PAGE_SIZE');
     }
 
     /**

@@ -2,9 +2,7 @@
 
 namespace app\common\model;
 
-use app\common\validate\XadList;
 use app\common\validate\Xconfig;
-use think\Db;
 use \think\Model;
 
 /**
@@ -43,14 +41,14 @@ class Xconfigs extends BaseModel
     /**
      * 获取 符合条件的数量
      * @param null $search
-     * @param string $type
+     * @param string $input_type
      * @return int|string
      */
-    public function getConfigsCount($search = null, $type = 'text')
+    public function getConfigsCount($search = null, $input_type = 'text')
     {
         $res = $this
             ->field('id')
-            ->where([["status", '=', 0], ['type', '=', $type]])
+            ->where([["conf_type", '=', 0],["status", '=', 0], ['input_type', '=', $input_type]])
             ->where('title|tag', 'like', '%' . $search . '%')
             ->count();
         return $res;
@@ -64,14 +62,14 @@ class Xconfigs extends BaseModel
     {
         $res = $this
             ->field("*,count(id) count")
-            ->where("status",0)
-            ->group("type")
+            ->where([["conf_type", '=', 0],["status", '=', 0]])
+            ->group("input_type")
             ->select();
         $res  = isset($res) ? $res->toArray() : [];
         $arrCount = ['WB' => 0, 'KG' => 0, 'TP' => 0];
         foreach ($res as $key => $value) {
-            $status = $value['type'];
-            switch ($status) {
+            $input_type = $value['input_type'];
+            switch ($input_type) {
                 case 'text':
                     $arrCount['WB'] = $value['count'];
                     break;
@@ -93,22 +91,22 @@ class Xconfigs extends BaseModel
      * @param $curr_page
      * @param $limit
      * @param null $search
-     * @param string $type
+     * @param string $input_type
      * @return array|\PDOStatement|string|\think\Collection
      */
-    public function getConfigsForPage($curr_page, $limit, $search = null, $type = 'text')
+    public function getConfigsForPage($curr_page, $limit, $search = null, $input_type = 'text')
     {
         $res = $this
             ->field('*')
-            ->where([["status", '=', 0], ['type', '=', $type]])
+            ->where([["conf_type", '=', 0],["status", '=', 0], ['input_type', '=', $input_type]])
             ->where('title|tag', 'like', '%' . $search . '%')
-            ->order(['list_order' => 'desc', 'id' => 'desc'])
+            ->order(['list_order' => 'asc', 'id' => 'desc'])
             ->limit($limit * ($curr_page - 1), $limit)
             ->select();
         foreach ($res as $key => $v) {
-            if ($v['type'] == "text") {
+            if ($v['input_type'] == "text") {
                 $res[$key]['value_tip'] = "<span class=\"span-7EC0EE\">".$v['value']."</span>";
-            } elseif ($v['type'] == "checkbox") {
+            } elseif ($v['input_type'] == "checkbox") {
                 $id = $v['id'];
                 $checkTag = $v['value']?"checked":"";
                 $value_tip = "<input type=\"checkbox\" class=\"switch_checked\" lay-filter=\"switchConfigID\"
@@ -145,21 +143,20 @@ class Xconfigs extends BaseModel
      */
     public function addConfig($data)
     {
-        $type = isset($data['type']) ? $data['type'] : 'text';
-        $value_text = isset($data['value_text']) ? $data['value_text'] : '';
-        $value_checkbox = isset($data['value_checkbox']) ? $data['value_checkbox'] : '';
-        $value_button = isset($data['value_button']) ? $data['value_button'] : '';
-        if ($type == "checkbox") {
+        $input_type = isset($data['input_type']) ? $data['input_type'] : 'text';
+
+        if ($input_type == "checkbox") {
+            $value_checkbox = isset($data['value_checkbox']) ? $data['value_checkbox'] : '';
             $value = $value_checkbox?1:0;
-        }elseif ($type == "text"){
-            $value = $value_text;
+        }elseif ($input_type == "text"){
+            $value = isset($data['value_text']) ? $data['value_text'] : '';
         }else{
-            $value = $value_button;
+            $value = isset($data['value_button']) ? $data['value_button'] : '';
         }
         $addData = [
             'title' => isset($data['title']) ? $data['title'] : '',
             'tag' => isset($data['tag']) ? $data['tag'] : '',
-            'type' => $type,
+            'input_type' => $input_type,
             'value' => $value,
             'list_order' => isset($data['list_order']) ? intval($data['list_order']) : 0,
             'tip' => isset($data['tip']) ? $data['tip'] : '',
@@ -191,23 +188,22 @@ class Xconfigs extends BaseModel
                 ->update(['status' => -1]);
             $validateRes['message'] = $tag ? '删除成功' : '已删除';
         } else {
-            $type = isset($data['type']) ? $data['type'] : 'text';
-            $value_text = isset($data['value_text']) ? $data['value_text'] : '';
-            $value_checkbox = isset($data['value_checkbox']) ? $data['value_checkbox'] : '';
-            $value_button = isset($data['value_button']) ? $data['value_button'] : '';
-            if ($type == "checkbox") {
+            $input_type = isset($data['input_type']) ? $data['input_type'] : 'text';
+
+            if ($input_type == "checkbox") {
+                $value_checkbox = isset($data['value_checkbox']) ? $data['value_checkbox'] : '';
                 $value = $value_checkbox?1:0;
-            }elseif ($type == "text"){
-                $value = $value_text;
+            }elseif ($input_type == "text"){
+                $value = isset($data['value_text']) ? $data['value_text'] : '';
             }else{
-                $value = $value_button;
+                $value = isset($data['value_button']) ? $data['value_button'] : '';
             }
 
             $saveData = [
                 'id' => $id,
                 'title' => isset($data['title']) ? $data['title'] : '',
                 'tag' => isset($data['tag']) ? $data['tag'] : '',
-                'type' => $type,
+                'input_type' => $input_type,
                 'value' => $value,
                 'list_order' => isset($data['list_order']) ? intval($data['list_order']) : 0,
                 'tip' => isset($data['tip']) ? $data['tip'] : '',

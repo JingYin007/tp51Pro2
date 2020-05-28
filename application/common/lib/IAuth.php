@@ -18,24 +18,21 @@ use think\Request;
 class IAuth
 {
     /**
-     * 初始化配置信息
-     * 根据注释，进行配置，提高系统安全性
-     * @var string
+     * 获取系统配置项
+     * @param string $confTag
+     * @return mixed
      */
-    protected static $key = '_7+()HU&&@^#@%8dd73sK';//自定义AES秘钥
-    protected static $iv = '170MT07**(&^#@6E';//自定义16位 AES偏移量
-    protected static $set_pwd_pre_halt = '_#*moTzxx#mEx77BHGFSEDF'; //密码加密前缀
-    protected static $session_cms_tag = 'cmsMoTzxxAID';//后台登录信息存储标记
-    protected static $session_cms_scope = 'tp51Pro';// 后台登录信息存储 作用域
-
-
+    public static function AUTH_CONF($confTag = ''){
+        $res = config("sys_auth.".$confTag);
+        return $res;
+    }
     /**
      * 设置后台管理员登录密码加密
      * @param string $password
      * @return string
      */
     public static function setAdminUsrPassword($password = ''){
-        $res = strrev(md5(base64_encode($password).self::$set_pwd_pre_halt));
+        $res = strrev(md5(base64_encode($password).self::AUTH_CONF('PWD_PRE_HALT')));
         return $res;
     }
 
@@ -53,7 +50,7 @@ class IAuth
             $jsonRes = json_encode($cmsRes);
             //进行加密 并保存到Session中
             $cms_encrypt = self::encrypt($jsonRes);
-            Session::set(self::$session_cms_tag, $cms_encrypt,self::$session_cms_scope);
+            Session::set(self::AUTH_CONF('SESSION_CMS_TAG'), $cms_encrypt,self::AUTH_CONF('SESSION_CMS_SCOPE'));
         }
     }
     /**
@@ -76,9 +73,9 @@ class IAuth
      * @return array|mixed
      */
     public static function getDecryCmsRes(){
-        if (Session::has(self::$session_cms_tag,self::$session_cms_scope)
-            && Session::get(self::$session_cms_tag,self::$session_cms_scope)){
-            $cms_encrypt = Session::get(self::$session_cms_tag,self::$session_cms_scope);
+        if (Session::has(self::AUTH_CONF('SESSION_CMS_TAG'),self::AUTH_CONF('SESSION_CMS_SCOPE'))
+            && Session::get(self::AUTH_CONF('SESSION_CMS_TAG'),self::AUTH_CONF('SESSION_CMS_SCOPE'))){
+            $cms_encrypt = Session::get(self::AUTH_CONF('SESSION_CMS_TAG'),self::AUTH_CONF('SESSION_CMS_SCOPE'));
             $cms_decrypt = self::decrypt($cms_encrypt);
             $cmsRes = json_decode($cms_decrypt,1);
         }
@@ -88,8 +85,8 @@ class IAuth
      * 管理员账号退出操作
      */
     public static function logoutAdminCurrLogged(){
-        if (Session::has(self::$session_cms_tag,self::$session_cms_scope)) {
-            Session::delete(self::$session_cms_tag,self::$session_cms_scope);
+        if (Session::has(self::AUTH_CONF('SESSION_CMS_TAG'),self::AUTH_CONF('SESSION_CMS_SCOPE'))) {
+            Session::delete(self::AUTH_CONF('SESSION_CMS_TAG'),self::AUTH_CONF('SESSION_CMS_SCOPE'));
         }
     }
 
@@ -101,7 +98,7 @@ class IAuth
      * @return HexString
      */
     public static  function encrypt($input = '') {
-        $data = openssl_encrypt($input, 'AES-256-CBC', self::$key, OPENSSL_RAW_DATA,self::$iv);
+        $data = openssl_encrypt($input, 'AES-256-CBC', self::AUTH_CONF('AES_KEY'), OPENSSL_RAW_DATA,self::AUTH_CONF('AES_IV'));
         $data = base64_encode($data);
         return $data;
     }
@@ -113,7 +110,7 @@ class IAuth
      * @return String
      */
     public static function decrypt($sStr) {
-        $decrypted = openssl_decrypt(base64_decode($sStr), 'AES-256-CBC', self::$key, OPENSSL_RAW_DATA,self::$iv);
+        $decrypted = openssl_decrypt(base64_decode($sStr), 'AES-256-CBC', self::AUTH_CONF('AES_KEY'), OPENSSL_RAW_DATA,self::AUTH_CONF('AES_IV'));
         return $decrypted;
     }
 

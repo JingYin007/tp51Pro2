@@ -14,13 +14,10 @@ use think\Request;
 class AdList extends CmsBase
 {
     private $adModel;
-    //定义每页的记录数
-    private $page_limit;
     public function __construct()
     {
         parent::__construct();
         $this->adModel = new XadLists();
-        $this->page_limit = config('app.CMS_PAGE_SIZE');
     }
 
     /**

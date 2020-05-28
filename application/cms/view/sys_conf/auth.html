@@ -1,0 +1,128 @@
+{extend name="layouts/cms"}
+{block name='body-content'}
+
+<div class="layui-form">
+
+    <table class="layui-table table-body" lay-skin="row">
+        <colgroup>
+            <col width="15%">
+            <col width="40%">
+            <col width="10%">
+            <col width="30%">
+        </colgroup>
+        <thead>
+        <tr>
+            <th>配置项</th>
+            <th>取值</th>
+            <th>更新</th>
+            <th>注释</th>
+        </tr>
+        </thead>
+        <tbody class="table-tbody-normal">
+
+        <tr class="tr-normal tr-normal-PWD_PRE_HALT" tag="PWD_PRE_HALT">
+            <td><label type="button" class="layui-btn layui-btn-danger layui-btn-sm">登录密码-加密前缀</label></td>
+            <td class="td-value">
+                <input type="text" value="{$authConf.PWD_PRE_HALT}" class="layui-input">
+            </td>
+            <td class="td-refresh">
+                <button type="button" class="layui-btn layui-btn-danger layui-btn-radius">
+                    <i class="layui-icon">&#xe669;</i>
+                </button>
+            <td><div class="layui-form-mid layui-word-aux">建议16-24个字符左右</div></td>
+        </tr>
+
+        <tr class="tr-normal tr-normal-AES_KEY" tag="AES_KEY">
+            <td><label type="button" class="layui-btn layui-btn-primary layui-btn-sm">AES秘钥串</label></td>
+            <td class="td-value">
+                    <input type="text" value="{$authConf.AES_KEY}" class="layui-input">
+            </td>
+            <td class="td-refresh">
+                <button type="button" class="layui-btn layui-btn-primary layui-btn-radius">
+                    <i class="layui-icon">&#xe669;</i>
+                </button>
+            </td>
+            <td><div class="layui-form-mid layui-word-aux">为了安全性，使用时可自定义</div></td>
+        </tr>
+
+        <tr class="tr-normal tr-normal-AES_IV" tag="AES_IV">
+            <td><label type="button" class="layui-btn layui-btn-warm layui-btn-sm">AES偏移量</label></td>
+            <td class="td-value">
+                    <input type="text" value="{$authConf.AES_IV}" class="layui-input">
+            </td>
+            <td class="td-refresh"><button type="button" class="layui-btn layui-btn-warm layui-btn-radius">更新</button>
+            <td><div class="layui-form-mid layui-word-aux">自定义16位 AES偏移量</div></td>
+        </tr>
+
+        <tr class="tr-normal tr-normal-SESSION_CMS_TAG" tag="SESSION_CMS_TAG">
+            <td><label type="button" class="layui-btn layui-btn-normal layui-btn-sm">登录信息-存储标记</label></td>
+            <td class="td-value">
+                    <input type="text" value="{$authConf.SESSION_CMS_TAG}" class="layui-input">
+            </td>
+            <td class="td-refresh">
+                <button type="button" class="layui-btn layui-btn-normal layui-btn-radius">更新</button>
+            <td><div class="layui-form-mid layui-word-aux">SESSION 存储键设置</div></td>
+        </tr>
+
+        <tr class="tr-normal tr-normal-SESSION_CMS_SCOPE" tag="SESSION_CMS_SCOPE">
+            <td><label type="button" class="layui-btn layui-btn-sm">登录信息-存储作用域</label></td>
+            <td class="td-value">
+                    <input type="text" value="{$authConf.SESSION_CMS_SCOPE}" class="layui-input">
+            </td>
+            <td class="td-refresh">
+                <button type="button"
+                        class="layui-btn layui-btn-radius">
+                    <i class="layui-icon">&#xe669;</i>
+                </button>
+            <td><div class="layui-form-mid layui-word-aux">SESSION 存储作用域</div></td>
+        </tr>
+
+        </tbody>
+    </table>
+
+</div>
+<style>
+
+    .table-body{
+        width: 65%;
+        margin: 55px auto;
+        text-align: center;
+        border: 1px solid #7274A7;
+    }
+    label.layui-btn{
+        cursor: default;
+    }
+    .td-value input{
+        color: #7274AB;
+        background-color: #7274AB;
+    }
+    .td-refresh .layui-btn{
+        padding: 0px 0px;
+        width: 40px;
+        height: 39px;
+        border-radius: 200%;
+    }
+</style>
+{/block}
+
+{block name='single-content'}
+<script src="__CMS__/js/moZhang.js"></script>
+<script src="__CMS__/js/sys_configs.js"></script>
+<script>
+
+    $(".tr-normal .layui-input").click(function () {
+        var tr_tag = $(this).parent().parent().attr('tag');
+        console.log(tr_tag);
+        $(".tr-normal input").css('background','#7274AB');
+        $(".tr-normal-"+tr_tag+" input").css('background','#fff');
+        if(tr_tag == 'PWD_PRE_HALT'){
+            var tipMsg = "注意！更新后,后台管理员暂时只能以【moTzxx@admin:admin】进行登录，后期密码需再次更新哦";
+            layer.tips(tipMsg, '.tr-normal-PWD_PRE_HALT .layui-word-aux',{timer:8000});
+        }
+    });
+
+
+
+
+</script>
+{/block}

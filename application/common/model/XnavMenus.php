@@ -31,13 +31,13 @@ class XnavMenus extends BaseModel
         $res = $this
             ->field('*')
             ->where([['id', '>', 0], ['parent_id', '=', 0], ['status', '=', 1]])
-            ->order('list_order', 'desc')
+            ->order('list_order', 'asc')
             ->select();
         foreach ($res as $key => $value) {
             $parent_id = $value['id'];
             $childRes = $this
                 ->where([['parent_id', '=', $parent_id], ["status", '=', 1], ["type", '=', 0]])
-                ->order('list_order', 'desc')
+                ->order('list_order', 'asc')
                 ->select();
             $res[$key]['child'] = $childRes;
         }
@@ -100,7 +100,7 @@ class XnavMenus extends BaseModel
         $res = $this
             ->field('*')
             ->where([['id', '>', 0], ['parent_id', '=', 0], ['status', '=', 1], ['type', '=', 0]])
-            ->order('list_order', 'desc')
+            ->order('list_order', 'asc')
             ->select();
         return isset($res)?$res->toArray():[];
     }
@@ -121,7 +121,7 @@ class XnavMenus extends BaseModel
                 $childRes = $this
                     ->where('parent_id', $parent_id)
                     ->where('status', 1)
-                    ->order('list_order', 'desc')
+                    ->order('list_order', 'asc')
                     ->select();
                 $childRes = $this->dealForAdminShowMenus2($childRes, $arr);
                 $rootMenus[$key]['child'] = $childRes;
@@ -206,7 +206,7 @@ class XnavMenus extends BaseModel
             ->field('*')
             ->where($where)
             ->whereLike('name', '%' . $search . '%')
-            ->order(['list_order' => 'desc', 'created_at' => 'desc'])
+            ->order(['list_order' => 'asc', 'created_at' => 'desc'])
             ->limit($limit * ($curr_page - 1), $limit)
             ->select();
         foreach ($res as $key => $v) {

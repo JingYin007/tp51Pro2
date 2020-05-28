@@ -12,14 +12,11 @@ class Activity extends CmsBase
     private $actModel;
     private $categoryModel;
 
-    //定义每页的记录数
-    private $page_limit;
     public function __construct()
     {
         parent::__construct();
         $this->actModel = new Xactivitys();
         $this->categoryModel = new Xcategorys();
-        $this->page_limit = config('app.CMS_PAGE_SIZE');
     }
 
     /**

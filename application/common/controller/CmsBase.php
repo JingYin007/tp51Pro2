@@ -18,6 +18,8 @@ use app\common\model\Xadmins;
  */
 class CmsBase extends Base
 {
+    //定义每页的记录数
+    public $page_limit;
     /**
      * 初始化处理数据
      * Base constructor.
@@ -25,6 +27,7 @@ class CmsBase extends Base
     public function __construct()
     {
         parent::__construct();
+        $this->page_limit = config('app.CMS_PAGE_SIZE');
         $this->initAuth();
     }
 

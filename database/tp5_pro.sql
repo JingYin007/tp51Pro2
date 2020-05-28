@@ -10,7 +10,7 @@ Target Server Type    : MYSQL
 Target Server Version : 50553
 File Encoding         : 65001
 
-Date: 2020-05-25 18:11:51
+Date: 2020-05-28 11:27:26
 */
 
 SET FOREIGN_KEY_CHECKS=0;
@@ -103,7 +103,7 @@ CREATE TABLE `tp5_xadmin_roles` (
 -- ----------------------------
 -- Records of tp5_xadmin_roles
 -- ----------------------------
-INSERT INTO `tp5_xadmin_roles` VALUES ('1', '终级管理员', '1|7|6|2|3|73|4|5|93|49|48|50|67|61|76|133|134|', '2019-12-05 10:44:02', '1');
+INSERT INTO `tp5_xadmin_roles` VALUES ('1', '终级管理员', '138|139|140|141|1|2|7|6|3|4|5|93|73|49|48|50|67|61|76|133|134|', '2020-05-27 16:28:22', '1');
 INSERT INTO `tp5_xadmin_roles` VALUES ('2', '初级管理员', '1|6|2|3|4|5|', '2018-02-11 21:02:43', '1');
 
 -- ----------------------------
@@ -253,8 +253,9 @@ CREATE TABLE `tp5_xconfigs` (
   `id` int(11) NOT NULL AUTO_INCREMENT COMMENT 'ID标记',
   `title` varchar(50) NOT NULL COMMENT '配置项标题',
   `tag` varchar(50) NOT NULL COMMENT '缩写标签 建议使用大写字母',
+  `conf_type` tinyint(2) NOT NULL DEFAULT '0' COMMENT '配置类型 0：业务配置；1：系统配置',
+  `input_type` varchar(20) NOT NULL COMMENT '配置项 输入类型，分为 text、number、file、checkbox',
   `value` varchar(100) NOT NULL COMMENT '配置项的 取值',
-  `type` varchar(20) NOT NULL COMMENT '配置项类型，分为 text、number、file、checkbox',
   `tip` varchar(100) NOT NULL COMMENT '配置项提示信息',
   `list_order` int(11) NOT NULL DEFAULT '0' COMMENT '排序，越大越靠前',
   `status` tinyint(2) NOT NULL DEFAULT '0' COMMENT '状态  -1：删除  0：正常',
@@ -267,10 +268,10 @@ CREATE TABLE `tp5_xconfigs` (
 -- ----------------------------
 -- Records of tp5_xconfigs
 -- ----------------------------
-INSERT INTO `tp5_xconfigs` VALUES ('1', '我是一个文本1', 'WSWENBEN1', 'XXEERRES', 'text', 'HELLO,不要乱改！', '0', '0', '2019-07-30 18:09:23');
-INSERT INTO `tp5_xconfigs` VALUES ('2', '我是一个开关', 'SWITCHTOYOU', '0', 'checkbox', 'HAHAHA', '0', '0', '2019-07-30 18:13:34');
-INSERT INTO `tp5_xconfigs` VALUES ('3', '我是一个图片', 'TUPIAN1', '/cms/images/icon/goods_manager.png', 'button', '注意图片不要太大', '3', '0', '2019-07-30 18:21:18');
-INSERT INTO `tp5_xconfigs` VALUES ('4', 'VIP会员费用', 'VIP_MONEY', '199', 'text', 'VIP 就是牛!', '-1', '0', '2019-07-30 18:59:31');
+INSERT INTO `tp5_xconfigs` VALUES ('1', '我是一个文本1', 'WSWENBEN1', '0', 'text', '1', 'HELLO,不要乱改！', '2', '0', '2019-07-30 18:09:23');
+INSERT INTO `tp5_xconfigs` VALUES ('2', '我是一个开关', 'SWITCHTOYOU', '0', 'checkbox', '1', 'HAHAHA', '0', '0', '2019-07-30 18:13:34');
+INSERT INTO `tp5_xconfigs` VALUES ('3', '我是一个图片', 'TUPIAN1', '0', 'button', '/cms/images/icon/goods_manager.png', '注意图片不要太大', '3', '0', '2019-07-30 18:21:18');
+INSERT INTO `tp5_xconfigs` VALUES ('4', 'VIP会员费用', 'VIP_MONEY', '0', 'text', '199', 'VIP 就是牛!', '1', '0', '2019-07-30 18:59:31');
 
 -- ----------------------------
 -- Table structure for tp5_xgoods
@@ -318,24 +319,24 @@ CREATE TABLE `tp5_xnav_menus` (
   `action` varchar(100) NOT NULL DEFAULT '' COMMENT 'action地址（etc:admin/home）',
   `icon` varchar(100) NOT NULL DEFAULT '' COMMENT '自定义图标样式',
   `status` tinyint(4) NOT NULL DEFAULT '1' COMMENT '状态，1：正常，-1：删除',
-  `list_order` tinyint(4) NOT NULL DEFAULT '0' COMMENT '排序标识，越大越靠前',
+  `list_order` tinyint(4) NOT NULL DEFAULT '0' COMMENT '排序标识，越小越靠前',
   `created_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
   `type` tinyint(2) NOT NULL DEFAULT '0' COMMENT '导航类型 0：菜单类  1：权限链接',
   PRIMARY KEY (`id`),
   KEY `id` (`id`,`name`) USING BTREE
-) ENGINE=MyISAM AUTO_INCREMENT=138 DEFAULT CHARSET=utf8mb4 COMMENT='菜单导航表';
+) ENGINE=MyISAM AUTO_INCREMENT=142 DEFAULT CHARSET=utf8mb4 COMMENT='菜单导航表';
 
 -- ----------------------------
 -- Records of tp5_xnav_menus
 -- ----------------------------
 INSERT INTO `tp5_xnav_menus` VALUES ('136', '查看商品操作日志', '50', 'cms/goods/viewLogs', '', '1', '0', '2020-03-09 17:45:57', '1');
 INSERT INTO `tp5_xnav_menus` VALUES ('2', '菜单管理', '1', 'cms/menu/index', '/cms/images/icon/menu_list.png', '1', '0', '2018-02-11 21:02:43', '0');
-INSERT INTO `tp5_xnav_menus` VALUES ('3', '列表管理', '0', '/', '/cms/images/icon/desktop.png', '1', '1', '2019-11-22 15:34:51', '0');
+INSERT INTO `tp5_xnav_menus` VALUES ('3', '列表管理', '0', '/', '/cms/images/icon/desktop.png', '1', '2', '2020-05-26 16:52:44', '0');
 INSERT INTO `tp5_xnav_menus` VALUES ('4', '今日赠言', '3', 'cms/todayWord/index', '/cms/images/icon/diplom.png', '1', '0', '2018-02-11 21:02:43', '0');
 INSERT INTO `tp5_xnav_menus` VALUES ('5', '文章列表', '3', 'cms/article/index', '/cms/images/icon/adaptive.png', '1', '0', '2018-02-11 21:02:43', '0');
-INSERT INTO `tp5_xnav_menus` VALUES ('1', '管理分配', '0', '/', '/cms/images/icon/manage.png', '1', '3', '2019-11-25 14:15:54', '0');
-INSERT INTO `tp5_xnav_menus` VALUES ('6', '管理人员', '1', 'cms/admin/index', '/cms/images/icon/admin.png', '1', '2', '2019-11-22 15:48:30', '0');
-INSERT INTO `tp5_xnav_menus` VALUES ('7', '角色管理', '1', 'cms/admin/role', '/cms/images/icon/role.png', '1', '3', '2018-02-11 21:02:43', '0');
+INSERT INTO `tp5_xnav_menus` VALUES ('1', '管理分配', '0', '/', '/cms/images/icon/manage.png', '1', '1', '2020-05-26 16:52:32', '0');
+INSERT INTO `tp5_xnav_menus` VALUES ('6', '管理人员', '1', 'cms/admin/index', '/cms/images/icon/admin.png', '1', '3', '2020-05-26 16:54:27', '0');
+INSERT INTO `tp5_xnav_menus` VALUES ('7', '角色管理', '1', 'cms/admin/role', '/cms/images/icon/role.png', '1', '2', '2020-05-26 16:54:14', '0');
 INSERT INTO `tp5_xnav_menus` VALUES ('29', '添加导航菜单', '2', 'cms/menu/add', '/', '1', '0', '2018-11-23 20:32:29', '1');
 INSERT INTO `tp5_xnav_menus` VALUES ('30', '导航菜单修改', '2', 'cms/menu/edit', '/', '1', '0', '2018-11-23 20:34:54', '1');
 INSERT INTO `tp5_xnav_menus` VALUES ('31', '菜单权限设置', '2', 'cms/menu/auth', '/', '1', '0', '2018-11-23 20:35:33', '1');
@@ -348,7 +349,7 @@ INSERT INTO `tp5_xnav_menus` VALUES ('39', '修改管理员数据', '6', 'cms/ad
 INSERT INTO `tp5_xnav_menus` VALUES ('41', '增加角色', '7', 'cms/admin/addRole', '/', '1', '0', '2018-11-23 20:48:52', '1');
 INSERT INTO `tp5_xnav_menus` VALUES ('42', '修改角色数据', '7', 'cms/admin/editRole', '/', '1', '0', '2018-11-23 20:49:08', '1');
 INSERT INTO `tp5_xnav_menus` VALUES ('48', '产品分类', '49', 'cms/category/index', '/cms/images/icon/goods_category.png', '1', '0', '2019-03-11 11:41:24', '0');
-INSERT INTO `tp5_xnav_menus` VALUES ('49', '商品管理', '0', '/', '/cms/images/icon/goods_manager.png', '1', '0', '2019-11-22 14:59:54', '0');
+INSERT INTO `tp5_xnav_menus` VALUES ('49', '商品管理', '0', '/', '/cms/images/icon/goods_manager.png', '1', '3', '2020-05-26 16:52:56', '0');
 INSERT INTO `tp5_xnav_menus` VALUES ('50', '商品列表', '49', 'cms/goods/index', '/cms/images/icon/goods.png', '1', '0', '2019-03-11 15:04:20', '0');
 INSERT INTO `tp5_xnav_menus` VALUES ('51', '添加产品分类', '48', 'cms/category/add', '/', '1', '0', '2019-03-11 15:16:11', '1');
 INSERT INTO `tp5_xnav_menus` VALUES ('52', '修改产品分类', '48', 'cms/category/edit', '/', '1', '0', '2019-03-11 15:16:11', '1');
@@ -376,15 +377,19 @@ INSERT INTO `tp5_xnav_menus` VALUES ('77', '广告添加', '76', 'cms/adList/add
 INSERT INTO `tp5_xnav_menus` VALUES ('80', 'ajax 首页显示广告状态修改', '76', 'cms/adList/ajaxForShow', '/', '1', '0', '2019-07-19 18:11:23', '1');
 INSERT INTO `tp5_xnav_menus` VALUES ('78', '广告修改', '76', 'cms/adList/edit', '/', '1', '0', '2019-07-19 18:11:00', '1');
 INSERT INTO `tp5_xnav_menus` VALUES ('92', 'ajax 文章推荐操作', '5', 'cms/article/ajaxForRecommend', '/', '1', '0', '2019-07-22 16:22:01', '1');
-INSERT INTO `tp5_xnav_menus` VALUES ('93', '配置列表', '3', 'cms/config/index', '/cms/images/icon/cms_config.png', '1', '0', '2019-07-30 18:06:31', '0');
+INSERT INTO `tp5_xnav_menus` VALUES ('93', '业务配置', '3', 'cms/config/index', '/cms/images/icon/cms_config.png', '1', '0', '2020-05-26 16:41:15', '0');
 INSERT INTO `tp5_xnav_menus` VALUES ('94', '添加配置项', '93', 'cms/config/add', '/', '1', '0', '2019-07-26 15:08:38', '1');
 INSERT INTO `tp5_xnav_menus` VALUES ('95', '配置项修改', '93', 'cms/config/edit', '/', '1', '0', '2019-07-29 14:30:13', '1');
 INSERT INTO `tp5_xnav_menus` VALUES ('97', 'ajax 根据分类获取参加活动的商品', '61', 'cms/goods/ajaxGetCatGoodsForActivity', '/', '1', '0', '2019-08-16 09:31:52', '1');
 INSERT INTO `tp5_xnav_menus` VALUES ('99', '规格数据展示', '67', 'cms/specInfo/details', '/', '1', '0', '2019-11-14 16:08:47', '1');
-INSERT INTO `tp5_xnav_menus` VALUES ('133', '监控统计', '0', '/', '/cms/images/icon/cms_analyze.png', '1', '0', '2019-12-05 10:47:23', '0');
+INSERT INTO `tp5_xnav_menus` VALUES ('133', '监控统计', '0', '/', '/cms/images/icon/cms_analyze.png', '1', '4', '2020-05-26 16:53:05', '0');
 INSERT INTO `tp5_xnav_menus` VALUES ('134', '商品价格分布饼图', '133', 'cms/analyze/goodsPricePie', '/cms/images/icon/cms_pie.png', '1', '0', '2019-12-05 10:49:53', '0');
 INSERT INTO `tp5_xnav_menus` VALUES ('135', '查看文章操作日志', '5', 'cms/article/viewLogs', '', '1', '0', '2020-03-09 17:06:40', '1');
 INSERT INTO `tp5_xnav_menus` VALUES ('137', '动态配置开关状态', '93', 'cms/config/ajaxUpdateSwitchValue', '/', '1', '0', '2020-05-25 18:05:34', '1');
+INSERT INTO `tp5_xnav_menus` VALUES ('138', '系统配置', '0', '/', '/cms/images/icon/cms_config_system.png', '1', '0', '2020-05-27 16:24:28', '0');
+INSERT INTO `tp5_xnav_menus` VALUES ('139', '登录认证', '138', 'cms/sysConf/auth', '/cms/images/icon/cms_auth.png', '1', '1', '2020-05-27 16:41:18', '0');
+INSERT INTO `tp5_xnav_menus` VALUES ('140', 'FTP 配置', '138', 'cms/sysConf/ftp', '/cms/images/icon/cms_ftp.png', '1', '2', '2020-05-27 16:41:28', '0');
+INSERT INTO `tp5_xnav_menus` VALUES ('141', 'IP 白名单', '138', 'cms/sysConf/ip', '/cms/images/icon/cms_ip.png', '1', '3', '2020-05-27 16:41:36', '0');
 
 -- ----------------------------
 -- Table structure for tp5_xphotos

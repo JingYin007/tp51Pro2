@@ -21,34 +21,34 @@
     <div class="layui-form-item">
         <label class="layui-form-label">所属类型：</label>
         <div class="layui-input-inline">
-            <select name="type" lay-filter="sel_type" lay-verify="required">
-                <option value="text" {$confData.type=="text"?"selected":""}>文本</option>
-                <option value="checkbox" {$confData.type=="checkbox"?"selected":""}>开关</option>
-                <option value="button" {$confData.type=="button"?"selected":""}>图片</option>
+            <select name="input_type" lay-filter="sel_type" lay-verify="required">
+                <option value="text" {$confData.input_type=="text"?"selected":""}>文本</option>
+                <option value="checkbox" {$confData.input_type=="checkbox"?"selected":""}>开关</option>
+                <option value="button" {$confData.input_type=="button"?"selected":""}>图片</option>
             </select>
         </div>
     </div>
 
     <div class="layui-form-item">
         <label class="layui-form-label">配置取值：</label>
-        <div class="div-config-type div-config-typeFor-text" style="display: {$confData.type=='text'?'block':'none'}" >
+        <div class="div-config-type div-config-typeFor-text" style="display: {$confData.input_type=='text'?'block':'none'}" >
             <div class="layui-input-inline">
                 <input type="text" name="value_text" required lay-verify="required"
                        value="{$confData.value}"
                        placeholder="请输入取值" autocomplete="off" class="layui-input">
             </div>
         </div>
-        <div class="div-config-type div-config-typeFor-button" style="display: {$confData.type=='button'?'block':'none'}">
+        <div class="div-config-type div-config-typeFor-button" style="display: {$confData.input_type=='button'?'block':'none'}">
             <div class="layui-upload layui-input-inline">
                 <button type="button" name="img_upload" class="layui-btn btn_upload_img">
                     <i class="layui-icon">&#xe67c;</i>上传图片
                 </button>
                 <img class="layui-upload-img img-upload-preview-small img-upload-view"
-                     src="{$confData.type=='button'?$confData.value:'/'}">
+                     src="{$confData.input_type=='button'?$confData.value:'/'}">
             </div>
             <input type="hidden" name="value_button" class="menu-icon" value="{$confData.value}">
         </div>
-        <div class="div-config-type div-config-typeFor-checkbox" style="display: {$confData.type=='checkbox'?'block':'none'}">
+        <div class="div-config-type div-config-typeFor-checkbox" style="display: {$confData.input_type=='checkbox'?'block':'none'}">
             <div class="layui-input-block">
                 <input type="checkbox" {$confData['value']==1?"checked":""} name="value_checkbox"
                        lay-skin="switch" lay-filter="switchTest" lay-text="打开|关闭">
@@ -72,7 +72,7 @@
                    value="{$confData.list_order}" required lay-verify="required"
                    autocomplete="off" class="layui-input">
         </div>
-        <div class="layui-form-mid layui-word-aux">(数字越大，排序越靠前)</div>
+        <div class="layui-form-mid layui-word-aux">(数字越小，排序越靠前)</div>
     </div>
 
     {:token()}

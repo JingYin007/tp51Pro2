@@ -11,7 +11,6 @@ use think\Db;
 class SpecInfo extends CmsBase
 {
     protected $model;
-    protected $page_limit;
     protected $categoryModel;
 
     public function __construct()
@@ -19,7 +18,6 @@ class SpecInfo extends CmsBase
         parent::__construct();
         $this->model = new XspecInfos();
         $this->categoryModel = new Xcategorys();
-        $this->page_limit = config('app.CMS_PAGE_SIZE');
     }
 
     /**

@@ -27,7 +27,7 @@
 
     <div class="layui-form-item">
         <label class="layui-form-label">菜单类型：</label>
-        <div class="layui-input-inline" style="width: 660px">
+        <div class="layui-input-block" style="width: 660px">
             <input type="radio" name="navType" lay-filter="navType" value="F" title="主菜单" checked>
             <input type="radio" name="navType" lay-filter="navType" value="S" title="二级菜单">
         </div>
@@ -66,7 +66,7 @@
             <input type="number" name="list_order" value="0" required lay-verify="required"
                    placeholder="请输入密码" autocomplete="off" class="layui-input">
         </div>
-        <div class="layui-form-mid layui-word-aux">(数字越大，排序越靠前)</div>
+        <div class="layui-form-mid layui-word-aux">(数字越小，排序越靠前)</div>
     </div>
     <div class="layui-form-item">
         <label class="layui-form-label">状态设置：</label>

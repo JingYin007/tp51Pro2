@@ -5,8 +5,6 @@ namespace app\cms\controller;
 use app\common\lib\IAuth;
 use app\common\model\Xadmins;
 use app\common\model\XnavMenus;
-use think\facade\Cookie;
-use think\facade\Session;
 use think\Request;
 
 /**

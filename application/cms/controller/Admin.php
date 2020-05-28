@@ -18,7 +18,6 @@ class Admin extends CmsBase
     protected $model;
     protected $ar_model;
     protected $menuModel;
-    protected $page_limit;
 
     public function __construct()
     {
@@ -26,7 +25,6 @@ class Admin extends CmsBase
         $this->model = new Xadmins();
         $this->ar_model = new XadminRoles();
         $this->menuModel = new XnavMenus();
-        $this->page_limit = config('app.CMS_PAGE_SIZE');
     }
 
     /**
