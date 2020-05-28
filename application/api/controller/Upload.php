@@ -49,7 +49,7 @@ class Upload
     public function ftpImageToServer($local_file, $remote_file)
     {
         //是否启用FTP
-        $FTP_USE = config('app.FTP_USE');
+        $FTP_USE = config('ftp.FTP_USE');
         if (!$FTP_USE){
             return true;
         }else{

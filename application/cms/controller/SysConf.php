@@ -48,9 +48,9 @@ class SysConf extends CmsBase
         if ($request->isPost()){
             return showMsg(0,'请求不合法！');
         }else{
-            $authConf = config('auth.');
+            $ftpConf = config('ftp.');
 
-            return view('auth');
+            return view('ftp',['ftpConf'=>$ftpConf]);
         }
     }
 

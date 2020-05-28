@@ -27,11 +27,11 @@ class FtpServer
      */
     public function start($data)
     {
-        if(empty($data['port'])) $data['port'] ='21';
-        if(empty($data['pasv'])) $data['pasv'] =false;
-        if(empty($data['ssl'])) $data['ssl'] = false;
-        if(empty($data['timeout'])) $data['timeout'] = 30;
-        return $this->connect($data['server'],$data['username'],$data['password'],$data['port'],$data['pasv'],$data['ssl'],$data['timeout']);
+        if(empty($data['PORT'])) $data['PORT'] ='21';
+        if(empty($data['PASV'])) $data['PASV'] =false;
+        if(empty($data['SSL'])) $data['SSL'] = false;
+        if(empty($data['TIME_OUT'])) $data['TIME_OUT'] = 30;
+        return $this->connect($data['SERVER'],$data['USER_NAME'],$data['PASSWORD'],$data['PORT'],$data['PASV'],$data['SSL'],$data['TIME_OUT']);
     }
 
     /**
@@ -41,19 +41,19 @@ class FtpServer
      * @param string $password 密码
      * @param string $port  服务器端口，默认值为21
      * @param bool $pasv    是否开启被动模式
-     * @param bool $ssl     是否使用SSL连接
-     * @param int $timeout  超时时间
+     * @param bool $SSL     是否使用SSL连接
+     * @param int $TIME_OUT  超时时间
      * @return bool
      */
-    public function connect($host, $username = '', $password = '', $port = '21', $pasv = false, $ssl = false, $timeout = 30) {
+    public function connect($host, $username = '', $password = '', $port = '21', $pasv = false, $SSL = false, $TIME_OUT = 30) {
         $start = time();
-        if ($ssl) {
-            if (!$this->link = @ftp_ssl_connect($host, $port, $timeout)) {
+        if ($SSL) {
+            if (!$this->link = @ftp_ssl_connect($host, $port, $TIME_OUT)) {
                 $this->err_code = 1;
                 return false;
             }
         } else {
-            if (!$this->link = @ftp_connect($host, $port, $timeout)) {
+            if (!$this->link = @ftp_connect($host, $port, $TIME_OUT)) {
                 $this->err_code = 1;
                 return false;
             }

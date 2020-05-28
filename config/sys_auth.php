@@ -10,7 +10,6 @@
  * Time: 14:45
  */
 return [
-    'FTP_USE' => false, //是否启用ftp上传功能，true时，请对应修改配置文件 “ftp.php”
     'IP_WHITE' => false,//是否启用IP白名单，true时 ...
 
     'AES_KEY'=>'$MEWQ+D_()*#($#@O>?',//自定义AES秘钥
