@@ -63,9 +63,9 @@ class SysConf extends CmsBase
         if ($request->isPost()){
             return showMsg(0,'请求不合法！');
         }else{
-            $authConf = config('auth.');
+            $authConf = config('sys_auth.');
 
-            return view('auth');
+            return view('ip');
         }
     }
 }

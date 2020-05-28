@@ -48,7 +48,7 @@ Route::any('cms/config/add','cms/config/add');
 Route::any('cms/config/edit/:id','cms/config/edit');
 Route::post('cms/config/ajaxUpdateSwitchValue','cms/config/ajaxUpdateSwitchValue');
 
-// 系统信息配置
+//系统信息配置
 Route::any('cms/sysConf/auth','cms/sysConf/auth');
 Route::any('cms/sysConf/ftp','cms/sysConf/ftp');
 Route::any('cms/sysConf/ipWhite','cms/sysConf/ipWhite');
