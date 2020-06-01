@@ -121,7 +121,7 @@ class XsysConf extends Model
                 $count = Db::name('xipWhites')->where('ip',$ipVal)->field('status')->find();
                 if ($count){
                     if ($count['status'] == 1){
-                        $message = "该IP地址已存在！";
+                        $message = "Sorry，该IP地址已存在！";
                     }else{
                         $tag = Db::name('xipWhites')->where('ip',$ipVal)->update(['status'=>1]);
                     }
@@ -130,7 +130,7 @@ class XsysConf extends Model
                 }
                 $message = isset($message)?$message:"IP 添加成功";
             }else{
-                $message = "IP 地址不规范！";
+                $message = "Sorry，IP地址不规范！";
             }
         }
         return ['tag' => $tag?1:0,'message' => $message];
