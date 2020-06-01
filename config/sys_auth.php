@@ -10,7 +10,7 @@
  * Time: 14:45
  */
 return [
-    'IP_WHITE' => false,//是否启用IP白名单，true时 ...
+    'IP_WHITE'=>'CLOSE',//是否启用IP白名单 ...
 
     'AES_KEY'=>'$MEWQ+D_()*#($#@O>?',//自定义AES秘钥
     'AES_IV'=>'$DH890^28LOIgf()',//自定义16位 AES偏移量

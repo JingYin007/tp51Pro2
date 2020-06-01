@@ -10,7 +10,7 @@ Target Server Type    : MYSQL
 Target Server Version : 50553
 File Encoding         : 65001
 
-Date: 2020-05-28 17:18:07
+Date: 2020-06-01 19:33:01
 */
 
 SET FOREIGN_KEY_CHECKS=0;
@@ -306,6 +306,28 @@ INSERT INTO `tp5_xgoods` VALUES ('5', '江小白白酒500ml40度8瓶青春版清
 INSERT INTO `tp5_xgoods` VALUES ('7', '纽仕兰牧场Theland新西兰进口全脂纯牛奶4.0蛋白质钙250ml*24盒箱', '10', '/cms/images/goods/7/1.jpg', '一条裙子', '0', '<p><img src=\"/cms/images/goods/7/3.jpg\" title=\"100629MTMzMzg3NDQ4MTA0.png\" alt=\"TB2pn9Tqk7mBKNjSZFyXXbydFXa_!!82033576.png\"/></p>', '129.00', '99.00', '[{\"spec_id\":\"14\",\"spec_info\":[{\"spec_name\":\"250ml*24\",\"spec_id\":\"15\",\"specFstID\":\"14\"},{\"spec_name\":\"250ml*6\",\"spec_id\":\"16\",\"specFstID\":\"14\"}],\"spec_name\":\"规格【牛奶】\"}]', '2399', '2019-03-19 10:03:48', '2019-11-29 15:12:31', '1', '0', '1');
 INSERT INTO `tp5_xgoods` VALUES ('3', '蒙牛纯甄小蛮腰酸牛奶原味红西柚味瓶装230g×10瓶学生酸奶', '10', '/cms/images/goods/3/1.jpg', '8月产蒙牛纯甄小蛮腰酸牛奶', '0', '<p><img src=\"/cms/images/goods/3/2.jpg\" title=\"094200Mjc1ODM2NzIyNTI5.jpg\" alt=\"O1CN01H5YnKT1QuzKuf9HCE_!!1584902037.jpg\"/></p><p><br/></p>', '30.00', '29.88', '[{\"spec_id\":\"14\",\"spec_info\":[{\"spec_name\":\"230g*10\",\"spec_id\":\"24\",\"specFstID\":\"14\"}],\"spec_name\":\"规格【牛奶】\"}]', '700', '2019-11-29 09:42:38', '2020-03-09 17:54:23', '1', '1', '3');
 INSERT INTO `tp5_xgoods` VALUES ('6', '马来西亚进口 零涩 蓝山风味速溶三合一咖啡 40条640g', '9', '/cms/images/goods/6/1.jpg', 'HHEEE', '2', '<p><img src=\"/cms/images/goods/6/4.jpg\" title=\"182640MTY0OTg5Njg2NTk0.jpg\"/></p><p><img src=\"/cms/images/goods/6/5.jpg\" title=\"182641OTc0ODMzMTk1Nzgy.jpg\"/></p><p><br/></p>', '28.99', '29.99', '[{\"spec_id\":\"1\",\"spec_info\":[{\"spec_name\":\"640g\",\"spec_id\":\"2\",\"specFstID\":\"1\"}],\"spec_name\":\"容量【速溶咖啡】\"}]', '500', '2019-03-11 18:03:26', '2019-11-29 15:14:17', '1', '0', '1');
+
+-- ----------------------------
+-- Table structure for tp5_xip_whites
+-- ----------------------------
+DROP TABLE IF EXISTS `tp5_xip_whites`;
+CREATE TABLE `tp5_xip_whites` (
+  `id` int(11) NOT NULL AUTO_INCREMENT COMMENT 'ID 标识',
+  `ip` varchar(20) NOT NULL COMMENT 'ip 地址',
+  `status` tinyint(2) NOT NULL DEFAULT '1' COMMENT '状态 1：正常；-1：已删除',
+  PRIMARY KEY (`id`)
+) ENGINE=MyISAM AUTO_INCREMENT=8 DEFAULT CHARSET=utf8mb4 COMMENT='IP 白名单';
+
+-- ----------------------------
+-- Records of tp5_xip_whites
+-- ----------------------------
+INSERT INTO `tp5_xip_whites` VALUES ('1', '127.0.0.1', '1');
+INSERT INTO `tp5_xip_whites` VALUES ('2', '210.12.84.30', '1');
+INSERT INTO `tp5_xip_whites` VALUES ('3', '199.32.22.12', '1');
+INSERT INTO `tp5_xip_whites` VALUES ('4', '22.132.1.3', '1');
+INSERT INTO `tp5_xip_whites` VALUES ('5', '145.55.3.4', '1');
+INSERT INTO `tp5_xip_whites` VALUES ('6', '122.4.5.7', '1');
+INSERT INTO `tp5_xip_whites` VALUES ('7', '210.12.84.12', '-1');
 
 -- ----------------------------
 -- Table structure for tp5_xnav_menus

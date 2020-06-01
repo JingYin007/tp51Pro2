@@ -51,4 +51,98 @@ class XsysConf extends Model
 
         return ['tag' => $opTag,'message' => $opMessage];
     }
+
+    /**
+     * 获取正常状态下的 ip
+     * @return array|\PDOStatement|string|\think\Collection
+     */
+    public function getIpWhites(){
+        $res = Db::name('xipWhites')
+            ->field('ip,floor(rand()*6) rand')
+            ->where('status',1)
+            ->select();
+        return isset($res)? $res:[];
+    }
+
+    /**
+     * ajax 更新IP白名单数据
+     * @param array $req
+     * @return array
+     */
+    public function ajaxUpdateIpData($req = []){
+        $opTag = isset($req['tag'])?$req['tag']:'S';
+        switch ($opTag){
+            case 'S'://进行服务开启、关闭
+                $val = $req['val']?'OPEN':'CLOSE';
+                $opRes = $this->updateAuthConf('IP_WHITE',$val);
+                break;
+            case 'A'://添加IP地址
+                $val = $req['val']?trim($req['val']):'';
+                $opRes = $this->addIpWhite($val);
+                break;
+            case 'D'://删除IP地址
+                $val = $req['val']?trim($req['val']):'';
+                $opRes = $this->delIpWhite($val);
+                break;
+            default:
+                $opRes = [];
+                break;
+        }
+        return $opRes;
+    }
+
+    /**
+     * 删除 IP
+     * @param string $ipVal
+     * @return array
+     */
+    public function delIpWhite($ipVal = ''){
+        if ($ipVal){
+            $tag = Db::name('xipWhites')->where('ip',$ipVal)->update(['status'=>-1]);
+            $message = $tag?'删除成功':"删除失败";
+        }else{
+            $tag = 0;
+            $message = "获取IP信息失败！";
+        }
+        return ['tag'=>$tag,'message' => $message];
+    }
+    /**
+     * 添加 IP 地址
+     * @param string $ipVal
+     * @return array
+     */
+    public function addIpWhite($ipVal = ''){
+        $tag = 0;
+        if (!$ipVal){
+            $message = '请输入IP地址！';
+        }else{
+            $ipVal = trim($ipVal);
+            if (filter_var($ipVal,FILTER_VALIDATE_IP)){
+                $count = Db::name('xipWhites')->where('ip',$ipVal)->field('status')->find();
+                if ($count){
+                    if ($count['status'] == 1){
+                        $message = "该IP地址已存在！";
+                    }else{
+                        $tag = Db::name('xipWhites')->where('ip',$ipVal)->update(['status'=>1]);
+                    }
+                }else{
+                    $tag = Db::name('xipWhites')->insertGetId(['ip'=>$ipVal]);
+                }
+                $message = isset($message)?$message:"IP 添加成功";
+            }else{
+                $message = "IP 地址不规范！";
+            }
+        }
+        return ['tag' => $tag?1:0,'message' => $message];
+    }
+
+    /**
+     * 检查是否在白名单中
+     * @param string $ipVal
+     * @return bool
+     */
+    public function checkIpAuth($ipVal = ''){
+        $ipStatus =  Db::name('xipWhites')->where('ip',$ipVal)->value('status');
+        return $ipStatus==1?true:false;
+    }
 }

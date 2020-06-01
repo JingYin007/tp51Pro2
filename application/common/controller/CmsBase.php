@@ -10,6 +10,8 @@ namespace app\common\controller;
 
 use app\common\lib\IAuth;
 use app\common\model\Xadmins;
+use app\common\model\XsysConf;
+use think\facade\Request;
 
 /**
  * 此类主要用于后台控制类的初始化操作
@@ -41,16 +43,39 @@ class CmsBase extends Base
         if (!$cmsAID) {
             $message = "You are offline,please logon again!";
         } else {
-            //TODO 判断当前用户是否具有此操作权限
-            $checkAuth = $this->checkCmsAdminAuth($cmsAID);
-            $authFlag = $checkAuth;
-            $message = $checkAuth ? "权限正常" : "Sorry,You don't have permission!";
+            if ($this->checkCmsIpAuth()){
+                //TODO 判断当前用户是否具有此操作权限
+                $checkAuth = $this->checkCmsAdminAuth($cmsAID);
+                $authFlag = $checkAuth;
+                $message = $checkAuth ? "权限正常" : "Sorry,You don't have permission!";
+            }else{
+                $message = "Sorry,Your IP is abnormal, please contact the administrator!";
+            }
         }
         if (!$authFlag) {
             return showMsg($authFlag, $message);
         };
     }
 
+    /**
+     * 检查IP白名单开启状态下是否有权限
+     * @return bool
+     */
+    public function checkCmsIpAuth(){
+        $authTag = true;
+        $IP_WHITE = config('sys_auth.IP_WHITE');
+        if ($IP_WHITE == 'OPEN'){
+            //TODO 当前IP 是否在白名单中
+            $ipMark = Request::ip();
+            $checkTag = (new XsysConf())->checkIpAuth($ipMark);
+            if ($checkTag){
+                $authTag = true;
+            }else{
+                $authTag = false;
+            }
+        }
+        return $authTag;
+    }
     /**
      * 检查权限
      * @param int $adminID

@@ -1,14 +1,163 @@
 {extend name="layouts/cms"}
 {block name='body-content'}
 
-<div class="layui-inline layui-form">
+<div class="layui-form-item layui-form">
+    <label class="layui-form-label">IP白名单：</label>
     <div class="layui-input-block">
-        <input type="checkbox" checked="" name="open" lay-skin="switch" lay-filter="switchTest" lay-text="ON|OFF">
+        <input type="checkbox"
+               {eq name="IP_WHITE" value="OPEN"} checked="" {/eq}
+               name="open" lay-skin="switch"
+               class="cb-switch"
+               lay-filter="switchIP" lay-text="开启|关闭">
+
     </div>
+
 </div>
+<div class="div-btn-add">
+    <button type="button" title="添加ip" onclick="addIP()"
+            class="btn-add-ip layui-btn-danger layui-btn layui-btn-sm layui-btn-radius">
+        <i class="layui-icon">&#xe61f;</i>
+    </button>
+</div>
+
+<div class="div-ips">
+    {volist name="ipWhites" id="vo"}
+    <button type="button" class="layui-btn
+        layui-btn-sm layui-btn-radius btn-ip-{$vo.rand}">{$vo.ip}</button>
+    {/volist}
+</div>
+
+<style>
+    .div-ips,.div-btn-add{
+        /*background-color: #7274AB;*/
+        text-align:center;
+        margin:0 auto;
+        width: 52%;
+    }
+    .div-ips button{
+        margin: 5px 5px;
+    }
+    .btn-add-ip{
+        padding: 0px 0px;
+        width: 52px;
+        height: 52px;
+        border-radius: 200%;
+        margin: 36px;
+    }
+    .layui-btn .layui-icon{
+        margin-right: 0px;
+    }
+    .btn-ip-0{
+        background-color: #d9534f;
+    }
+    .btn-ip-1{
+        background-color: #ffc107;
+    }
+    .btn-ip-2{
+        background-color: #7274AB;
+    }
+    .btn-ip-3{
+        background-color: #5FB878;
+    }
+    .btn-ip-4{
+        background-color: #1E9FFF;
+    }
+    .btn-ip-5{
+        background-color: #A0522D;
+    }
+
+</style>
+
+
 {/block}
 
 {block name='single-content'}
 <script src="__CMS__/js/moZhang.js"></script>
-<script></script>
+<script>
+    $(".div-ips button").click(function () {
+
+        var _this = $(this);
+        var ipVal = _this.html();
+        var toUrl = "{:url('cms/sysConf/ipWhite')}";
+        layer.msg('确定要删除此IP吗？', {
+            time: 0 //不自动关闭
+            ,btn: ['确定', '离开']
+            ,shade:0.6,shadeClose:true
+            ,yes: function(){
+                toDelIP(toUrl,{tag:'D',val:ipVal},_this);
+            }
+        });
+    });
+
+    function toDelIP(toUrl,postData,_this) {
+        $.post(
+            toUrl,
+            postData,
+            function (result) {
+                dialog.tip(result.message);
+                if(result.status == 1){
+                    _this.remove();
+                }else{
+                    //失败
+                    layer.msg(result.message);
+                }
+            },"JSON");
+    }
+
+
+    layui.use(['form', 'layer'], function () {
+        var form = layui.form;
+        var tipMsg = "\"开启\" 状态下，只有白名单中的 IP 地址可访问后台； \"关闭\"状态下，则无此限制 ！";
+        layer.tips(tipMsg, '.layui-unselect', {
+            tips: [2, "#b94a48"],time:20000
+        });
+        form.on('switch(switchIP)', function (data) {
+            //开关是否开启，true或者false
+            var checked = data.elem.checked;
+            var okStatus = 0;
+            if (checked) {
+                okStatus = 1
+            }
+            //TODO 此时进行ajax的服务器访问，如果返回数据正常，则进行后面代码的调用
+            var toUrl = "{:url('cms/sysConf/ipWhite')}";
+            $.post(
+                toUrl,
+                {val: okStatus,tag:'S'},
+                function (result) {
+                    if (result.status > 0) {
+                        data.elem.checked = checked;
+                    } else {
+                        //失败
+                        data.elem.checked = !checked;
+                    }
+                    layer.msg(result.message);
+                }, "JSON");
+        });
+    });
+
+
+    function addIP() {
+        layer.prompt({
+            title: '请输入IP地址，并确认...',
+            formType: 0,shade:0.6,shadeClose:true
+        }, function(pass, index){
+            var toUrl = "{:url('cms/sysConf/ipWhite')}";
+            $.post(
+                toUrl,
+                {val: pass,tag:'A'},
+                function (result) {
+                    if (result.status > 0) {
+                        var ipStr = "<button type=\"button\" class=\"layui-btn\n" +
+                            "        layui-btn-sm layui-btn-radius\">"+pass+"</button>";
+                        $(".div-ips").append(ipStr);
+                        layer.close(index);
+
+                    }
+                    layer.msg(result.message);
+                }, "JSON");
+        });
+    }
+
+
+</script>
 {/block}

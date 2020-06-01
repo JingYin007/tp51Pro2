@@ -61,11 +61,13 @@ class SysConf extends CmsBase
      */
     public function ipWhite(Request $request){
         if ($request->isPost()){
-            return showMsg(0,'请求不合法！');
+            $opRes = $this->model->ajaxUpdateIpData($request->post());
+            return showMsg($opRes['tag'],$opRes['message']);
         }else{
-            $authConf = config('sys_auth.');
-
-            return view('ip');
+            $IP_WHITE = config('sys_auth.IP_WHITE');
+            $ipWhites = $this->model->getIpWhites();
+            return view('ip',['IP_WHITE' => $IP_WHITE,'ipWhites' =>$ipWhites]);
         }
     }
+
 }
