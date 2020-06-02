@@ -208,8 +208,7 @@ function captcha_img($id = '')
 - 相信成型的网站基本都需要一个或几个图片资源服务器，这时，考虑使用的便是 FTP文件上传功能的扩展
 ```b
 - 本项目做了处理，如果道友已经创建好了FTP信息，可以打开文件 "/config/ftp.php"
-- 对应填写 FTP配置信息
-- 然后，打开 "/config/ftp.php" 文件
+- 对应填写 FTP 配置信息
 - 设置 "FTP_USE" 参数为 true
 - 并配置 "IMG_SERVER_PUBLIC" 参数为图片服务器地址
 ```
