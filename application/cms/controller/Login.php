@@ -2,9 +2,11 @@
 
 namespace app\cms\controller;
 
+use app\common\controller\CmsBase;
 use app\common\lib\IAuth;
 use app\common\model\Xadmins;
 use app\common\model\XnavMenus;
+use app\common\model\XsysConf;
 use think\Request;
 
 /**
@@ -54,7 +56,13 @@ class Login
     {
         if ($request->isPost()) {
             $input = $request->post();
-            $tagRes = $this->adminModel->checkAdminLogin($input);
+            $sysConf = new XsysConf();
+            if ($sysConf->checkCmsIpAuth()){
+                $tagRes = $this->adminModel->checkAdminLogin($input);
+            }else{
+                $tagRes = ['tag'=>0,'message'=>'Sorry,Your IP is abnormal, please contact the administrator!'];
+            }
+
             return showMsg($tagRes['tag'], $tagRes['message']);
         } else {
             return showMsg(0, 'sorry,您的请求不合法！');

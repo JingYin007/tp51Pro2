@@ -85,7 +85,7 @@ function uploadSlideShow($slide_show = '',$tag_id = 0,$type = 0){
  */
 function imgToServerView($imgUrl)
 {
-    $imgServerUrl = config('app.IMG_SERVER_PUBLIC') . $imgUrl;
+    $imgServerUrl = config('ftp.IMG_SERVER_PUBLIC') . $imgUrl;
     return $imgServerUrl;
 }
 /**
@@ -96,7 +96,7 @@ function imgToServerView($imgUrl)
  */
 function ftpImageToServerUE($str)
 {
-    $imgServerPublic = config('app.IMG_SERVER_PUBLIC');
+    $imgServerPublic = config('ftp.IMG_SERVER_PUBLIC');
     $pattern = "/<[img|IMG].*?src=[\'|\"](.*?(?:[\.gif|\.jpg|\.png|\.jpeg|\.mp4]))[\'|\"].*?[\/]?>/";
     preg_match_all($pattern, $str, $match);
     foreach ($match[1] as $k => $v) {

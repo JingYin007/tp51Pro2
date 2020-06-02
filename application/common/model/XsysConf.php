@@ -11,6 +11,7 @@ namespace app\common\model;
 
 use app\common\lib\IAuth;
 use think\Db;
+use think\facade\Request;
 use think\Model;
 
 /**
@@ -144,5 +145,24 @@ class XsysConf extends Model
     public function checkIpAuth($ipVal = ''){
         $ipStatus =  Db::name('xipWhites')->where('ip',$ipVal)->value('status');
         return $ipStatus==1?true:false;
+    }
+    /**
+     * 检查IP白名单开启状态下是否有权限
+     * @return bool
+     */
+    public function checkCmsIpAuth(){
+        $authTag = true;
+        $IP_WHITE = config('sys_auth.IP_WHITE');
+        if ($IP_WHITE == 'OPEN'){
+            //TODO 当前IP 是否在白名单中
+            $ipMark = Request::ip();
+            $checkTag = (new XsysConf())->checkIpAuth($ipMark);
+            if ($checkTag){
+                $authTag = true;
+            }else{
+                $authTag = false;
+            }
+        }
+        return $authTag;
     }
 }

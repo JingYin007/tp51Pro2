@@ -43,7 +43,8 @@ class CmsBase extends Base
         if (!$cmsAID) {
             $message = "You are offline,please logon again!";
         } else {
-            if ($this->checkCmsIpAuth()){
+            $sysConf = new XsysConf();
+            if ($sysConf->checkCmsIpAuth()){
                 //TODO 判断当前用户是否具有此操作权限
                 $checkAuth = $this->checkCmsAdminAuth($cmsAID);
                 $authFlag = $checkAuth;
@@ -57,25 +58,7 @@ class CmsBase extends Base
         };
     }
 
-    /**
-     * 检查IP白名单开启状态下是否有权限
-     * @return bool
-     */
-    public function checkCmsIpAuth(){
-        $authTag = true;
-        $IP_WHITE = config('sys_auth.IP_WHITE');
-        if ($IP_WHITE == 'OPEN'){
-            //TODO 当前IP 是否在白名单中
-            $ipMark = Request::ip();
-            $checkTag = (new XsysConf())->checkIpAuth($ipMark);
-            if ($checkTag){
-                $authTag = true;
-            }else{
-                $authTag = false;
-            }
-        }
-        return $authTag;
-    }
+
     /**
      * 检查权限
      * @param int $adminID

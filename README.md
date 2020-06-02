@@ -209,7 +209,7 @@ function captcha_img($id = '')
 ```b
 - 本项目做了处理，如果道友已经创建好了FTP信息，可以打开文件 "/config/ftp.php"
 - 对应填写 FTP配置信息
-- 然后，打开 "/config/app.php" 文件
+- 然后，打开 "/config/ftp.php" 文件
 - 设置 "FTP_USE" 参数为 true
 - 并配置 "IMG_SERVER_PUBLIC" 参数为图片服务器地址
 ```
