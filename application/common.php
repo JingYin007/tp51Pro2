@@ -85,7 +85,7 @@ function uploadSlideShow($slide_show = '',$tag_id = 0,$type = 0){
  */
 function imgToServerView($imgUrl)
 {
-    $imgServerUrl = config('ftp.IMG_SERVER_PUBLIC') . $imgUrl;
+    $imgServerUrl = config('ftp.IMG_SERVER_PATH') . $imgUrl;
     return $imgServerUrl;
 }
 /**
@@ -96,21 +96,20 @@ function imgToServerView($imgUrl)
  */
 function ftpImageToServerUE($str)
 {
-    $imgServerPublic = config('ftp.IMG_SERVER_PUBLIC');
+    $imgServerPath = config('ftp.IMG_SERVER_PATH');
     $pattern = "/<[img|IMG].*?src=[\'|\"](.*?(?:[\.gif|\.jpg|\.png|\.jpeg|\.mp4]))[\'|\"].*?[\/]?>/";
     preg_match_all($pattern, $str, $match);
-    foreach ($match[1] as $k => $v) {
-        //此时 $subDealStr 为以“upload/”开头的图片路径
-        $subDealStr = substr($v, 1);
-        $remotefile = '/public' . $v;
-        if (startsWithStr($subDealStr, "upload")) {
+    foreach ($match[1] as $k => $local_file) {
+        //此时 $local_file 为以“upload/”开头的图片路径
+        $local_file = substr($local_file, 1);
+        if (startsWithStr($local_file, "upload")) {
             //进行FTP 图片上传操作
             $ftp = new \app\api\controller\Upload();
-            $ftp->ftpImageToServer($subDealStr, $remotefile);
-            //ftp_upload($remotefile, $subDealStr);
+            $server_file = '/public/' . $local_file;
+            $ftp->ftpImageToServer($local_file, $server_file);
         }
     }
-    return str_replace("src=\"/upload", "src=\"$imgServerPublic/upload", $str);
+    return str_replace("src=\"/upload/", "src=\"$imgServerPath"."upload/", $str);
 }
 /**
  * 判断是否以某个字符串开头

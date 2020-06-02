@@ -46,10 +46,12 @@ class SysConf extends CmsBase
      */
     public function ftp(Request $request){
         if ($request->isPost()){
-            return showMsg(0,'请求不合法！');
+            $ftp_tag = $request->post('ftp_tag',null);
+            $ftp_val = $request->post('ftp_val',null);
+            $opRes = $this->model->updateFtpConf($ftp_tag,$ftp_val);
+            return showMsg($opRes['tag'],$opRes['message']);
         }else{
             $ftpConf = config('ftp.');
-
             return view('ftp',['ftpConf'=>$ftpConf]);
         }
     }

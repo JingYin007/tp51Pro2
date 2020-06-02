@@ -22,10 +22,11 @@ class Upload
             if ($info){
                 //把反斜杠(\)替换成斜杠(/) 因为在windows下上传路是反斜杠径
                 $getSaveName = str_replace("\\", "/", $info->getSaveName());
-                $fileUrl = '/upload/' . $getSaveName;
-                $data['url'] = $fileUrl;
-                $saveFileUrl = 'upload/' . $getSaveName;
-                $ftpTag = $this->ftpImageToServer($saveFileUrl, "/public/" . $saveFileUrl);
+
+                $local_file_path = 'upload/' . $getSaveName;
+                $server_file_path = config('ftp.IMG_SAVE_PATH'). $getSaveName;
+                $ftpTag = $this->ftpImageToServer($local_file_path,$server_file_path);
+                $data['url'] = $local_file_path;
                 if ($ftpTag) {
                     $status = 1;
                     $message = '上传成功';
@@ -43,14 +44,14 @@ class Upload
     /**
      * ftp 图片文件上传服务器操作
      * @param $local_file 本地文件源地址
-     * @param $remote_file 服务器目的地址
+     * @param $server_file 服务器目的地址
      * @return bool
      */
-    public function ftpImageToServer($local_file, $remote_file)
+    public function ftpImageToServer($local_file, $server_file)
     {
         //是否启用FTP
         $FTP_USE = config('ftp.FTP_USE');
-        if (!$FTP_USE){
+        if ($FTP_USE == "CLOSE"){
             return true;
         }else{
             $ftpConf = config('ftp.');
@@ -58,11 +59,11 @@ class Upload
             $info = $ftp->start($ftpConf);
             if ($info) {
                 //上传文件
-                if ($ftp->put($remote_file, $local_file)) {
+                if ($ftp->put($server_file, $local_file)) {
                     //echo "上传成功";
                     $ftp->close();
                     //删除本地图片
-                    //$this->deleteServerImgCommon($localfile);
+                    //$this->deleteServerImgCommon($local_file);
                     return true;
                 } else {
                     $ftp->close();

@@ -212,7 +212,7 @@ function captcha_img($id = '')
 - 本项目做了处理，如果道友已经创建好了FTP信息，可以打开文件 "/config/ftp.php"
 - 对应填写 FTP 配置信息
 - 设置 "FTP_USE" 参数为 true
-- 并配置 "IMG_SERVER_PUBLIC" 参数为图片服务器地址
+- 并配置 "IMG_SERVER_PATH" 参数为图片服务器地址
 ```
 ![](https://img-blog.csdnimg.cn/20191129172531248.jpg)
 ## ⑤. 优化登录信息加密保存 [`2020-05-21`]

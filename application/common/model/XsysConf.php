@@ -49,7 +49,20 @@ class XsysConf extends Model
                 $opMessage = $opTag?"更新成功":"Sorry，请稍后重试！";
             }
         }
+        return ['tag' => $opTag,'message' => $opMessage];
+    }
 
+    /**
+     * @param string $ftpTag
+     * @param string $ftpVal
+     * @return array
+     */
+    public function updateFtpConf($ftpTag = '',$ftpVal = ''){
+        if ($ftpTag == "FTP_USE"){
+            $ftpVal = $ftpVal?'OPEN':'CLOSE';
+        }
+        $opTag = set_cms_config([$ftpTag],[$ftpVal],'ftp');
+        $opMessage = $opTag?"更新成功":"Sorry，请稍后重试！";
         return ['tag' => $opTag,'message' => $opMessage];
     }
 

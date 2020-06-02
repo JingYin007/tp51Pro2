@@ -1,16 +1,181 @@
 {extend name="layouts/cms"}
 {block name='body-content'}
 
-<div class="layui-inline layui-form">
+<div class="layui-form-item layui-form">
+    <label class="layui-form-label">FTP 服务：</label>
     <div class="layui-input-block">
-        <input type="checkbox" checked="" name="open" lay-skin="switch" lay-filter="switchTest" lay-text="ON|OFF">
+        <input type="checkbox"
+               {eq name="ftpConf.FTP_USE" value="OPEN"} checked="" {/eq}
+        name="open" lay-skin="switch"
+        class="cb-switch"
+        lay-filter="switchFTP" lay-text="开启|关闭">
     </div>
 </div>
+
+<div class="layui-form">
+    <table class="layui-table table-body" lay-skin="row">
+        <colgroup>
+            <col width="15%">
+            <col width="30%">
+            <col width="10%">
+            <col width="40%">
+        </colgroup>
+        <thead>
+        <tr>
+            <th>配置项</th>
+            <th>取值</th>
+            <th>更新</th>
+            <th>注释</th>
+        </tr>
+        </thead>
+        <tbody class="table-tbody-normal">
+
+            <tr class="tr-normal tr-normal-IMG_SERVER_PATH" tag="IMG_SERVER_PATH">
+                <td><label type="button" class="layui-btn layui-btn-danger layui-btn-sm">本站图片显示路径</label></td>
+                <td class="td-value">
+                    <input type="text" value="{$ftpConf.IMG_SERVER_PATH}" class="layui-input">
+                </td>
+                <td class="td-refresh">
+                    <button type="button" class="layui-btn layui-btn-danger layui-btn-radius">
+                        <i class="layui-icon">&#xe669;</i>
+                    </button>
+                </td>
+                <td><div class="layui-form-mid layui-word-aux">默认“/”,如果使用图片服务器，例：'http://img.xxxx.com/public/'</div></td>
+            </tr>
+
+            <tr class="tr-normal tr-normal-IMG_SAVE_PATH" tag="IMG_SAVE_PATH">
+                <td><label type="button" class="layui-btn layui-btn-danger layui-btn-sm">FTP图片存储路径</label></td>
+                <td class="td-value">
+                    <input type="text" readonly value="{$ftpConf.IMG_SAVE_PATH}" class="layui-input">
+                </td>
+                <td class="td-refresh">
+                    <button type="button" class="layui-btn layui-btn-danger layui-btn-radius">
+                        <i class="layui-icon">&#xe669;</i>
+                    </button>
+                </td>
+                <td><div class="layui-form-mid layui-word-aux">对应的FTP服务器的图片存储路径</div></td>
+            </tr>
+
+            <tr class="tr-normal tr-normal-SERVER" tag="SERVER">
+                <td><label type="button" class="layui-btn layui-btn-primary layui-btn-sm">服务器IP</label></td>
+                <td class="td-value">
+                    <input type="text" value="{$ftpConf.SERVER}" class="layui-input">
+                </td>
+                <td class="td-refresh">
+                    <button type="button" class="layui-btn layui-btn-primary layui-btn-radius">
+                        <i class="layui-icon">&#xe669;</i>
+                    </button>
+                </td>
+                <td><div class="layui-form-mid layui-word-aux">如果满足内网IP条件，可大大提高传输效率</div></td>
+            </tr>
+
+            <tr class="tr-normal tr-normal-USER_NAME" tag="USER_NAME">
+                <td><label type="button" class="layui-btn layui-btn-sm">FTP账号</label></td>
+                <td class="td-value">
+                    <input type="text" value="{$ftpConf.USER_NAME}" class="layui-input">
+                </td>
+                <td class="td-refresh"><button type="button" class="layui-btn layui-btn-radius"> <i class="layui-icon">&#xe669;</i></button></td>
+                <td><div class="layui-form-mid layui-word-aux">保证输入的正确性</div></td>
+            </tr>
+
+            <tr class="tr-normal tr-normal-PASSWORD" tag="PASSWORD">
+                <td><label type="button" class="layui-btn layui-btn-sm">FTP密码</label></td>
+                <td class="td-value">
+                    <input type="text" value="{$ftpConf.PASSWORD}" class="layui-input">
+                </td>
+                <td class="td-refresh">
+                    <button type="button" class="layui-btn layui-btn-radius"> <i class="layui-icon">&#xe669;</i></button>
+                </td>
+                <td><div class="layui-form-mid layui-word-aux">保证输入的正确性</div></td>
+            </tr>
+
+            <tr class="tr-normal tr-normal-PORT" tag="PORT">
+                <td><label type="button" class="layui-btn layui-btn-sm">FTP端口</label></td>
+                <td class="td-value">
+                    <input type="text" value="{$ftpConf.PORT}" class="layui-input">
+                </td>
+                <td class="td-refresh">
+                    <button type="button"
+                            class="layui-btn layui-btn-radius">
+                        <i class="layui-icon">&#xe669;</i>
+                    </button>
+                </td>
+                <td><div class="layui-form-mid layui-word-aux">ftp端口,默认为21</div></td>
+            </tr>
+
+        </tbody>
+    </table>
+</div>
+
+<style>
+    .table-body{
+        width: 65%;
+        margin: 85px auto;
+        text-align: center;
+        border: 1px solid #7274A7;
+    }
+    label.layui-btn{
+        cursor: default;
+    }
+    .td-value input{
+        color: #7274AB;
+    }
+    .td-refresh .layui-btn{
+        padding: 0px 0px;
+        width: 40px;
+        height: 39px;
+        border-radius: 200%;
+    }
+    .layui-btn .layui-icon{
+        margin-right: 0px;
+    }
+</style>
 {/block}
 
 {block name='single-content'}
 <script src="__CMS__/js/moZhang.js"></script>
 <script>
+    layui.use(['form', 'layer'], function () {
+        var form = layui.form;
+        var tipMsg = "\"开启\" 状态下，只有白名单中的 IP 地址可访问后台； \"关闭\"状态下，则无此限制 ！";
+        layer.tips(tipMsg, '.layui-unselect', {
+            tips: [2, "#1094fa"],time:20000
+        });
+        form.on('switch(switchFTP)', function (data) {
+            //开关是否开启，true或者false
+            var checked = data.elem.checked;
+            var okStatus = 0;
+            if (checked) {
+                okStatus = 1
+            }
+            var toUrl = "{:url('cms/sysConf/ftp')}";
+            $.post(
+                toUrl,
+                {ftp_val: okStatus,ftp_tag:'FTP_USE'},
+                function (result) {
+                    if (result.status > 0) {
+                        data.elem.checked = checked;
+                    } else {
+                        //失败
+                        data.elem.checked = !checked;
+                    }
+                    layer.msg(result.message);
+                }, "JSON");
+        });
+    });
+
+    $(".tr-normal button").click(function () {
+        var auth_tag = $(this).parent().parent().attr('tag');
+        var auth_val = $(".tr-normal-"+auth_tag+" .layui-input").val();
+        var toUrl = "{:url('cms/sysConf/ftp')}";
+        var postData = {ftp_tag:auth_tag,ftp_val:auth_val};
+        $.post(
+            toUrl,
+            postData,
+            function (result) {
+                dialog.tip(result.message);
+            },"JSON");
+    });
 
 </script>
 {/block}

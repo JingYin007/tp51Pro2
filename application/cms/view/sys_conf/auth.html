@@ -2,7 +2,6 @@
 {block name='body-content'}
 
 <div class="layui-form">
-
     <table class="layui-table table-body" lay-skin="row">
         <colgroup>
             <col width="15%">
@@ -29,6 +28,7 @@
                 <button type="button" class="layui-btn layui-btn-danger layui-btn-radius">
                     <i class="layui-icon">&#xe669;</i>
                 </button>
+            </td>
             <td><div class="layui-form-mid layui-word-aux">建议16-24个字符左右</div></td>
         </tr>
 
@@ -50,7 +50,7 @@
             <td class="td-value">
                     <input type="text" value="{$authConf.AES_IV}" class="layui-input">
             </td>
-            <td class="td-refresh"><button type="button" class="layui-btn layui-btn-warm layui-btn-radius">更新</button>
+            <td class="td-refresh"><button type="button" class="layui-btn layui-btn-warm layui-btn-radius">更新</button></td>
             <td><div class="layui-form-mid layui-word-aux">自定义16位 AES偏移量</div></td>
         </tr>
 
@@ -61,6 +61,7 @@
             </td>
             <td class="td-refresh">
                 <button type="button" class="layui-btn layui-btn-normal layui-btn-radius">更新</button>
+            </td>
             <td><div class="layui-form-mid layui-word-aux">SESSION 存储键设置</div></td>
         </tr>
 
@@ -74,12 +75,12 @@
                         class="layui-btn layui-btn-radius">
                     <i class="layui-icon">&#xe669;</i>
                 </button>
+            </td>
             <td><div class="layui-form-mid layui-word-aux">SESSION 存储作用域</div></td>
         </tr>
 
         </tbody>
     </table>
-
 </div>
 <style>
 
@@ -138,8 +139,5 @@
                 dialog.tip(result.message);
             },"JSON");
     });
-
-
-
 </script>
 {/block}

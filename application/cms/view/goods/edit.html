@@ -17,7 +17,7 @@
                 <i class="layui-icon">&#xe67c;</i>上传图片
             </button>
             <img class="layui-upload-img img-upload-preview"
-                 src="{$Think.config.ftp.IMG_SERVER_PUBLIC}{$good['thumbnail']}">
+                 src="{$Think.config.ftp.IMG_SERVER_PATH}{$good['thumbnail']}">
         </div>
     </div>
 
@@ -30,7 +30,7 @@
             <blockquote class="layui-elem-quote layui-quote-nm" style="margin-top: 10px;">
                 <div class="layui-upload-list" id="div-multiple-img-upload-preview">
                     {volist name="$good.arr_slide_show" id="slide"}
-                    <img src="{$Think.config.ftp.IMG_SERVER_PUBLIC}{$slide.picture}" alt="{$slide.picture}" title="点击删除"
+                    <img src="{$Think.config.ftp.IMG_SERVER_PATH}{$slide.picture}" alt="{$slide.picture}" title="点击删除"
                          class="layui-upload-img"
                          upload_img_id="{$slide.upload_img_id}"
                          onclick="delMultipleImgs(this,1)">
@@ -184,7 +184,7 @@
                         </button>
                         <img class="layui-upload-img sku-img-upload-preview-{$i}
                              img-upload-preview-medium img-upload-view"
-                             src="{$Think.config.ftp.IMG_SERVER_PUBLIC}{$sku.sku_img}">
+                             src="{$Think.config.ftp.IMG_SERVER_PATH}{$sku.sku_img}">
                         <input type="hidden" class="input-sku-img-{$i}"
                                name="sku_arr[{$sku.spec_info}][sku_img]"
                                value="{$sku.sku_img}" required="" class="layui-input">
