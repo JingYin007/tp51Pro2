@@ -31,7 +31,7 @@
         <tbody class="table-tbody-normal">
 
             <tr class="tr-normal tr-normal-IMG_SERVER_PATH" tag="IMG_SERVER_PATH">
-                <td><label type="button" class="layui-btn layui-btn-danger layui-btn-sm">本站图片显示路径</label></td>
+                <td><label type="button" class="layui-btn layui-btn-primary layui-btn-sm">本站图片显示路径</label></td>
                 <td class="td-value">
                     <input type="text" value="{$ftpConf.IMG_SERVER_PATH}" class="layui-input">
                 </td>
@@ -44,12 +44,15 @@
             </tr>
 
             <tr class="tr-normal tr-normal-IMG_SAVE_PATH" tag="IMG_SAVE_PATH">
-                <td><label type="button" class="layui-btn layui-btn-danger layui-btn-sm">FTP图片存储路径</label></td>
+                <td><label type="button" class="layui-btn layui-btn-primary layui-btn-sm">FTP图片存储路径</label></td>
                 <td class="td-value">
-                    <input type="text" readonly value="{$ftpConf.IMG_SAVE_PATH}" class="layui-input">
+                    <button type="button" class="layui-btn layui-btn-xs layui-btn-disabled">
+                        {$ftpConf.IMG_SAVE_PATH}
+                    </button>
+                    <!--<input type="text" layui-btn-disabled value="{$ftpConf.IMG_SAVE_PATH}" class="layui-input">-->
                 </td>
                 <td class="td-refresh">
-                    <button type="button" class="layui-btn layui-btn-danger layui-btn-radius">
+                    <button type="button" class="layui-btn layui-btn-disabled layui-btn-danger layui-btn-radius">
                         <i class="layui-icon">&#xe669;</i>
                     </button>
                 </td>
@@ -57,7 +60,7 @@
             </tr>
 
             <tr class="tr-normal tr-normal-SERVER" tag="SERVER">
-                <td><label type="button" class="layui-btn layui-btn-primary layui-btn-sm">服务器IP</label></td>
+                <td><label type="button" class="layui-btn layui-btn-sm">服务器IP</label></td>
                 <td class="td-value">
                     <input type="text" value="{$ftpConf.SERVER}" class="layui-input">
                 </td>
@@ -74,7 +77,11 @@
                 <td class="td-value">
                     <input type="text" value="{$ftpConf.USER_NAME}" class="layui-input">
                 </td>
-                <td class="td-refresh"><button type="button" class="layui-btn layui-btn-radius"> <i class="layui-icon">&#xe669;</i></button></td>
+                <td class="td-refresh">
+                    <button type="button" class="layui-btn layui-btn-primary layui-btn-radius">
+                        <i class="layui-icon">&#xe669;</i>
+                    </button>
+                </td>
                 <td><div class="layui-form-mid layui-word-aux">保证输入的正确性</div></td>
             </tr>
 
@@ -84,7 +91,9 @@
                     <input type="text" value="{$ftpConf.PASSWORD}" class="layui-input">
                 </td>
                 <td class="td-refresh">
-                    <button type="button" class="layui-btn layui-btn-radius"> <i class="layui-icon">&#xe669;</i></button>
+                    <button type="button" class="layui-btn layui-btn-primary layui-btn-radius">
+                        <i class="layui-icon">&#xe669;</i>
+                    </button>
                 </td>
                 <td><div class="layui-form-mid layui-word-aux">保证输入的正确性</div></td>
             </tr>
@@ -96,7 +105,7 @@
                 </td>
                 <td class="td-refresh">
                     <button type="button"
-                            class="layui-btn layui-btn-radius">
+                            class="layui-btn layui-btn-primary layui-btn-radius">
                         <i class="layui-icon">&#xe669;</i>
                     </button>
                 </td>
@@ -122,8 +131,8 @@
     }
     .td-refresh .layui-btn{
         padding: 0px 0px;
-        width: 40px;
-        height: 39px;
+        width: 36px;
+        height: 36px;
         border-radius: 200%;
     }
     .layui-btn .layui-icon{
@@ -137,9 +146,9 @@
 <script>
     layui.use(['form', 'layer'], function () {
         var form = layui.form;
-        var tipMsg = "\"开启\" 状态下，只有白名单中的 IP 地址可访问后台； \"关闭\"状态下，则无此限制 ！";
+        var tipMsg = "\"开启\" 状态下，图片上传到 FTP服务器！具体实现请参考 \"api/controller/Upload.php\"";
         layer.tips(tipMsg, '.layui-unselect', {
-            tips: [2, "#1094fa"],time:20000
+            tips: [2, "#1094fa"],time:25000
         });
         form.on('switch(switchFTP)', function (data) {
             //开关是否开启，true或者false
