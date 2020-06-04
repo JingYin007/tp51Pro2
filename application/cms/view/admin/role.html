@@ -2,8 +2,8 @@
 
 {block name='body-content'}
 
-<button class="layui-btn layui-btn-normal"
-        onclick="addRoles()">
+<button class="layui-btn layui-btn-normal" op_url="{:url('cms/admin/addRole')}"
+        onclick="addForOpenPopups(this,'✚ 添加新角色','77%','')">
     <i class="layui-icon">&#xe608;</i> 添加角色
 </button>
 <div class="layui-inline">
@@ -31,6 +31,7 @@
         <th>操作</th>
     </tr>
     </thead>
+    <input type="hidden" class="op_url" value="{:url('cms/admin/editRole',['id'=>'opid'])}">
     <tbody class="table-tbody-normal">
     {volist name="roles" id="vo"}
     <tr class="tr-normal-{$vo['id']}">
@@ -41,11 +42,11 @@
         <td>
             <div class="layui-btn-group">
                 <button class="layui-btn layui-btn-sm" title="编辑"
-                        onclick="editRole('{$vo.id}')">
+                        onclick="editForOpenPopups('✎ 角色信息修改','{$vo.id}', '77%', '')">
                     <i class="layui-icon">&#xe642;</i>
                 </button>
                 <button class="layui-btn layui-btn-sm" title="删除"
-                        onclick="delRole('{$vo.id}')">
+                        onclick="delPostRecord('{$vo.id}')">
                     <i class="layui-icon">&#xe640;</i>
                 </button>
             </div>
@@ -62,28 +63,4 @@
 {/block}
 
 {block name='single-content'}
-<script src="__CMS__/js/moZhang.js"></script>
-<script>
-    //根据菜单ID 删除菜单记录
-    function delRole(id) {
-        var toUrl = "{:url('cms/admin/editRole',['id'=>'RoleID'])}";
-        toUrl = toUrl.replace('RoleID', id);
-        ToDelItem(id, toUrl, '.tr-normal-' + id);
-    }
-
-    //添加导航菜单
-    function addRoles() {
-        var toUrl = "{:url('cms/admin/addRole')}";
-        ToOpenPopups(toUrl, '✚ 添加新角色', '77%');
-    }
-
-    //根据菜单ID修改菜单信息
-    function editRole(id) {
-        var toUrl = "{:url('cms/admin/editRole',['id'=>'RoleID'])}";
-        toUrl = toUrl.replace('RoleID', id);
-        ToOpenPopups(toUrl, '✎ 角色信息修改', '77%');
-    }
-</script>
-
-
 {/block}

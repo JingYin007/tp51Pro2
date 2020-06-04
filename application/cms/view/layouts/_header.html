@@ -1,0 +1,53 @@
+<div class="layui-header">
+    <div class="layui-logo"><span>moTzxx 后台管理</span></div>
+    <!-- 头部区域（可配合layui已有的水平导航） -->
+    <ul class="layui-nav layui-layout-left ">
+        <li class="layui-nav-item ">
+            <span class="menu-switch open"></span>
+        </li>
+        <li class="layui-nav-item"><a href="">控制台</a></li>
+        <li class="layui-nav-item">
+            <a href="javascript:;">
+                <img class="nav-icon" src="__CMS__/images/icon/cms_tip.png">
+                消息<span class="layui-badge">0</span></a>
+        </li>
+    </ul>
+
+    <ul class="layui-nav layui-layout-right">
+        <li class="layui-nav-item nav_weather">
+            <!-- 天气信息 -->
+            {include file="layouts/_weather" /}
+        </li>
+        <li class="layui-nav-item" id="FullScreen">
+            <img class="nav-icon" src="__CMS__/images/icon/fullscreen.png">
+            <span>&nbsp;全屏</span>
+        </li>
+        <li class="layui-nav-item lockcms" id="LockScreen">
+            <a href="javascript:;">
+                <img class="nav-icon" src="__CMS__/images/icon/lockScreen.png">
+                <span>锁屏</span>
+            </a>
+        </li>
+
+        <li class="layui-nav-item">
+            <a href="javascript:;">
+                <img src="{$admin['picture']}" class="layui-nav-img">
+                {$admin['user_name']}
+            </a>
+            <dl class="layui-nav-child">
+                <dd>
+                    <a href="#" onclick="viewAdminMsg('{$admin.id}')">
+                        <img class="nav-icon" src="__CMS__/images/icon/cms_user.png">
+                        基本资料
+                    </a>
+                </dd>
+                <dd>
+                    <a href="{:url('cms/login/logout')}">
+                        <img class="nav-icon" src="__CMS__/images/icon/cms_exit.png">
+                        注销退出
+                    </a>
+                </dd>
+            </dl>
+        </li>
+    </ul>
+</div>

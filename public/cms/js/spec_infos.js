@@ -22,11 +22,11 @@ function ToAjaxOpForPageSpecInfos(toUrl,postData) {
                         "                <td>\n" +
                         "                    <div class=\"layui-btn-group\">\n" +
                         "                        <button class=\"layui-btn layui-btn-sm\" title=\"编辑属性\"\n" +
-                        "                                onclick=\"editSpecInfo('"+e.spec_id+"')\">\n" +
+                        "                                onclick=\"editForOpenPopups('✎ 产品属性修改','"+e.spec_id+"', '70%', '66%')\">\n" +
                         "                            <i class=\"layui-icon\">&#xe642;</i>\n" +
                         "                        </button>\n" +
                         "                        <button class=\"layui-btn layui-btn-sm\" title=\"删除\"\n" +
-                        "                                onclick=\"delSpecInfo('"+e.spec_id+"')\">\n" +
+                        "                                onclick=\"delPostRecord('"+e.spec_id+"')\">\n" +
                         "                            <i class=\"layui-icon\">&#xe640;</i>\n" +
                         "                        </button>\n" +
                         "<button class=\"layui-btn layui-btn-sm\" title=\"规格数据\"\n" +

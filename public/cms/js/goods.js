@@ -32,15 +32,15 @@ function ToAjaxOpForPageGoods(toUrl,postData) {
                         "                <td>\n" +
                         "                    <div class=\"layui-btn-group\">\n" +
                         "                        <button class=\"layui-btn layui-btn-sm\" title='编辑商品' \n" +
-                        "                                onclick=\"editGoods('"+e.goods_id+"')\">\n" +
+                        "                                onclick=\"editForOpenPopups('✎ 商品修改','"+e.goods_id+"','85%','92%')\">\n" +
                         "                            <i class=\"layui-icon\">&#xe642;</i>\n" +
                         "                        </button>\n" +
                         "                        <button class=\"layui-btn layui-btn-sm\" title='删除商品' \n" +
-                        "                                onclick=\"delGoods('"+e.goods_id+"')\">\n" +
+                        "                                onclick=\"delPostRecord('"+e.goods_id+"')\">\n" +
                         "                            <i class=\"layui-icon\">&#xe640;</i>\n" +
                         "                        </button>\n" +
                         "<button class=\"layui-btn layui-btn-sm\" title=\"操作记录\"\n" +
-                        "                        onclick=\"viewLogs('"+e.goods_id+"')\">\n" +
+                        "                        onclick=\"viewLogOpenPopups('☁ 操作日志','"+e.goods_id+"')\">\n" +
                         "                    <i class=\"layui-icon\">&#xe60e;</i>\n" +
                         "                </button>"+
                         "                    </div>\n" +

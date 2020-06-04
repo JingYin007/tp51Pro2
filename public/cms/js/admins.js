@@ -24,11 +24,11 @@ function ToAjaxOpForPageAdmins(toUrl,postData) {
                         "                <td>\n" +
                         "                    <div class=\"layui-btn-group\">\n" +
                         "                        <button class=\"layui-btn layui-btn-sm\" title='编辑' \n" +
-                        "                                onclick=\"editAdmin('"+e.id+"')\">\n" +
+                        "                                onclick=\"editForOpenPopups('✎ 管理员修改','"+e.id+"', '48%', '65%')\">\n" +
                         "                            <i class=\"layui-icon\">&#xe642;</i>\n" +
                         "                        </button>\n" +
                         "                        <button class=\"layui-btn layui-btn-sm\" title='删除' \n" +
-                        "                                onclick=\"delAdmin('"+e.id+"')\">\n" +
+                        "                                onclick=\"delPostRecord('"+e.id+"')\">\n" +
                         "                            <i class=\"layui-icon\">&#xe640;</i>\n" +
                         "                        </button>\n" +
                         "                    </div>\n" +

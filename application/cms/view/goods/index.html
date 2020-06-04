@@ -2,7 +2,8 @@
 {block name='body-content'}
 
 <button class="layui-btn layui-btn-normal"
-        onclick="addGoods()">
+        op_url="{:url('cms/goods/add')}"
+        onclick="addForOpenPopups(this,'✚ 添加商品','85%','92%')">
     <i class="layui-icon">&#xe608;</i> 添加商品
 </button>
 <div class="layui-inline layui-form">
@@ -30,8 +31,6 @@
         </div>
 
         <div class="layui-input-inline">
-            <input type="hidden" name="record_num" class="record_num" value="<?php echo $record_num; ?>">
-            <input type="hidden" name="page_limit" class="page_limit" value="{$page_limit}">
             <input type="hidden" name="curr_page" class="curr_page" value="1">
             <input type="text" value="{$search}" name="str_search" placeholder="请输入商品名称"
                    class="layui-input search_input">
@@ -79,7 +78,12 @@
         <th>操作</th>
     </tr>
     </thead>
-    <tbody class="table-tbody-normal layui-form">
+    <input type="hidden" class="op_url" value="{:url('cms/goods/edit',['id'=>'opid'])}">
+    <input type="hidden" class="log_url" value="{:url('cms/goods/viewLogs',['id'=>'opid'])}">
+    <tbody class="table-tbody-normal layui-form"
+           ajax_page_fun="ToAjaxOpForPageGoods"
+           record_num="{$record_num}" page_limit="{$page_limit}"
+           page_url="{:url('cms/goods/index')}">
     {volist name="goods" id="vo"}
     <tr class="tr-normal-{$vo['goods_id']}">
         <td>{$vo['goods_id']}</td>
@@ -104,15 +108,15 @@
         <td>
             <div class="layui-btn-group">
                 <button class="layui-btn layui-btn-sm" title="编辑商品"
-                        onclick="editGoods('{$vo.goods_id}')">
+                        onclick="editForOpenPopups('✎ 商品修改','{$vo.goods_id}','85%','92%')">
                     <i class="layui-icon">&#xe642;</i>
                 </button>
                 <button class="layui-btn layui-btn-sm" title="删除商品"
-                        onclick="delGoods('{$vo.goods_id}')">
+                        onclick="delPostRecord('{$vo.goods_id}')">
                     <i class="layui-icon">&#xe640;</i>
                 </button>
                 <button class="layui-btn layui-btn-sm" title="操作记录"
-                        onclick="viewLogs('{$vo.goods_id}')">
+                        onclick="viewLogOpenPopups('☁ 操作日志','{$vo.goods_id}')">
                     <i class="layui-icon">&#xe60e;</i>
                 </button>
             </div>
@@ -127,7 +131,6 @@
 
 {block name='single-content'}
 <script src="__CMS__/js/goods.js"></script>
-<script src="__CMS__/js/moZhang.js"></script>
 <script>
     layui.use(['form'], function () {
         var form = layui.form;
@@ -158,44 +161,5 @@
                 }, "JSON");
         });
     });
-</script>
-<script>
-    //根据菜单ID 删除菜单记录
-    function delGoods(id) {
-        var toUrl = "{:url('cms/goods/edit',['id'=>'AID'])}";
-        toUrl = toUrl.replace('AID', id);
-        ToDelItem(id, toUrl, '.tr-normal-' + id);
-    }
-    function viewLogs(id) {
-        var toUrl = "{:url('cms/goods/viewLogs',['id'=>'AID'])}";
-        toUrl = toUrl.replace('AID', id);
-        ToOpenPopups(toUrl, '☁ 操作日志', '30%', '92%');
-    }
-
-    $(".btn-search-mz").on('click', function () {
-        //var str_search = $(".search_input").val();
-        $(".form-search").submit();
-    });
-
-    //添加导航菜单
-    function addGoods() {
-        var toUrl = "{:url('cms/goods/add')}";
-        ToOpenPopups(toUrl, '✚ 商品添加', '85%', '92%');
-    }
-
-    //根据菜单ID修改菜单信息
-    function editGoods(id) {
-        var toUrl = "{:url('cms/goods/edit',['id'=>'AID'])}";
-        toUrl = toUrl.replace('AID', id);
-        ToOpenPopups(toUrl, '✎ 商品修改', '85%', '92%');
-    }
-
-    //通过ajax 获取分页数据
-    function ajaxOpForPage(curr_page) {
-        var toUrl = "{:url('cms/goods/index')}";
-        $(".curr_page").val(curr_page);
-        var postData = $(".form-search").serialize();
-        ToAjaxOpForPageGoods(toUrl, postData);
-    }
 </script>
 {/block}

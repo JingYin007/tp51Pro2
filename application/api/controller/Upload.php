@@ -13,83 +13,30 @@ class Upload
      */
     public function img_file(Request $request)
     {
+        $res = \app\common\lib\Upload::singleFile($request);
+        return showMsg($res['status'], $res['message'],$res['data']);
+    }
+    /**
+     * 七牛云图片上传
+     * @param Request $request
+     * @return \think\response\Json
+     */
+    public function uploadQiNiu(Request $request){
         $status = 0;
         $data = [];
         if ($request->Method()== 'POST') {
-            $file = $request->file('file');
-            // 移动到框架应用根目录/upload/ 目录下
-            $info = $file->move('upload');
-            if ($info){
-                //把反斜杠(\)替换成斜杠(/) 因为在windows下上传路是反斜杠径
-                $getSaveName = str_replace("\\", "/", $info->getSaveName());
-
-                $local_file_path = 'upload/' . $getSaveName;
-                $server_file_path = config('ftp.IMG_SAVE_PATH'). $getSaveName;
-                $ftpTag = $this->ftpImageToServer($local_file_path,$server_file_path);
-                $data['url'] = $local_file_path;
-                if ($ftpTag) {
-                    $status = 1;
-                    $message = '上传成功';
-                } else {
-                    $message = "FTP 上传失败，请稍后再试";
-                }
+            $opRes = \app\common\lib\Upload::qiNiuSingleFile();
+            if ($opRes['status']){
+                $status = 1;
+                $data['url'] = config('qiniu.image_url').$opRes['message'];
+                $message = '上传成功';
             }else{
-                $message = "上传失败 ".$file->getError();
+                $message = $opRes['message'];
             }
-        } else {
-            $message = "参数错误";
+        }else{
+            $message = "Sorry,请求不合法！";
         }
         return showMsg($status, $message,$data);
-    }
-    /**
-     * ftp 图片文件上传服务器操作
-     * @param $local_file 本地文件源地址
-     * @param $server_file 服务器目的地址
-     * @return bool
-     */
-    public function ftpImageToServer($local_file, $server_file)
-    {
-        //是否启用FTP
-        $FTP_USE = config('ftp.FTP_USE');
-        if ($FTP_USE == "CLOSE"){
-            return true;
-        }else{
-            $ftpConf = config('ftp.');
-            $ftp = new FtpServer();
-            $info = $ftp->start($ftpConf);
-            if ($info) {
-                //上传文件
-                if ($ftp->put($server_file, $local_file)) {
-                    //echo "上传成功";
-                    $ftp->close();
-                    //删除本地图片
-                    //$this->deleteServerImgCommon($local_file);
-                    return true;
-                } else {
-                    $ftp->close();
-                    return false;
-                }
-            }
-        }
-    }
-    /**
-     * 删除本地文件，Liunx上比较适用
-     * @param $filename
-     * @return bool
-     */
-    public function deleteServerImgCommon($filename)
-    {
-        if (file_exists($filename)) { //检查图片文件是否存在
-            $result = @unlink($filename);
-            return true;
-//            if ($result == true) {
-//                echo '删除成功';
-//            } else {
-//                echo '无法删除' . $filename;
-//            }
-        } else {
-            return false;
-            //echo '找不到图片文件';
-        }
+
     }
 }

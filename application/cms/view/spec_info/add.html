@@ -49,7 +49,8 @@
     {:token()}
     <div class="layui-form-item">
         <div class="layui-input-block div-form-op">
-            <button class="layui-btn" type="button" onclick="addSpecInfo()">提交</button>
+            <button class="layui-btn" type="button"
+                    op_url="{:url('cms/specInfo/add')}" onclick="opFormPostRecord(this)">提交</button>
             <button type="reset" class="layui-btn layui-btn-primary">放弃</button>
         </div>
     </div>
@@ -58,13 +59,4 @@
 {/block}
 
 {block name='single-content'}
-<script src="__CMS__/js/moZhang.js"></script>
-<script>
-    //修改按钮的点击事件
-    function addSpecInfo() {
-        var toUrl = "{:url('cms/specInfo/add')}";
-        var postData = $(".form-op-normal").serialize();
-        ToPostPopupsDeal(toUrl, postData);
-    }
-</script>
 {/block}

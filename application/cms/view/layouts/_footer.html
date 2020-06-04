@@ -1,0 +1,30 @@
+<script>
+    $(".refresh").click(function () {
+        if ($(this).hasClass("refreshThis")) {
+            $(this).removeClass("refreshThis");
+            $(".layui-layout-admin .layui-body").find("iframe")[0].contentWindow.location.reload(true);
+            setTimeout(function () {
+                $(".refresh").addClass("refreshThis");
+            }, 2000);
+        } else {
+            layer.msg("您的刷新速度太快，还是等两秒再刷新吧！");
+        }
+    });
+
+    $(document).ready(function () {
+        var allH = $(".layui-body").height();
+        var titleH = $(".layui-tab-title").height();
+        //$(".iframe-body").css("height", allH - titleH - 10);
+        $(".iframe-body").css("height", '99%');
+    });
+
+    /**
+     * 主要用于管理员 自身账号修改
+     * @param adminID
+     */
+    function viewAdminMsg(adminID) {
+        var toUrl = "{:url('cms/index/admin',['id'=>'AdminID'])}";
+        toUrl = toUrl.replace('AdminID',adminID);
+        ToOpenPopups(toUrl,'✎ 基本资料','48%','65%');
+    }
+</script>

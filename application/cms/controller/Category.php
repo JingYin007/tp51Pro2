@@ -29,12 +29,12 @@ class Category extends CmsBase
         $catType = $request->param("CatType","F");
         if ($request->isGet()) {
             $list = $this->model->getCmsCategoryForPage($curr_page, $this->page_limit, $search, $catType);
-            $num = $this->model->getCmsCategoryCount($search, $catType);
+            $record_num = $this->model->getCmsCategoryCount($search, $catType);
             $data = [
                 'list' => $list,
                 'search' => $search,
                 'cat_type' => $catType,
-                'num' => $num,
+                'record_num' => $record_num,
                 'page_limit' => $this->page_limit,
             ];
             return view('index', $data);

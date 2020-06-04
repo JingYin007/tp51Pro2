@@ -13,11 +13,11 @@
     <div class="layui-form-item">
         <label class="layui-form-label">活动配图：</label>
         <div class="layui-upload layui-input-inline">
-            <button type="button" class="layui-btn btn_upload_icon">
+            <button type="button" class="layui-btn btn_upload_img">
                 <i class="layui-icon">&#xe67c;</i>上传配图
             </button>
-            <img class="layui-upload-img img-upload-preview-medium" src="">
-            <input type="hidden" name="act_img" class="upload-icon" value="">
+            <img class="layui-upload-img img-upload-preview-medium upload_img_preview" src="">
+            <input type="hidden" name="act_img" class="upload_img_url" value="">
         </div>
     </div>
 
@@ -97,7 +97,8 @@
     {:token()}
     <div class="layui-form-item">
         <div class="layui-input-block div-form-op">
-            <button class="layui-btn" type="button" onclick="addCategory()">提交</button>
+            <button class="layui-btn" type="button"
+                    op_url="{:url('cms/activity/add')}" onclick="opFormPostRecord(this)">提交</button>
             <button type="reset" class="layui-btn layui-btn-primary">放弃</button>
         </div>
     </div>
@@ -106,61 +107,11 @@
 {/block}
 
 {block name='single-content'}
-<script src="__CMS__/js/moZhang.js"></script>
+<script src="__CMS__/js/activitys.js"></script>
 <script src="__CMS__/js/tree_categorys.js"></script>
 <script>
     var toUrl = "{:url('cms/category/ajaxGetToSelCategoryList')}";
     var toUrl2 = "{:url('cms/goods/ajaxGetCatGoodsForActivity')}";
     initViewTreeCategorys(toUrl,toUrl2,"#toSelGoodsID");
-
-    //修改按钮的点击事件
-    function addCategory() {
-        var toUrl = "{:url('cms/activity/add')}";
-        var postData = $(".form-op-normal").serialize();
-        ToPostPopupsDeal(toUrl, postData);
-    }
-
-    layui.use(['upload','laydate'], function () {
-        var upload = layui.upload;
-        var tag_token = $(".tag_token").val();
-        //普通图片上传
-        var uploadInst = upload.render({
-            elem: '.btn_upload_icon'
-            , type: 'images'
-            , exts: 'jpg|png|gif' //设置一些后缀，用于演示前端验证和后端的验证
-            //,auto:false //选择图片后是否直接上传
-            //,accept:'images' //上传文件类型
-            , url: '/api/upload/img_file'
-            , data: {'_token': tag_token}
-            , before: function (obj) {
-                //预读本地文件示例，不支持ie8
-                obj.preview(function (index, file, result) {
-                    $('.img-upload-preview-medium').attr('src', result); //图片链接（base64）
-                });
-            }
-            , done: function (res) {
-                dialog.tip(res.message);
-                //如果上传成功
-                if (res.status == 1) {
-                    $('.upload-icon').val(res.data.url);
-                }
-            }
-            , error: function () {
-                //演示失败状态，并实现重传
-                return layer.msg('上传失败,请重新上传');
-            }
-        });
-        var laydate = layui.laydate;
-        laydate.render({
-            elem: '#startTime',
-            type: 'datetime',
-            trigger: 'click'
-        });
-        laydate.render({
-            elem: '#endTime',
-            type: 'datetime',
-            trigger: 'click'
-        });
-    });
 </script>
 {/block}

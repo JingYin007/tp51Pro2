@@ -1,15 +1,13 @@
 {extend name='layouts/cms'}
 {block name='body-content'}
 
-<button class="layui-btn layui-btn-normal"
-        onclick="addAdmins()">
+<button class="layui-btn layui-btn-normal"op_url="{:url('cms/admin/addAdmin')}"
+        onclick="addForOpenPopups(this,'✚ 添加管理员', '48%', '65%')">
     <i class="layui-icon">&#xe608;</i> 添加管理员
 </button>
 <div class="layui-inline">
     <div class="layui-input-inline">
         <form class="form-search" action="{:url('cms/admin/index')}" method="get">
-            <input type="hidden" name="record_num" class="record_num" value="<?php echo $record_num; ?>">
-            <input type="hidden" name="page_limit" class="page_limit" value="{$page_limit}">
             <input type="hidden" name="curr_page" class="curr_page" value="1">
             <input type="text" value="{$search}" name="str_search" placeholder="请输入昵称或备注信息"
                    class="layui-input search_input">
@@ -41,7 +39,11 @@
         <th>操作</th>
     </tr>
     </thead>
-    <tbody class="table-tbody-normal">
+    <input type="hidden" class="op_url" value="{:url('cms/admin/editAdmin',['id'=>'opid'])}">
+    <tbody class="table-tbody-normal"
+           ajax_page_fun="ToAjaxOpForPageAdmins"
+           record_num="{$record_num}" page_limit="{$page_limit}"
+           page_url="{:url('cms/admin/index')}">
     {volist name="admins" id="vo"}
     <tr class="tr-normal-{$vo['id']}">
         <td>{$vo['id']}</td>
@@ -55,11 +57,11 @@
         <td>
             <div class="layui-btn-group">
                 <button class="layui-btn layui-btn-sm" title="编辑"
-                        onclick="editAdmin('{$vo.id}')">
+                        onclick="editForOpenPopups('✎ 管理员修改','{$vo.id}', '48%', '65%')">
                     <i class="layui-icon">&#xe642;</i>
                 </button>
                 <button class="layui-btn layui-btn-sm" title="删除"
-                        onclick="delAdmin('{$vo.id}')">
+                        onclick="delPostRecord('{$vo.id}')">
                     <i class="layui-icon">&#xe640;</i>
                 </button>
             </div>
@@ -88,40 +90,4 @@
 
 {block name='single-content'}
 <script src="__CMS__/js/admins.js"></script>
-<script src="__CMS__/js/moZhang.js"></script>
-<script>
-    //根据菜单ID 删除菜单记录
-    function delAdmin(id) {
-        var toUrl = "{:url('cms/admin/editAdmin',['id'=>'AdminID'])}";
-        toUrl = toUrl.replace('AdminID', id);
-        ToDelItem(id, toUrl, '.tr-normal-' + id);
-    }
-
-    $(".btn-search-mz").on('click', function () {
-        //var str_search = $(".search_input").val();
-        $(".form-search").submit();
-    });
-
-    //通过ajax 获取分页数据
-    function ajaxOpForPage(curr_page) {
-        var toUrl = "{:url('cms/admin/index')}";
-        $(".curr_page").val(curr_page);
-        var postData = $(".form-search").serialize();
-        ToAjaxOpForPageAdmins(toUrl, postData);
-    }
-
-    //添加导航菜单
-    function addAdmins() {
-        var toUrl = "{:url('cms/admin/addAdmin')}";
-        ToOpenPopups(toUrl, '✚ 添加管理员', '48%', '65%');
-    }
-
-    //根据菜单ID修改菜单信息
-    function editAdmin(id) {
-        var toUrl = "{:url('cms/admin/editAdmin',['id'=>'AdminID'])}";
-        toUrl = toUrl.replace('AdminID', id);
-        ToOpenPopups(toUrl, '✎ 管理员修改', '48%', '65%');
-    }
-</script>
-
 {/block}

@@ -15,7 +15,7 @@
 
 return [
     //默认页面显示记录数目，用于分页展示
-    'CMS_PAGE_SIZE' => 7,
+    'CMS_PAGE_SIZE' => 2,
 
     // 应用调试模式
     'app_debug'              => true,

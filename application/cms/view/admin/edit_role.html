@@ -71,7 +71,7 @@
     {:token()}
     <div class="layui-form-item">
         <div class="layui-input-block div-form-op">
-            <button class="layui-btn" type="button" onclick="editRole({$role['id']})"
+            <button class="layui-btn" type="button" onclick="editRole('{$role.id}')"
                     lay-submit lay-filter="formDemo">提交
             </button>
             <button type="reset" class="layui-btn layui-btn-primary">重置</button>
@@ -83,7 +83,6 @@
 
 {block name='single-content'}
 <script src="__CMS__/js/roles.js"></script>
-<script src="__CMS__/js/moZhang.js"></script>
 <script>
 
     function editRole(id) {

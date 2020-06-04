@@ -1,3 +1,48 @@
+
+
+layui.use(['upload','laydate'], function () {
+    var laydate = layui.laydate;
+    laydate.render({
+        elem: '#startTime',
+        type: 'datetime',
+        trigger: 'click'
+    });
+    laydate.render({
+        elem: '#endTime',
+        type: 'datetime',
+        trigger: 'click'
+    });
+});
+
+layui.use(['form'], function () {
+    var form = layui.form;
+    form.on('switch(switchActID)', function (data) {
+        //开关是否开启，true或者false
+        var checked = data.elem.checked;
+        var okStatus = 0;
+        if (checked) {
+            okStatus = 1
+        }
+        //获取所需属性值
+        var switch_act_id = data.elem.attributes['switch_act_id'].nodeValue;
+        //TODO 此时进行ajax的服务器访问，如果返回数据正常，则进行后面代码的调用
+        var toUrl = $(".switch_url").val();
+        $.post(
+            toUrl,
+            {act_id: switch_act_id, okStatus: okStatus},
+            function (result) {
+                if (result.status > 0) {
+                    data.elem.checked = checked;
+                    form.render();
+                } else {
+                    //失败
+                    data.elem.checked = !checked;
+                    form.render();
+                    layer.msg(result.message);
+                }
+            }, "JSON");
+    });
+});
 /**
  * ajax 获取并加载每页的数据
  * @param toUrl
@@ -28,11 +73,11 @@ function ToAjaxOpForPageAdvertisement(toUrl,postData) {
                         "                <td>\n" +
                         "                    <div class=\"layui-btn-group\">\n" +
                         "                        <button class=\"layui-btn layui-btn-sm\" title='编辑广告' \n" +
-                        "                                onclick=\"editAdvertisement('"+e.id+"')\">\n" +
+                        "                                onclick=\"editForOpenPopups('✎ 广告修改','"+e.id+"','55%', '65%')\">\n" +
                         "                            <i class=\"layui-icon\">&#xe642;</i>\n" +
                         "                        </button>\n" +
                         "                        <button class=\"layui-btn layui-btn-sm\" title='删除广告' \n" +
-                        "                                onclick=\"delAdvertisement('"+e.id+"')\">\n" +
+                        "                                onclick=\"delPostRecord('"+e.id+"')\">\n" +
                         "                            <i class=\"layui-icon\">&#xe640;</i>\n" +
                         "                        </button>\n" +
                         "                    </div>\n" +

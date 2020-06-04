@@ -33,13 +33,13 @@ class SpecInfo extends CmsBase
         if ($request->isGet()){
             $categoryList = $this->categoryModel->getCmsToSelCategoryList();
             $list = $this->model->getCmsSpecInfoForPage($curr_page, $this->page_limit, $search, $catID);
-            $num = $this->model->getCmsSpecInfoCount($search, $catID);
+            $record_num = $this->model->getCmsSpecInfoCount($search, $catID);
             $data = [
                 'list' => $list,
                 'search' => $search,
                 'catID' => $catID,
                 'categoryList' => $categoryList,
-                'num' => $num,
+                'record_num' => $record_num,
                 'page_limit' => $this->page_limit,
             ];
             return view('index', $data);

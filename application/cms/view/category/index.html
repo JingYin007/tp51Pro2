@@ -3,15 +3,14 @@
 {block name='body-content'}
 <div class="layui-form-item">
     <button class="layui-btn layui-btn-normal"
-            onclick="addCategory()">
+            op_url="{:url('cms/category/add')}"
+            onclick="addForOpenPopups(this,'✚ 产品分类添加','65%', '76%')">
         <i class="layui-icon">&#xe608;</i> 添加产品分类
     </button>
 </div>
 <div class="layui-inline layui-form">
     <form class="form-search " action="{:url('cms/category/index')}" method="get">
         <div class="layui-input-inline">
-            <input type="hidden" name="record_num" class="record_num" value="<?php echo $num; ?>">
-            <input type="hidden" name="page_limit" class="page_limit" value="{$page_limit}">
             <input type="hidden" name="curr_page" class="curr_page" value="1">
             <input type="text" value="{$search}" name="str_search" placeholder="请输入名称"
                    class="layui-input search_input">
@@ -50,7 +49,12 @@
         <th>操作</th>
     </tr>
     </thead>
-    <tbody class="table-tbody-normal layui-form">
+    <input type="hidden" class="switch_url" value="{:url('cms/category/ajaxForShow')}">
+    <input type="hidden" class="op_url" value="{:url('cms/category/edit',['id'=>'opid'])}">
+    <tbody class="table-tbody-normal layui-form"
+           ajax_page_fun="ToAjaxOpForPageCategorys"
+           record_num="{$record_num}" page_limit="{$page_limit}"
+           page_url="{:url('cms/category/index')}">
     {volist name="list" id="vo"}
     <tr class="tr-normal-{$vo['cat_id']}">
         <td>{$vo['cat_id']}</td>
@@ -68,11 +72,11 @@
         <td>
             <div class="layui-btn-group">
                 <button class="layui-btn layui-btn-sm" title="编辑分类"
-                        onclick="editCategory('{$vo.cat_id}')">
+                        onclick="editForOpenPopups('✎ 产品分类修改','{$vo.cat_id}','65%', '76%')">
                     <i class="layui-icon">&#xe642;</i>
                 </button>
                 <button class="layui-btn layui-btn-sm" title="删除分类"
-                        onclick="delCategory('{$vo.cat_id}')">
+                        onclick="delPostRecord('{$vo.cat_id}')">
                     <i class="layui-icon">&#xe640;</i>
                 </button>
             </div>
@@ -98,70 +102,4 @@
 
 {block name='single-content'}
 <script src="__CMS__/js/categorys.js"></script>
-<script src="__CMS__/js/moZhang.js"></script>
-<script>
-    layui.use(['form'], function () {
-        var form = layui.form;
-        form.on('switch(switchCatID)', function (data) {
-            //开关是否开启，true或者false
-            var checked = data.elem.checked;
-            var okStatus = 0;
-            if (checked) {
-                okStatus = 1
-            }
-            //获取所需属性值
-            var switch_cat_id = data.elem.attributes['switch_cat_id'].nodeValue;
-            //TODO 此时进行ajax的服务器访问，如果返回数据正常，则进行后面代码的调用
-            var toUrl = "{:url('cms/category/ajaxForShow')}";
-            $.post(
-                toUrl,
-                {cat_id: switch_cat_id, okStatus: okStatus},
-                function (result) {
-                    if (result.status > 0) {
-                        data.elem.checked = checked;
-                        form.render();
-                    } else {
-                        //失败
-                        data.elem.checked = !checked;
-                        form.render();
-                        layer.msg(result.message);
-                    }
-                }, "JSON");
-        });
-    });
-</script>
-<script>
-    //根据菜单ID 删除菜单记录
-    function delCategory(id) {
-        var toUrl = "{:url('cms/category/edit',['id'=>'AID'])}";
-        toUrl = toUrl.replace('AID', id);
-        ToDelItem(id, toUrl, '.tr-normal-' + id);
-    }
-
-    $(".btn-search-mz").on('click', function () {
-        //var str_search = $(".search_input").val();
-        $(".form-search").submit();
-    });
-
-    //添加导航菜单
-    function addCategory() {
-        var toUrl = "{:url('cms/category/add')}";
-        ToOpenPopups(toUrl, '✚ 产品分类添加', '65%', '76%');
-    }
-
-    //根据菜单ID修改菜单信息
-    function editCategory(id) {
-        var toUrl = "{:url('cms/category/edit',['id'=>'AID'])}";
-        toUrl = toUrl.replace('AID', id);
-        ToOpenPopups(toUrl, '✎ 产品分类修改', '65%', '76%');
-    }
-
-    //通过ajax 获取分页数据
-    function ajaxOpForPage(curr_page) {
-        var toUrl = "{:url('cms/category/index')}";
-        $(".curr_page").val(curr_page);
-        var postData = $(".form-search").serialize();
-        ToAjaxOpForPageCategorys(toUrl, postData);
-    }
-</script>
 {/block}

@@ -9,8 +9,6 @@
             </select>
         </div>
         <div class="layui-input-inline">
-            <input type="hidden" name="record_num" class="record_num" value="<?php echo $record_num; ?>">
-            <input type="hidden" name="page_limit" class="page_limit" value="{$page_limit}">
             <input type="hidden" name="curr_page" class="curr_page" value="1">
             <input type="text" value="{$search}" name="str_search" placeholder="昵称/认证手机"
                    class="layui-input search_input">
@@ -46,7 +44,10 @@
         <th>操作</th>
     </tr>
     </thead>
-    <tbody class="table-tbody-normal layui-form">
+    <tbody class="table-tbody-normal layui-form"
+           ajax_page_fun="ToAjaxOpForPageUsers"
+           record_num="{$record_num}" page_limit="{$page_limit}"
+           page_url="{:url('cms/users/index')}">
     {volist name="users" id="vo"}
     <tr class="tr-normal-{$vo['id']}">
         <td>{$vo['id']}</td>
@@ -80,7 +81,6 @@
 
 {block name='single-content'}
 <script src="__CMS__/js/users.js"></script>
-<script src="__CMS__/js/moZhang.js"></script>
 <script>
     //进行售后状态的更改
     function checkToStatus(user_id) {
@@ -116,18 +116,6 @@
                 layer.msg(res.message);
             }, 'JSON'
         )
-    }
-
-    $(".btn-search-mz").on('click', function () {
-        $(".form-search").submit();
-    });
-
-    //通过ajax 获取分页数据
-    function ajaxOpForPage(curr_page) {
-        var toUrl = "{:url('cms/users/index')}";
-        $(".curr_page").val(curr_page);
-        var postData = $(".form-search").serialize();
-        ToAjaxOpForPageUsers(toUrl, postData);
     }
 </script>
 {/block}

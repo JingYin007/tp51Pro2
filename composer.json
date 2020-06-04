@@ -21,7 +21,8 @@
         "topthink/think-migration": "^2.0",
         "tp5er/tp5-databackup": "dev-master",
         "topthink/think-captcha": "^2.0",
-        "phpoffice/phpexcel": "^1.8"
+        "phpoffice/phpexcel": "^1.8",
+        "qiniu/php-sdk": "^7.2"
     },
     "autoload": {
         "psr-4": {

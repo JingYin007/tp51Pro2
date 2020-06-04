@@ -125,29 +125,7 @@ $(document).ready(function () {
         $(".form-opAdmins .tip-pwd").html(tip);
     });
 
-    /**
-     * 公用 table 分页模块
-     */
-    layui.use(['laypage', 'layer'], function () {
-        var laypage = layui.laypage;
-        var page_limit = $(".page_limit").val();
-        var record_num = $(".record_num").val();
-        laypage.render({
-            elem: 'demo2-1'
-            , limit: page_limit
-            , count: record_num
-            , layout: ['count', 'prev', 'page', 'next', 'refresh', 'skip']
-            , jump: function (obj, first) {
-                //obj包含了当前分页的所有参数
-                //首次不执行
-                if (!first) {
-                    //layer.msg(obj.curr);
-                    ajaxOpForPage(obj.curr);
-                }
-            }
-            , theme: '#FF5722'
-        });
-    });
+
 });
 window.onload = function(){
     //要初始化的东西 TODO 我就奇怪为啥有的代码在$(document).function()中就不行！！！
@@ -213,92 +191,4 @@ function exitFullScreen() {
         docE.webkitCancelFullScreen();
     }
 }
-
-
-
 /*----------------------------------------------------------------------------------------------------*/
-// 除去页面所显示的记录 传递 div
-function ToRemoveDiv(tag) {
-    $(tag).remove();
-}
-
-/**
- * 导航菜单处理函数 包括 "添加"、"修改"
- * @param op_url URL 地址
- * @param tag 操作标识：add / edit
- * @param title
- * @constructor
- */
-function ToOpenPopups(op_url,title,width,height) {
-    var widthTag = width?width:'70%';
-    var heightTag = height?height:'65%';
-    var openPopus = layer.open({
-        type: 2,
-        shade:0.61,
-        shadeClose:true,
-        anim:4,
-        moveOut: true,
-        title: title,
-        maxmin: true, //开启最大化最小化按钮
-        area: [widthTag, heightTag],
-        content: op_url, //可以出现滚动条
-        //content: [op_url, 'no'], //如果你不想让iframe出现滚动条
-    });
-    layer.style(openPopus, {
-        background: '#EEEEEE',
-    });
-}
-/**
- * 对导航菜单的 ajax请求处理
- * @param toUrl
- * @param postData
- * @constructor
- */
-function ToPostPopupsDeal(toUrl,postData) {
-    $.post(
-        toUrl,
-        postData,
-        function (result) {
-            dialog.tip(result.message);
-            if(result.status == 1){
-                setTimeout(function(){
-                    var index = parent.layer.getFrameIndex(window.name); //先得到当前 iframe层的索引
-                    parent.layer.close(index); //再执行关闭
-                },2000);
-            }else{
-                //失败
-                //layer.msg(result.message);
-            }
-        },"JSON");
-}
-/**
- * 删除记录
- * @param id 记录ID
- * @param toUrl 请求 URL
- * @constructor
- */
-function ToDelItem(id,toUrl,remove_class) {
-    var tag_token = $(".tag_token").val();
-    var postData = {'id':id,'tag':'del','_token':tag_token};
-    layer.msg('确定要删除此条记录吗？', {
-        time: 0 //不自动关闭
-        ,btn: ['确定', '离开']
-        ,yes: function(index){
-            afterDelItem(toUrl,postData,remove_class);
-        }
-    });
-}
-function afterDelItem(toUrl,postData,remove_class) {
-    $.post(
-        toUrl,
-        postData,
-        function (result) {
-            dialog.tip(result.message);
-            if(result.status == 1){
-                ToRemoveDiv(remove_class);
-            }else{
-                //失败
-                layer.msg(result.message);
-            }
-        },"JSON");
-}

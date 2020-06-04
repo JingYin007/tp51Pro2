@@ -230,7 +230,8 @@
     {:token()}
     <div class="layui-form-item">
         <div class="layui-input-block div-form-op">
-            <button class="layui-btn" type="button" onclick="editGoods({$good['goods_id']})">提交</button>
+            <button class="layui-btn" type="button"
+                    op_url="{:url('cms/goods/edit',['id'=>$good.goods_id])}" onclick="opFormPostRecord(this)">提交</button>
             <button type="reset" class="layui-btn layui-btn-primary">放弃</button>
         </div>
     </div>
@@ -240,21 +241,12 @@
 {block name='single-content'}
 <link href="__CMS__/css/goods.css" rel="stylesheet">
 <script src="__CMS__/js/goods.js"></script>
-<script src="__CMS__/js/moZhang.js"></script>
 {include file='layouts/ueditor-js'}
 <script>
     var arrSpecFull = [];
     var multiple_images = [];
     function makeSaleGoodsMsg() {
         goToMakeSaleGoodsMsg(arrSpecFull);
-    }
-
-    //修改按钮的点击事件
-    function editGoods(id) {
-        var toUrl = "{:url('cms/goods/edit',['id'=>'AID'])}";
-        toUrl = toUrl.replace('AID', id);
-        var postData = $(".form-op-normal").serialize();
-        ToPostPopupsDeal(toUrl, postData);
     }
 
     /**

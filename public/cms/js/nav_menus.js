@@ -1,3 +1,11 @@
+layui.use(['upload','form'], function () {
+    var form = layui.form;
+    form.on('radio(navType)', function(data){
+        var level = data.value;//被点击的radio的value值
+        $(".sel-parent-msg").hide();
+        $(".sel-parent-msg-"+level).show();
+    });
+});
 /**
  * ajax 获取并加载每页的数据
  * @param toUrl
@@ -26,11 +34,11 @@ function ToAjaxOpForNavMenusPage(toUrl,postData) {
                         "                <td>\n" +
                         "                    <div class=\"layui-btn-group\">\n" +
                         "                        <button class=\"layui-btn layui-btn-sm\" title='编辑菜单' \n" +
-                        "                                onclick=\"editNavMenu('"+e.id+"')\">\n" +
+                        "                                onclick=\"editForOpenPopups('✎ 菜单信息修改','"+e.id+"', '75%', '68%')\">\n" +
                         "                            <i class=\"layui-icon\">&#xe642;</i>\n" +
                         "                        </button>\n" +
                         "                        <button class=\"layui-btn layui-btn-sm\" title='删除菜单' \n" +
-                        "                                onclick=\"delNavMenu('"+e.id+"')\">\n" +
+                        "                                onclick=\"delPostRecord('"+e.id+"')\">\n" +
                         "                            <i class=\"layui-icon\">&#xe640;</i>\n" +
                         "                        </button>\n";
 

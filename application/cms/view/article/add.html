@@ -16,11 +16,11 @@
             <button type="button" name="img_upload" class="layui-btn btn_upload_img">
                 <i class="layui-icon">&#xe67c;</i>上传图片
             </button>
-            <img class="layui-upload-img img-upload-preview-medium img-upload-view" src="">
+            <img class="layui-upload-img img-upload-preview-medium upload_img_preview" src="">
         </div>
     </div>
 
-    <input type="hidden" name="picture" class="menu-icon" value="">
+    <input type="hidden" name="picture" class="upload_img_url" value="">
     <div class="layui-form-item layui-form-text">
         <label class="layui-form-label">文章摘要：</label>
         <div class="layui-input-block">
@@ -56,7 +56,8 @@
     {:token()}
     <div class="layui-form-item">
         <div class="layui-input-block div-form-op">
-            <button class="layui-btn" type="button" onclick="addArticle()">提交</button>
+            <button class="layui-btn" type="button"
+                    op_url="{:url('cms/article/add')}" onclick="opFormPostRecord(this)">提交</button>
             <button type="reset" class="layui-btn layui-btn-primary">放弃</button>
         </div>
     </div>
@@ -65,46 +66,6 @@
 {/block}
 
 {block name='single-content'}
-<script src="__CMS__/js/moZhang.js"></script>
 {include file='layouts/ueditor-js'/}
-<script>
-    //修改按钮的点击事件
-    function addArticle() {
-        var toUrl = "{:url('cms/article/add')}";
-        var postData = $(".form-op-normal").serialize();
-        ToPostPopupsDeal(toUrl, postData);
-    }
 
-    layui.use('upload', function () {
-        var upload = layui.upload;
-        var tag_token = $(".tag_token").val();
-        //普通图片上传
-        var uploadInst = upload.render({
-            elem: '.btn_upload_img'
-            , type: 'images'
-            , exts: 'jpg|png|gif' //设置一些后缀，用于演示前端验证和后端的验证
-            //,auto:false //选择图片后是否直接上传
-            //,accept:'images' //上传文件类型
-            , url: '/api/upload/img_file'
-            , data: {'_token': tag_token}
-            , before: function (obj) {
-                //预读本地文件示例，不支持ie8
-                obj.preview(function (index, file, result) {
-                    $('.img-upload-view').attr('src', result); //图片链接（base64）
-                });
-            }
-            , done: function (res) {
-                dialog.tip(res.message);
-                //如果上传成功
-                if (res.status == 1) {
-                    $('.menu-icon').val(res.data.url);
-                }
-            }
-            , error: function () {
-                //演示失败状态，并实现重传
-                return layer.msg('上传失败,请重新上传');
-            }
-        });
-    });
-</script>
 {/block}

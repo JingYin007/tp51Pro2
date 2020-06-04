@@ -2,15 +2,13 @@
 
 {block name="body-content"}
 
-<button class="layui-btn layui-btn-normal"
-        onclick="addAdvertisement()">
+<button class="layui-btn layui-btn-normal" op_url="{:url('cms/adList/add')}"
+        onclick="addForOpenPopups(this,'✚ 添加活动','55%','65%')">
     <i class="layui-icon">&#xe608;</i> 添加广告
 </button>
 <div class="layui-inline">
     <div class="layui-input-inline">
         <form class="form-search" action="{:url('cms/adList/index')}" method="get">
-            <input type="hidden" name="record_num" class="record_num" value="<?php echo $record_num; ?>">
-            <input type="hidden" name="page_limit" class="page_limit" value="{$page_limit}">
             <input type="hidden" name="curr_page" class="curr_page" value="1">
             <input type="text" value="{$search}" name="str_search" placeholder="请输入标题或标识字符"
                    class="layui-input search_input">
@@ -48,7 +46,12 @@
         <th>操作</th>
     </tr>
     </thead>
-    <tbody class="table-tbody-normal layui-form">
+    <input type="hidden" class="switch_url" value="{:url('cms/adList/ajaxForShow')}">
+    <input type="hidden" class="op_url" value="{:url('cms/adList/edit',['id'=>'opid'])}">
+    <tbody class="table-tbody-normal layui-form"
+           ajax_page_fun="ToAjaxOpForPageAdvertisement"
+           record_num="{$record_num}" page_limit="{$page_limit}"
+           page_url="{:url('cms/adList/index')}">
     {volist name="ads" id="vo"}
     <tr class="tr-normal-{$vo['id']}">
         <td>{$vo['id']}</td>
@@ -67,11 +70,11 @@
         <td>
             <div class="layui-btn-group">
                 <button class="layui-btn layui-btn-sm" title="编辑广告"
-                        onclick="editAdvertisement('{$vo.id}')">
+                        onclick="editForOpenPopups('✎ 广告修改', '{$vo.id}','55%', '65%')">
                     <i class="layui-icon">&#xe642;</i>
                 </button>
                 <button class="layui-btn layui-btn-sm" title="删除广告"
-                        onclick="delAdvertisement('{$vo.id}')">
+                        onclick="delPostRecord('{$vo.id}')">
                     <i class="layui-icon">&#xe640;</i>
                 </button>
             </div>
@@ -96,73 +99,4 @@
 
 {block name="single-content"}
 <script src="__CMS__/js/adlists.js"></script>
-<script src="__CMS__/js/moZhang.js"></script>
-<script>
-    //根据广告ID 删除记录
-    function delAdvertisement(id) {
-        var toUrl = "{:url('cms/adList/edit',['id'=>'AID'])}";
-        toUrl = toUrl.replace('AID', id);
-        ToDelItem(id, toUrl, '.tr-normal-' + id);
-    }
-
-    layui.use(['form'], function () {
-        var form = layui.form;
-        form.on('switch(switchActID)', function (data) {
-            //开关是否开启，true或者false
-            var checked = data.elem.checked;
-            var okStatus = 0;
-            if (checked) {
-                okStatus = 1
-            }
-            //获取所需属性值
-            var switch_act_id = data.elem.attributes['switch_act_id'].nodeValue;
-            //TODO 此时进行ajax的服务器访问，如果返回数据正常，则进行后面代码的调用
-            var toUrl = "{:url('cms/adList/ajaxForShow')}";
-            toUrl = toUrl.replace('AID', switch_act_id);
-            $.post(
-                toUrl,
-                {act_id: switch_act_id, okStatus: okStatus},
-                function (result) {
-                    if (result.status > 0) {
-                        data.elem.checked = checked;
-                        form.render();
-                    } else {
-                        //失败
-                        data.elem.checked = !checked;
-                        form.render();
-                        layer.msg(result.message);
-                    }
-                }, "JSON");
-        });
-    });
-</script>
-<script>
-
-    $(".btn-search-mz").on('click', function () {
-        $(".form-search").submit();
-    });
-
-    //通过ajax 获取分页数据
-    function ajaxOpForPage(curr_page) {
-        var toUrl = "{:url('cms/adList/index')}";
-        $(".curr_page").val(curr_page);
-        var postData = $(".form-search").serialize();
-        ToAjaxOpForPageAdvertisement(toUrl, postData);
-    }
-
-    //添加新广告
-    function addAdvertisement() {
-        var toUrl = "{:url('cms/adList/add')}";
-        ToOpenPopups(toUrl, '✚ 添加广告', '55%', '65%');
-    }
-
-    //根据广告ID修改信息
-    function editAdvertisement(id) {
-        var toUrl = "{:url('cms/adList/edit',['id'=>'NMID'])}";
-        toUrl = toUrl.replace("NMID", id);
-        ToOpenPopups(toUrl, '✎ 广告修改', '55%', '65%');
-    }
-
-</script>
-
 {/block}

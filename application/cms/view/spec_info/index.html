@@ -29,8 +29,6 @@
         </div>
 
         <div class="layui-input-inline">
-            <input type="hidden" name="record_num" class="record_num" value="<?php echo $num; ?>">
-            <input type="hidden" name="page_limit" class="page_limit" value="{$page_limit}">
             <input type="hidden" name="curr_page" class="curr_page" value="1">
             <input type="text" value="{$search}" name="str_search" placeholder="请输入名称"
                    class="layui-input search_input">
@@ -60,7 +58,11 @@
         <th>操作</th>
     </tr>
     </thead>
-    <tbody class="table-tbody-normal layui-form">
+    <input type="hidden" class="op_url" value="{:url('cms/specInfo/edit',['id'=>'opid'])}">
+    <tbody class="table-tbody-normal layui-form"
+           ajax_page_fun="ToAjaxOpForPageSpecInfos"
+           record_num="{$record_num}" page_limit="{$page_limit}"
+           page_url="{:url('cms/specInfo/index')}">
     {volist name="list" id="vo"}
     <tr class="tr-normal-{$vo['spec_id']}">
         <td>{$vo['spec_id']}</td>
@@ -71,11 +73,11 @@
         <td>
             <div class="layui-btn-group">
                 <button class="layui-btn layui-btn-sm" title="编辑属性"
-                        onclick="editSpecInfo('{$vo.spec_id}')">
+                        onclick="editForOpenPopups('✎ 产品属性修改','{$vo.spec_id}', '70%', '66%')">
                     <i class="layui-icon">&#xe642;</i>
                 </button>
                 <button class="layui-btn layui-btn-sm" title="删除"
-                        onclick="delSpecInfo('{$vo.spec_id}')">
+                        onclick="delPostRecord('{$vo.spec_id}')">
                     <i class="layui-icon">&#xe640;</i>
                 </button>
                 <button class="layui-btn layui-btn-sm" title="规格数据"
@@ -107,18 +109,7 @@
 
 {block name='single-content'}
 <script src="__CMS__/js/spec_infos.js"></script>
-<script src="__CMS__/js/moZhang.js"></script>
 <script>
-    //根据菜单ID 删除菜单记录
-    function delSpecInfo(id) {
-        var toUrl = "{:url('cms/specInfo/edit',['id'=>'AID'])}";
-        toUrl = toUrl.replace('AID', id);
-        ToDelItem(id, toUrl, '.tr-normal-' + id);
-    }
-
-    $(".btn-search-mz").on('click', function () {
-        $(".form-search").submit();
-    });
 
     //添加导航菜单
     function addSpecInfo(id) {
@@ -127,24 +118,11 @@
         ToOpenPopups(toUrl, '✚ 产品属性添加', '70%', '66%');
     }
 
-    //根据菜单ID修改菜单信息
-    function editSpecInfo(id) {
-        var toUrl = "{:url('cms/specInfo/edit',['id'=>'AID'])}";
-        toUrl = toUrl.replace('AID', id);
-        ToOpenPopups(toUrl, '✎ 产品属性修改', '70%', '66%');
-    }
-
     function opSpecInfo(id) {
         var toUrl = "{:url('cms/specInfo/details',['id'=>'AID'])}";
         toUrl = toUrl.replace('AID', id);
         ToOpenPopups(toUrl, '★ 规格数据展示', '70%', '85%');
     }
-    //通过ajax 获取分页数据
-    function ajaxOpForPage(curr_page) {
-        var toUrl = "{:url('cms/specInfo/index')}";
-        $(".curr_page").val(curr_page);
-        var postData = $(".form-search").serialize();
-        ToAjaxOpForPageSpecInfos(toUrl, postData);
-    }
+
 </script>
 {/block}
