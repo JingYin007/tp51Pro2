@@ -108,32 +108,7 @@ function ToRemoveDiv(tag) {
     $(tag).remove();
 }
 
-/**
- * 导航菜单处理函数 包括 "添加"、"修改"
- * @param op_url URL 地址
- * @param tag 操作标识：add / edit
- * @param title
- * @constructor
- */
-function ToOpenPopups(op_url,title,width,height) {
-    var widthTag = width?width:'70%';
-    var heightTag = height?height:'65%';
-    var openPopus = layer.open({
-        type: 2,
-        shade:0.61,
-        shadeClose:true,
-        anim:4,
-        moveOut: true,
-        title: title,
-        maxmin: true, //开启最大化最小化按钮
-        area: [widthTag, heightTag],
-        content: op_url, //可以出现滚动条
-        //content: [op_url, 'no'], //如果你不想让iframe出现滚动条
-    });
-    layer.style(openPopus, {
-        background: '#EEEEEE',
-    });
-}
+
 /**
  * 对导航菜单的 ajax请求处理
  * @param toUrl
