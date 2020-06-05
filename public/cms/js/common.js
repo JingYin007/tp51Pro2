@@ -25,16 +25,17 @@ layui.use(['laypage', 'layer'], function () {
     });
 });
 
-
+/**
+ * 图片资源上传
+ */
 layui.use('upload', function () {
     var upload = layui.upload;
     //普通图片上传
     upload.render({
         elem: '.btn_upload_img'
         , type: 'images'
-        , exts: 'jpg|png|gif' //设置一些后缀，用于演示前端验证和后端的验证
-        //,auto:false //选择图片后是否直接上传
-        //,accept:'images' //上传文件类型
+        , exts: 'jpg|png|gif|jpeg' //设置一些后缀，用于演示前端验证和后端的验证
+        , accept:'images' //上传文件类型
         , url: image_upload_url
         , before: function (obj) {
             //预读本地文件示例，不支持ie8
@@ -87,7 +88,12 @@ function editForOpenPopups(title,id,width,height) {
     op_url = op_url.replace('opid', id);
     ToOpenPopups(op_url, title, width, height);
 }
-// 日志查看窗口
+
+/**
+ * 打开日志 查看窗口
+ * @param title
+ * @param id
+ */
 function viewLogOpenPopups(title,id) {
     var op_url = $(".log_url").val();
     op_url = op_url.replace('opid', id);
@@ -95,7 +101,6 @@ function viewLogOpenPopups(title,id) {
 }
 /**
  * 删除记录操作
- * @param obj
  * @param id
  */
 function delPostRecord(id) {
@@ -107,7 +112,6 @@ function delPostRecord(id) {
 function ToRemoveDiv(tag) {
     $(tag).remove();
 }
-
 
 /**
  * 对导航菜单的 ajax请求处理
@@ -153,6 +157,13 @@ function ToDelItem(id,toUrl,remove_class) {
         }
     });
 }
+
+/**
+ * 删除元素 请求
+ * @param toUrl
+ * @param postData
+ * @param remove_class
+ */
 function afterDelItem(toUrl,postData,remove_class) {
     $.post(
         toUrl,
