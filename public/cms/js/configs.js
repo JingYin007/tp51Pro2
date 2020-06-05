@@ -57,7 +57,7 @@ function ToAjaxOpForPageConfigs(toUrl,postData) {
                         "                <td>\n" +
                         "                    <div class=\"layui-btn-group\">\n" +
                         "                        <button class=\"layui-btn layui-btn-sm\" title='编辑' \n" +
-                        "                                onclick=\"editForOpenPopups('✎ 配置修改','"+e.id+"','','76%')\">\n" +
+                        "                                onclick=\"editForOpenPopups('✎ 配置修改','"+e.id+"','43%','76%')\">\n" +
                         "                            <i class=\"layui-icon\">&#xe642;</i>\n" +
                         "                        </button>\n" +
                         "                        <button class=\"layui-btn layui-btn-sm\" title='删除' \n" +

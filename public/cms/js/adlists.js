@@ -73,7 +73,7 @@ function ToAjaxOpForPageAdvertisement(toUrl,postData) {
                         "                <td>\n" +
                         "                    <div class=\"layui-btn-group\">\n" +
                         "                        <button class=\"layui-btn layui-btn-sm\" title='编辑广告' \n" +
-                        "                                onclick=\"editForOpenPopups('✎ 广告修改','"+e.id+"','55%', '65%')\">\n" +
+                        "                                onclick=\"editForOpenPopups('✎ 广告修改','"+e.id+"','55%', '92%')\">\n" +
                         "                            <i class=\"layui-icon\">&#xe642;</i>\n" +
                         "                        </button>\n" +
                         "                        <button class=\"layui-btn layui-btn-sm\" title='删除广告' \n" +

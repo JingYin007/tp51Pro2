@@ -4,7 +4,7 @@
 <div class="layui-form-item">
     <button class="layui-btn layui-btn-normal"
             op_url="{:url('cms/menu/add')}"
-            onclick="addForOpenPopups(this, '✚ 添加导航菜单', '75%', '68%')">
+            onclick="addForOpenPopups(this, '✚ 添加导航菜单', '56%', '68%')">
         <i class="layui-icon">&#xe608;</i> 添加导航
     </button>
 </div>
@@ -71,7 +71,7 @@
         <td>
             <div class="layui-btn-group">
                 <button class="layui-btn layui-btn-sm" title="编辑菜单"
-                        onclick="editForOpenPopups('✎ 菜单信息修改','{$vo.id}','75%','68%')">
+                        onclick="editForOpenPopups('✎ 菜单信息修改','{$vo.id}','56%','68%')">
                     <i class="layui-icon">&#xe642;</i>
                 </button>
                 <button class="layui-btn layui-btn-sm" title="删除菜单"
@@ -113,7 +113,7 @@
     function authNavMenu(id) {
         var toUrl = "{:url('cms/navMenu/auth',['id'=>'NMID'])}";
         toUrl = toUrl.replace("NMID", id);
-        ToOpenPopups(toUrl, '♖ 权限管理', '75%', '78%');
+        ToOpenPopups(toUrl, '♖ 权限管理', '62%', '78%');
     }
 </script>
 

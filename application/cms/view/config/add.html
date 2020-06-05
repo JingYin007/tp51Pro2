@@ -57,10 +57,10 @@
 
     <div class="layui-form-item">
         <label class="layui-form-label">提示信息：</label>
-        <div class="layui-input-inline">
+        <div class="layui-input-block">
             <input type="text" name="tip" required lay-verify="required"
                    value=""
-                   placeholder="请输入提示信息" autocomplete="off" class="layui-input input-title-mz">
+                   placeholder="请输入提示信息" autocomplete="off" class="layui-input">
         </div>
     </div>
 
@@ -84,7 +84,12 @@
         </div>
     </div>
 </form>
-
+<style>
+    .layui-form-item input{
+        color: #7274AB;
+        font-weight: 700;
+    }
+</style>
 {/block}
 
 {block name='single-content'}

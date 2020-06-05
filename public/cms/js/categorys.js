@@ -106,7 +106,7 @@ function ToAjaxOpForPageCategorys(toUrl,postData) {
                         "                <td>\n" +
                         "                    <div class=\"layui-btn-group\">\n" +
                         "                        <button class=\"layui-btn layui-btn-sm\" title='编辑分类' \n" +
-                        "                                onclick=\"editForOpenPopups('✎ 产品分类修改','"+e.cat_id+"','65%', '76%')\">\n" +
+                        "                                onclick=\"editForOpenPopups('✎ 产品分类修改','"+e.cat_id+"','51%', '82%')\">\n" +
                         "                            <i class=\"layui-icon\">&#xe642;</i>\n" +
                         "                        </button>\n" +
                         "                        <button class=\"layui-btn layui-btn-sm\" title='删除分类' \n" +

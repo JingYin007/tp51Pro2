@@ -34,7 +34,7 @@ function ToAjaxOpForNavMenusPage(toUrl,postData) {
                         "                <td>\n" +
                         "                    <div class=\"layui-btn-group\">\n" +
                         "                        <button class=\"layui-btn layui-btn-sm\" title='编辑菜单' \n" +
-                        "                                onclick=\"editForOpenPopups('✎ 菜单信息修改','"+e.id+"', '75%', '68%')\">\n" +
+                        "                                onclick=\"editForOpenPopups('✎ 菜单信息修改','"+e.id+"', '56%', '68%')\">\n" +
                         "                            <i class=\"layui-icon\">&#xe642;</i>\n" +
                         "                        </button>\n" +
                         "                        <button class=\"layui-btn layui-btn-sm\" title='删除菜单' \n" +
