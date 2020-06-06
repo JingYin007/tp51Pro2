@@ -1,0 +1,299 @@
+{extend name="layouts/cms"}
+{block name='body-content'}
+
+<div class="layui-form-item layui-form div-upload-head">
+    <div class="layui-input-block">
+        <input type="radio" lay-filter="radioSEL" name="USE_SEL" value="L" title="本地存储" {$SEL=="L"?"checked":""}>
+        <input type="radio" lay-filter="radioSEL" name="USE_SEL" value="FTP" title="FTP 存储" {$SEL=="FTP"?"checked":""}>
+        <input type="radio" lay-filter="radioSEL" name="USE_SEL" value="QN" title="七牛云存储" {$SEL=="QN"?"checked":""}>
+    </div>
+
+</div>
+
+<div class="layui-tab layui-tab-card">
+    <ul class="layui-tab-title layui-tab-title-zz">
+        <li>网站设置</li>
+        <li>FTP 配置</li>
+        <li>七牛云配置</li>
+    </ul>
+    <div class="layui-tab-content">
+        <div class="layui-tab-item layui-show">
+            <div class="layui-form">
+                <table class="layui-table table-body" lay-skin="row">
+                    <colgroup>
+                        <col width="15%"><col width="30%"><col width="10%"><col width="40%">
+                    </colgroup>
+                    <thead>
+                    <tr>
+                        <th>配置项</th><th>取值</th><th>更新</th><th>注释</th>
+                    </tr>
+                    </thead>
+                    <tbody class="table-tbody-normal">
+                    <tr class="tr-normal tr-normal-IMG_SERVER_PATH" conf="ftp" tag="IMG_SERVER_PATH">
+                        <td><label type="button" class="layui-btn layui-btn-primary layui-btn-sm">本站图片显示路径</label></td>
+                        <td class="td-value">
+                            <input type="text" value="{$ftpConf.IMG_SERVER_PATH}" class="layui-input">
+                        </td>
+                        <td class="td-refresh">
+                            <button type="button" class="layui-btn layui-btn-danger layui-btn-radius">
+                                <i class="layui-icon">&#xe669;</i>
+                            </button>
+                        </td>
+                        <td><div class="layui-form-mid layui-word-aux">默认“/”,如果使用图片服务器，例：'http://img.xxxx.com/public/'</div></td>
+                    </tr>
+                    </tbody>
+                </table>
+            </div>
+
+        </div>
+        <div class="layui-tab-item">
+            <div class="layui-form">
+                <table class="layui-table table-body" lay-skin="row">
+                    <colgroup>
+                        <col width="15%">
+                        <col width="30%">
+                        <col width="10%">
+                        <col width="40%">
+                    </colgroup>
+                    <thead>
+                    <tr>
+                        <th>配置项</th>
+                        <th>取值</th>
+                        <th>更新</th>
+                        <th>注释</th>
+                    </tr>
+                    </thead>
+                    <tbody class="table-tbody-normal">
+                    <tr class="tr-normal tr-normal-IMG_SAVE_PATH" conf="ftp" tag="IMG_SAVE_PATH">
+                        <td><label type="button" class="layui-btn layui-btn-primary layui-btn-sm">FTP图片存储路径</label></td>
+                        <td class="td-value">
+                            <button type="button" class="layui-btn layui-btn-xs layui-btn-disabled">
+                                {$ftpConf.IMG_SAVE_PATH}
+                            </button>
+                        </td>
+                        <td class="td-refresh">
+                            <button type="button" class="layui-btn layui-btn-disabled layui-btn-danger layui-btn-radius">
+                                <i class="layui-icon">&#xe669;</i>
+                            </button>
+                        </td>
+                        <td><div class="layui-form-mid layui-word-aux">对应的FTP服务器的图片存储路径</div></td>
+                    </tr>
+
+                    <tr class="tr-normal tr-normal-SERVER" conf="ftp" tag="SERVER">
+                        <td><label type="button" class="layui-btn layui-btn-sm">服务器IP</label></td>
+                        <td class="td-value">
+                            <input type="text" value="{$ftpConf.SERVER}" class="layui-input">
+                        </td>
+                        <td class="td-refresh">
+                            <button type="button" class="layui-btn layui-btn-primary layui-btn-radius">
+                                <i class="layui-icon">&#xe669;</i>
+                            </button>
+                        </td>
+                        <td><div class="layui-form-mid layui-word-aux">如果满足内网IP条件，可大大提高传输效率</div></td>
+                    </tr>
+
+                    <tr class="tr-normal tr-normal-USER_NAME" conf="ftp" tag="USER_NAME">
+                        <td><label type="button" class="layui-btn layui-btn-sm">FTP账号</label></td>
+                        <td class="td-value">
+                            <input type="text" value="{$ftpConf.USER_NAME}" class="layui-input">
+                        </td>
+                        <td class="td-refresh">
+                            <button type="button" class="layui-btn layui-btn-primary layui-btn-radius">
+                                <i class="layui-icon">&#xe669;</i>
+                            </button>
+                        </td>
+                        <td><div class="layui-form-mid layui-word-aux">保证输入的正确性</div></td>
+                    </tr>
+
+                    <tr class="tr-normal tr-normal-PASSWORD" conf="ftp" tag="PASSWORD">
+                        <td><label type="button" class="layui-btn layui-btn-sm">FTP密码</label></td>
+                        <td class="td-value">
+                            <input type="text" value="{$ftpConf.PASSWORD}" class="layui-input">
+                        </td>
+                        <td class="td-refresh">
+                            <button type="button" class="layui-btn layui-btn-primary layui-btn-radius">
+                                <i class="layui-icon">&#xe669;</i>
+                            </button>
+                        </td>
+                        <td><div class="layui-form-mid layui-word-aux">保证输入的正确性</div></td>
+                    </tr>
+
+                    <tr class="tr-normal tr-normal-PORT" conf="ftp" tag="PORT">
+                        <td><label type="button" class="layui-btn layui-btn-sm">FTP端口</label></td>
+                        <td class="td-value">
+                            <input type="text" value="{$ftpConf.PORT}" class="layui-input">
+                        </td>
+                        <td class="td-refresh">
+                            <button type="button"
+                                    class="layui-btn layui-btn-primary layui-btn-radius">
+                                <i class="layui-icon">&#xe669;</i>
+                            </button>
+                        </td>
+                        <td><div class="layui-form-mid layui-word-aux">ftp端口,默认为21</div></td>
+                    </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+        <div class="layui-tab-item">
+
+            <div class="layui-form">
+                <table class="layui-table table-body" lay-skin="row">
+                    <colgroup>
+                        <col width="15%">
+                        <col width="30%">
+                        <col width="10%">
+                    </colgroup>
+                    <thead>
+                    <tr>
+                        <th>配置项</th>
+                        <th>取值</th>
+                        <th>更新</th>
+                    </tr>
+                    </thead>
+                    <tbody class="table-tbody-normal">
+
+                    <tr class="tr-normal tr-normal-AK" conf="qn" tag="AK">
+                        <td><label type="button" class="layui-btn layui-btn-primary layui-btn-sm">Access_Key</label></td>
+                        <td class="td-value">
+                            <input type="text" value="{$qnConf.AK}" class="layui-input">
+                        </td>
+                        <td class="td-refresh">
+                            <button type="button" class="layui-btn layui-btn-danger layui-btn-radius">
+                                <i class="layui-icon">&#xe669;</i>
+                            </button>
+                        </td>
+                    </tr>
+                    <tr class="tr-normal tr-normal-SK" conf="qn" tag="SK">
+                        <td><label type="button" class="layui-btn layui-btn-primary layui-btn-sm">Secret_Key</label></td>
+                        <td class="td-value">
+                            <input type="text" value="{$qnConf.SK}" class="layui-input">
+                        </td>
+                        <td class="td-refresh">
+                            <button type="button" class="layui-btn layui-btn-danger layui-btn-radius">
+                                <i class="layui-icon">&#xe669;</i>
+                            </button>
+                        </td>
+                    </tr>
+                    <tr class="tr-normal tr-normal-BUCKET" conf="qn" tag="BUCKET">
+                        <td><label type="button" class="layui-btn layui-btn-primary layui-btn-sm">空间名称</label></td>
+                        <td class="td-value">
+                            <input type="text" value="{$qnConf.BUCKET}" class="layui-input">
+                        </td>
+                        <td class="td-refresh">
+                            <button type="button" class="layui-btn layui-btn-danger layui-btn-radius">
+                                <i class="layui-icon">&#xe669;</i>
+                            </button>
+                        </td>
+                    </tr>
+                    <tr class="tr-normal tr-normal-IMAGE_URL" conf="qn" tag="IMAGE_URL">
+                        <td><label type="button" class="layui-btn layui-btn-primary layui-btn-sm">外链域名</label></td>
+                        <td class="td-value">
+                            <input type="text" value="{$qnConf.IMAGE_URL}" class="layui-input">
+                        </td>
+                        <td class="td-refresh">
+                            <button type="button" class="layui-btn layui-btn-danger layui-btn-radius">
+                                <i class="layui-icon">&#xe669;</i>
+                            </button>
+                        </td>
+                    </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+
+
+
+<style>
+    .table-body{
+        margin: 15px auto;
+        text-align: center;
+        border: 1px solid #7274A7;
+    }
+    label.layui-btn{
+        cursor: default;
+    }
+    .td-value input{
+        color: #7274AB;
+    }
+    .td-refresh .layui-btn{
+        padding: 0px 0px;
+        width: 36px;
+        height: 36px;
+        border-radius: 200%;
+    }
+    .layui-btn .layui-icon{
+        margin-right: 0px;
+    }
+
+    .layui-tab-title-zz .layui-this{
+        background-color: #ce8483;
+        color: #3b4249;
+    }
+    .layui-tab-title-zz{
+        border-bottom: 3px solid #FFFFFF;
+    }
+    .layui-tab-card{
+        width: 55%;
+        margin: 85px auto;
+        text-align: center;
+    }
+    .layui-tab-content{
+        height: 500px;
+    }
+    .div-upload-head{
+        margin: 32px auto 5px auto;
+        text-align: center;
+    }
+    .td-value input{
+        color: #7274AB;
+        background-color: #7274AB;
+    }
+</style>
+{/block}
+
+{block name='single-content'}
+<script>
+    $(".tr-normal .layui-input").click(function () {
+        var auth_tag = $(this).parent().parent().attr('tag');
+        $(".tr-normal input").css('background','#7274AB');
+        $(".tr-normal-"+auth_tag+" input").css('background','#fff');
+    });
+
+    layui.use(['form', 'layer'], function () {
+        var form = layui.form;
+        form.on('radio(radioSEL)', function (data) {
+            var toUrl = "{:url('cms/sysConf/opfile')}";
+            $.post(
+                toUrl,
+                {op_val: data.value,op_tag:'USE_SEL'},
+                function (result) {
+                    if (result.status > 0) {
+
+                    }
+                    layer.msg(result.message);
+                }, "JSON");
+        });
+    });
+
+    $(".tr-normal button").click(function () {
+        var conf_tag = $(this).parent().parent().attr('conf');
+        var op_tag = $(this).parent().parent().attr('tag');
+        var op_val = $(".tr-normal-"+op_tag+" .layui-input").val();
+        var toUrl = "{:url('cms/sysConf/opfile')}";
+        var postData = {conf_tag:conf_tag,op_tag:op_tag,op_val:op_val};
+        $.post(
+            toUrl,
+            postData,
+            function (result) {
+                dialog.tip(result.message);
+            },"JSON");
+    });
+
+</script>
+{/block}

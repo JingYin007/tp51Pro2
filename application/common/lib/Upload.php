@@ -22,31 +22,27 @@ class Upload
      */
     public static function singleFile($request)
     {
-        $status = 0;
         $data = [];
-        if ($request->Method()== 'POST') {
-            $file = $request->file('file');
-            // 移动到框架应用根目录/upload/ 目录下
-            $info = $file->move('upload');
-            if ($info){
-                //把反斜杠(\)替换成斜杠(/) 因为在windows下上传路是反斜杠径
-                $getSaveName = str_replace("\\", "/", $info->getSaveName());
+        $status = 0;
+        $file = $request->file('file');
+        // 移动到框架应用根目录/upload/ 目录下
+        $info = $file->move('upload');
+        if ($info){
+            //把反斜杠(\)替换成斜杠(/) 因为在windows下上传路是反斜杠径
+            $getSaveName = str_replace("\\", "/", $info->getSaveName());
 
-                $local_file_path = 'upload/' . $getSaveName;
-                $server_file_path = config('ftp.IMG_SAVE_PATH'). $getSaveName;
-                $ftpTag = self::ftpImageToServer($local_file_path,$server_file_path);
-                $data['url'] = $local_file_path;
-                if ($ftpTag) {
-                    $status = 1;
-                    $message = '上传成功';
-                } else {
-                    $message = "FTP 上传失败，请稍后再试";
-                }
-            }else{
-                $message = "上传失败 ".$file->getError();
+            $local_file_path = 'upload/' . $getSaveName;
+            $server_file_path = config('ftp.IMG_SAVE_PATH'). $getSaveName;
+            $ftpTag = self::ftpImageToServer($local_file_path,$server_file_path);
+            $data['url'] = $local_file_path;
+            if ($ftpTag) {
+                $status = 1;
+                $message = '上传成功';
+            } else {
+                $message = "FTP 上传失败，请稍后再试";
             }
-        } else {
-            $message = "参数错误";
+        }else{
+            $message = "上传失败 ".$file->getError();
         }
         return ['status' => $status,'message'=>$message,'data'=>$data];
     }
@@ -101,6 +97,7 @@ class Upload
      * @return bool|string
      */
     public static function qiNiuSingleFile(){
+        $data = [];
         // 要上传文件的临时文件
         $file = $_FILES['file']['tmp_name'];
         if (empty($file)){
@@ -113,9 +110,9 @@ class Upload
             $ext = $pathinfo['extension'];
             $config = config('qiniu.');
             //构建一个鉴权对象
-            $auth = new Auth($config['ak'],$config['sk']);
+            $auth = new Auth($config['AK'],$config['SK']);
             //生成上传的token
-            $token = $auth->uploadToken($config['bucket']);
+            $token = $auth->uploadToken($config['BUCKET']);
 
             //上传到七牛云后 保存的文件名
             $saveFileName = date("YmdHis").substr(md5($file),0,6).rand(0000,9999).".".$ext;
@@ -127,10 +124,11 @@ class Upload
                 $message = "Sorry,七牛云上传失败!";
             }else{
                 $opTag = true;
-                $message = $saveFileName;
+                $message = '七牛云文件上传成功！';
+                $data['url'] = $config['IMAGE_URL']. $saveFileName;
             }
         }
-        return ['status' => $opTag,'message' => $message];
+        return ['status' => $opTag,'message' => $message,'data' => $data];
     }
 
     /**
@@ -148,13 +146,13 @@ class Upload
             //七牛云账号配置信息
             $conf = config('qiniu.');
             // 构建鉴权对象
-            $auth = new Auth($conf['ak'],$conf['sk']);
+            $auth = new Auth($conf['AK'],$conf['SK']);
             // 配置
             $config = new Config();
             // 管理资源
             $bucketManager = new BucketManager($auth, $config);
             // 删除文件操作
-            $opRes = $bucketManager->delete($conf['bucket'], $delFileName);
+            $opRes = $bucketManager->delete($conf['BUCKET'], $delFileName);
             if (is_null($opRes)) {
                 // 删除操作成功
                 return true;

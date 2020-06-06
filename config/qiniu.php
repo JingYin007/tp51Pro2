@@ -10,8 +10,9 @@
  * 七牛云账号配置
  */
 return [
-    'ak' => 'SljXmBloaYvZRWyfvCQr3Z8ib6ljOWkUad6AMR2n',//Access_Key
-    'sk' => 'gCO3lxjjfYFTyKFWW1J-oads1RdnoncDO8giQhFa',//Secret_Key
-    'bucket' => 'mz-think5api',//空间名称
-    'image_url' => 'http://qak59ynet.bkt.clouddn.com/',//外链域名
+    'QN_USE'=>'OPEN',
+    'AK' => 'SljXmBloaYvZRWyfvCQr3Z8ib6ljOWkUad6AMR2n',//Access_Key
+    'SK' => 'gCO3lxjjfYFTyKFWW1J-oads1RdnoncDO8giQhFa',//Secret_Key
+    'BUCKET' => 'mz-think5api',//空间名称
+    'IMAGE_URL'=>'http://qak59ynet.bkt.clouddn.com/',//外链域名
 ];

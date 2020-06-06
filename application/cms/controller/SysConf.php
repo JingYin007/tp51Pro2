@@ -40,19 +40,22 @@ class SysConf extends CmsBase
     }
 
     /**
-     * FTP 操作指示
+     * 文件上传 操作指示
      * @param Request $request
      * @return \think\response\View|void
      */
-    public function ftp(Request $request){
+    public function opfile(Request $request){
         if ($request->isPost()){
-            $ftp_tag = $request->post('ftp_tag',null);
-            $ftp_val = $request->post('ftp_val',null);
-            $opRes = $this->model->updateFtpConf($ftp_tag,$ftp_val);
+            $conf_tag = $request->post('conf_tag',null);
+            $op_tag = $request->post('op_tag',null);
+            $op_val = $request->post('op_val',null);
+            $opRes = $this->model->updateOpFileConf($conf_tag,$op_tag,$op_val);
             return showMsg($opRes['tag'],$opRes['message']);
         }else{
             $ftpConf = config('ftp.');
-            return view('ftp',['ftpConf'=>$ftpConf]);
+            $qnConf = config('qiniu.');
+            $use_sel = $this->model->getOpFileUseSel();
+            return view('opfile',['ftpConf'=>$ftpConf,'qnConf'=>$qnConf,'SEL'=>$use_sel]);
         }
     }
 

@@ -53,17 +53,63 @@ class XsysConf extends Model
     }
 
     /**
-     * @param string $ftpTag
-     * @param string $ftpVal
+     * 获取文件操作选取方式
+     * @return string
+     */
+    public function getOpFileUseSel(){
+        $sel = "L";
+        $ftpUse = config('ftp.FTP_USE');
+        if ($ftpUse == "OPEN") {
+            $sel='FTP';
+        }else{
+            $qnUse = config('qiniu.QN_USE');
+            if ($qnUse == "OPEN") $sel="QN";
+        }
+       return $sel;
+    }
+    /**
+     * 更新文件操作选取方式
+     * @param string $conf_tag
+     * @param string $opTag
+     * @param string $opVal
      * @return array
      */
-    public function updateFtpConf($ftpTag = '',$ftpVal = ''){
-        if ($ftpTag == "FTP_USE"){
-            $ftpVal = $ftpVal?'OPEN':'CLOSE';
+    public function updateOpFileConf($conf_tag='',$opTag = '',$opVal = ''){
+
+        if ($opTag == 'USE_SEL'){
+            switch ($opVal){
+                case 'L':
+                    $opStatus1 = set_cms_config(['FTP_USE'],['CLOSE'],'ftp');
+                    $opStatus2 = set_cms_config(['QN_USE'],['CLOSE'],'qiniu');
+                    break;
+                case 'FTP':
+                    $opStatus1 = set_cms_config(['FTP_USE'],['OPEN'],'ftp');
+                    $opStatus2 = set_cms_config(['QN_USE'],['CLOSE'],'qiniu');
+                    break;
+                case 'QN':
+                    $opStatus1 = set_cms_config(['FTP_USE'],['CLOSE'],'ftp');
+                    $opStatus2 = set_cms_config(['QN_USE'],['OPEN'],'qiniu');
+                    break;
+                default:
+                    $opStatus1=$opStatus2=0;
+                    break;
+            }
+            $opStatus = $opStatus1&&$opStatus2;
+        }else{
+            switch ($conf_tag){
+                case 'ftp':
+                    $opStatus = set_cms_config([$opTag],[$opVal],'ftp');
+                    break;
+                case 'qn':
+                    $opStatus = set_cms_config([$opTag],[$opVal],'qiniu');
+                    break;
+                default:
+                    $opStatus = 0;
+                    break;
+            }
         }
-        $opTag = set_cms_config([$ftpTag],[$ftpVal],'ftp');
-        $opMessage = $opTag?"更新成功":"Sorry，请稍后重试！";
-        return ['tag' => $opTag,'message' => $opMessage];
+        $opMessage = $opStatus?"配置更新成功":"Sorry，请稍后重试！";
+        return ['tag' => $opStatus,'message' => $opMessage];
     }
 
     /**

@@ -8,35 +8,22 @@ use think\Request;
 class Upload
 {
     /**
-     * 单一图片的上传操作
-     * @param Request $request
-     */
-    public function img_file(Request $request)
-    {
-        $res = \app\common\lib\Upload::singleFile($request);
-        return showMsg($res['status'], $res['message'],$res['data']);
-    }
-    /**
-     * 七牛云图片上传
+     * 图片上传
      * @param Request $request
      * @return \think\response\Json
      */
-    public function uploadQiNiu(Request $request){
-        $status = 0;
-        $data = [];
+    public function img_file(Request $request){
+        $opRes = [];
         if ($request->Method()== 'POST') {
-            $opRes = \app\common\lib\Upload::qiNiuSingleFile();
-            if ($opRes['status']){
-                $status = 1;
-                $data['url'] = config('qiniu.image_url').$opRes['message'];
-                $message = '上传成功';
+            //判断是哪种上传方式 七牛云
+            if (config('qiniu.QN_USE') == 'OPEN'){
+                $opRes = \app\common\lib\Upload::qiNiuSingleFile();
             }else{
-                $message = $opRes['message'];
+                $opRes = \app\common\lib\Upload::singleFile($request);
             }
         }else{
-            $message = "Sorry,请求不合法！";
+            $opRes['message'] = "Sorry,请求不合法！";
         }
-        return showMsg($status, $message,$data);
-
+        return showMsg($opRes['status'], $opRes['message'],$opRes['data']);
     }
 }
