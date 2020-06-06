@@ -10,7 +10,7 @@ Target Server Type    : MYSQL
 Target Server Version : 50553
 File Encoding         : 65001
 
-Date: 2020-06-03 08:57:15
+Date: 2020-06-06 11:38:52
 */
 
 SET FOREIGN_KEY_CHECKS=0;
@@ -431,7 +431,7 @@ INSERT INTO `tp5_xnav_menus` VALUES ('135', '查看文章操作日志', '5', 'cm
 INSERT INTO `tp5_xnav_menus` VALUES ('137', '动态配置开关状态', '93', 'cms/config/ajaxUpdateSwitchValue', '/', '1', '0', '2020-05-25 18:05:34', '1');
 INSERT INTO `tp5_xnav_menus` VALUES ('138', '系统配置', '0', '/', 'cms/images/icon/cms_config_system.png', '1', '0', '2020-06-02 19:55:33', '0');
 INSERT INTO `tp5_xnav_menus` VALUES ('139', '登录认证', '138', 'cms/sysConf/auth', 'cms/images/icon/cms_auth.png', '1', '1', '2020-06-02 19:55:31', '0');
-INSERT INTO `tp5_xnav_menus` VALUES ('140', 'FTP 配置', '138', 'cms/sysConf/ftp', 'cms/images/icon/cms_ftp.png', '1', '2', '2020-06-02 19:55:29', '0');
+INSERT INTO `tp5_xnav_menus` VALUES ('140', '文件上传', '138', 'cms/sysConf/opfile', 'cms/images/icon/cms_upload.png', '1', '2', '2020-06-05 20:29:14', '0');
 INSERT INTO `tp5_xnav_menus` VALUES ('141', 'IP 白名单', '138', 'cms/sysConf/ipWhite', 'cms/images/icon/cms_ip.png', '1', '3', '2020-06-02 19:55:27', '0');
 
 -- ----------------------------
