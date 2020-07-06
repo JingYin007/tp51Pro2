@@ -363,33 +363,6 @@ function goToAjax_del_upload_img(toUrl,this_img) {
 
 layui.use('upload', function () {
     var upload = layui.upload;
-    //商品缩略图片上传
-    var uploadInst = upload.render({
-        elem: '.btn_upload_img'
-        , type: 'images'
-        , exts: 'jpg|png|gif' //设置一些后缀，用于演示前端验证和后端的验证
-        //,auto:false //选择图片后是否直接上传
-        //,accept:'images' //上传文件类型
-        , url: '/api/upload/img_file'
-        , before: function (obj) {
-            //预读本地文件示例，不支持ie8
-            obj.preview(function (index, file, result) {
-                $('.img-upload-preview').attr('src', result); //图片链接（base64）
-            });
-        }
-        , done: function (res) {
-            dialog.tip(res.message);
-            //如果上传成功
-            if (res.status == 1) {
-                $('.menu-icon').val(res.data.url);
-            }
-        }
-        , error: function () {
-            //演示失败状态，并实现重传
-            return layer.msg('上传失败,请重新上传');
-        }
-    });
-
     //多图片上传
     upload.render({
         elem: '#multiple-img-upload'
