@@ -188,6 +188,10 @@
 .nav_weather {
     margin-right: 20px;
 }
+.nav_weather .dsrBSL {
+    color: #ff7800;
+    font-weight: bold;
+}
 
 #body-login .video-player {
     background-color: transparent;
