@@ -106,7 +106,7 @@ class Xarticles extends BaseModel
             ->join('xarticle_points ap', 'ap.article_id = a.id')
             ->where("ap.status","<>", -1)
             ->whereLike('a.title', '%' . $search . '%')
-            ->order(['a.list_order' => 'desc', 'a.id' => 'desc'])
+            ->order(['a.list_order' => 'asc', 'a.id' => 'desc'])
             ->limit($limit * ($curr_page - 1), $limit)
             ->select();
         foreach ($res as $key => $v) {

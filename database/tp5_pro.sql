@@ -142,7 +142,7 @@ CREATE TABLE `tp5_xarticles` (
   `user_id` int(11) NOT NULL DEFAULT '0' COMMENT '作者ID',
   `created_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
   `updated_at` timestamp NOT NULL DEFAULT '0000-00-00 00:00:00',
-  `list_order` int(11) NOT NULL DEFAULT '0' COMMENT '排序标识 越大越靠前',
+  `list_order` int(11) NOT NULL DEFAULT '0' COMMENT '排序标识 越小越靠前',
   `content` text NOT NULL COMMENT '文章内容',
   PRIMARY KEY (`id`)
 ) ENGINE=MyISAM AUTO_INCREMENT=5 DEFAULT CHARSET=utf8mb4 COMMENT='文章表';
