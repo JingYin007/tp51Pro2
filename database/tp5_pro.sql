@@ -10,7 +10,7 @@ Target Server Type    : MYSQL
 Target Server Version : 50553
 File Encoding         : 65001
 
-Date: 2020-06-06 11:38:52
+Date: 2020-09-04 17:03:58
 */
 
 SET FOREIGN_KEY_CHECKS=0;
@@ -82,7 +82,7 @@ CREATE TABLE `tp5_xadmins` (
 -- ----------------------------
 -- Records of tp5_xadmins
 -- ----------------------------
-INSERT INTO `tp5_xadmins` VALUES ('1', 'moTzxx@admin', 'cms/images/headshot/wuHuang.png', '317c775b607a08e911a338826c459cf4', '1', '2020-06-02 19:50:54', '1', 'HELLO');
+INSERT INTO `tp5_xadmins` VALUES ('1', 'moTzxx@admin', 'cms/images/headshot/wuHuang.png', '37993cfef6629b18d80d7be625aa2485', '1', '2020-09-04 17:01:10', '1', 'HELLO');
 INSERT INTO `tp5_xadmins` VALUES ('2', 'baZhaHei@admin', 'cms/images/headshot/baZhaHei.png', '8fa7b3a3e2f6d44bd205ba89e3759e9f', '2', '2020-06-02 19:50:57', '1', 'HELLO');
 INSERT INTO `tp5_xadmins` VALUES ('3', 'niuNengx@admin', 'cms/images/headshot/niuNeng.png', '74cc22bb9abcddc8a1cdafbae1fadc7a', '1', '2020-06-02 19:51:04', '1', 'HELLO');
 
@@ -142,7 +142,7 @@ CREATE TABLE `tp5_xarticles` (
   `user_id` int(11) NOT NULL DEFAULT '0' COMMENT '作者ID',
   `created_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
   `updated_at` timestamp NOT NULL DEFAULT '0000-00-00 00:00:00',
-  `list_order` int(11) NOT NULL DEFAULT '0' COMMENT '排序标识 越小越靠前',
+  `list_order` int(11) NOT NULL DEFAULT '0' COMMENT '排序标识 越大越靠前',
   `content` text NOT NULL COMMENT '文章内容',
   PRIMARY KEY (`id`)
 ) ENGINE=MyISAM AUTO_INCREMENT=5 DEFAULT CHARSET=utf8mb4 COMMENT='文章表';
