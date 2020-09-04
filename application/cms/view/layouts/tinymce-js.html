@@ -3,10 +3,9 @@
 <script>
     tinymce.init({
         selector: '#mz-tinymce',
-        language:'zh_CN', //调用放在langs文件夹内的语言包
+        language:'zh_CN', //TODO 调用放在langs文件夹内的语言包
         height: 300,
         //plugins: ['table','preview' ], //选择需加载的插件
-        //toolbar: "preview|undo redo|font_formats| bold italic|forecolor backcolor",
         plugins: 'print preview searchreplace autolink directionality visualblocks visualchars fullscreen image link media template code codesample table charmap hr pagebreak nonbreaking anchor insertdatetime advlist lists wordcount imagetools textpattern  autosave bdmap indent2em autoresize lineheight formatpainter axupimgs',
         toolbar1: 'code undo redo| forecolor backcolor bold italic underline strikethrough hr|' +
         '|alignleft aligncenter alignright alignjustify|table image media| insertdatetime preview fullscreen',
@@ -15,7 +14,8 @@
         font_formats: '微软雅黑=Microsoft YaHei,Helvetica Neue,PingFang SC,sans-serif;苹果苹方=PingFang SC,Microsoft YaHei,sans-serif;宋体=simsun,serif;仿宋体=FangSong,serif;黑体=SimHei,sans-serif;Arial=arial,helvetica,sans-serif;Arial Black=arial black,avant garde;Book Antiqua=book antiqua,palatino;',
         importcss_append: true,
         autosave_ask_before_unload: false,
-        convert_urls:false,
+
+        convert_urls:false,//TODO 避免带有域名的路径也会被转换为相对路径
         //图片上传操作
         images_upload_handler: function (blobInfo, succFun, failFun) {
             var xhr, formData;
