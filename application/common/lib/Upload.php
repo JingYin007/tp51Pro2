@@ -35,6 +35,7 @@ class Upload
             $server_file_path = config('ftp.IMG_SAVE_PATH'). $getSaveName;
             $ftpTag = self::ftpImageToServer($local_file_path,$server_file_path);
             $data['url'] = $local_file_path;
+            $data['full_url'] = config('ftp.IMG_SERVER_PATH').$local_file_path;
             if ($ftpTag) {
                 $status = 1;
                 $message = '上传成功';
@@ -126,6 +127,7 @@ class Upload
                 $opTag = true;
                 $message = '七牛云文件上传成功！';
                 $data['url'] = $config['IMAGE_URL']. $saveFileName;
+                $data['full_url'] = $config['IMAGE_URL']. $saveFileName;
             }
         }
         return ['status' => $opTag,'message' => $message,'data' => $data];

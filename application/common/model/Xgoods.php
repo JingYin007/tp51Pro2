@@ -152,7 +152,7 @@ class Xgoods extends BaseModel
             $saveData = [
                 'goods_name' => isset($input['goods_name']) ? $input['goods_name'] : '',
                 'list_order' => isset($input['list_order']) ? $input['list_order'] : 0,
-                'details' => isset($input['details']) ? ftpImageToServerUE($input['details']) : '',
+                'details' => isset($input['details']) ? $input['details'] : '',
                 'thumbnail' => isset($input['thumbnail']) ? $input['thumbnail'] : '',
                 'tip_word' => isset($input['tip_word']) ? $input['tip_word'] : '',
                 'cat_id' => isset($input['cat_id']) ? intval($input['cat_id']) : 1,
@@ -220,7 +220,7 @@ class Xgoods extends BaseModel
         $addData = [
             'goods_name' => isset($data['goods_name']) ? $data['goods_name'] : '',
             'list_order' => isset($data['list_order']) ? $data['list_order'] : 0,
-            'details' => isset($data['details']) ? ftpImageToServerUE($data['details']) : '',
+            'details' => isset($data['details']) ? $data['details'] : '',
             'thumbnail' => isset($data['thumbnail']) ? $data['thumbnail'] : '',
             'tip_word' => isset($data['tip_word']) ? $data['tip_word'] : '',
             'cat_id' => isset($data['cat_id']) ? intval($data['cat_id']) : 1,

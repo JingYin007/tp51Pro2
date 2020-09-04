@@ -57,12 +57,11 @@
 
     <div class="layui-form-item layui-form-text ">
         <label class="layui-form-label">文章内容：</label>
-        <div class="layui-input-block div-article-content">
-            <script id="ue-container" name="content" type="text/plain">
+        <div class="layui-input-block">
+            <textarea  id="mz-tinymce" name="content">
                     {php}echo htmlspecialchars_decode($article['content']);{/php}
-            </script>
+            </textarea >
         </div>
-
     </div>
     {:token()}
     <div class="layui-form-item">
@@ -77,7 +76,7 @@
 {/block}
 
 {block name='single-content'}
-{include file='layouts/ueditor-js'}
+{include file='layouts/tinymce-js'}
 {/block}
 
 

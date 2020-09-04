@@ -175,7 +175,7 @@
     <div class="layui-form-item layui-form-text ">
         <label class="layui-form-label">商品详情：</label>
         <div class="layui-input-block div-article-content">
-            <script id="ue-container" name="details" type="text/plain"></script>
+            <textarea id="mz-tinymce" name="details"></textarea>
         </div>
     </div>
     {:token()}
@@ -193,7 +193,7 @@
 {block name='single-content'}
 <link href="__CMS__/css/goods.css" rel="stylesheet">
 <script src="__CMS__/js/goods.js"></script>
-{include file='layouts/ueditor-js'/}
+{include file='layouts/tinymce-js'/}
 <script>
     var arrSpecFull = [];
     var multiple_images = [];

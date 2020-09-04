@@ -40,7 +40,7 @@ class Xcategorys extends BaseModel
             $where[] = ['level', '=', 3];
         }
         $res = $this
-            ->field('cat_id,cat_name,parent_id,is_show,status,icon,after_sale,list_order')
+            ->field('cat_id,cat_name,parent_id,is_show,status,icon,list_order')
             ->where($where)
             ->whereLike('cat_name', '%' . $search . '%')
             ->order(['list_order' => 'desc', 'cat_id' => 'desc'])
@@ -103,7 +103,6 @@ class Xcategorys extends BaseModel
             'level' => isset($data['level'])?$data['level']:1,
             'show_img' => isset($data['show_img'])?$data['show_img']:'',
             'list_order' => isset($data['list_order'])?$data['list_order']:0,
-            'after_sale' => isset($data['after_sale']) ? ftpImageToServerUE($data['after_sale']) : '',
         ];
         $tokenData = ['__token__' => isset($data['__token__']) ? $data['__token__'] : '',];
         $validateRes = $this->validate($this->validate, $addData, $tokenData);
@@ -158,7 +157,6 @@ class Xcategorys extends BaseModel
                 'level' => isset($input['level'])?$input['level']:1,
                 'show_img' => isset($input['show_img'])?$input['show_img']:'',
                 'list_order' => isset($input['list_order'])?$input['list_order']:0,
-                'after_sale' => isset($input['after_sale']) ? ftpImageToServerUE($input['after_sale']) : '',
             ];
             $tokenData = ['__token__' => isset($input['__token__']) ? $input['__token__'] : '',];
             $validateRes = $this->validate($this->validate, $saveData, $tokenData);

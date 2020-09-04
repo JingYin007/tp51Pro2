@@ -37,6 +37,7 @@ return [
         '__CMS__' => '/cms',
         '__ERRORS__' => '/errors',
         '__UEDITOR__' => '/ueditor-mz',
+        '__TINYMCE__' => '/tinymce-mz',
         '__ECHARTS__' => '/echarts',
     ]
 ];

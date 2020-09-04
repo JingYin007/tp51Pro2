@@ -177,7 +177,7 @@ class Xarticles extends BaseModel
             $saveData = [
                 'title' => isset($input['title'])?$input['title']:'',
                 'list_order' => isset($input['list_order'])?$input['list_order']:0,
-                'content' => isset($input['content']) ? ftpImageToServerUE($input['content']) : '',
+                'content' => isset($input['content']) ? $input['content'] : '',
                 'updated_at' => date('Y-m-d H:i:s', time())
             ];
             $tokenData = ['__token__' => isset($input['__token__']) ? $input['__token__'] : '',];
@@ -215,7 +215,7 @@ class Xarticles extends BaseModel
         $addData = [
             'title' => isset($data['title'])?$data['title']:'',
             'list_order' => isset($data['list_order'])?$data['list_order']:0,
-            'content' => isset($data['content']) ? ftpImageToServerUE($data['content']) : '',
+            'content' => isset($data['content']) ? $data['content'] : '',
             'user_id' => 1,
             'created_at' => date('Y-m-d H:i:s', time()),
             'updated_at' => date('Y-m-d H:i:s', time())
