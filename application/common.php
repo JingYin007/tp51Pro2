@@ -22,7 +22,7 @@ function showMsg($status,$message = '',$data = array()){
         'message' =>$message,
         'data' =>$data
     );
-    exit(json_encode($result));
+    exit(json_encode($result,JSON_UNESCAPED_UNICODE));
 }
 
 /**
@@ -104,7 +104,7 @@ function ftpImageToServerUE($str)
         $local_file = substr($local_file, 1);
         if (startsWithStr($local_file, "upload")) {
             //进行FTP 图片上传操作
-            $ftp = new \app\api\controller\Upload();
+            $ftp = new \app\common\lib\Upload();
             $server_file = '/public/' . $local_file;
             $ftp->ftpImageToServer($local_file, $server_file);
         }
