@@ -72,7 +72,7 @@
     <div class="layui-form-item">
         <label class="layui-form-label">前端显示：</label>
         <div class="layui-input-block">
-            <input type="checkbox" {$adData['is_show']==1?"checked":""} name="is_show"
+            <input type="checkbox" {$adData.is_show==1?"checked":""} name="is_show"
             lay-skin="switch" lay-filter="switchTest" lay-text="显示|隐藏">
         </div>
     </div>
@@ -84,7 +84,7 @@
                    value="{$adData['list_order']}" required lay-verify="required"
                    placeholder="" autocomplete="off" class="layui-input">
         </div>
-        <div class="layui-form-mid layui-word-aux">(数字越大，排序越靠前)</div>
+        <div class="layui-form-mid layui-word-aux">(数字越小，排序越靠前)</div>
     </div>
 
     {:token()}

@@ -43,7 +43,7 @@ class Xcategorys extends BaseModel
             ->field('cat_id,cat_name,parent_id,is_show,status,icon,list_order')
             ->where($where)
             ->whereLike('cat_name', '%' . $search . '%')
-            ->order(['list_order' => 'desc', 'cat_id' => 'desc'])
+            ->order(['list_order' => 'asc', 'cat_id' => 'desc'])
             ->limit($limit * ($curr_page - 1), $limit)
             ->select();
         foreach ($res as $key => $v) {
@@ -101,7 +101,6 @@ class Xcategorys extends BaseModel
             'is_show' => isset($data['is_show'])?$data['is_show']:1,
             'icon' => isset($data['icon'])?$data['icon']:'',
             'level' => isset($data['level'])?$data['level']:1,
-            'show_img' => isset($data['show_img'])?$data['show_img']:'',
             'list_order' => isset($data['list_order'])?$data['list_order']:0,
         ];
         $tokenData = ['__token__' => isset($data['__token__']) ? $data['__token__'] : '',];
@@ -155,7 +154,6 @@ class Xcategorys extends BaseModel
                 'is_show' => isset($input['is_show'])?$input['is_show']:1,
                 'icon' => isset($input['icon'])?$input['icon']:'',
                 'level' => isset($input['level'])?$input['level']:1,
-                'show_img' => isset($input['show_img'])?$input['show_img']:'',
                 'list_order' => isset($input['list_order'])?$input['list_order']:0,
             ];
             $tokenData = ['__token__' => isset($input['__token__']) ? $input['__token__'] : '',];
@@ -224,7 +222,7 @@ class Xcategorys extends BaseModel
         $res = $this
             ->field('cat_id,cat_name,parent_id')
             ->where($map)
-            ->order(["list_order"=>"desc","cat_id"=>'asc'])
+            ->order(["list_order"=>"asc","cat_id"=>'asc'])
             ->select();
         foreach ($res as $key => $value){
             $first_id = $value['cat_id'];
@@ -253,7 +251,7 @@ class Xcategorys extends BaseModel
         $res = $this
             ->field('cat_id,cat_name,parent_id')
             ->where($map)
-            ->order(["list_order"=>"desc","cat_id"=>'asc'])
+            ->order(["list_order"=>"asc","cat_id"=>'asc'])
             ->select();
         foreach ($res as $key => $value){
             $thirdThemes = $this->get2ndAnd3rdCategoryList(3,$value['cat_id']);
@@ -279,7 +277,7 @@ class Xcategorys extends BaseModel
         $res = $this
             ->field('cat_id id,cat_name title,parent_id')
             ->where($map)
-            ->order(["list_order"=>"desc","cat_id"=>'asc'])
+            ->order(["list_order"=>"asc","cat_id"=>'asc'])
             ->select();
         foreach ($res as $key => $value){
             $first_id = $value['id'];

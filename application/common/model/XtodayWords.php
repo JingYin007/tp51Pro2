@@ -37,6 +37,14 @@ class XtodayWords extends BaseModel
             $res = $this
                 ->where('id', $id)
                 ->find();
+            if ($res){
+                $images_str = $res['images_str'];
+                $img_list = [];
+                if ($images_str){
+                    $img_list = explode(',',$res['images_str']);
+                }
+                $res['img_list'] = $img_list;
+            }
         } else {
             //此處 隨機取出一條數據
             $allRes = $this
@@ -97,6 +105,16 @@ class XtodayWords extends BaseModel
             }
             $res[$key]['status_tip'] = "<span class=\"layui-badge layui-bg-$statusColor\">$statusTip</span>";
             $res[$key]['picture'] = imgToServerView($v['picture']);
+            $image_str = $v['images_str'];
+            $img_list_str = "";
+            if ($image_str){
+                $image_list = explode(',',$v['images_str']);
+                foreach ($image_list as $key2 => $pic){
+                    $picUrl = imgToServerView($pic);
+                    $img_list_str.="<img src=\"{$picUrl}\" class=\"view_image\">";
+                }
+            }
+            $res[$key]['image_list_view'] = $img_list_str;
         }
         return isset($res)?$res->toArray():[];
     }
@@ -109,11 +127,12 @@ class XtodayWords extends BaseModel
     public function addTodayWord($data)
     {
         $addData = [
-            'from' => $data['from'],
-            'word' => $data['word'],
-            'picture' => isset($data['picture']) ? $data['picture'] : '',
-            'status' => $data['status'],
+            'from' => isset($data['from'])?$data['from']:'',
+            'picture' => isset($data['picture'])?$data['picture']:'',
+            'word' => isset($data['word'])?$data['word']:'',
             'updated_at' => date("Y-m-d H:i:s", time()),
+            'status' => $data['status'],
+            'images_str' => isset($data['images_str'])?$data['images_str']:'',
         ];
         $tokenData = ['__token__' => isset($data['__token__']) ? $data['__token__'] : '',];
         $validateRes = $this->validate($this->validate, $addData, $tokenData);
@@ -142,11 +161,12 @@ class XtodayWords extends BaseModel
             $validateRes = ['tag' => 1, 'message' => '删除成功'];
         } else {
             $saveData = [
-                'from' => $data['from'],
-                'picture' => $data['picture'],
-                'word' => $data['word'],
+                'from' => isset($data['from'])?$data['from']:'',
+                'picture' => isset($data['picture'])?$data['picture']:'',
+                'word' => isset($data['word'])?$data['word']:'',
                 'updated_at' => date("Y-m-d H:i:s", time()),
                 'status' => $data['status'],
+                'images_str' => isset($data['images_str'])?$data['images_str']:'',
             ];
             $tokenData = ['__token__' => isset($data['__token__']) ? $data['__token__'] : '',];
             $validateRes = $this->validate($this->validate, $saveData, $tokenData);

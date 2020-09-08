@@ -59,6 +59,7 @@
             <img src="{$vo['picture']}" class="">
         </td>
         <td>
+            {php} echo $vo['all_images_view'];{/php}
             <p class="p-article-abstract">{$vo['abstract']}</p>
         </td>
         <td>{$vo['updated_at']}</td>
@@ -111,6 +112,11 @@
         transform: scale(3);
         position: relative;
         z-index: 100;
+    }
+    .img_content{
+        height: 53px;
+        padding-left: 3px;
+        padding-bottom: 3px;
     }
 </style>
 {/block}

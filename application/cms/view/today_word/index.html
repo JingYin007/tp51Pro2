@@ -2,7 +2,7 @@
 {block name="body-content"}
 <button class="layui-btn layui-btn-normal"
         op_url="{:url('cms/todayWord/add')}"
-        onclick="addForOpenPopups(this,'ღ 添加今日赠言','40%')">
+        onclick="addForOpenPopups(this,'ღ 添加今日赠言','60%')">
     <i class="layui-icon">&#xe608;</i> 添加赠言
 </button>
 <div class="layui-inline">
@@ -51,13 +51,13 @@
         <td class="icon">
             <img src="{$vo['picture']}" class="layui-circle">
         </td>
-        <td class="word">{$vo['word']}</td>
+        <td class="word">{php}echo $vo['image_list_view'];{/php}<br>{$vo['word']}</td>
         <td>{$vo['updated_at']}</td>
         <td>{php} echo $vo['status_tip']{/php}</td>
         <td>
             <div class="layui-btn-group">
                 <button class="layui-btn layui-btn-sm" title="编辑"
-                        onclick="editForOpenPopups('✌ 今日赠言修改','{$vo.id}','40%')">
+                        onclick="editForOpenPopups('✌ 今日赠言修改','{$vo.id}','60%')">
                     <i class="layui-icon">&#xe642;</i>
                 </button>
                 <button class="layui-btn layui-btn-sm" title="删除"
@@ -81,6 +81,10 @@
     .icon img {
         width: 66px;
         height: 66px;
+    }
+    .view_image{
+        padding-left: 3px;
+        padding-bottom: 3px;
     }
 </style>
 {/block}

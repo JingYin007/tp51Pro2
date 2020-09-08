@@ -61,26 +61,13 @@
         </div>
     </div>
 
-    <div class="layui-form-item sel-parent-msg sel-parent-msg-1">
-        <label class="layui-form-label">展示图片：</label>
-        <div class="layui-upload layui-input-inline">
-            <button type="button" name="icon" class="layui-btn btn_upload"
-                    lay-data="{key:2}">
-                <i class="layui-icon">&#xe67c;</i>上传图标
-            </button>
-            <img class="layui-upload-img img-upload-preview-medium img-upload-show-img"
-                 src="">
-            <input type="hidden" name="show_img" class="upload-show-img" value="">
-        </div>
-    </div>
-
     <div class="layui-form-item">
         <label class="layui-form-label">排序权重：</label>
         <div class="layui-input-inline">
             <input type="number" name="list_order" value="0" required lay-verify="required"
                    autocomplete="off" class="layui-input">
         </div>
-        <div class="layui-form-mid layui-word-aux">(数字越大，排序越靠前)</div>
+        <div class="layui-form-mid layui-word-aux">(数字越小，排序越靠前)</div>
     </div>
     <div class="layui-form-item">
         <label class="layui-form-label">首页显示：</label>

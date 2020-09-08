@@ -57,14 +57,8 @@
     <div class="layui-form-item">
         <label class="layui-form-label">状态设置：</label>
         <div class="layui-input-inline">
-            <input type="radio" name="status" value="1" title="正常"
-                   {if ($admin['status'] == 1)}
-            checked
-            {/if}>
-            <input type="radio" name="status" value="0" title="无效"
-                   {if ($admin['status'] == 0)}
-            checked
-            {/if};>
+            <input type="radio" name="status" value="1" title="正常" {$admin.status==1?"checked":""}>
+            <input type="radio" name="status" value="0" title="无效" {$admin.status==0?"checked":""}>
         </div>
     </div>
 

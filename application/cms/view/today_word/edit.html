@@ -17,24 +17,33 @@
                 <i class="layui-icon">&#xe67c;</i>上传图片
             </button>
             <img class="img-upload-preview-headshot upload_img_preview"
-                 src="{$Think.config.ftp.IMG_SERVER_PATH}{$todayWordData['picture']}">
+                 src="{$Think.config.ftp.IMG_SERVER_PATH}{$todayWordData.picture}">
             <input type="hidden" name="picture" class="upload_img_url" value="{$todayWordData['picture']}">
+        </div>
+    </div>
+    <div class="layui-form-item">
+        <label class="layui-form-label">多图列表：</label>
+        <div class="layui-upload layui-input-block">
+            <button type="button" class="layui-btn" id="btn_multiple_upload_img">多图上传</button>
+            <button type="button" class="layui-btn" id="btn_image_clear">清空多图</button>
+            <blockquote class="layui-elem-quote layui-quote-nm" style="margin-top: 10px;">
+                <div class="layui-upload-list" id="upload_image_list">
+                    {volist name="todayWordData.img_list" id="pic"}
+                    <img style="height: 66px;margin-left: 7px"
+                         src="{$Think.config.ftp.IMG_SERVER_PATH}{$pic}"
+                         class="layui-upload-img">
+                    {/volist}
+                </div>
+                <input type="hidden" name="images_str" class="upload_image_url" value="{$todayWordData['images_str']}">
+            </blockquote>
         </div>
     </div>
 
     <div class="layui-form-item">
         <label class="layui-form-label">状态：</label>
         <div class="layui-input-inline">
-            <input type="radio" name="status" value="1" title="正常"
-                   {if ($todayWordData['status'] == 1)}
-            checked
-            {/if}
-            >
-            <input type="radio" name="status" value="-1" title="无效"
-                   {if ($todayWordData['status'] == -1)}
-            checked
-            {/if}
-            >
+            <input type="radio" name="status" value="1" title="正常" {$todayWordData.status==1?"checked":""}>
+            <input type="radio" name="status" value="-1" title="无效" {$todayWordData.status==-1?"checked":""}>
         </div>
     </div>
 
@@ -60,6 +69,42 @@
 {/block}
 
 {block name="single-content"}
+<script>
+    layui.use(['upload'], function () {
+        var upload = layui.upload;
+        upload.render({
+            elem: '#btn_multiple_upload_img'
+            ,url: image_upload_url //改成您自己的上传接口
+            ,multiple: true
+            ,before: function(obj){
+                //预读本地文件示例，不支持ie8
+                obj.preview(function(index, file, result){
+                    $('#upload_image_list').append('<img style="height: 66px;margin-left: 7px" src="'+ result +'" alt="'+ file.name +'" class="layui-upload-img">')
+                });
+            }
+            ,done: function(res){
+                //上传完毕
+                if (res.status == 1) {
+                    var last_url = $(".upload_image_url").val();
+                    var upload_image_url = "";
+                    if(last_url){
+                        upload_image_url = last_url+","+res.data.url;
+                    }else {
+                        upload_image_url = res.data.url;
+                    }
+                    $(".upload_image_url").val(upload_image_url);
+                }else {
+                    dialog.tip(res.message);
+                }
+            }
+        });
+
+    });
+    $("#btn_image_clear").click(function () {
+        $('#upload_image_list').html("");
+        $(".upload_image_url").val('');
+    });
+</script>
 {/block}
 
 

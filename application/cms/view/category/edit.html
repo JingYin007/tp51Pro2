@@ -41,7 +41,7 @@
              style="display:none">
             <select name="parent_id_2" lay-search="">
                 {volist name="cat_list" id="vo"}
-                <option value="{$vo.cat_id}" {if ($cat['parent_id'] == $vo['cat_id'])}selected{/if}>{$vo.cat_name}</option>
+                <option value="{$vo.cat_id}" {$cat.parent_id==$vo.cat_id?"selected":""}>{$vo.cat_name}</option>
                 {/volist}
             </select>
         </div>
@@ -52,24 +52,11 @@
                 {volist name="cat_list" id="vo"}
                 <optgroup label="{$vo['cat_name']}">
                     {volist name="vo.child" id="vo2"}
-                    <option value="{$vo2.cat_id}" {if ($cat['parent_id'] == $vo2['cat_id'])}selected{/if}>{$vo2.cat_name}</option>
+                    <option value="{$vo2.cat_id}" {$cat.parent_id==$vo2.cat_id?"selected":""}>{$vo2.cat_name}</option>
                     {/volist}
                 </optgroup>
                 {/volist}
             </select>
-        </div>
-    </div>
-
-    <div class="layui-form-item sel-parent-msg sel-parent-msg-1">
-        <label class="layui-form-label">展示图片：</label>
-        <div class="layui-upload layui-input-inline">
-            <button type="button" name="icon" class="layui-btn btn_upload"
-                    lay-data="{key:2}">
-                <i class="layui-icon">&#xe67c;</i>上传图标
-            </button>
-            <img class="layui-upload-img img-upload-preview-medium img-upload-show-img"
-                 src="{$Think.config.ftp.IMG_SERVER_PATH}{$cat['show_img']}">
-            <input type="hidden" name="show_img" class="upload-show-img" value="{$cat['show_img']}">
         </div>
     </div>
 
@@ -80,17 +67,13 @@
                    value="{$cat['list_order']}" required lay-verify="required"
                    placeholder="" autocomplete="off" class="layui-input">
         </div>
-        <div class="layui-form-mid layui-word-aux">(数字越大，排序越靠前)</div>
+        <div class="layui-form-mid layui-word-aux">(数字越小，排序越靠前)</div>
     </div>
     <div class="layui-form-item">
         <label class="layui-form-label">首页显示：</label>
         <div class="layui-input-block">
-            <input type="radio" name="is_show" value="1" title="显示" {if ($cat['is_show'] == 1)}
-            checked
-            {/if}>
-            <input type="radio" name="is_show" value="0" title="隐藏" {if ($cat['is_show'] == 0)}
-            checked
-            {/if}>
+            <input type="radio" name="is_show" value="1" title="显示" {$cat.is_show==1?"checked":""}>
+            <input type="radio" name="is_show" value="0" title="隐藏" {$cat.is_show==0?"checked":""}>
         </div>
     </div>
     {:token()}

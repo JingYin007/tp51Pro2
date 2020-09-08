@@ -102,7 +102,7 @@ class Xarticles extends BaseModel
     {
         $res = $this
             ->alias('a')
-            ->field('a.id,title,a.updated_at,status,picture,abstract,recommend,a.list_order')
+            ->field('a.id,title,a.updated_at,status,picture,abstract,recommend,a.list_order,content')
             ->join('xarticle_points ap', 'ap.article_id = a.id')
             ->where("ap.status","<>", -1)
             ->whereLike('a.title', '%' . $search . '%')
@@ -121,6 +121,16 @@ class Xarticles extends BaseModel
                 $res[$key]['status_checked'] = "checked";
             }
             $res[$key]['picture'] = imgToServerView($v['picture']);
+
+            $allImgs = getPatternMatchImages($v['content']);
+            $str_images_view = "";
+            if ($allImgs){
+                foreach ($allImgs as $keyImg => $img){
+                    if ($keyImg > 2) break;
+                    $str_images_view.= "<img src='$img' class='img_content'>";
+                }
+            }
+            $res[$key]['all_images_view'] = $str_images_view;
         }
         return isset($res)?$res->toArray():[];
     }

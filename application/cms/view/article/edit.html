@@ -32,16 +32,8 @@
     <div class="layui-form-item">
         <label class="layui-form-label">状态：</label>
         <div class="layui-input-block">
-            <input type="radio" name="status" value="1" title="显示"
-                   {if ($article['status'] == 1)}
-            checked
-            {/if}
-            >
-            <input type="radio" name="status" value="0" title="隐藏"
-                   {if ($article['status'] == 0)}
-            checked
-            {/if};
-            >
+            <input type="radio" name="status" value="1" title="显示" {$article.status==1?"checked":""}>
+            <input type="radio" name="status" value="0" title="隐藏" {$article.status==0?"checked":""}>
         </div>
     </div>
     <div class="layui-form-item">

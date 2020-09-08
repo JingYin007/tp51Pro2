@@ -88,6 +88,21 @@ function imgToServerView($imgUrl)
     $imgServerUrl = config('ftp.IMG_SERVER_PATH') . $imgUrl;
     return $imgServerUrl;
 }
+
+/**
+ * 匹配文章详情中的 图片src
+ * @param string $contetnStr
+ * @return array
+ */
+function getPatternMatchImages($contetnStr = ""){
+    $imgArr = [];
+    $pattern= '/src="(.+\.(png|jpg|jpeg|gif))".+?/';
+    preg_match_all($pattern,$contetnStr,$match);
+    if (isset($match[1])){
+        $imgArr = $match[1];
+    }
+    return $imgArr;
+}
 /**
  * ue编辑器通过FTP上传图片（$str代表从表单接收到的content字符串）
  * 返回处理后的content字符串

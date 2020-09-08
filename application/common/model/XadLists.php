@@ -66,7 +66,7 @@ class XadLists extends BaseModel
             ->where("status",'=',0)
             ->where('ad_name|ad_tag','like','%' . $search . '%')
             //->whereLike('ad_name', '%' . $search . '%')
-            ->order(['list_order' => 'desc', 'id' => 'desc'])
+            ->order(['list_order' => 'asc', 'id' => 'desc'])
             ->limit($limit * ($curr_page - 1), $limit)
             ->select();
         foreach ($res as $key => $v) {

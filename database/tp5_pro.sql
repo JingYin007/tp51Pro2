@@ -10,7 +10,7 @@ Target Server Type    : MYSQL
 Target Server Version : 50553
 File Encoding         : 65001
 
-Date: 2020-09-04 21:25:05
+Date: 2020-09-08 18:44:23
 */
 
 SET FOREIGN_KEY_CHECKS=0;
@@ -95,7 +95,7 @@ CREATE TABLE `tp5_xadmin_roles` (
   `user_name` varchar(50) NOT NULL DEFAULT '' COMMENT '角色称呼',
   `nav_menu_ids` text NOT NULL COMMENT '权限下的菜单ID',
   `updated_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
-  `status` tinyint(4) NOT NULL DEFAULT '1' COMMENT '状态标识',
+  `status` tinyint(2) NOT NULL DEFAULT '1' COMMENT '状态标识',
   PRIMARY KEY (`id`)
 ) ENGINE=MyISAM AUTO_INCREMENT=5 DEFAULT CHARSET=utf8mb4 COMMENT='管理员角色表';
 
@@ -103,7 +103,7 @@ CREATE TABLE `tp5_xadmin_roles` (
 -- Records of tp5_xadmin_roles
 -- ----------------------------
 INSERT INTO `tp5_xadmin_roles` VALUES ('1', '终级管理员', '138|139|140|141|1|2|7|6|3|4|5|93|73|49|48|50|67|61|76|133|134|', '2020-05-27 16:28:22', '1');
-INSERT INTO `tp5_xadmin_roles` VALUES ('2', '初级管理员', '1|6|2|3|4|5|', '2018-02-11 21:02:43', '1');
+INSERT INTO `tp5_xadmin_roles` VALUES ('2', '初级管理员', '1|2|6|3|4|5|', '2020-09-08 15:29:23', '0');
 
 -- ----------------------------
 -- Table structure for tp5_xad_lists
@@ -117,7 +117,7 @@ CREATE TABLE `tp5_xad_lists` (
   `ad_type` tinyint(2) unsigned NOT NULL DEFAULT '0' COMMENT '广告类型, 0：首页幻灯片广告 1：首屏加载倒计时广告；2:其他广告',
   `ad_url` varchar(50) NOT NULL DEFAULT '' COMMENT '广告链接',
   `original_img` varchar(500) NOT NULL DEFAULT '' COMMENT '广告图片',
-  `list_order` int(3) unsigned NOT NULL DEFAULT '0' COMMENT '排序 数字越大越靠前',
+  `list_order` int(3) unsigned NOT NULL DEFAULT '0' COMMENT '排序 数字越小 越靠前',
   `status` tinyint(2) NOT NULL DEFAULT '0' COMMENT 'app前端显示状态 0：正常，-1已删除',
   `is_show` tinyint(1) NOT NULL DEFAULT '1' COMMENT '是否在 app 首页显示  0：不显示  1：显示',
   `ad_tag` varchar(100) NOT NULL DEFAULT '' COMMENT '唯一标识字符串 建议大写',
@@ -150,9 +150,9 @@ CREATE TABLE `tp5_xarticles` (
 -- ----------------------------
 -- Records of tp5_xarticles
 -- ----------------------------
-INSERT INTO `tp5_xarticles` VALUES ('1', '这是今年最好的演讲：生命来来往往，来日并不方长', '1', '2020-09-04 20:56:11', '2020-09-04 20:56:11', '0', '<p style=\"margin: 0px 16px; padding: 0px; max-width: 100%; clear: both; min-height: 1em; color: #333333; text-align: center;\"><span style=\"margin: 0px; padding: 0px; max-width: 100%; box-sizing: border-box !important; word-wrap: break-word !important; color: #990000;\"><span style=\"margin: 0px; padding: 0px; max-width: 100%; box-sizing: border-box !important; word-wrap: break-word !important; font-size: 15px;\">余生很贵，经不起浪费。</span></span></p>\r\n<p style=\"margin: 0px 16px; padding: 0px; max-width: 100%; clear: both; min-height: 1em; color: #333333; text-align: center;\"><span style=\"margin: 0px; padding: 0px; max-width: 100%; box-sizing: border-box !important; word-wrap: break-word !important; font-size: 15px;\">&nbsp;</span></p>\r\n<p style=\"margin: 0px 16px; padding: 0px; max-width: 100%; clear: both; min-height: 1em; color: #333333; text-align: center;\"><span style=\"margin: 0px; padding: 0px; max-width: 100%; box-sizing: border-box !important; word-wrap: break-word !important; font-size: 15px;\">就像三毛所说，</span><span style=\"margin: 0px; padding: 0px; max-width: 100%; box-sizing: border-box !important; word-wrap: break-word !important; font-size: 15px; color: #990000;\">我来不及认真地年轻，待明白过来时，只能选择认真地老去。</span></p>\r\n<p class=\"\" style=\"margin-top: 0px; margin-bottom: 0px; padding: 0px; max-width: 100%; clear: both; min-height: 1em; color: #333333; font-family: -apple-system-font, BlinkMacSystemFont,;\">&nbsp;</p>\r\n<p style=\"margin: 0px 16px; padding: 0px; max-width: 100%; clear: both; min-height: 1em; color: #333333; text-align: center;\"><span style=\"margin: 0px; padding: 0px; max-width: 100%; box-sizing: border-box !important; word-wrap: break-word !important; font-size: 15px;\">趁阳光正好，趁微风不燥，见想见的人，做想做的事，就是对人生最大的不辜负。</span></p>\r\n<p style=\"margin: 0px 16px; padding: 0px; max-width: 100%; clear: both; min-height: 1em; color: #333333; font-family: -apple-system-font, BlinkMacSystemFont,;\">&nbsp;</p>\r\n<p style=\"margin: 0px 16px; padding: 0px; max-width: 100%; clear: both; min-height: 1em; color: #333333; text-align: center;\"><strong style=\"margin: 0px; padding: 0px; max-width: 100%; box-sizing: border-box !important; word-wrap: break-word !important;\"><span style=\"margin: 0px; padding: 0px; max-width: 100%; box-sizing: border-box !important; word-wrap: break-word !important; font-size: 15px;\">所以，</span></strong></p>\r\n<p style=\"margin: 0px 16px; padding: 0px; max-width: 100%; clear: both; min-height: 1em; color: #333333; text-align: center;\"><strong style=\"margin: 0px; padding: 0px; max-width: 100%; box-sizing: border-box !important; word-wrap: break-word !important;\"><span style=\"margin: 0px; padding: 0px; max-width: 100%; box-sizing: border-box !important; word-wrap: break-word !important; font-size: 15px;\">去爱吧，就像从来没有受过伤害一样</span></strong></p>\r\n<p style=\"margin: 0px 16px; padding: 0px; max-width: 100%; clear: both; min-height: 1em; color: #333333; text-align: center;\"><strong style=\"margin: 0px; padding: 0px; max-width: 100%; box-sizing: border-box !important; word-wrap: break-word !important;\"><span style=\"margin: 0px; padding: 0px; max-width: 100%; box-sizing: border-box !important; word-wrap: break-word !important; font-size: 15px;\">跳舞吧，如同没有任何人注视你一样</span></strong></p>\r\n<p style=\"margin: 0px 16px; padding: 0px; max-width: 100%; clear: both; min-height: 1em; color: #333333; text-align: center;\"><strong style=\"margin: 0px; padding: 0px; max-width: 100%; box-sizing: border-box !important; word-wrap: break-word !important;\"><span style=\"margin: 0px; padding: 0px; max-width: 100%; box-sizing: border-box !important; word-wrap: break-word !important; font-size: 15px;\">活着吧，如同今天就是末日一样</span></strong></p>\r\n<p class=\"\" style=\"margin-top: 0px; margin-bottom: 0px; padding: 0px; max-width: 100%; clear: both; min-height: 1em; color: #333333; font-family: -apple-system-font, BlinkMacSystemFont,;\">&nbsp;</p>\r\n<p style=\"margin: 0px 16px; padding: 0px; max-width: 100%; min-height: 1em; color: #333333; text-align: center;\"><span style=\"margin: 0px; padding: 0px; max-width: 100%; box-sizing: border-box !important; word-wrap: break-word !important; color: #990000; font-size: 15px;\">生命来来往往，来日并不方长，别等，别遗憾</span></p>');
+INSERT INTO `tp5_xarticles` VALUES ('1', '这是今年最好的演讲：生命来来往往，来日并不方长', '1', '2020-09-04 20:56:11', '2020-09-08 17:09:42', '0', '<p style=\"margin: 0px 16px; padding: 0px; max-width: 100%; clear: both; min-height: 1em; color: #333333; text-align: center;\"><span style=\"margin: 0px; padding: 0px; max-width: 100%; box-sizing: border-box !important; word-wrap: break-word !important; color: #990000;\"><span style=\"margin: 0px; padding: 0px; max-width: 100%; box-sizing: border-box !important; word-wrap: break-word !important; font-size: 15px;\"><strong>余生很贵，经不起浪费</strong></span></span></p>\r\n<p style=\"margin: 0px 16px; padding: 0px; max-width: 100%; clear: both; min-height: 1em; color: #333333; text-align: center;\"><span style=\"margin: 0px; padding: 0px; max-width: 100%; box-sizing: border-box !important; word-wrap: break-word !important; color: #990000;\"><span style=\"margin: 0px; padding: 0px; max-width: 100%; box-sizing: border-box !important; word-wrap: break-word !important; font-size: 15px;\"><strong><img src=\"/upload/20200908/e7262deba9f13cda7d89d425a8f2568c.jpg\" alt=\"\" width=\"380\" height=\"285\" /></strong></span></span></p>\r\n<p style=\"margin: 0px 16px; padding: 0px; max-width: 100%; clear: both; min-height: 1em; color: #333333; text-align: center;\"><span style=\"margin: 0px; padding: 0px; max-width: 100%; box-sizing: border-box !important; word-wrap: break-word !important; font-size: 15px;\">&nbsp;</span></p>\r\n<p style=\"margin: 0px 16px; padding: 0px; max-width: 100%; clear: both; min-height: 1em; color: #333333; text-align: center;\"><span style=\"margin: 0px; padding: 0px; max-width: 100%; box-sizing: border-box !important; word-wrap: break-word !important; font-size: 15px;\"><span style=\"color: #843fa1;\">就像三毛所说</span>，</span><span style=\"margin: 0px; padding: 0px; max-width: 100%; box-sizing: border-box !important; word-wrap: break-word !important; font-size: 15px; color: #990000;\">我来不及认真地年轻，待明白过来时，只能选择认真地老去。</span></p>\r\n<p class=\"\" style=\"margin-top: 0px; margin-bottom: 0px; padding: 0px; max-width: 100%; clear: both; min-height: 1em; color: #333333; font-family: -apple-system-font, BlinkMacSystemFont,;\">&nbsp;</p>\r\n<p style=\"margin: 0px 16px; padding: 0px; max-width: 100%; clear: both; min-height: 1em; color: #333333; text-align: center;\"><span style=\"margin: 0px; padding: 0px; max-width: 100%; box-sizing: border-box !important; word-wrap: break-word !important; font-size: 15px;\">趁阳光正好，趁微风不燥，见想见的人，做想做的事，就是对人生最大的不辜负。</span></p>\r\n<p style=\"margin: 0px 16px; padding: 0px; max-width: 100%; clear: both; min-height: 1em; color: #333333; font-family: -apple-system-font, BlinkMacSystemFont,;\">&nbsp;</p>\r\n<p style=\"margin: 0px 16px; padding: 0px; max-width: 100%; clear: both; min-height: 1em; color: #333333; text-align: center;\"><strong style=\"margin: 0px; padding: 0px; max-width: 100%; box-sizing: border-box !important; word-wrap: break-word !important;\"><span style=\"margin: 0px; padding: 0px; max-width: 100%; box-sizing: border-box !important; word-wrap: break-word !important; font-size: 15px;\">所以，</span></strong></p>\r\n<p style=\"margin: 0px 16px; padding: 0px; max-width: 100%; clear: both; min-height: 1em; color: #333333; text-align: center;\"><strong style=\"margin: 0px; padding: 0px; max-width: 100%; box-sizing: border-box !important; word-wrap: break-word !important;\"><span style=\"margin: 0px; padding: 0px; max-width: 100%; box-sizing: border-box !important; word-wrap: break-word !important; font-size: 15px;\">去爱吧，就像从来没有受过伤害一样</span></strong></p>\r\n<p style=\"margin: 0px 16px; padding: 0px; max-width: 100%; clear: both; min-height: 1em; color: #333333; text-align: center;\"><strong style=\"margin: 0px; padding: 0px; max-width: 100%; box-sizing: border-box !important; word-wrap: break-word !important;\"><span style=\"margin: 0px; padding: 0px; max-width: 100%; box-sizing: border-box !important; word-wrap: break-word !important; font-size: 15px;\">跳舞吧，如同没有任何人注视你一样</span></strong></p>\r\n<p style=\"margin: 0px 16px; padding: 0px; max-width: 100%; clear: both; min-height: 1em; color: #333333; text-align: center;\"><strong style=\"margin: 0px; padding: 0px; max-width: 100%; box-sizing: border-box !important; word-wrap: break-word !important;\"><span style=\"margin: 0px; padding: 0px; max-width: 100%; box-sizing: border-box !important; word-wrap: break-word !important; font-size: 15px;\">活着吧，如同今天就是末日一样</span></strong></p>\r\n<p class=\"\" style=\"margin-top: 0px; margin-bottom: 0px; padding: 0px; max-width: 100%; clear: both; min-height: 1em; color: #333333; font-family: -apple-system-font, BlinkMacSystemFont,;\">&nbsp;</p>\r\n<p style=\"margin: 0px 16px; padding: 0px; max-width: 100%; min-height: 1em; color: #333333; text-align: center;\"><span style=\"margin: 0px; padding: 0px; max-width: 100%; box-sizing: border-box !important; word-wrap: break-word !important; color: #990000; font-size: 15px;\">生命来来往往，来日并不方长，别等，别遗憾</span></p>\r\n<p style=\"margin: 0px 16px; padding: 0px; max-width: 100%; min-height: 1em; color: #333333; text-align: center;\">&nbsp;</p>\r\n<p style=\"margin: 0px 16px; padding: 0px; max-width: 100%; min-height: 1em; color: #333333; text-align: center;\"><span style=\"margin: 0px; padding: 0px; max-width: 100%; box-sizing: border-box !important; word-wrap: break-word !important; color: #990000; font-size: 15px;\"><img src=\"/upload/20200908/cf79bd0e6574244f9bc2a97a9d572e9c.jpg\" alt=\"\" width=\"120\" height=\"68\" /> </span></p>\r\n<p style=\"margin: 0px 16px; padding: 0px; max-width: 100%; min-height: 1em; color: #333333; text-align: center;\"><span style=\"margin: 0px; padding: 0px; max-width: 100%; box-sizing: border-box !important; word-wrap: break-word !important; color: #990000; font-size: 15px;\"><img src=\"/upload/20200908/6c5a03a4749919fc5739029bdc6f4d4c.jpg\" alt=\"\" width=\"120\" height=\"75\" /></span></p>');
 INSERT INTO `tp5_xarticles` VALUES ('2', '真正放下一个人，不是拉黑，也不是删除', '2', '2020-09-04 21:16:58', '2020-09-04 21:16:58', '1', '<p style=\"margin: 0px 16px; padding: 0px; max-width: 100%; clear: both; min-height: 1em; color: #333333; text-align: center;\"><span style=\"margin: 0px; padding: 0px; max-width: 100%; box-sizing: border-box !important; word-wrap: break-word !important; font-size: 15px; letter-spacing: 0.5px;\">有人说，越在乎，越假装不在乎；越放不下，越假装放得下</span></p>\r\n<p style=\"margin: 0px 16px; padding: 0px; max-width: 100%; clear: both; min-height: 1em; color: #333333; text-align: center;\"><span style=\"margin: 0px; padding: 0px; max-width: 100%; box-sizing: border-box !important; word-wrap: break-word !important; font-size: 15px; letter-spacing: 0.5px; color: #990000;\">没错。成年人的我们的确有着数不清的佯装，就连感情也难逃此劫</span></p>\r\n<p style=\"margin: 0px 16px; padding: 0px; max-width: 100%; clear: both; min-height: 1em; color: #333333; text-align: center;\"><span style=\"margin: 0px; padding: 0px; max-width: 100%; box-sizing: border-box !important; word-wrap: break-word !important; font-size: 15px; letter-spacing: 0.5px; color: #990000;\"><img src=\"https://timgsa.baidu.com/timg?image&amp;quality=80&amp;size=b9999_10000&amp;sec=1599235079831&amp;di=4e7c08b476267106e7eeefb768964c89&amp;imgtype=0&amp;src=http%3A%2F%2Ft7.baidu.com%2Fit%2Fu%3D1179872664%2C290201490%26fm%3D79%26app%3D86%26f%3DJPEG%3Fw%3D1280%26h%3D854\" alt=\"\" width=\"280\" height=\"187\" /></span></p>');
-INSERT INTO `tp5_xarticles` VALUES ('4', '真正在乎你的人，绝不会说这句话', '1', '2020-09-04 21:12:22', '2020-09-04 21:12:22', '0', '<section>\r\n<p style=\"white-space: normal; margin-top: 0px; margin-bottom: 0px; padding: 0px; max-width: 100%; clear: both; min-height: 1em; caret-color: #333333; color: #333333; text-align: center;\"><strong style=\"font-size: 15px; margin: 0px; padding: 0px; max-width: 100%; box-sizing: border-box !important; overflow-wrap: break-word !important;\">在乎你的男人，绝不会说&ldquo;我很忙，没时间&rdquo;</strong></p>\r\n<p style=\"white-space: normal; margin-top: 0px; margin-bottom: 0px; padding: 0px; max-width: 100%; clear: both; min-height: 1em; caret-color: #333333; color: #333333; text-align: center;\">&nbsp;</p>\r\n<p style=\"white-space: normal; margin-top: 0px; margin-bottom: 0px; padding: 0px; max-width: 100%; clear: both; min-height: 1em; color: #333333; font-family: -apple-system-font, BlinkMacSystemFont,;\"><img style=\"display: block; margin-left: auto; margin-right: auto;\" src=\"https://c-ssl.duitang.com/uploads/item/201501/01/20150101132940_QtmTM.jpeg\" alt=\"\" width=\"235\" height=\"235\" /></p>\r\n<p style=\"white-space: normal; margin: 0px 16px; padding: 0px; max-width: 100%; clear: both; min-height: 1em; color: #333333; text-align: center;\"><span style=\"margin: 0px; padding: 0px; max-width: 100%; font-size: 15px; box-sizing: border-box !important; word-wrap: break-word !important;\">网上有一段话，<span style=\"color: #e67e23;\"><strong>想陪你吃饭的人酸甜苦辣都想吃</strong></span></span></p>\r\n<p style=\"white-space: normal; margin: 0px 16px; padding: 0px; max-width: 100%; clear: both; min-height: 1em; color: #333333; text-align: center;\"><span style=\"margin: 0px; padding: 0px; max-width: 100%; font-size: 15px; box-sizing: border-box !important; word-wrap: break-word !important;\">想送你回家的人东南西北都顺路，<span style=\"margin: 0px; padding: 0px; max-width: 100%; box-sizing: border-box !important; word-wrap: break-word !important;\">想见你的人 24小时都有空&nbsp;</span></span></p>\r\n<p style=\"white-space: normal; margin-top: 0px; margin-bottom: 0px; padding: 0px; max-width: 100%; clear: both; min-height: 1em; color: #333333; font-family: -apple-system-font, BlinkMacSystemFont,;\">&nbsp;</p>\r\n<p style=\"white-space: normal; margin: 0px 16px; padding: 0px; max-width: 100%; clear: both; min-height: 1em; color: #333333; text-align: center;\"><span style=\"margin: 0px; padding: 0px; max-width: 100%; color: #990000; font-size: 15px; box-sizing: border-box !important; word-wrap: break-word !important;\">生活中没有谁是真的忙，只看他愿不愿你为你花时间</span></p>\r\n</section>');
+INSERT INTO `tp5_xarticles` VALUES ('4', '真正在乎你的人，绝不会说这句话', '1', '2020-09-04 21:12:22', '2020-09-08 17:14:39', '0', '<section>\r\n<p style=\"white-space: normal; margin-top: 0px; margin-bottom: 0px; padding: 0px; max-width: 100%; clear: both; min-height: 1em; caret-color: #333333; color: #333333; text-align: center;\"><strong style=\"font-size: 15px; margin: 0px; padding: 0px; max-width: 100%; box-sizing: border-box !important; overflow-wrap: break-word !important;\">在乎你的男人，绝不会说&ldquo;我很忙，没时间&rdquo;</strong></p>\r\n<p style=\"white-space: normal; margin-top: 0px; margin-bottom: 0px; padding: 0px; max-width: 100%; clear: both; min-height: 1em; color: #333333; font-family: -apple-system-font, BlinkMacSystemFont,;\"><img style=\"display: block; margin-left: auto; margin-right: auto;\" src=\"https://c-ssl.duitang.com/uploads/item/201501/01/20150101132940_QtmTM.jpeg\" alt=\"\" width=\"235\" height=\"235\" /></p>\r\n<p style=\"white-space: normal; margin-top: 0px; margin-bottom: 0px; padding: 0px; max-width: 100%; clear: both; min-height: 1em; color: #333333; font-family: -apple-system-font, BlinkMacSystemFont,;\">&nbsp;</p>\r\n<p style=\"white-space: normal; margin: 0px 16px; padding: 0px; max-width: 100%; clear: both; min-height: 1em; color: #333333; text-align: center;\"><span style=\"margin: 0px; padding: 0px; max-width: 100%; font-size: 15px; box-sizing: border-box !important; word-wrap: break-word !important;\">网上有一段话，<span style=\"color: #e67e23;\"><strong>想陪你吃饭的人酸甜苦辣都想吃</strong></span></span></p>\r\n<p style=\"white-space: normal; margin: 0px 16px; padding: 0px; max-width: 100%; clear: both; min-height: 1em; color: #333333; text-align: center;\"><span style=\"margin: 0px; padding: 0px; max-width: 100%; font-size: 15px; box-sizing: border-box !important; word-wrap: break-word !important;\">想送你回家的人东南西北都顺路，<span style=\"margin: 0px; padding: 0px; max-width: 100%; box-sizing: border-box !important; word-wrap: break-word !important;\">想见你的人 24小时都有空&nbsp;</span></span></p>\r\n<p style=\"white-space: normal; margin-top: 0px; margin-bottom: 0px; padding: 0px; max-width: 100%; clear: both; min-height: 1em; color: #333333; font-family: -apple-system-font, BlinkMacSystemFont,;\">&nbsp;</p>\r\n<p style=\"white-space: normal; margin: 0px 16px; padding: 0px; max-width: 100%; clear: both; min-height: 1em; color: #333333; text-align: center;\"><span style=\"margin: 0px; padding: 0px; max-width: 100%; color: #990000; font-size: 15px; box-sizing: border-box !important; word-wrap: break-word !important;\">生活中没有谁是真的忙，只看他愿不愿你为你花时间</span></p>\r\n<p style=\"white-space: normal; margin: 0px 16px; padding: 0px; max-width: 100%; clear: both; min-height: 1em; color: #333333; text-align: center;\">&nbsp;</p>\r\n<p style=\"white-space: normal; margin: 0px 16px; padding: 0px; max-width: 100%; clear: both; min-height: 1em; color: #333333; text-align: center;\"><span style=\"margin: 0px; padding: 0px; max-width: 100%; color: #990000; font-size: 15px; box-sizing: border-box !important; word-wrap: break-word !important;\"><iframe style=\"color: #333333; font-size: medium; caret-color: #333333; width: 560px; height: 362px;\" src=\"http://tp51pro.com/tinymce-mz/js/tinymce/plugins/bdmap/bd.html?center=116.3298837745457%2C39.89708864020384&amp;zoom=14&amp;width=558&amp;height=360\" frameborder=\"0\"></iframe></span></p>\r\n</section>');
 INSERT INTO `tp5_xarticles` VALUES ('3', '年轻人，我劝你没事多存点钱', '1', '2020-09-04 21:09:10', '2020-09-04 21:09:10', '2', '<section>\r\n<section>\r\n<section>\r\n<section>\r\n<p style=\"margin: 0px 16px; padding: 0px; max-width: 100%; clear: both; min-height: 1em; line-height: 1.75em; text-align: center; box-sizing: border-box !important; word-wrap: break-word !important;\"><span style=\"margin: 0px; padding: 0px; max-width: 100%; color: #ffffff; background-color: #990000; font-size: 16px; box-sizing: border-box !important; word-wrap: break-word !important;\">你的存款，就是你选择权</span></p>\r\n</section>\r\n</section>\r\n</section>\r\n</section>\r\n<p style=\"white-space: normal; margin: 0px 16px; padding: 0px; max-width: 100%; clear: both; min-height: 1em; caret-color: #333333; color: #333333; font-family: -apple-system-font, BlinkMacSystemFont,;\"><span style=\"margin: 0px; padding: 0px; max-width: 100%; font-size: 15px; box-sizing: border-box !important; word-wrap: break-word !important;\">我曾经和闺蜜去过一次&ldquo;非同凡响&rdquo;的毕业旅游。</span></p>\r\n<p style=\"white-space: normal; margin-top: 0px; margin-bottom: 0px; padding: 0px; max-width: 100%; clear: both; min-height: 1em; caret-color: #333333; color: #333333; font-family: -apple-system-font, BlinkMacSystemFont,;\">&nbsp;</p>\r\n<p style=\"white-space: normal; margin: 0px 16px; padding: 0px; max-width: 100%; clear: both; min-height: 1em; caret-color: #333333; color: #333333; font-family: -apple-system-font, BlinkMacSystemFont,;\"><span style=\"margin: 0px; padding: 0px; max-width: 100%; font-size: 15px; box-sizing: border-box !important; word-wrap: break-word !important;\">当时的我们还是大学生，每个月的生活费只会有超支，不会有结余，整天理所当然地做着月光族。</span></p>\r\n<p style=\"white-space: normal; margin-top: 0px; margin-bottom: 0px; padding: 0px; max-width: 100%; clear: both; min-height: 1em; caret-color: #333333; color: #333333; font-family: -apple-system-font, BlinkMacSystemFont,;\">&nbsp;</p>\r\n<p style=\"white-space: normal; margin: 0px 16px; padding: 0px; max-width: 100%; clear: both; min-height: 1em; caret-color: #333333; color: #333333; font-family: -apple-system-font, BlinkMacSystemFont,;\"><span style=\"margin: 0px; padding: 0px; max-width: 100%; font-size: 15px; box-sizing: border-box !important; word-wrap: break-word !important;\">直到我们站在旅行社的门外盯着别人的海报，才猛然发现自己简直就是拿着买大宝的钱，跑去买人家的SK2。</span></p>\r\n<p style=\"white-space: normal; margin-top: 0px; margin-bottom: 0px; padding: 0px; max-width: 100%; clear: both; min-height: 1em; caret-color: #333333; color: #333333; font-family: -apple-system-font, BlinkMacSystemFont,;\">&nbsp;</p>\r\n<p style=\"white-space: normal; margin: 0px 16px; padding: 0px; max-width: 100%; min-height: 1em; caret-color: #333333; color: #333333;\"><span style=\"margin: 0px; padding: 0px; max-width: 100%; font-size: 15px; box-sizing: border-box !important; word-wrap: break-word !important;\">最后，不得不厚着脸皮问家里人拿了一笔小小的旅游基金，报了一个超级特惠团</span></p>');
 
 -- ----------------------------
@@ -176,7 +176,7 @@ CREATE TABLE `tp5_xarticle_points` (
 -- ----------------------------
 INSERT INTO `tp5_xarticle_points` VALUES ('1', '1', '2', '', 'home/images/article1.png', '如今科技进步，时代向前，人的平均寿命越来越长了。但长长的一生中，究竟有多少时间真正属于我们自己呢？', '1', '1');
 INSERT INTO `tp5_xarticle_points` VALUES ('2', '2', '12', '', 'home/images/article2.png', '我的小天地，我闯荡的大江湖，我的浩瀚星辰和璀璨日月，再与你无关；而你的天地，你行走的江湖，你的日月和星辰，我也再不惦念。从此，一别两宽，各生欢喜。', '1', '1');
-INSERT INTO `tp5_xarticle_points` VALUES ('4', '4', '0', '', 'home/images/article4.png', '人都是对喜欢的东西最上心。他若真的在乎你，一分一秒都不想失去你的消息，更不会不时玩消失，不会对你忽冷忽热，因为他比你还害怕失去。所有的不主动都是由于不喜欢，喜欢你的人永远不忙。', '0', '1');
+INSERT INTO `tp5_xarticle_points` VALUES ('4', '4', '0', '', 'home/images/article4.png', '人都是对喜欢的东西最上心。他若真的在乎你，一分一秒都不想失去你的消息，更不会不时玩消失，不会对你忽冷忽热，因为他比你还害怕失去。所有的不主动都是由于不喜欢，喜欢你的人永远不忙。', '0', '0');
 INSERT INTO `tp5_xarticle_points` VALUES ('3', '3', '0', '', 'home/images/article3.png', '因为穷，所以要努力赚钱；努力赚钱，就会没时间找对象；找不到对象就算了，钱也没赚多少，难免开始焦虑；一旦焦虑，每天洗头的时候，掉出来的头发会告诉你什么才是真正的“绝望”。', '1', '1');
 
 -- ----------------------------
@@ -189,9 +189,8 @@ CREATE TABLE `tp5_xcategorys` (
   `parent_id` smallint(5) unsigned NOT NULL DEFAULT '0' COMMENT '该分类的父id，取决于cat_id ',
   `is_show` tinyint(1) NOT NULL DEFAULT '1' COMMENT '是否在 app 首页导航栏显示  0：不显示  1：显示',
   `icon` varchar(255) NOT NULL COMMENT '分类图标',
-  `show_img` varchar(255) NOT NULL COMMENT '首页展示图片，暂时只用于一级分类',
   `level` tinyint(2) NOT NULL DEFAULT '2' COMMENT '类型  1：一级；2：二级； 3：三级',
-  `list_order` int(11) NOT NULL DEFAULT '0' COMMENT '排序数字越大越靠前',
+  `list_order` int(11) NOT NULL DEFAULT '0' COMMENT '排序数字越小 越靠前',
   `status` tinyint(2) NOT NULL DEFAULT '0' COMMENT '状态 0：正常  -1：已删除',
   PRIMARY KEY (`cat_id`),
   KEY `parent_id` (`parent_id`)
@@ -200,23 +199,23 @@ CREATE TABLE `tp5_xcategorys` (
 -- ----------------------------
 -- Records of tp5_xcategorys
 -- ----------------------------
-INSERT INTO `tp5_xcategorys` VALUES ('1', '图书', '0', '1', 'cms/images/category/books.png', '', '1', '0', '0');
-INSERT INTO `tp5_xcategorys` VALUES ('2', '电器', '0', '1', 'cms/images/category/electric.png', '', '1', '2', '0');
-INSERT INTO `tp5_xcategorys` VALUES ('4', '美食', '0', '1', 'cms/images/category/food.png', '', '1', '0', '0');
-INSERT INTO `tp5_xcategorys` VALUES ('3', '服饰', '0', '1', 'cms/images/category/clothing.png', '', '1', '0', '0');
-INSERT INTO `tp5_xcategorys` VALUES ('5', '电子书', '1', '1', 'cms/images/category/e-book.png', '', '2', '0', '0');
-INSERT INTO `tp5_xcategorys` VALUES ('7', '冰箱', '2', '1', 'cms/images/category/refrigerator.png', '', '2', '0', '0');
-INSERT INTO `tp5_xcategorys` VALUES ('6', '饮品', '4', '1', 'cms/images/category/drink.png', '', '2', '0', '0');
-INSERT INTO `tp5_xcategorys` VALUES ('8', '红酒', '4', '1', 'cms/images/category/red_wine.png', '', '2', '1', '-1');
-INSERT INTO `tp5_xcategorys` VALUES ('9', '咖啡', '6', '1', 'cms/images/category/coffee.png', '', '3', '0', '0');
-INSERT INTO `tp5_xcategorys` VALUES ('10', '牛奶', '6', '1', 'cms/images/category/milk.png', '', '3', '0', '0');
-INSERT INTO `tp5_xcategorys` VALUES ('12', '洗衣机', '2', '1', 'cms/images/category/washer.png', '', '2', '0', '0');
-INSERT INTO `tp5_xcategorys` VALUES ('13', '小说', '5', '1', 'cms/images/category/fiction.png', '', '3', '0', '0');
-INSERT INTO `tp5_xcategorys` VALUES ('14', '糖果', '15', '1', 'cms/images/category/candies.png', '', '3', '0', '0');
-INSERT INTO `tp5_xcategorys` VALUES ('15', '休闲食品', '4', '1', 'cms/images/category/leisure-food.png', '', '2', '0', '0');
-INSERT INTO `tp5_xcategorys` VALUES ('16', '酒类', '4', '1', 'cms/images/category/wine.png', '', '2', '0', '0');
-INSERT INTO `tp5_xcategorys` VALUES ('17', '白酒', '16', '1', 'cms/images/category/white-wine.png', '', '3', '0', '0');
-INSERT INTO `tp5_xcategorys` VALUES ('18', '葡萄酒', '16', '1', 'cms/images/category/grape-wine.png', '', '3', '0', '0');
+INSERT INTO `tp5_xcategorys` VALUES ('1', '图书', '0', '1', 'cms/images/category/books.png', '1', '0', '0');
+INSERT INTO `tp5_xcategorys` VALUES ('2', '电器', '0', '1', 'cms/images/category/electric.png', '1', '2', '0');
+INSERT INTO `tp5_xcategorys` VALUES ('4', '美食', '0', '1', 'cms/images/category/food.png', '1', '0', '0');
+INSERT INTO `tp5_xcategorys` VALUES ('3', '服饰', '0', '0', 'cms/images/category/clothing.png', '1', '0', '0');
+INSERT INTO `tp5_xcategorys` VALUES ('5', '电子书', '1', '1', 'cms/images/category/e-book.png', '2', '0', '0');
+INSERT INTO `tp5_xcategorys` VALUES ('7', '冰箱', '2', '1', 'cms/images/category/refrigerator.png', '2', '0', '0');
+INSERT INTO `tp5_xcategorys` VALUES ('6', '饮品', '4', '1', 'cms/images/category/drink.png', '2', '0', '0');
+INSERT INTO `tp5_xcategorys` VALUES ('8', '红酒', '4', '1', 'cms/images/category/red_wine.png', '2', '1', '-1');
+INSERT INTO `tp5_xcategorys` VALUES ('9', '咖啡', '6', '1', 'cms/images/category/coffee.png', '3', '0', '0');
+INSERT INTO `tp5_xcategorys` VALUES ('10', '牛奶', '6', '1', 'cms/images/category/milk.png', '3', '0', '0');
+INSERT INTO `tp5_xcategorys` VALUES ('12', '洗衣机', '2', '1', 'cms/images/category/washer.png', '2', '0', '0');
+INSERT INTO `tp5_xcategorys` VALUES ('13', '小说', '5', '1', 'cms/images/category/fiction.png', '3', '0', '0');
+INSERT INTO `tp5_xcategorys` VALUES ('14', '糖果', '15', '1', 'cms/images/category/candies.png', '3', '0', '0');
+INSERT INTO `tp5_xcategorys` VALUES ('15', '休闲食品', '4', '1', 'cms/images/category/leisure-food.png', '2', '0', '0');
+INSERT INTO `tp5_xcategorys` VALUES ('16', '酒类', '4', '1', 'cms/images/category/wine.png', '2', '0', '0');
+INSERT INTO `tp5_xcategorys` VALUES ('17', '白酒', '16', '1', 'cms/images/category/white-wine.png', '3', '0', '0');
+INSERT INTO `tp5_xcategorys` VALUES ('18', '葡萄酒', '16', '1', 'cms/images/category/grape-wine.png', '3', '0', '0');
 
 -- ----------------------------
 -- Table structure for tp5_xcms_logs
@@ -230,7 +229,7 @@ CREATE TABLE `tp5_xcms_logs` (
   `admin_id` int(11) NOT NULL DEFAULT '0' COMMENT '操作管理员ID',
   `add_time` datetime NOT NULL COMMENT '记录添加时间',
   PRIMARY KEY (`id`)
-) ENGINE=MyISAM AUTO_INCREMENT=76 DEFAULT CHARSET=utf8mb4;
+) ENGINE=MyISAM AUTO_INCREMENT=97 DEFAULT CHARSET=utf8mb4;
 
 -- ----------------------------
 -- Records of tp5_xcms_logs
@@ -298,6 +297,27 @@ INSERT INTO `tp5_xcms_logs` VALUES ('72', 'GOODS', '4', '商品修改成功', '1
 INSERT INTO `tp5_xcms_logs` VALUES ('73', 'GOODS', '2', '商品修改成功', '1', '2020-09-04 21:14:24');
 INSERT INTO `tp5_xcms_logs` VALUES ('74', 'GOODS', '1', '商品修改成功', '1', '2020-09-04 21:14:49');
 INSERT INTO `tp5_xcms_logs` VALUES ('75', 'ARTICLE', '2', '文章更新', '1', '2020-09-04 21:16:59');
+INSERT INTO `tp5_xcms_logs` VALUES ('76', 'ARTICLE', '1', '文章更新', '1', '2020-09-07 14:14:35');
+INSERT INTO `tp5_xcms_logs` VALUES ('77', 'ARTICLE', '1', '文章更新', '1', '2020-09-07 14:14:52');
+INSERT INTO `tp5_xcms_logs` VALUES ('78', 'ARTICLE', '4', '文章更新', '1', '2020-09-07 17:44:15');
+INSERT INTO `tp5_xcms_logs` VALUES ('79', 'ARTICLE', '4', '文章更新', '1', '2020-09-08 14:55:05');
+INSERT INTO `tp5_xcms_logs` VALUES ('80', 'GOODS', '1', '商品修改成功', '1', '2020-09-08 15:35:36');
+INSERT INTO `tp5_xcms_logs` VALUES ('81', 'ARTICLE', '1', '文章更新', '1', '2020-09-08 16:28:26');
+INSERT INTO `tp5_xcms_logs` VALUES ('82', 'ARTICLE', '1', '文章更新', '1', '2020-09-08 16:29:33');
+INSERT INTO `tp5_xcms_logs` VALUES ('83', 'ARTICLE', '1', '文章更新', '1', '2020-09-08 16:39:01');
+INSERT INTO `tp5_xcms_logs` VALUES ('84', 'ARTICLE', '1', '文章更新', '1', '2020-09-08 17:01:17');
+INSERT INTO `tp5_xcms_logs` VALUES ('85', 'ARTICLE', '1', '文章更新', '1', '2020-09-08 17:05:46');
+INSERT INTO `tp5_xcms_logs` VALUES ('86', 'ARTICLE', '1', '文章更新', '1', '2020-09-08 17:08:10');
+INSERT INTO `tp5_xcms_logs` VALUES ('87', 'ARTICLE', '1', '文章更新', '1', '2020-09-08 17:09:01');
+INSERT INTO `tp5_xcms_logs` VALUES ('88', 'ARTICLE', '1', '文章更新', '1', '2020-09-08 17:09:16');
+INSERT INTO `tp5_xcms_logs` VALUES ('89', 'ARTICLE', '1', '文章更新', '1', '2020-09-08 17:09:30');
+INSERT INTO `tp5_xcms_logs` VALUES ('90', 'ARTICLE', '1', '文章更新', '1', '2020-09-08 17:09:42');
+INSERT INTO `tp5_xcms_logs` VALUES ('91', 'ARTICLE', '4', '文章更新', '1', '2020-09-08 17:12:25');
+INSERT INTO `tp5_xcms_logs` VALUES ('92', 'ARTICLE', '4', '文章更新', '1', '2020-09-08 17:12:43');
+INSERT INTO `tp5_xcms_logs` VALUES ('93', 'ARTICLE', '4', '文章更新', '1', '2020-09-08 17:13:11');
+INSERT INTO `tp5_xcms_logs` VALUES ('94', 'ARTICLE', '4', '文章更新', '1', '2020-09-08 17:13:51');
+INSERT INTO `tp5_xcms_logs` VALUES ('95', 'ARTICLE', '4', '文章更新', '1', '2020-09-08 17:14:25');
+INSERT INTO `tp5_xcms_logs` VALUES ('96', 'ARTICLE', '4', '文章更新', '1', '2020-09-08 17:14:39');
 
 -- ----------------------------
 -- Table structure for tp5_xconfigs
@@ -354,7 +374,7 @@ CREATE TABLE `tp5_xgoods` (
 -- ----------------------------
 -- Records of tp5_xgoods
 -- ----------------------------
-INSERT INTO `tp5_xgoods` VALUES ('1', '德芙 Dove分享碗 草莓白巧克力 221g（新旧包装随机发放）', '14', 'cms/images/goods/1/1.jpg', '办公室休闲零食 员工福利糖果巧克力 ', '1', '<p><img style=\"display: block; margin-left: auto; margin-right: auto;\" title=\"175706NDMzOTQwNDUzNTE4.jpg\" src=\"/cms/images/goods/1/5.jpg\" alt=\"O1CN014zzptX1rlMcSpY1yn_!!1748365671.jpg\" width=\"107\" height=\"618\" /></p>', '30.55', '32.90', '[{\"spec_id\":\"11\",\"spec_info\":[{\"spec_name\":\"221g\",\"spec_id\":\"12\",\"specFstID\":\"11\"},{\"spec_name\":\"300g\",\"spec_id\":\"13\",\"specFstID\":\"11\"}],\"spec_name\":\"重量【巧克力通用】\"}]', '5000', '2019-11-28 10:51:31', '2020-09-04 21:14:49', '1', '0', '1');
+INSERT INTO `tp5_xgoods` VALUES ('1', '德芙 Dove分享碗 草莓白巧克力 221g（新旧包装随机发放）', '14', 'cms/images/goods/1/1.jpg', '办公室休闲零食 员工福利糖果巧克力 ', '1', '                    <p><img style=\"display: block; margin-left: auto; margin-right: auto;\" title=\"175706NDMzOTQwNDUzNTE4.jpg\" src=\"/cms/images/goods/1/5.jpg\" alt=\"O1CN014zzptX1rlMcSpY1yn_!!1748365671.jpg\" width=\"107\" height=\"618\" /></p>            ', '30.55', '32.90', '[{\"spec_id\":\"11\",\"spec_info\":[{\"spec_name\":\"221g\",\"spec_id\":\"12\",\"specFstID\":\"11\"},{\"spec_name\":\"300g\",\"spec_id\":\"13\",\"specFstID\":\"11\"}],\"spec_name\":\"重量【巧克力通用】\"}]', '5000', '2019-11-28 10:51:31', '2020-09-08 15:35:36', '1', '0', '1');
 INSERT INTO `tp5_xgoods` VALUES ('2', 'CandyLab【水晶棒棒糖组合】手工糖果创意水果味水晶棒棒糖定制', '14', 'cms/images/goods/2/1.jpg', '只是一件裙子嘛', '2', '<p><img title=\"100125MzY5NTI3NjY5OTU5.png\" src=\"/cms/images/goods/2/3.jpg\" alt=\"QQ截图20191129095547.png\" width=\"145\" height=\"117\" /></p>', '120.00', '105.00', '[{\"spec_id\":\"11\",\"spec_info\":[{\"spec_name\":\"300g\",\"spec_id\":\"13\",\"specFstID\":\"11\"}],\"spec_name\":\"重量【巧克力通用】\"}]', '600', '2019-03-11 18:03:26', '2020-09-04 21:14:23', '1', '0', '1');
 INSERT INTO `tp5_xgoods` VALUES ('4', '买1箱送1箱法国进口红酒赤霞珠希雅特酒堡干红葡萄酒红酒特价整箱', '18', 'cms/images/goods/4/1.jpg', '好咖啡，有精神头', '2', '<p>&nbsp;</p>\r\n<p><img title=\"093713NzI5OTYxNjkzNzQ4.jpg\" src=\"/cms/images/goods/4/5.jpg\" width=\"240\" height=\"259\" /></p>\r\n<p>&nbsp;</p>', '1980.00', '388.00', '[{\"spec_id\":\"18\",\"spec_info\":[{\"spec_name\":\"13%VOL\",\"spec_id\":\"19\",\"specFstID\":\"18\"}],\"spec_name\":\"酒精度\"},{\"spec_id\":\"21\",\"spec_info\":[{\"spec_name\":\"750ml*6\",\"spec_id\":\"23\",\"specFstID\":\"21\"},{\"spec_name\":\"750ml*12\",\"spec_id\":\"22\",\"specFstID\":\"21\"}],\"spec_name\":\"净含量\"}]', '5000', '2019-03-14 11:03:58', '2020-09-04 21:14:10', '1', '0', '1');
 INSERT INTO `tp5_xgoods` VALUES ('5', '江小白白酒500ml40度8瓶青春版清香型国产大瓶整箱正品包邮送礼', '17', 'cms/images/goods/5/1.jpg', '不给你喝，哈哈哈哈', '1', '<p><img src=\"/cms/images/goods/5/4.jpg\" title=\"094745Mjc4NjQ4NzcwNDU1.jpg\" alt=\"TB2OrSAsiCYBuNkSnaVXXcMsVXa_!!2961619882.jpg\"/></p>', '1280.00', '536.00', '[{\"spec_id\":\"4\",\"spec_info\":[{\"spec_name\":\"500ml\",\"spec_id\":\"5\",\"specFstID\":\"4\"}],\"spec_name\":\"容量【小瓶】\"},{\"spec_id\":\"7\",\"spec_info\":[{\"spec_name\":\"40度\",\"spec_id\":\"8\",\"specFstID\":\"7\"},{\"spec_name\":\"38度\",\"spec_id\":\"9\",\"specFstID\":\"7\"}],\"spec_name\":\"酒精度数【白酒类型】\"}]', '4121', '2019-03-18 17:03:17', '2019-11-29 15:13:48', '1', '0', '1');
@@ -458,7 +478,7 @@ INSERT INTO `tp5_xnav_menus` VALUES ('94', '添加配置项', '93', 'cms/config/
 INSERT INTO `tp5_xnav_menus` VALUES ('95', '配置项修改', '93', 'cms/config/edit', '/', '1', '0', '2019-07-29 14:30:13', '1');
 INSERT INTO `tp5_xnav_menus` VALUES ('97', 'ajax 根据分类获取参加活动的商品', '61', 'cms/goods/ajaxGetCatGoodsForActivity', '/', '1', '0', '2019-08-16 09:31:52', '1');
 INSERT INTO `tp5_xnav_menus` VALUES ('99', '规格数据展示', '67', 'cms/specInfo/details', '/', '1', '0', '2019-11-14 16:08:47', '1');
-INSERT INTO `tp5_xnav_menus` VALUES ('133', '监控统计', '0', '/', 'cms/images/icon/cms_analyze.png', '1', '4', '2020-06-02 19:55:39', '0');
+INSERT INTO `tp5_xnav_menus` VALUES ('133', '监控统计', '0', '/', 'cms/images/icon/cms_analyze.png', '1', '4', '2020-09-08 15:31:44', '0');
 INSERT INTO `tp5_xnav_menus` VALUES ('134', '商品价格分布饼图', '133', 'cms/analyze/goodsPricePie', 'cms/images/icon/cms_pie.png', '1', '0', '2020-06-02 19:55:37', '0');
 INSERT INTO `tp5_xnav_menus` VALUES ('135', '查看文章操作日志', '5', 'cms/article/viewLogs', '', '1', '0', '2020-03-09 17:06:40', '1');
 INSERT INTO `tp5_xnav_menus` VALUES ('137', '动态配置开关状态', '93', 'cms/config/ajaxUpdateSwitchValue', '/', '1', '0', '2020-05-25 18:05:34', '1');
@@ -511,8 +531,8 @@ CREATE TABLE `tp5_xskus` (
 -- ----------------------------
 -- Records of tp5_xskus
 -- ----------------------------
-INSERT INTO `tp5_xskus` VALUES ('73', '1', '', '12', '221g', '32.90', '3000', '11', '2020-09-04 21:14:49', '0');
-INSERT INTO `tp5_xskus` VALUES ('74', '1', '', '13', '300g', '50.00', '2000', '12', '2020-09-04 21:14:49', '0');
+INSERT INTO `tp5_xskus` VALUES ('73', '1', '', '12', '221g', '32.90', '3000', '11', '2020-09-08 15:35:36', '0');
+INSERT INTO `tp5_xskus` VALUES ('74', '1', '', '13', '300g', '50.00', '2000', '12', '2020-09-08 15:35:36', '0');
 INSERT INTO `tp5_xskus` VALUES ('75', '7', '', '15', '250ml*24', '99.00', '2099', '87', '2019-11-29 15:12:31', '0');
 INSERT INTO `tp5_xskus` VALUES ('76', '7', '', '16', '250ml*6', '52.00', '300', '77', '2019-11-29 15:12:31', '0');
 INSERT INTO `tp5_xskus` VALUES ('77', '5', '', '5,8', '500ml,40度', '536.00', '3099', '1', '2019-11-29 15:13:48', '0');
@@ -577,20 +597,21 @@ CREATE TABLE `tp5_xtoday_words` (
   `picture` varchar(255) CHARACTER SET utf8 COLLATE utf8_unicode_ci NOT NULL COMMENT '插图',
   `status` tinyint(4) NOT NULL DEFAULT '1' COMMENT '状态，1：正常，-1：删除',
   `updated_at` timestamp NOT NULL DEFAULT '0000-00-00 00:00:00' ON UPDATE CURRENT_TIMESTAMP COMMENT '更新时间',
+  `images_str` varchar(500) NOT NULL COMMENT '多图列表，逗号隔开，建议三张以内',
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=9 DEFAULT CHARSET=utf8mb4 COMMENT='今日赠言表';
 
 -- ----------------------------
 -- Records of tp5_xtoday_words
 -- ----------------------------
-INSERT INTO `tp5_xtoday_words` VALUES ('1', '谁的青春不迷茫，其实我们都一样！', '谁的青春不迷茫', 'home/images/ps.png', '1', '2020-06-02 19:57:01');
-INSERT INTO `tp5_xtoday_words` VALUES ('2', '想和你重新认识一次 从你叫什么名字说起', '你的名字', 'home/images/ps2.png', '1', '2020-06-02 19:57:03');
-INSERT INTO `tp5_xtoday_words` VALUES ('3', '我是一只雁，你是南方云烟。但愿山河宽，相隔只一瞬间.                ', '秦时明月', 'home/images/ps3.png', '1', '2020-06-02 19:57:08');
-INSERT INTO `tp5_xtoday_words` VALUES ('4', '人老了的好处，就是可失去的东西越来越少了.', '哈尔的移动城堡', 'home/images/ps4.png', '1', '2020-06-02 19:57:10');
-INSERT INTO `tp5_xtoday_words` VALUES ('5', '到底要怎么才能证明自己成长了 那种事情我也不知道啊 但是只要那一抹笑容尚存 我便心无旁骛 ', '声之形', 'home/images/ps5.png', '1', '2020-06-02 19:57:11');
-INSERT INTO `tp5_xtoday_words` VALUES ('6', '你觉得被圈养的鸟儿为什么无法自由地翱翔天际？是因为鸟笼不是属于它的东西', '东京食尸鬼A', 'home/images/ps6.png', '1', '2020-06-02 19:57:13');
-INSERT INTO `tp5_xtoday_words` VALUES ('7', '我手里拿着刀，没法抱你。我放下刀，没法保护你', '死神', 'home/images/ps7.png', '1', '2020-06-02 19:57:15');
-INSERT INTO `tp5_xtoday_words` VALUES ('8', '不管前方的路有多苦，只要走的方向正确，不管多么崎岖不平，都比站在原地更接近幸福!', '千与千寻', 'home/images/ps8.png', '1', '2020-06-02 19:57:18');
+INSERT INTO `tp5_xtoday_words` VALUES ('1', '谁的青春不迷茫，其实我们都一样！', '谁的青春不迷茫', 'home/images/ps.png', '1', '2020-06-02 19:57:01', '');
+INSERT INTO `tp5_xtoday_words` VALUES ('2', '想和你重新认识一次 从你叫什么名字说起', '你的名字', 'home/images/ps2.png', '1', '2020-06-02 19:57:03', '');
+INSERT INTO `tp5_xtoday_words` VALUES ('3', '我是一只雁，你是南方云烟。但愿山河宽，相隔只一瞬间.                ', '秦时明月', 'home/images/ps3.png', '1', '2020-06-02 19:57:08', '');
+INSERT INTO `tp5_xtoday_words` VALUES ('4', '人老了的好处，就是可失去的东西越来越少了.', '哈尔的移动城堡', 'home/images/ps4.png', '1', '2020-06-02 19:57:10', '');
+INSERT INTO `tp5_xtoday_words` VALUES ('5', '到底要怎么才能证明自己成长了 那种事情我也不知道啊 但是只要那一抹笑容尚存 我便心无旁骛 ', '声之形', 'home/images/ps5.png', '1', '2020-06-02 19:57:11', '');
+INSERT INTO `tp5_xtoday_words` VALUES ('6', '你觉得被圈养的鸟儿为什么无法自由地翱翔天际？是因为鸟笼不是属于它的东西', '东京食尸鬼A', 'home/images/ps6.png', '1', '2020-09-08 18:28:43', 'upload/20200908/3ced666f29f7c779e4cdb63c12ee0685.jpg,upload/20200908/2638afdd8361c2340479e04c1716d442.jpg,upload/20200908/2a06055c5a5cdf580a3e6cb6a9b565b7.jpg');
+INSERT INTO `tp5_xtoday_words` VALUES ('7', '我手里拿着刀，没法抱你。我放下刀，没法保护你', '死神', 'home/images/ps7.png', '1', '2020-09-08 15:33:25', '');
+INSERT INTO `tp5_xtoday_words` VALUES ('8', '不管前方的路有多苦，只要走的方向正确，不管多么崎岖不平，都比站在原地更接近幸福!', '千与千寻', 'home/images/ps8.png', '-1', '2020-09-08 15:33:00', '');
 
 -- ----------------------------
 -- Table structure for tp5_xupload_imgs
@@ -612,7 +633,7 @@ CREATE TABLE `tp5_xupload_imgs` (
 INSERT INTO `tp5_xupload_imgs` VALUES ('30', '1', 'cms/images/goods/1/4.jpg', '2020-06-02 19:57:30', '0', '1');
 INSERT INTO `tp5_xupload_imgs` VALUES ('31', '1', 'cms/images/goods/1/3.jpg', '2020-06-02 19:57:33', '0', '1');
 INSERT INTO `tp5_xupload_imgs` VALUES ('32', '1', 'cms/images/goods/1/2.jpg', '2020-06-02 19:57:34', '0', '1');
-INSERT INTO `tp5_xupload_imgs` VALUES ('33', '1', 'cms/images/goods/1/1.jpg', '2020-06-02 19:57:37', '0', '1');
+INSERT INTO `tp5_xupload_imgs` VALUES ('33', '1', 'cms/images/goods/1/1.jpg', '2020-09-08 15:35:26', '0', '-1');
 INSERT INTO `tp5_xupload_imgs` VALUES ('36', '6', 'cms/images/goods/6/1.jpg', '2020-06-02 19:58:04', '0', '1');
 INSERT INTO `tp5_xupload_imgs` VALUES ('37', '6', 'cms/images/goods/6/2.jpg', '2020-06-02 19:58:07', '0', '1');
 INSERT INTO `tp5_xupload_imgs` VALUES ('38', '6', 'cms/images/goods/6/3.jpg', '2020-06-02 19:58:09', '0', '1');
@@ -651,10 +672,10 @@ CREATE TABLE `tp5_xusers` (
 -- ----------------------------
 -- Records of tp5_xusers
 -- ----------------------------
-INSERT INTO `tp5_xusers` VALUES ('1', '龙猫', 'https://img2.woyaogexing.com/2019/11/19/1532c6effbfb43fe90490e1aaa171040!400x400.jpeg', '15118988888', '0', '1555735686', '0', '0', '700', '0', '', '');
-INSERT INTO `tp5_xusers` VALUES ('2', '大熊', 'https://img2.woyaogexing.com/2019/11/20/0d61858adef44109a3b5b40e1b8ecfff!400x400.jpeg', '18898888877', '2', '1555738810', '0', '0', '0', '0', '', '');
-INSERT INTO `tp5_xusers` VALUES ('3', '红猪', 'https://img2.woyaogexing.com/2019/11/19/e3f06886561143b780c62412ca326f8d!400x400.jpeg', '15577888878', '2', '1555738881', '0', '0', '0', '1', '', '');
-INSERT INTO `tp5_xusers` VALUES ('4', '卡卡西', 'https://img2.woyaogexing.com/2019/11/21/ba315e9432af44fab0f03e06fe7f6a75!400x400.jpeg', '15112322322', '1', '1555739036', '1', '0', '0', '2', '', '');
-INSERT INTO `tp5_xusers` VALUES ('5', '佐罗', 'https://img2.woyaogexing.com/2019/11/20/e1a94beb38174eb6a98b07d6d2749833!400x400.jpeg', '18988777787', '1', '1555748309', '1', '0', '0', '0', '', '');
-INSERT INTO `tp5_xusers` VALUES ('6', '龙溪', 'https://img2.woyaogexing.com/2019/11/20/23d88c964e4a41f8b08d5d7e5e232c8a!400x400.jpeg', '18788777788', '0', '1555748365', '0', '0', '0', '1', '', '');
-INSERT INTO `tp5_xusers` VALUES ('7', '安若', 'https://img2.woyaogexing.com/2019/11/18/79dffa4237594e6995fd0a71048498f5!400x400.jpeg', '16888777787', '1', '1555748448', '0', '0', '0', '0', '', '');
+INSERT INTO `tp5_xusers` VALUES ('1', '龙猫', 'https://c-ssl.duitang.com/uploads/item/201412/29/20141229151653_HiM8B.jpeg', '15118988888', '0', '1555735686', '0', '0', '700', '0', '', '');
+INSERT INTO `tp5_xusers` VALUES ('2', '大熊', 'https://c-ssl.duitang.com/uploads/item/201603/21/20160321174127_AH5sw.jpeg', '18898888877', '2', '1555738810', '0', '0', '0', '0', '', '');
+INSERT INTO `tp5_xusers` VALUES ('3', '红猪', 'https://c-ssl.duitang.com/uploads/item/201509/17/20150917192807_8ZLKv.jpeg', '15577888878', '2', '1555738881', '0', '0', '0', '1', '', '');
+INSERT INTO `tp5_xusers` VALUES ('4', '卡卡西', 'https://c-ssl.duitang.com/uploads/item/201510/06/20151006221403_xjnCh.jpeg', '15112322322', '1', '1555739036', '1', '0', '0', '2', '', '');
+INSERT INTO `tp5_xusers` VALUES ('5', '佐罗', 'https://c-ssl.duitang.com/uploads/item/201509/27/20150927200243_YmaQB.jpeg', '18988777787', '1', '1555748309', '1', '0', '0', '0', '', '');
+INSERT INTO `tp5_xusers` VALUES ('6', '龙溪', 'https://c-ssl.duitang.com/uploads/item/201901/19/20190119231949_buetu.jpg', '18788777788', '0', '1555748365', '0', '0', '0', '1', '', '');
+INSERT INTO `tp5_xusers` VALUES ('7', '安若', 'https://c-ssl.duitang.com/uploads/item/201509/16/20150916031123_dyaiY.png', '16888777787', '1', '1555748448', '0', '0', '0', '0', '', '');
