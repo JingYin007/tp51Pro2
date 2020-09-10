@@ -34,7 +34,7 @@
             background-color: #cccccc;
             border: 1px solid #ccc;
             color: #207ab7;
-            width: 280px;
+            width: 180px;
             padding: 5px;
             font-weight: bold;
             font-size: 16px;
@@ -53,15 +53,13 @@
 
         #div-show-list {
             position: fixed;
-            top: 37px;
-            right: 55px;
+            top:37px;
+            right:57px;
             z-index: 200;
-            background: white;
+            background:white;
             font-weight: 400;
-            width: 280px;
-            font-size: 14px;
-            color: #7274A7;
-            border: 1px solid #ccc;
+            width:178px;font-size: 14px;
+            color: #7274A7;border:1px solid #ccc;
         }
 
         #div-show-list .div-item:hover {
@@ -83,14 +81,8 @@
 <script charset="utf-8" src="http://api.map.baidu.com/api?v=3.0&ak=M7GFlg9ApjGlQDFh8gHDaxxzLu7KfuSc"></script>
 
 <script>
-    //    var editor = parent.tinymce.activeEditor;
-    //    function insCnt(txt) {
-    //        editor.insertContent(txt);
-    //        parent.tinymce.activeEditor.windowManager.close();
-    //    }
 
-    var map, geocoder;
-    var lng, lat;
+    var map;
     /**
      * 页面初始化加载
      */
@@ -112,7 +104,13 @@
          * 百度地图 监听点击事件
          */
         map.addEventListener("click", function (e) {
-                //alert(e.point.lng + ", " + e.point.lat);
+            //alert(e.point.lng + "," + e.point.lat); // 经纬度数据
+            var ponitE = e.point;
+            var marker = new BMap.Marker(new BMap.Point(ponitE.lng, ponitE.lat));
+            map.clearOverlays();
+            map.addOverlay(marker);
+            parent.tinymceLng = ponitE.lng;
+            parent.tinymceLat = ponitE.lat;
             }
         );
     }
@@ -167,8 +165,18 @@
      */
     function searchMapByStationName() {
         var keyword = document.getElementById("kw_input").value;
-        map.centerAndZoom(map, 20);
         var local = new BMap.LocalSearch(map, {renderOptions: {map: map}});
+
+        local.setSearchCompleteCallback(function (searchResult) {
+            console.log(searchResult);
+            var poi = searchResult.getPoi(0);
+            map.centerAndZoom(poi.point, 20);
+            var marker = new BMap.Marker(new BMap.Point(poi.point.lng, poi.point.lat));
+            parent.tinymceLng = poi.point.lng;
+            parent.tinymceLat = poi.point.lat;
+            map.addOverlay(marker);
+        });
+
         local.search(keyword);
     }
 </script>
