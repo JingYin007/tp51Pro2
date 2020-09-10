@@ -102,8 +102,8 @@ function getPatternMatchImages($contetnStr = ""){
 
     if (isset($match[1])){
         foreach ($match[1] as $key => $url){
-            $tag = preg_match('/.*(\.png|\.jpg|\.jpeg|\.gif)$/', $url);
-            if($tag) $imgArr[]=$url;
+            $matchTag = preg_match('/.*(\.(png|jpg|jpeg|gif))$/', $url);
+            if($matchTag) $imgArr[]=$url;
         }
 
     }
