@@ -49,17 +49,21 @@
             padding: 4px 6px;
             font-size: 14px;
         }
-        #div-show-list{
+
+        #div-show-list {
             position: fixed;
-            top:37px;
-            right:57px;
+            top: 37px;
+            right: 57px;
             z-index: 200;
-            background:white;
+            background: white;
             font-weight: 400;
-            width:178px;font-size: 14px;
-            color: #7274A7;border:1px solid #ccc;
+            width: 178px;
+            font-size: 14px;
+            color: #7274A7;
+            border: 1px solid #ccc;
         }
-        #div-show-list .div-item:hover{
+
+        #div-show-list .div-item:hover {
             color: #009E94;
             background-color: #ebcccc;
             font-weight: 700;
@@ -71,22 +75,24 @@
     <input id="kw_input" class="kw_input" type="text" value="" autocomplete="off" placeholder="输入要搜索的地点"/>
     <input type="button" value="搜索" onclick="searchMapByStationName()"></div>
 
-    <div id="div-show-list" style="display:block;"></div>
-    <div id="map_canvas" style="width:100%; height:100%"></div>
+<div id="div-show-list" style="display:block;"></div>
+<div id="map_canvas" style="width:100%; height:100%"></div>
 </body>
 <script type="text/javascript" src="jquery.js"></script>
 <script charset="utf-8" src="http://api.map.baidu.com/api?v=3.0&ak=M7GFlg9ApjGlQDFh8gHDaxxzLu7KfuSc"></script>
 
 <script>
-//    var editor = parent.tinymce.activeEditor;
-//    function insCnt(txt) {
-//        editor.insertContent(txt);
-//        parent.tinymce.activeEditor.windowManager.close();
-//    }
+    //    var editor = parent.tinymce.activeEditor;
+    //    function insCnt(txt) {
+    //        editor.insertContent(txt);
+    //        parent.tinymce.activeEditor.windowManager.close();
+    //    }
 
     var map, geocoder;
     var lng, lat;
-
+    /**
+     * 页面初始化加载
+     */
     function initialize() {
         map = new BMap.Map('map_canvas');
         var point = new BMap.Point(116.331398, 39.897445);
@@ -104,99 +110,65 @@
         /**
          * 百度地图 监听点击事件
          */
-        map.addEventListener('click', function (e) {
-            //alert(e.point.lng + "," + e.point.lat); // 经纬度数据
-            lng = e.point.lng;
-            lat = e.point.lat;
-            var marker = new BMap.Marker(new BMap.Point(e.point.lng, e.point.lat));
-            map.clearOverlays();
-            map.addOverlay(marker);
-            //insCnt(lng+','+lat);
-            parent.tinymceLng = lng;
-            parent.tinymceLat = lat;
-        });
-
-        document.getElementById('kw_input').addEventListener('keypress', function (e) {
-            //回车键效果
-            if (e.keyCode == '13') {
-                e.preventDefault();
-                searchMapByStationName();
+        map.addEventListener("click", function (e) {
+                //alert(e.point.lng + ", " + e.point.lat);
             }
-        });
+        );
     }
-</script>
-<script>
-    $(document).ready(function () {
-        /**
-         * 关键字 搜索输入框触发事件，保证实时的数据刷新显示效果
-         */
-        $(".kw_input").bind("input propertychange",function(){
-            var val = $(".kw_input").val();
-            var localSearch = new BMap.LocalSearch(map);
-            localSearch.enableAutoViewport(); //允许自动调节窗体大小
-            map.clearOverlays();//清空原来的标注
-            localSearch.setSearchCompleteCallback(function (searchResult) {
-                //console.log(searchResult);
-                if (typeof (searchResult) === 'undefined') {
-                    console.log('搜索不到该地区');
-                    $("#div-show-list").css("display","none");
-                    return false;
-                } else {
-                    if (typeof (searchResult.$q.length) !== "undefined") {
-                        if (searchResult.$q.length == 0) {
-                            console.log('搜索不到该地区');
-                            $("#div-show-list").css("display","none");
-                            return false;
-                        }else {
-                            var content = "";
-                            for(var i=0;i<searchResult.$q.length;i++){
-                                content+="<div style='padding:5px;cursor:pointer' class='div-item' onclick='selToItem(this)'>"+searchResult.$q[i].title+"</div>";
-                            }
-                            $("#div-show-list").html(content);
-                            $("#div-show-list").css("display","block");
-                        }
-                    } else {
-                        console.log('搜索不到该地区');
-                        $("#div-show-list").css("display","none");
-                        return false;
-                    }
-                }
-            });
-            localSearch.search(val);
-            return false;
-        });
 
-        /**
-         * 自定义 div 点击事件，注意命名方式
-         * @param obj
-         */
-        selToItem = function (obj) {//鼠标点击
-            $("#kw_input").val($(obj).html());
-            $("#div-show-list").css("display", "none");
+    document.getElementById('kw_input').addEventListener('keypress', function (e) {
+        //回车键效果
+        if (e.keyCode == '13') {
+            e.preventDefault();
             searchMapByStationName();
         }
     });
+    /**
+     * 关键字 搜索输入框触发事件，保证实时的数据刷新显示效果
+     */
+    $(".kw_input").bind("input propertychange", function () {
+        var val = $(".kw_input").val();
+        var options = {
+            onSearchComplete: function (results) {
+                if (localSearch.getStatus() == BMAP_STATUS_SUCCESS) {
+                    // 判断状态是否正确
+                    if (results.getCurrentNumPois() == 0) {
+                        console.log('搜索不到该地区');
+                        $("#div-show-list").css("display", "none");
+                    } else {
+                        var searchResHtml = "";
+                        for (var i = 0; i < results.getCurrentNumPois(); i++) {
+                            searchResHtml += "<div style='padding:5px;cursor:pointer' class='div-item' onclick='selToItem(this)'>" + results.getPoi(i).title + "</div>";
+                        }
+                        $("#div-show-list").html(searchResHtml);
+                        $("#div-show-list").css("display", "block");
+                    }
+                }
+            }
+        };
+        var localSearch = new BMap.LocalSearch(map, options);
+        localSearch.search(val);
+    });
+
+    /**
+     * 自定义 div 点击事件，注意命名方式
+     * @param obj
+     */
+    selToItem = function (obj) {//鼠标点击
+        $("#kw_input").val($(obj).html());
+        $("#div-show-list").css("display", "none");
+        searchMapByStationName();
+    }
 
     /**
      * 根据输入的文字 搜索对应的百度地图信息
      * @returns {boolean}
      */
     function searchMapByStationName() {
-        var localSearch = new BMap.LocalSearch(map);
-        localSearch.enableAutoViewport(); //允许自动调节窗体大小
-        map.clearOverlays();//清空原来的标注
         var keyword = document.getElementById("kw_input").value;
-        localSearch.setSearchCompleteCallback(function (searchResult) {
-            console.log(searchResult);
-            var poi = searchResult.getPoi(0);
-            map.centerAndZoom(poi.point, 20);
-            var marker = new BMap.Marker(new BMap.Point(poi.point.lng, poi.point.lat));
-            parent.tinymceLng = poi.point.lng;
-            parent.tinymceLat = poi.point.lat;
-            map.addOverlay(marker);
-        });
-        localSearch.search(keyword);
-        return false;
+        map.centerAndZoom(map, 20);
+        var local = new BMap.LocalSearch(map, {renderOptions: {map: map}});
+        local.search(keyword);
     }
 </script>
 </html>
