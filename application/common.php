@@ -93,13 +93,19 @@ function imgToServerView($imgUrl)
  * 匹配文章详情中的 图片src
  * @param string $contetnStr
  * @return array
+ *
  */
 function getPatternMatchImages($contetnStr = ""){
     $imgArr = [];
-    $pattern= '/src="(.+\.(png|jpg|jpeg|gif))".+?/';
-    preg_match_all($pattern,$contetnStr,$match);
+    $pattern= '/src="(.+\.(png|jpg|jpeg|gif))"/U';
+    preg_match_all($pattern,$contetnStr,$match,PREG_PATTERN_ORDER);
+
     if (isset($match[1])){
-        $imgArr = $match[1];
+        foreach ($match[1] as $key => $url){
+            $tag = preg_match('/.*(\.png|\.jpg|\.jpeg|\.gif)$/', $url);
+            if($tag) $imgArr[]=$url;
+        }
+
     }
     return $imgArr;
 }
