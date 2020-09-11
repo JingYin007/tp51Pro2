@@ -29,9 +29,9 @@
             <blockquote class="layui-elem-quote layui-quote-nm" style="margin-top: 10px;">
                 <div class="layui-upload-list" id="upload_image_list">
                     {volist name="todayWordData.img_list" id="pic"}
-                    <img style="height: 66px;margin-left: 7px"
+                    <img style="height: 66px;margin-left: 7px" onclick="delMultipleImgs(this)"
                          src="{$Think.config.ftp.IMG_SERVER_PATH}{$pic}"
-                         class="layui-upload-img">
+                         title="单击删除" class="layui-upload-img">
                     {/volist}
                 </div>
                 <input type="hidden" name="images_str" class="upload_image_url" value="{$todayWordData['images_str']}">
@@ -69,42 +69,7 @@
 {/block}
 
 {block name="single-content"}
-<script>
-    layui.use(['upload'], function () {
-        var upload = layui.upload;
-        upload.render({
-            elem: '#btn_multiple_upload_img'
-            ,url: image_upload_url //改成您自己的上传接口
-            ,multiple: true
-            ,before: function(obj){
-                //预读本地文件示例，不支持ie8
-                obj.preview(function(index, file, result){
-                    $('#upload_image_list').append('<img style="height: 66px;margin-left: 7px" src="'+ result +'" alt="'+ file.name +'" class="layui-upload-img">')
-                });
-            }
-            ,done: function(res){
-                //上传完毕
-                if (res.status == 1) {
-                    var last_url = $(".upload_image_url").val();
-                    var upload_image_url = "";
-                    if(last_url){
-                        upload_image_url = last_url+","+res.data.url;
-                    }else {
-                        upload_image_url = res.data.url;
-                    }
-                    $(".upload_image_url").val(upload_image_url);
-                }else {
-                    dialog.tip(res.message);
-                }
-            }
-        });
-
-    });
-    $("#btn_image_clear").click(function () {
-        $('#upload_image_list').html("");
-        $(".upload_image_url").val('');
-    });
-</script>
+<script src="__CMS__/js/today_words.js"></script>
 {/block}
 
 

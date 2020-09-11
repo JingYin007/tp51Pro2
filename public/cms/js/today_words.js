@@ -1,4 +1,61 @@
 /**
+ * 多图上传按钮 监听事件
+ */
+layui.use(['upload'], function () {
+    var upload = layui.upload;
+    upload.render({
+        elem: '#btn_multiple_upload_img'
+        ,url: image_upload_url //改成您自己的上传接口
+        ,multiple: true
+        ,before: function(obj){
+            //预读本地文件示例，不支持ie8
+            obj.preview(function(index, file, result){
+                $('#upload_image_list').append('<img style="height: 66px;margin-left: 7px" src="'+ result +'" title="单击删除" onclick="delMultipleImgs(this)" class="layui-upload-img">');
+            });
+        }
+        ,done: function(res){
+            //上传完毕
+            if (res.status == 1) {
+                var last_url = $(".upload_image_url").val();
+                var upload_image_url = "";
+                if(last_url){
+                    upload_image_url = last_url+","+res.data.url;
+                }else {
+                    upload_image_url = res.data.url;
+                }
+                $(".upload_image_url").val(upload_image_url);
+            }else {
+                dialog.tip(res.message);
+            }
+        }
+    });
+
+});
+/**
+ * 多图清除按钮点击事件
+ */
+$("#btn_image_clear").click(function () {
+    $('#upload_image_list').html("");
+    $(".upload_image_url").val('');
+});
+
+/**
+ * 多图上传的单击删除操作
+ * @param this_img
+ */
+function delMultipleImgs(this_img) {
+    //获取下标
+    var subscript = $("#upload_image_list img").index(this_img);
+    multiple_images = $('.upload_image_url').val().split(",");
+    //删除图片
+    this_img.remove();
+    //删除数组
+    multiple_images.splice(subscript, 1);
+    $('.upload_image_url').val(multiple_images);
+};
+
+
+/**
  * ajax 获取并加载每页的数据
  * @param toUrl
  * @param postData
