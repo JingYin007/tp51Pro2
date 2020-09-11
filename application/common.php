@@ -97,16 +97,20 @@ function imgToServerView($imgUrl)
  */
 function getPatternMatchImages($contetnStr = ""){
     $imgArr = [];
-    $pattern= '/src="(.+\.(png|jpg|jpeg|gif))"/U';
-    preg_match_all($pattern,$contetnStr,$match,PREG_PATTERN_ORDER);
-
-    if (isset($match[1])){
-        foreach ($match[1] as $key => $url){
-            $matchTag = preg_match('/.*(\.(png|jpg|jpeg|gif))$/', $url);
-            if($matchTag) $imgArr[]=$url;
+    $pattern_imgTag = '/<img\b.*?(?:\>|\/>)/i';
+    preg_match_all($pattern_imgTag,$contetnStr,$matchIMG);
+    if (isset($matchIMG[0])){
+        foreach ($matchIMG[0] as $key => $imgTag){
+            $pattern_src = '/\bsrc\b\s*=\s*[\'\"]?([^\'\"]*)[\'\"]?/i';
+            preg_match_all($pattern_src,$imgTag,$matchSrc);
+            if (isset($matchSrc[1])){
+                foreach ($matchSrc[1] as $src){
+                    $imgArr[] =$src;
+                }
+            }
         }
-
     }
+    //$pattern= '/<img\b.+\bsrc\b\s*=\s*[\'\"]([^\'\"]*)[\'\"]/iU';
     return $imgArr;
 }
 /**
