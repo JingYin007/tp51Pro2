@@ -90,28 +90,32 @@ function imgToServerView($imgUrl)
 }
 
 /**
- * 匹配文章详情中的 图片src
- * @param string $contetnStr
+ * 对富文本信息中的数据
+ * 匹配出所有的 <img> 标签的 src属性
+ * @param string $contentStr 富文本字符串
  * @return array
  *
  */
-function getPatternMatchImages($contetnStr = ""){
-    $imgArr = [];
+function getPatternMatchImages($contentStr = ""){
+    $imgSrcArr = [];
+    //首先将富文本字符串中的 img 标签进行匹配
     $pattern_imgTag = '/<img\b.*?(?:\>|\/>)/i';
-    preg_match_all($pattern_imgTag,$contetnStr,$matchIMG);
+    preg_match_all($pattern_imgTag,$contentStr,$matchIMG);
     if (isset($matchIMG[0])){
         foreach ($matchIMG[0] as $key => $imgTag){
+            //进一步提取 img标签中的 src属性信息
             $pattern_src = '/\bsrc\b\s*=\s*[\'\"]?([^\'\"]*)[\'\"]?/i';
             preg_match_all($pattern_src,$imgTag,$matchSrc);
             if (isset($matchSrc[1])){
                 foreach ($matchSrc[1] as $src){
-                    $imgArr[] =$src;
+                    //将匹配到的src信息压入数组
+                    $imgSrcArr[] = $src;
                 }
             }
         }
     }
     //$pattern= '/<img\b.+\bsrc\b\s*=\s*[\'\"]([^\'\"]*)[\'\"]/iU';
-    return $imgArr;
+    return $imgSrcArr;
 }
 /**
  * ue编辑器通过FTP上传图片（$str代表从表单接收到的content字符串）
