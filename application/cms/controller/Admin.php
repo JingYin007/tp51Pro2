@@ -59,12 +59,12 @@ class Admin extends CmsBase
      */
     public function addAdmin(Request $request)
     {
-        $adminRoles = $this->ar_model->getNormalRoles();
         if ($request->isPost()) {
             $input = $request->post();
             $opRes = $tag = $this->model->addAdmin($input);
             return showMsg($opRes['tag'], $opRes['message']);
         } else {
+            $adminRoles = $this->ar_model->getNormalRoles();
             return view('add_admin', [
                 'adminRoles' => $adminRoles
             ]);
@@ -78,13 +78,13 @@ class Admin extends CmsBase
      */
     public function editAdmin(Request $request, $id)
     {
-        $adminRoles = $this->ar_model->getNormalRoles();
-        $adminData = $this->model->getAdminData($id);
         if ($request->isPost()) {
             $input = $request->param();
             $opRes = $this->model->editAdmin($id, $input);
             return showMsg($opRes['tag'], $opRes['message']);
         } else {
+            $adminData = $this->model->getAdminData($id);
+            $adminRoles = $this->ar_model->getNormalRoles();
             return view('edit_admin', [
                 'admin' => $adminData,
                 'adminRoles' => $adminRoles

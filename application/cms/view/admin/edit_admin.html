@@ -45,11 +45,8 @@
         <label class="layui-form-label">角色选择：</label>
         <div class="layui-input-inline">
             <select name="role_id" lay-verify="required">
-                <option value="{$admin['role_id']}">{$admin['role_name']}</option>
                 {volist name="adminRoles" id="vo"}
-                {if($vo['id']!=$admin['role_id'])}
-                <option value="{$vo['id']}">{$vo['user_name']}</option>
-                {/if}
+                    <option value="{$vo['id']}" {$vo.id==$admin.role_id?"selected":""}>{$vo['user_name']}</option>
                 {/volist}
             </select>
         </div>
