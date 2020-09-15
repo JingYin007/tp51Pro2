@@ -1,4 +1,25 @@
+/**
+ * 多图清除按钮点击事件
+ */
+$("#btn_image_clear").click(function () {
+    $('#upload_image_list').html("");
+    $(".upload_image_url").val('');
+});
 
+/**
+ * 多图上传的单击删除操作
+ * @param this_img
+ */
+function delMultipleImgs(this_img) {
+    //获取下标
+    var subscript = $("#upload_image_list img").index(this_img);
+    multiple_images = $('.upload_image_url').val().split(",");
+    //删除图片
+    this_img.remove();
+    //删除数组
+    multiple_images.splice(subscript, 1);
+    $('.upload_image_url').val(multiple_images);
+};
 /**
  * ajax 获取并加载每页的数据
  * @param toUrl
@@ -162,10 +183,9 @@ function goToMakeSaleGoodsMsg(arrSpecFull) {
         upload.render({
             elem: '.btn_sku_upload_img'
             , type: 'images'
-            , exts: 'jpg|png|gif' //设置一些后缀，用于演示前端验证和后端的验证
-            //,auto:false //选择图片后是否直接上传
+            , exts: 'jpg|png|gif|jpeg' //设置一些后缀，用于演示前端验证和后端的验证
             ,accept:'images' //上传文件类型
-            , url: '/api/upload/img_file'
+            , url: image_upload_url
             , before: function (obj) {
                 //预读本地文件示例，不支持ie8
                 var sku_index = this.sku_index;
@@ -321,68 +341,31 @@ function goToToSelCatID(toUrl,catID,form) {
         }, "JSON");
 }
 
-
-//单击图片删除图片 【注册全局函数】
-function delMultipleImgs(this_img,editFlag) {
-    //获取下标
-    var subscript = $("#div-multiple-img-upload-preview img").index(this_img);
-    //删除图片
-    this_img.remove();
-    //删除数组
-    multiple_images.splice(subscript, 1);
-    //重新排序
-    multiple_images.sort();
-    $('.multiple-show-img').val(multiple_images);
-    if(editFlag == 1){
-        //TODO 此时判断是否当前的图片拥有 upload_img_id 属性，如果有，ajax 进行数据库删除操作
-        ajax_del_upload_img(this_img);
-    }
-    //返回
-    return;
-}
-
-/**
- * ajax 删除所上传的图片
- * @param this_img
- */
-function goToAjax_del_upload_img(toUrl,this_img) {
-    var upload_img_id = $(this_img).attr("upload_img_id");
-    if (upload_img_id > 0) {
-        $.post(
-            toUrl,
-            {upload_img_id: upload_img_id},
-            function (result) {
-                if (result.status = 0) {
-                    layer.msg(result.message);
-                }
-            }, "JSON");
-    } else {
-        //此时，不作处理
-    }
-}
-
 layui.use('upload', function () {
     var upload = layui.upload;
     //多图片上传
     upload.render({
-        elem: '#multiple-img-upload'
-        , url: '/api/upload/img_file'
-        , multiple: true
-        , before: function (obj) {
+        elem: '#btn_multiple_upload_img'
+        ,url: image_upload_url //改成您自己的上传接口
+        ,multiple: true
+        ,before: function(obj){
             //预读本地文件示例，不支持ie8
-            obj.preview(function (index, file, result) {
-                $('#div-multiple-img-upload-preview')
-                    .append('<img src="' + result + '" alt="' + file.name
-                        + '" title="点击删除" upload_img_id="0" class="layui-upload-img" onclick="delMultipleImgs(this)">')
+            obj.preview(function(index, file, result){
+                $('#upload_image_list').append('<img style="height: 66px;margin-left: 7px" src="'+ result +'" title="单击删除" onclick="delMultipleImgs(this)" class="layui-upload-img">');
             });
         }
-        , done: function (res) {
-            //如果上传成功
+        ,done: function(res){
+            //上传完毕
             if (res.status == 1) {
-                //追加图片成功追加文件名至图片容器
-                multiple_images.push(res.data.url);
-                $('.multiple-show-img').val(multiple_images);
-            } else {
+                var last_url = $(".upload_image_url").val();
+                var upload_image_url = "";
+                if(last_url){
+                    upload_image_url = last_url+","+res.data.url;
+                }else {
+                    upload_image_url = res.data.url;
+                }
+                $(".upload_image_url").val(upload_image_url);
+            }else {
                 dialog.tip(res.message);
             }
         }
@@ -392,10 +375,9 @@ layui.use('upload', function () {
     upload.render({
         elem: '.btn_sku_upload_img'
         , type: 'images'
-        , exts: 'jpg|png|gif' //设置一些后缀，用于演示前端验证和后端的验证
-        //,auto:false //选择图片后是否直接上传
+        , exts: 'jpg|png|gif|jpeg' //设置一些后缀，用于演示前端验证和后端的验证
         ,accept:'images' //上传文件类型
-        , url: '/api/upload/img_file'
+        , url: image_upload_url
         , before: function (obj) {
             //预读本地文件示例，不支持ie8
             var sku_index = this.sku_index;

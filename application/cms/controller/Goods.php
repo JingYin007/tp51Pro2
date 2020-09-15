@@ -69,10 +69,7 @@ class Goods extends CmsBase
             return showMsg($opRes['tag'], $opRes['message']);
         } else {
             $categoryList = $this->categoryModel->getCmsToSelCategoryList();
-            return view('add',
-                [
-                    'categoryList' => $categoryList,
-                ]);
+            return view('add', ['categoryList' => $categoryList,]);
         }
     }
 
@@ -89,12 +86,10 @@ class Goods extends CmsBase
             return showMsg($opRes['tag'], $opRes['message']);
         } else {
             $goodsMsg = $this->model->getCmsGoodsByID($id);
-            $comments = [];
             $categoryList = $this->categoryModel->getCmsToSelCategoryList();
             $data =
                 [
                     'good' => $goodsMsg,
-                    'comments' => $comments,
                     'categoryList' => $categoryList,
                 ];
             return view('edit', $data);
@@ -109,16 +104,6 @@ class Goods extends CmsBase
     {
         $opRes = $this->model
             ->updatePutaway($request->post('goods_id'), $request->post('okStatus'));
-        return showMsg($opRes['tag'], $opRes['message']);
-    }
-
-    /**
-     * ajax 删除已上传的图片
-     * @param Request $request
-     */
-    public function ajaxDelUploadImg(Request $request)
-    {
-        $opRes = $this->model->delUploadImg($request->post('upload_img_id'));
         return showMsg($opRes['tag'], $opRes['message']);
     }
 

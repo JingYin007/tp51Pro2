@@ -114,19 +114,11 @@ class Xgoods extends BaseModel
             ->join('xcategorys cat', 'cat.cat_id = g.cat_id')//给你要关联的表取别名,并让两个值关联
             ->where('g.goods_id', $id)
             ->find();
-        //获取轮播图
-        $arrSlideShow = Db('xupload_imgs')
-            ->field("picture,id")
-            ->where([['tag_id', '=', $id], ['type', '=', 0], ['status', '=', 1]])
-            ->select();
-        $arr = [];
-
-        foreach ($arrSlideShow as $key => $value) {
-            $slideArr = ['upload_img_id' => $value['id'], 'picture' => $value['picture']];
-            $arr[] = $slideArr;
-            //array_push($arr,$value['picture']);
+        if ($res){
+            $images_str = $res['slide_imgs'];
+            if ($images_str){$img_list = explode(',',$images_str);}
+            $res['img_list'] = isset($img_list)?$img_list:[];
         }
-        $res['arr_slide_show'] = $arr;
         $skuModle = new Xskus();
         //初始化 SKU 数组
         $sku_arr = $skuModle->getSKUDataByGoodsID($id);
@@ -154,6 +146,7 @@ class Xgoods extends BaseModel
                 'list_order' => isset($input['list_order']) ? $input['list_order'] : 0,
                 'details' => isset($input['details']) ? $input['details'] : '',
                 'thumbnail' => isset($input['thumbnail']) ? $input['thumbnail'] : '',
+                'slide_imgs' => isset($input['slide_imgs'])? $input['slide_imgs']:'',
                 'tip_word' => isset($input['tip_word']) ? $input['tip_word'] : '',
                 'cat_id' => isset($input['cat_id']) ? intval($input['cat_id']) : 1,
                 'reference_price' => isset($input['reference_price']) ? round($input['reference_price'], 2) : 0.00,
@@ -173,9 +166,6 @@ class Xgoods extends BaseModel
                 $validateRes['tag'] = $saveTag;
                 $validateRes['message'] = $saveTag ? '修改成功' : '数据无变动';
                 if ($saveTag) {
-                    //此处进行轮播图片的上传操作
-                    $slide_show = isset($input['slide_show']) ? $input['slide_show'] : '';
-                    uploadSlideShow($slide_show, $id);
                     //TODO 此时进行 sku库存信息的上传
                     $skuModle = new Xskus();
                     $sku_arr = isset($input['sku_arr']) ? $input['sku_arr'] : [];
@@ -222,6 +212,7 @@ class Xgoods extends BaseModel
             'list_order' => isset($data['list_order']) ? $data['list_order'] : 0,
             'details' => isset($data['details']) ? $data['details'] : '',
             'thumbnail' => isset($data['thumbnail']) ? $data['thumbnail'] : '',
+            'slide_imgs' => isset($input['slide_imgs'])? $input['slide_imgs']:'',
             'tip_word' => isset($data['tip_word']) ? $data['tip_word'] : '',
             'cat_id' => isset($data['cat_id']) ? intval($data['cat_id']) : 1,
             'reference_price' => isset($data['reference_price']) ? round($data['reference_price'], 2) : 0.00,
@@ -242,9 +233,6 @@ class Xgoods extends BaseModel
             $validateRes['message'] = $tag ? '添加成功' : '添加失败';
             if ($tag) {
                 $goodsId = $this->getLastInsID();
-                //此处进行轮播图片的上传操作
-                $slide_show = isset($data['slide_show']) ? $data['slide_show'] : '';
-                uploadSlideShow($slide_show, $goodsId);
                 //TODO 此时进行 sku库存信息的上传
                 $skuModle = new Xskus();
                 $sku_arr = isset($data['sku_arr']) ? $data['sku_arr'] : [];
@@ -253,27 +241,6 @@ class Xgoods extends BaseModel
             }
         }
         return $validateRes;
-    }
-
-
-    /**
-     * ajax 删除所上传的图片
-     * @param int $upload_img_id
-     * @return array
-     */
-    public function delUploadImg($upload_img_id = 0)
-    {
-        $tag = 1;
-        $message = "图片删除失败";
-        if (intval($upload_img_id) > 0) {
-            $tag = Db('xupload_imgs')
-                ->where("id", $upload_img_id)
-                ->update(['status' => '-1']);
-            if ($tag) {
-                $message = "图片删除成功";
-            }
-        }
-        return ['tag' => $tag, 'message' => $message];
     }
 
     /**

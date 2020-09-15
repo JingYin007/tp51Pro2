@@ -39,11 +39,8 @@ class XtodayWords extends BaseModel
                 ->find();
             if ($res){
                 $images_str = $res['images_str'];
-                $img_list = [];
-                if ($images_str){
-                    $img_list = explode(',',$res['images_str']);
-                }
-                $res['img_list'] = $img_list;
+                if ($images_str){$img_list = explode(',',$images_str);}
+                $res['img_list'] = isset($img_list)?$img_list:[];
             }
         } else {
             //此處 隨機取出一條數據

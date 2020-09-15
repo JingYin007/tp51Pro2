@@ -23,10 +23,12 @@
     <input type="hidden" name="slide_show" class="multiple-show-img" value="">
     <div class="layui-form-item">
         <label class="layui-form-label">轮播图片：</label>
-        <div class="layui-upload">
-            <button type="button" class="layui-btn" id="multiple-img-upload">多图片上传</button>
+        <div class="layui-upload layui-input-block">
+            <button type="button" class="layui-btn" id="btn_multiple_upload_img">多图上传</button>
+            <button type="button" class="layui-btn" id="btn_image_clear">清空多图</button>
             <blockquote class="layui-elem-quote layui-quote-nm" style="margin-top: 10px;">
-                <div class="layui-upload-list" id="div-multiple-img-upload-preview"></div>
+                <div class="layui-upload-list" id="upload_image_list"></div>
+                <input type="hidden" name="slide_imgs" class="upload_image_url" value="">
             </blockquote>
         </div>
     </div>
@@ -195,9 +197,6 @@
 <script src="__CMS__/js/goods.js"></script>
 {include file='layouts/tinymce-js'/}
 <script>
-    var arrSpecFull = [];
-    var multiple_images = [];
-
     layui.use(['form'], function () {
         var form = layui.form;
         form.on('select(toSelCatID)', function (data) {

@@ -86,7 +86,6 @@ Route::any('cms/goods/index','cms/goods/index');
 Route::any('cms/goods/add','cms/goods/add');
 Route::any('cms/goods/edit/:id','cms/goods/edit');
 Route::post('cms/goods/ajaxPutaway','cms/goods/ajaxPutaway');
-Route::post('cms/goods/ajaxDelUploadImg','cms/goods/ajaxDelUploadImg');
 Route::post('cms/goods/ajaxGetCatGoodsForActivity','cms/goods/ajaxGetCatGoodsForActivity');
 Route::get('cms/goods/viewLogs/:id','cms/goods/viewLogs');
 

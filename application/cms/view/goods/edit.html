@@ -25,17 +25,18 @@
     <input type="hidden" name="slide_show" class="multiple-show-img" value="">
     <div class="layui-form-item">
         <label class="layui-form-label">轮播图片：</label>
-        <div class="layui-upload">
-            <button type="button" class="layui-btn" id="multiple-img-upload">多图片上传</button>
+        <div class="layui-upload layui-input-block">
+            <button type="button" class="layui-btn" id="btn_multiple_upload_img">多图上传</button>
+            <button type="button" class="layui-btn" id="btn_image_clear">清空多图</button>
             <blockquote class="layui-elem-quote layui-quote-nm" style="margin-top: 10px;">
-                <div class="layui-upload-list" id="div-multiple-img-upload-preview">
-                    {volist name="$good.arr_slide_show" id="slide"}
-                    <img src="{$Think.config.ftp.IMG_SERVER_PATH}{$slide.picture}" alt="{$slide.picture}" title="点击删除"
-                         class="layui-upload-img"
-                         upload_img_id="{$slide.upload_img_id}"
-                         onclick="delMultipleImgs(this,1)">
+                <div class="layui-upload-list" id="upload_image_list">
+                    {volist name="good.img_list" id="pic"}
+                    <img style="height: 66px;margin-left: 7px" onclick="delMultipleImgs(this)"
+                         src="{$Think.config.ftp.IMG_SERVER_PATH}{$pic}"
+                         title="单击删除" class="layui-upload-img">
                     {/volist}
                 </div>
+                <input type="hidden" name="slide_imgs" class="upload_image_url" value="{$good['slide_imgs']}">
             </blockquote>
         </div>
     </div>
@@ -53,26 +54,17 @@
         <label class="layui-form-label">状态：</label>
         <div class="layui-input-block">
             <input type="radio" name="status" value="1" title="上架"
-                   {if ($good['status'] == 1)}
-            checked
-            {/if}
-            >
+                   {$good.status==1?"checked":""}>
             <input type="radio" name="status" value="0" title="下架"
-                   {if ($good['status'] == 0)}
-            checked
-            {/if};
-            >
+                   {$good.status==0?"checked":""}>
             <input type="radio" name="status" value="-1" title="删除"
-                   {if ($good['status'] == -1)}
-            checked
-            {/if};
-            >
+                   {$good.status==-1?"checked":""}>
         </div>
     </div>
     <div class="layui-form-item">
         <label class="layui-form-label">推荐：</label>
         <div class="layui-input-block">
-            <input type="checkbox" {$good['recommend']==1?"checked":""} name="recommend"
+            <input type="checkbox" {$good.recommend==1?"checked":""} name="recommend"
             lay-skin="switch" lay-filter="switchTest" lay-text="YES|NO">
         </div>
     </div>
@@ -112,7 +104,7 @@
                 {volist name="vo.children" id="vo2"}
                 <optgroup label="{$vo2['title']}">
                     {volist name="vo2.children" id="vo3"}
-                    <option value="{$vo3.id}" {$good['cat_id']==$vo3.id?"selected":""}>{$vo3.title}</option>
+                    <option value="{$vo3.id}" {$good.cat_id==$vo3.id?"selected":""}>{$vo3.title}</option>
                     {/volist}
                 </optgroup>
                 {/volist}
@@ -243,18 +235,8 @@
 {include file='layouts/tinymce-js'}
 <script>
     var arrSpecFull = [];
-    var multiple_images = [];
     function makeSaleGoodsMsg() {
         goToMakeSaleGoodsMsg(arrSpecFull);
-    }
-
-    /**
-     * ajax 删除所上传的图片
-     * @param this_img
-     */
-    function ajax_del_upload_img(this_img) {
-        var toUrl = "{:url('cms/goods/ajaxDelUploadImg')}";
-        goToAjax_del_upload_img(toUrl, this_img);
     }
 
     layui.use(['form'], function () {

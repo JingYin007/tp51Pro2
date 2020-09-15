@@ -72,13 +72,13 @@ class TodayWord extends CmsBase
     public function edit(Request $request, $id)
     {
         $opID = intval($id);
-        $todayWordData = $this->model->getTodayWord($opID);
         if ($request->isPost()) {
             //TODO 修改对应的菜单
             $input = $request->post();
             $opRes = $this->model->editTodayWord($opID, $input);
             return showMsg($opRes['tag'], $opRes['message']);
         } else {
+            $todayWordData = $this->model->getTodayWord($opID);
             return view('edit', [
                 'todayWordData' => $todayWordData
             ]);

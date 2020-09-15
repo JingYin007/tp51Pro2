@@ -56,29 +56,6 @@ function set_cms_config($pat =[], $rep =[],$confFileName = 'sys_auth')
     }
 }
 /**
- * 进行图片数据的上传，写入表 xupload_imgs
- * @param string $slide_show
- * @param int $tag_id
- * @param int $type 0：商品轮播图  1：订单评论图片
- */
-function uploadSlideShow($slide_show = '',$tag_id = 0,$type = 0){
-    $arrSlideShow = explode(",",$slide_show);
-    foreach ($arrSlideShow as $value){
-        if ($value){
-            $addData = [
-                'tag_id' => $tag_id,
-                'type'  => $type,
-                'picture' => $value,
-                'add_time' => date('Y-m-d H:i:s', time()),
-
-            ];
-            Db('xupload_imgs')
-                ->insert($addData);
-        }
-    }
-}
-
-/**
  * 处理显示图片服务器地址,可进行图片服务器地址的处理
  * @param $imgUrl
  * @return string
