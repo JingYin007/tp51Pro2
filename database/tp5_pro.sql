@@ -10,7 +10,7 @@ Target Server Type    : MYSQL
 Target Server Version : 50553
 File Encoding         : 65001
 
-Date: 2020-09-15 17:02:42
+Date: 2020-10-24 13:46:49
 */
 
 SET FOREIGN_KEY_CHECKS=0;
@@ -83,7 +83,7 @@ CREATE TABLE `tp5_xadmins` (
 -- Records of tp5_xadmins
 -- ----------------------------
 INSERT INTO `tp5_xadmins` VALUES ('1', 'moTzxx@admin', 'cms/images/headshot/wuHuang.png', '37993cfef6629b18d80d7be625aa2485', '1', '2020-09-04 17:01:10', '1', 'HELLO');
-INSERT INTO `tp5_xadmins` VALUES ('2', 'baZhaHei@admin', 'cms/images/headshot/baZhaHei.png', '8fa7b3a3e2f6d44bd205ba89e3759e9f', '2', '2020-06-02 19:50:57', '1', 'HELLO');
+INSERT INTO `tp5_xadmins` VALUES ('2', 'baZhaHei@admin', 'cms/images/headshot/baZhaHei.png', '52c59afc073ef974c23497beb7a87266', '2', '2020-10-21 18:02:01', '1', 'HELLO');
 INSERT INTO `tp5_xadmins` VALUES ('3', 'niuNengx@admin', 'cms/images/headshot/niuNeng.png', '74cc22bb9abcddc8a1cdafbae1fadc7a', '1', '2020-06-02 19:51:04', '1', 'HELLO');
 
 -- ----------------------------
@@ -95,7 +95,7 @@ CREATE TABLE `tp5_xadmin_roles` (
   `user_name` varchar(50) NOT NULL DEFAULT '' COMMENT '角色称呼',
   `nav_menu_ids` text NOT NULL COMMENT '权限下的菜单ID',
   `updated_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
-  `status` tinyint(2) NOT NULL DEFAULT '1' COMMENT '状态标识',
+  `status` tinyint(2) NOT NULL DEFAULT '1' COMMENT '状态标识  0：失效；1：正常',
   PRIMARY KEY (`id`)
 ) ENGINE=MyISAM AUTO_INCREMENT=5 DEFAULT CHARSET=utf8mb4 COMMENT='管理员角色表';
 
@@ -103,7 +103,7 @@ CREATE TABLE `tp5_xadmin_roles` (
 -- Records of tp5_xadmin_roles
 -- ----------------------------
 INSERT INTO `tp5_xadmin_roles` VALUES ('1', '终级管理员', '138|139|140|141|1|2|7|6|3|4|5|93|73|49|48|50|67|61|76|133|134|', '2020-05-27 16:28:22', '1');
-INSERT INTO `tp5_xadmin_roles` VALUES ('2', '初级管理员', '1|2|6|3|4|5|', '2020-09-08 15:29:23', '0');
+INSERT INTO `tp5_xadmin_roles` VALUES ('2', '初级管理员', '1|2|6|3|4|5|', '2020-09-15 17:13:02', '1');
 
 -- ----------------------------
 -- Table structure for tp5_xad_lists
@@ -216,6 +216,32 @@ INSERT INTO `tp5_xcategorys` VALUES ('15', '休闲食品', '4', '1', 'cms/images
 INSERT INTO `tp5_xcategorys` VALUES ('16', '酒类', '4', '1', 'cms/images/category/wine.png', '2', '0', '0');
 INSERT INTO `tp5_xcategorys` VALUES ('17', '白酒', '16', '1', 'cms/images/category/white-wine.png', '3', '0', '0');
 INSERT INTO `tp5_xcategorys` VALUES ('18', '葡萄酒', '16', '1', 'cms/images/category/grape-wine.png', '3', '0', '0');
+
+-- ----------------------------
+-- Table structure for tp5_xchat_logs
+-- ----------------------------
+DROP TABLE IF EXISTS `tp5_xchat_logs`;
+CREATE TABLE `tp5_xchat_logs` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `from_id` int(11) NOT NULL DEFAULT '0' COMMENT '发送方 admin ID',
+  `to_id` int(11) NOT NULL DEFAULT '0' COMMENT '接收方 Admin ID',
+  `content` varchar(255) NOT NULL COMMENT '聊天内容',
+  `log_time` int(11) NOT NULL DEFAULT '0' COMMENT '记录时间',
+  `is_read` tinyint(1) NOT NULL DEFAULT '0' COMMENT '0：未读；1：已读',
+  `type` tinyint(1) NOT NULL DEFAULT '1' COMMENT '1：文字；2：图片',
+  PRIMARY KEY (`id`),
+  KEY `INDEX` (`from_id`,`to_id`)
+) ENGINE=MyISAM AUTO_INCREMENT=547 DEFAULT CHARSET=utf8mb4 COMMENT='聊天记录表';
+
+-- ----------------------------
+-- Records of tp5_xchat_logs
+-- ----------------------------
+INSERT INTO `tp5_xchat_logs` VALUES ('539', '1', '2', '巴扎黑，快出来玩！', '1603515063', '1', '1');
+INSERT INTO `tp5_xchat_logs` VALUES ('540', '1', '2', '牛能在吗', '1603515089', '0', '1');
+INSERT INTO `tp5_xchat_logs` VALUES ('541', '3', '1', '在吗？', '1603515098', '1', '1');
+INSERT INTO `tp5_xchat_logs` VALUES ('542', '3', '1', '快说啊', '1603515089', '1', '1');
+INSERT INTO `tp5_xchat_logs` VALUES ('543', '1', '3', '在的', '1603517973', '0', '1');
+INSERT INTO `tp5_xchat_logs` VALUES ('544', '1', '2', '想吃饭了', '1603518013', '0', '1');
 
 -- ----------------------------
 -- Table structure for tp5_xcms_logs

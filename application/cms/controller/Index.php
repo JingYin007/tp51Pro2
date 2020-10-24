@@ -45,6 +45,7 @@ class Index
             $data = [
                 'menus' => $menuList,
                 'admin' => $adminInfo,
+                'web_socket_url' => config('workerman.WEB_SOCKET_URL')
             ];
             return view('index', $data);
         }

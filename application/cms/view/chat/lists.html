@@ -1,0 +1,215 @@
+{extend name="layouts/cms_chat"}
+{block name='body-content'}
+
+<div class='fui-page-group'>
+    <div class="fui-statusbar"></div>
+    <div class='fui-page chat-page'>
+        <div class="fui-header">
+            <div class="title">消息列表</div>
+            <div class="fui-header-right">
+                <i class="layui-icon layui-icon-user" title="管理员" style="font-size: 22px; color: #1E9FFF;"></i>
+                <i class="layui-icon layui-icon-help" title="帮助" style="font-size: 22px; color: #1E9FFF;"></i>
+            </div>
+        </div>
+
+        <div class="fui-content navbar chat-fui-content" style="padding-bottom: 2rem;">
+            {volist name="chatList" id="vo"}
+            <div class="chat-list flex" onclick="redi('{$vo.redi_url}')">
+                <div class="chat-img" style="background-image: url('{$vo.head_url}')">
+                    {gt name="vo.countNoRead" value="0"}<span class="badge">{$vo.countNoRead}</span>{/gt}
+                </div>
+                <div class="chat-info">
+                    <p class="chat-merch flex">
+                        <span class="title t-28">{$vo.user_name}</span>
+                        <span class="time">{$vo.last_message.log_time|date="Y/m/d H:i:s"}</span>
+                    </p>
+                    <p class="chat-text">{$vo.last_message.content}</p>
+                </div>
+            </div>
+            {/volist}
+        </div>
+    </div>
+</div>
+<style>
+    .div-user-list{
+        padding: 5px 5px;
+        line-height: 22px;
+        background-color: #393D49;
+        color: #fff;
+        font-weight: 300;
+        text-align: center;
+    }
+    .layui-layer-content{
+        background-color: #393D49;
+    }
+    .div-user-list ul{
+        margin-top: 5px;
+    }
+    .div-user-list ul li{
+        height: 50px;
+        text-align:center;
+        line-height:50px;
+    }
+    .img-user-head{
+        width: 40px;
+        height: 40px;
+        margin: 5px 5px;
+        float: left;
+    }
+    .span-user-name{
+        display:block;
+        color: #CCCCFF;
+        text-overflow: ellipsis;
+        overflow: hidden;
+        font-weight: bold;
+        font-size: small;
+    }
+    .div-chat-help{
+        margin: 2px 2px;
+        padding: 5px 7px;
+        background-color: #0D3349;
+        color: yellowgreen;
+        height: 100%;
+        border-radius: 15px;
+        font-family: 楷体;
+        font-size: small;
+    }
+    .div-chat-help p{
+        margin-left: 2px;
+        margin-top: 3px;
+    }
+    .chat-info{
+        padding: 1px 5px;
+    }
+</style>
+{/block}
+
+{block name='single-content'}
+<script>
+    var from_id ='{$from_id}';
+    var ws =  new WebSocket("{$web_socket_url}");
+    ws.onmessage = function(e){
+        var message = eval('(' + e.data + ')');
+        console.log('message', message);
+        switch (message.type){
+            case  "init":
+                var bild = '{"type":"bind","from_id":"'+from_id+'"}';
+                ws.send(bild);
+                return;
+            case "say":
+                refresh_list();
+                return;
+            case "say_img":
+                refresh_list();
+                return;
+        }
+    };
+    $(".layui-icon-help").click(function () {
+        var content_html =
+            '<div class="div-chat-help">' +
+                '【启动条件】<br>'+
+                '<p>1. 默认需要保证【8282】端口的开放</p>'+
+                '<p>2. windows环境下，需要单击运行文件：“\\vendor\\GatewayWorker\\start_for_win.bat”</p>'+
+                '<p>3. Linux环境下，命令行进入目录：“\\vendor\\GatewayWorker”' +
+                '然后，执行命令—— “ php start.php start -d”</p>'+
+                '<p>4.请管理员在“config\\workerman.php”中，配置连接地址 "WEB_SOCKET_URL"</p>'+
+                '<p>5.如果是 Https 网站，请参考开发手册创建 wss服务</p>'+
+            '</div>';
+        layer.open({
+            type: 1,
+            shade: 0.7,
+            area: ['80%', '192px'], //宽高
+            offset:'c',
+            shadeClose: true,
+            title: false, //不显示标题
+            content: content_html
+
+        });
+    });
+    $(".layui-icon-user").click(function () {
+        $.post(
+            "{:url('cms/chat/ajax_get_user_list')}",
+            {}, function (result) {
+                if(result.status == 1){
+                    if(result.data.length == 0){
+                        dialog.tip('Sorry,没有其他管理员了！')
+                    }else {
+                        ToOpenUserList(result.data);
+                    }
+                }else {
+                    dialog.tip(result.message);
+                }
+            },'JSON'
+        );
+    });
+    function ToOpenUserList(user_list_result) {
+        var content_html = '<div class="div-user-list">请选择管理员<br>' + '<ul>\n' ;
+        $.each(user_list_result,function (index,user) {
+            content_html += '<li onclick=redi("'+user.redi_url+'")>'+
+                            '<img class="img-user-head layui-circle" src="'+user.picture+'">'+
+                            '<span class="span-user-name" title="'+user.user_name+'">'+user.user_name+'</span>' +
+                            '</li>';
+        });
+        content_html += "</ul></div>";
+        layer.open({
+            type: 1
+            ,title: false //不显示标题栏
+            ,closeBtn: false
+            ,shade: 0.8
+            ,offset:'rt'
+            ,id: 'LAY_layuipro' //设定一个id，防止重复弹出
+            ,btnAlign: 'c'
+            ,moveType: 1 //拖拽模式，0或者1
+            ,shadeClose: true
+            ,area: ['36%', '280px'] //宽高
+            ,content:content_html
+        });
+    }
+    /**
+     * 刷新对话列表
+     */
+    function refresh_list(){
+        $(".chat-fui-content").html("");
+        $.post(
+            "{:url('cms/chat/lists')}",
+            {id:from_id},
+            function(res){
+                console.log(res);
+                $.each(res.data,function(index,content){
+                    var appendStr1 =
+                        '<div onclick=redi("'+content.redi_url+'") class="chat-list flex" >' +
+                        '<div class="chat-img"  style="background-image: url('+content.head_url+')">';
+
+                    var appendStr2 =
+                        '</div> '+
+                        '<div class="chat-info"> <p class="chat-merch flex"> ' +
+                        '<span class="title t-28">'+content.user_name+'</span> ' +
+                        '<span class="time">'+mydate(content.last_message.log_time)+'</span> </p> ' +
+                        '<p class="chat-text">'+content.last_message.content+'</p> </div>' +
+                        '</div>';
+                    var appendBade = '<span class="badge">'+content.countNoRead+'</span>';
+                    if(content.countNoRead == 0){
+                        $(".chat-fui-content").append(appendStr1+appendStr2);
+                    }else{
+                        $(".chat-fui-content").append(appendStr1+appendBade+appendStr2);
+                    }
+                })
+
+            },'json'
+        )
+    }
+
+    /**
+     *根据时间戳格式化为日期形式
+     */
+    function mydate(time_stamp) {
+        var date = new Date(parseInt(time_stamp) * 1000).toLocaleString('zh',{hour12:false});
+        date = date.replace(/年|月/g, "/").replace(/日/g, " ");
+        return date;
+    }
+    function redi(url){
+        window.location.href = url;
+    }
+</script>
+{/block}
+
