@@ -37,21 +37,12 @@ class Events
     /**
      * 当客户端连接时触发
      * 如果业务不需此回调可以删除onConnect
-     * 
      * @param int $client_id 连接id
      */
     public static function onConnect($client_id)
     {
-        global $num;
-        // 向当前client_id发送数据 
-        //Gateway::sendToClient($client_id, "Hello $client_id\r\n");
-        // 向所有人发送
-        //Gateway::sendToAll("$client_id login\r\n");
-        echo "connect ".++$num.$client_id."\n";
-        Gateway::sendToClient($client_id,json_encode([
-            'type' => 'init',
-            'client_id' => $client_id]
-        ));
+        // 向当前 client_id 发送数据
+        Gateway::sendToClient($client_id,json_encode(['type' => 'init', 'client_id' => $client_id]));
     }
     
    /**
@@ -61,21 +52,27 @@ class Events
     */
    public static function onMessage($client_id, $message)
    {
-       // $message = '{"type":"send_to_uid","uid":"xxxxx", "message":"...."}'
+       //示例： $message = '{"type":"send_to_uid","uid":"xxxxx", "message":"...."}'
        $message_data = json_decode($message,true);
        if ($message_data){
+           //TODO 方便区分信息传递类型
            $type = $message_data['type'];
+           // 发送人ID,此处为数据库中管理员的ID
            $from_id = $message_data['from_id'];
+           // 接收人ID
            $to_id = isset($message_data['to_id'])?$message_data['to_id']:0;
            switch ($type){
                case 'bind':
+                   //将client_id与uid绑定，用来唯一确定一个客户端用户或者设备
                    Gateway::bindUid($client_id,$from_id);
                    return;
                case 'online':
+                   //判断接收人是否在线
                    $onlineStatus = Gateway::isUidOnline($to_id);
                    Gateway::sendToUid($from_id, json_encode(['type'=>'online','to_id'=>$to_id,'status'=>$onlineStatus]));
                    return;
                case 'say':
+                   //发送文字
                    $text = nl2br(htmlspecialchars($message_data['content']));
                    $sayData = [
                        'type' => 'say',
@@ -91,9 +88,9 @@ class Events
                        $sayData['is_read'] = 0;
                    }
                    Gateway::sendToUid($from_id,json_encode($sayData));
-                   break;
-
+                   return;
                case "say_img":
+                   //发送图片
                    $img_name = $message_data['data'];
                    $sayData=[
                        'type'=>'say_img',
@@ -106,24 +103,20 @@ class Events
                        Gateway::sendToUid($to_id,json_encode($sayData));
                    }
                    Gateway::sendToUid($from_id,json_encode($sayData));
-
                    return;
            }
        }else{
            return;
        }
-        // 向所有人发送 
-        //Gateway::sendToAll("$client_id said $message\r\n");
    }
    
    /**
     * 当用户断开连接时触发
+    * 当client_id下线（连接断开）时会自动与uid解绑，开发者无需在onClose事件调用
     * @param int $client_id 连接id
     */
    public static function onClose($client_id)
    {
-       //$uid = session('bind-uid');
-       //session('bind-uid',null);
        // 向所有人发送 
        //GateWay::sendToAll(json_encode(['type'=>'online','to_id'=>$client_id,'status'=>0]));
    }

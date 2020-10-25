@@ -73,7 +73,6 @@
                     $(".chat-content").scrollTop(3000);
                     changeNoReadLogs();
                 }
-
                 if (to_id == message.to_id) {
                     if (message.is_read == 1) {
                         set_online_status(true);
@@ -82,7 +81,6 @@
                     }
                 }
                 save_message(message);
-
                 return;
         }
     };
@@ -170,7 +168,9 @@
             $(".chat-content").append(appendHtml);
         }
     }
-
+    /**
+     * 处理发送人的未读消息
+     */
     function changeNoReadLogs() {
         var URL = "{:url('cms/chat/changeNoRead')}";
         $.post(
