@@ -32,6 +32,9 @@
     var from_head = '';
     var to_head = '';
     var online_status = 0;
+    var interval_timer = null;//计时器
+    var timer_count = 0;
+
 
     var API_CHAT_URL = "{:url('cms/chat/save_message')}";
     var ws =  new WebSocket("{$web_socket_url}");
@@ -84,6 +87,36 @@
                 return;
         }
     };
+    ws.onclose = function (e) {
+        console.log('websocket 断开: ' + e.code + ' ' + e.reason + ' ' + e.wasClean);
+    };
+    init_start_timer();
+    /**
+     * 设置一个 30秒的轮询监听方法，避免页面关闭
+     */
+    function init_start_timer() {
+        //重置计数器
+        timer_count = 0;
+        if(interval_timer != null){
+            clearInterval(interval_timer);
+            interval_timer = null;
+        }
+        interval_timer = setInterval(function(){ myTimer() }, 30000);
+    }
+    /**
+     *定时器具体实现方法
+     */
+    function myTimer() {
+        //TODO 如果超过半小时没有交互，则关闭计时器
+        if(timer_count >= 1800){
+            clearInterval(interval_timer);
+        }else {
+            timer_count += 30;
+            var online = '{"type":"timer","from_id":"' + from_id + '","to_id":"' + to_id + '"}';
+            ws.send(online);
+            console.log('timer_count',timer_count);
+        }
+    }
     /**
      * 设置用户在线状态
      */
@@ -133,7 +166,19 @@
         }
 
     }
-
+    /**
+     * 判断当前用户是否 还在线
+     */
+    function isOnlineCurrUser() {
+        if(ws.readyState == WebSocket.OPEN){
+            console.log('open',ws.readyState);
+            init_start_timer();
+            return true;
+        }else {
+            console.log('close',ws.readyState);
+            return false;
+        }
+    }
     /**
      * 发送聊天信息
      */
@@ -154,11 +199,14 @@
                 "<span class=\"text\"><i class=\"icon icon-sanjiao3 t-32\"></i>" + replace_em(content) + "</span>\n" +
                 "<span class=\"char-img\" style=\"background-image: url(" + from_head + ")\"></span>\n" +
                 "</div>";
-            $(".chat-content").append(appendHtml);
-
-            ws.send(message);
-            $(".send-input").val("");
-            $(".chat-content").scrollTop(3000);
+            if(isOnlineCurrUser()){
+                $(".chat-content").append(appendHtml);
+                ws.send(message);
+                $(".send-input").val("");
+                $(".chat-content").scrollTop(3000);
+            }else {
+                dialog.tip("Sorry,您已离线！");
+            }
         }else {
             var appendHtml =
                 "<div class=\"chat-text section-left flex\">\n" +
@@ -235,28 +283,28 @@
      * 图片发送操作：上传服务器+记录展示
      */
     layui.use('upload', function () {
-        var upload = layui.upload;
-        //普通图片上传
-        upload.render({
-            elem: '.image_up'
-            , type: 'images'
-            , exts: 'jpg|png|gif|jpeg' //设置一些后缀，用于演示前端验证和后端的验证
-            , accept:'images' //上传文件类型
-            , url: image_upload_url
-            , done: function (res) {
-                //如果上传成功
-                if (res.status == 1) {
-                    $(".chat-content").append('<div class="chat-text section-right flex"><span class="text"><i class="icon icon-sanjiao3 t-32"></i><img width="120em" height="auto" src="'+res.data.full_url+'"></span> <span class="char-img" style="background-image: url('+to_head+')"></span> </div>');
-                    $(".chat-content").scrollTop(3000);
-                    var message = '{"data":"'+res.data.full_url+'","from_id":"'+from_id+'","to_id":"'+to_id+'","type":"say_img"}';
-                    ws.send(message);
+            var upload = layui.upload;
+            //普通图片上传
+            upload.render({
+                elem: '.image_up'
+                , type: 'images'
+                , exts: 'jpg|png|gif|jpeg' //设置一些后缀，用于演示前端验证和后端的验证
+                , accept:'images' //上传文件类型
+                , url: image_upload_url
+                , done: function (res) {
+                    //如果上传成功
+                    if (res.status == 1) {
+                        $(".chat-content").append('<div class="chat-text section-right flex"><span class="text"><i class="icon icon-sanjiao3 t-32"></i><img width="120em" height="auto" src="'+res.data.full_url+'"></span> <span class="char-img" style="background-image: url('+to_head+')"></span> </div>');
+                        $(".chat-content").scrollTop(3000);
+                        var message = '{"data":"'+res.data.full_url+'","from_id":"'+from_id+'","to_id":"'+to_id+'","type":"say_img"}';
+                        ws.send(message);
+                    }
                 }
-            }
-            , error: function () {
-                //演示失败状态，并实现重传
-                return layer.msg('发送失败,请重新上传');
-            }
-        });
+                , error: function () {
+                    //演示失败状态，并实现重传
+                    return layer.msg('发送失败,请重新上传');
+                }
+            });
     });
     /**
      * QQ 表情配置加载

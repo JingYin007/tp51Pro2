@@ -104,6 +104,10 @@ class Events
                    }
                    Gateway::sendToUid($from_id,json_encode($sayData));
                    return;
+               case "timers":
+                   return;
+               default:
+                   break;
            }
        }else{
            return;
@@ -117,7 +121,8 @@ class Events
     */
    public static function onClose($client_id)
    {
-       // 向所有人发送 
-       //GateWay::sendToAll(json_encode(['type'=>'online','to_id'=>$client_id,'status'=>0]));
+       // 向所有人发送
+       $send_msg = json_encode(['type'=>'online','to_id'=>$client_id,'status'=>0,'msg'=>'掉线了！']);
+       GateWay::sendToClient($client_id,$send_msg);
    }
 }
