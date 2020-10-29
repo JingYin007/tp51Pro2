@@ -62,7 +62,11 @@ function set_cms_config($pat =[], $rep =[],$confFileName = 'sys_auth')
  */
 function imgToServerView($imgUrl)
 {
-    $imgServerUrl = config('ftp.IMG_SERVER_PATH') . $imgUrl;
+    if (startsWithStr($imgUrl,'http')){
+        $imgServerUrl = $imgUrl;
+    }else{
+        $imgServerUrl = config('ftp.IMG_SERVER_PATH') . $imgUrl;
+    }
     return $imgServerUrl;
 }
 
