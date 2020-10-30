@@ -64,7 +64,11 @@
     color: white;
     font-weight: 600;
 }
-
+.layui-tab-title .refreshThis{
+    background-color: salmon;
+    color: white;
+    font-weight: 600;
+}
 .layui-nav-item .nav-icon {
     width: 25px;
     height: 25px;
@@ -135,7 +139,7 @@
 }
 
 .layui-icon img {
-    width: 22px;
+    width: 28px;
     margin-right: 3px;
 }
 
