@@ -32,7 +32,7 @@ tinymce.PluginManager.add('bdmap', function(editor, url) {
 			onAction: function (api, details) {
 				switch (details.name) {
 					case 'save':
-						html='<iframe src="'+baseURL+'/plugins/bdmap/bd.html?center='+tinymceLng+'%2C'+tinymceLat+'&zoom=14&width='+(bdmap_width(editor)-2)+'&height='+(bdmap_height(editor)-2)+'" frameborder="0" style="width:'+bdmap_width(editor)+'px;height:'+bdmap_height(editor)+'px;">';
+						html='<iframe src="'+baseURL+'/plugins/bdmap/bd.html?center='+tinymceLng+'%2C'+tinymceLat+'&zoom=19&width='+(bdmap_width(editor)-2)+'&height='+(bdmap_height(editor)-2)+'" frameborder="0" style="width:'+bdmap_width(editor)+'px;height:'+bdmap_height(editor)+'px;">';
 						editor.insertContent(html);
 						api.close();
 						break;

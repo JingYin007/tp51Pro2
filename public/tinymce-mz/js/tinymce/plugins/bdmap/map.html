@@ -69,7 +69,7 @@
         }
     </style>
 </head>
-<body onload="initialize();">
+<body>
 <div id="search_box">
     <input id="kw_input" class="kw_input" type="text" value="" autocomplete="off" placeholder="输入要搜索的地点"/>
     <input type="button" value="搜索" onclick="searchMapByStationName()"></div>
@@ -83,13 +83,14 @@
 <script>
 
     var map;
+    initialize();
     /**
      * 页面初始化加载
      */
     function initialize() {
         map = new BMap.Map('map_canvas');
         var point = new BMap.Point(116.331398, 39.897445);
-        map.centerAndZoom(point, 15);
+        map.centerAndZoom(point, 19);
         map.addControl(new BMap.NavigationControl());
         ////开启鼠标滚轮缩放
         map.enableScrollWheelZoom(true);
@@ -104,13 +105,15 @@
          * 百度地图 监听点击事件
          */
         map.addEventListener("click", function (e) {
-            //alert(e.point.lng + "," + e.point.lat); // 经纬度数据
+
             var ponitE = e.point;
             var marker = new BMap.Marker(new BMap.Point(ponitE.lng, ponitE.lat));
             map.clearOverlays();
             map.addOverlay(marker);
+            map.panTo(ponitE);
             parent.tinymceLng = ponitE.lng;
             parent.tinymceLat = ponitE.lat;
+            console.log('经纬度：',ponitE); // 经纬度数据
             }
         );
     }
@@ -137,7 +140,7 @@
                     } else {
                         var searchResHtml = "";
                         for (var i = 0; i < results.getCurrentNumPois(); i++) {
-                            searchResHtml += "<div style='padding:5px;cursor:pointer' class='div-item' onclick='selToItem(this)'>" + results.getPoi(i).title + "</div>";
+                            searchResHtml += "<div style='padding:5px;cursor:pointer' class='div-item'>" + results.getPoi(i).title + "</div>";
                         }
                         $("#div-show-list").html(searchResHtml);
                         $("#div-show-list").css("display", "block");
@@ -150,14 +153,15 @@
     });
 
     /**
-     * 自定义 div 点击事件，注意命名方式
+     * js动态加载 html元素，html中绑定的click事件不生效的解决办法
      * @param obj
      */
-    selToItem = function (obj) {//鼠标点击
-        $("#kw_input").val($(obj).html());
+    $("body").on('click', '.div-item', function () {
+        //do sth...
+        $("#kw_input").val($(this).html());
         $("#div-show-list").css("display", "none");
         searchMapByStationName();
-    }
+    });
 
     /**
      * 根据输入的文字 搜索对应的百度地图信息
@@ -170,13 +174,19 @@
         local.setSearchCompleteCallback(function (searchResult) {
             console.log(searchResult);
             var poi = searchResult.getPoi(0);
-            map.centerAndZoom(poi.point, 20);
-            var marker = new BMap.Marker(new BMap.Point(poi.point.lng, poi.point.lat));
-            parent.tinymceLng = poi.point.lng;
-            parent.tinymceLat = poi.point.lat;
-            map.addOverlay(marker);
+            if(poi){
+                var pointNew = poi.point;
+                map.centerAndZoom(pointNew, 19);
+                var marker = new BMap.Marker(new BMap.Point(pointNew.lng, pointNew.lat));
+                parent.tinymceLng = pointNew.lng;
+                parent.tinymceLat = pointNew.lat;
+                map.clearOverlays();
+                map.addOverlay(marker);
+                map.panTo(pointNew);
+            }else {
+                console.log('Sorry，未查到地址信息')
+            }
         });
-
         local.search(keyword);
     }
 </script>
