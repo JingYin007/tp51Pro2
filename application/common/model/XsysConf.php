@@ -12,6 +12,7 @@ namespace app\common\model;
 use app\common\lib\IAuth;
 use think\Db;
 use think\facade\Request;
+use think\facade\Validate;
 use think\Model;
 
 /**
@@ -23,31 +24,51 @@ class XsysConf extends Model
 {
     /**
      * 更新登录认证配置数据
-     * @param string $authTag
-     * @param string $authVal
+     * @param array $postData
      * @return array
+     * @throws \think\Exception
+     * @throws \think\exception\PDOException
      */
-    public function updateAuthConf($authTag = '',$authVal = ''){
+    public function updateAuthConf($postData = []){
         $opTag = false;
-        if ($authVal == '' or empty($authVal)){
-            $opMessage = "配置数据不能为空";
+        $rule = [
+            'PWD_PRE_HALT'  => 'require|min:16|max:24',
+            'AES_KEY'   => 'require|min:20|max:30',
+            'AES_IV' => 'require|length:16',
+            'SESSION_CMS_TAG'  => 'require|min:12|max:30',
+            'SESSION_CMS_SCOPE'   => 'require|min:6|max:20',
+        ];
+
+        $msg = [
+            'PWD_PRE_HALT' => '加密前缀建议16-24个字符',
+            'AES_KEY'     => 'AES秘钥建议20-30个字符',
+            'AES_IV'   => 'AES_IV 偏移量要求16个字符',
+            'SESSION_CMS_TAG'  => 'SESSION存储键要求12-30个字符',
+            'SESSION_CMS_SCOPE'        => 'SESSION作用域要求6-20个字符',
+        ];
+        $validate   = Validate::make($rule,$msg);
+        $result = $validate->check($postData);
+
+        if(!$result) {
+            $opMessage = $validate->getError();
         }else{
-            if ($authTag == 'AES_IV' && strlen($authVal)!==16){
-                $opMessage = "AES 偏移量不是16位！";
-            }else{
-                $opTag = set_cms_config([$authTag],[$authVal],'sys_auth');
-                if ($opTag && $authTag == "PWD_PRE_HALT"){
-                    //进行默认管理员的设置
-                    Db::name('xadmins')->where('id',1)
-                        ->update([
-                            'user_name' => 'moTzxx@admin',
-                            'password'  =>  IAuth::setAdminUsrPassword('admin',$authVal),
-                            'status'    => 1,
-                            'role_id' => 1,
-                        ]);
-                }
-                $opMessage = $opTag?"更新成功":"Sorry，请稍后重试！";
+            foreach ($postData as $key => $value) {
+                $arrAuthTag[] = $key;
+                $arrAuthVal[] = $value;
             }
+            $opTag = set_cms_config($arrAuthTag,$arrAuthVal,'sys_auth');
+            if ($opTag){
+                //进行默认管理员的设置
+                Db::name('xadmins')->where('id',1)
+                    ->update([
+                        'user_name' => 'moTzxx@admin',
+                        'password'  =>  IAuth::setAdminUsrPassword('admin',$postData['PWD_PRE_HALT']),
+                        'status'    => 1,
+                        'role_id' => 1,
+                    ]);
+            }
+            $opMessage = $opTag?"更新成功":"Sorry，请稍后重试！";
+
         }
         return ['tag' => $opTag,'message' => $opMessage];
     }
@@ -134,7 +155,7 @@ class XsysConf extends Model
         switch ($opTag){
             case 'S'://进行服务开启、关闭
                 $val = $req['val']?'OPEN':'CLOSE';
-                $opRes = $this->updateAuthConf('IP_WHITE',$val);
+                $opRes = $this->setIpWhite($val);
                 break;
             case 'A'://添加IP地址
                 $val = $req['val']?trim($req['val']):'';
@@ -151,6 +172,16 @@ class XsysConf extends Model
         return $opRes;
     }
 
+    /**
+     * 设置IP白名单操作
+     * @param $authVal
+     * @return array
+     */
+    public function setIpWhite($authVal){
+        $opTag = set_cms_config(['IP_WHITE'],[$authVal],'sys_auth');
+        $opMessage = $opTag?"更新成功":"Sorry，请稍后重试！";
+        return ['tag' => $opTag,'message' => $opMessage];
+    }
     /**
      * 删除 IP
      * @param string $ipVal

@@ -1,87 +1,78 @@
 {extend name="layouts/cms"}
 {block name='body-content'}
 
-<div class="layui-form">
-    <table class="layui-table table-body" lay-skin="row">
-        <colgroup>
-            <col width="15%">
-            <col width="40%">
-            <col width="10%">
-            <col width="30%">
-        </colgroup>
-        <thead>
-        <tr>
-            <th>配置项</th>
-            <th>取值</th>
-            <th>更新</th>
-            <th>注释</th>
-        </tr>
-        </thead>
-        <tbody class="table-tbody-normal">
+<form class="form-auth-data">
+    <div class="layui-form">
+        <table class="layui-table table-body" lay-skin="row">
+            <colgroup>
+                <col width="15%">
+                <col width="40%">
+                <col width="30%">
+            </colgroup>
+            <thead>
+            <tr>
+                <th>配置项</th>
+                <th>取值</th>
+                <th>注释</th>
+            </tr>
+            </thead>
+            <tbody class="table-tbody-normal">
 
-        <tr class="tr-normal tr-normal-PWD_PRE_HALT" tag="PWD_PRE_HALT">
-            <td><label type="button" class="layui-btn layui-btn-danger layui-btn-sm">登录密码-加密前缀</label></td>
-            <td class="td-value">
-                <input type="text" value="{$authConf.PWD_PRE_HALT}" class="layui-input">
-            </td>
-            <td class="td-refresh">
-                <button type="button" class="layui-btn layui-btn-danger layui-btn-radius">
-                    <i class="layui-icon">&#xe669;</i>
-                </button>
-            </td>
-            <td><div class="layui-form-mid layui-word-aux">建议16-24个字符左右</div></td>
-        </tr>
+            <tr class="tr-normal tr-normal-PWD_PRE_HALT" tag="PWD_PRE_HALT">
+                <td><label type="button" class="layui-btn layui-btn-danger layui-btn-sm">登录密码-加密前缀</label></td>
+                <td class="td-value">
+                    <input type="text"
+                           name="PWD_PRE_HALT" value="{$authConf.PWD_PRE_HALT}" class="layui-input">
+                </td>
+                <td><div class="layui-form-mid layui-word-aux">建议16-24个字符左右</div></td>
+            </tr>
 
-        <tr class="tr-normal tr-normal-AES_KEY" tag="AES_KEY">
-            <td><label type="button" class="layui-btn layui-btn-primary layui-btn-sm">AES秘钥串</label></td>
-            <td class="td-value">
-                    <input type="text" value="{$authConf.AES_KEY}" class="layui-input">
-            </td>
-            <td class="td-refresh">
-                <button type="button" class="layui-btn layui-btn-primary layui-btn-radius">
-                    <i class="layui-icon">&#xe669;</i>
-                </button>
-            </td>
-            <td><div class="layui-form-mid layui-word-aux">用于登录信息加密，可自定义</div></td>
-        </tr>
+            <tr class="tr-normal tr-normal-AES_KEY" tag="AES_KEY">
+                <td><label type="button" class="layui-btn layui-btn-primary layui-btn-sm">AES秘钥串</label></td>
+                <td class="td-value">
+                    <input type="text"
+                           name="AES_KEY" value="{$authConf.AES_KEY}" class="layui-input">
+                </td>
+                <td><div class="layui-form-mid layui-word-aux">用于登录信息加密，可自定义</div></td>
+            </tr>
 
-        <tr class="tr-normal tr-normal-AES_IV" tag="AES_IV">
-            <td><label type="button" class="layui-btn layui-btn-warm layui-btn-sm">AES偏移量</label></td>
-            <td class="td-value">
-                    <input type="text" value="{$authConf.AES_IV}" class="layui-input">
-            </td>
-            <td class="td-refresh"><button type="button" class="layui-btn layui-btn-warm layui-btn-radius">更新</button></td>
-            <td><div class="layui-form-mid layui-word-aux">自定义16位 AES偏移量</div></td>
-        </tr>
+            <tr class="tr-normal tr-normal-AES_IV" tag="AES_IV">
+                <td><label type="button" class="layui-btn layui-btn-warm layui-btn-sm">AES偏移量</label></td>
+                <td class="td-value">
+                    <input type="text"
+                           name="AES_IV" value="{$authConf.AES_IV}" class="layui-input">
+                </td>
+                <td><div class="layui-form-mid layui-word-aux">自定义16位 AES偏移量</div></td>
+            </tr>
 
-        <tr class="tr-normal tr-normal-SESSION_CMS_TAG" tag="SESSION_CMS_TAG">
-            <td><label type="button" class="layui-btn layui-btn-normal layui-btn-sm">登录信息-存储标记</label></td>
-            <td class="td-value">
-                    <input type="text" value="{$authConf.SESSION_CMS_TAG}" class="layui-input">
-            </td>
-            <td class="td-refresh">
-                <button type="button" class="layui-btn layui-btn-normal layui-btn-radius">更新</button>
-            </td>
-            <td><div class="layui-form-mid layui-word-aux">SESSION 存储键设置</div></td>
-        </tr>
+            <tr class="tr-normal tr-normal-SESSION_CMS_TAG" tag="SESSION_CMS_TAG">
+                <td><label type="button" class="layui-btn layui-btn-normal layui-btn-sm">登录信息-存储标记</label></td>
+                <td class="td-value">
+                    <input type="text"
+                           name="SESSION_CMS_TAG" value="{$authConf.SESSION_CMS_TAG}" class="layui-input">
+                </td>
+                <td><div class="layui-form-mid layui-word-aux">SESSION 存储键设置</div></td>
+            </tr>
 
-        <tr class="tr-normal tr-normal-SESSION_CMS_SCOPE" tag="SESSION_CMS_SCOPE">
-            <td><label type="button" class="layui-btn layui-btn-sm">登录信息-存储作用域</label></td>
-            <td class="td-value">
-                    <input type="text" value="{$authConf.SESSION_CMS_SCOPE}" class="layui-input">
-            </td>
-            <td class="td-refresh">
-                <button type="button"
-                        class="layui-btn layui-btn-radius">
-                    <i class="layui-icon">&#xe669;</i>
-                </button>
-            </td>
-            <td><div class="layui-form-mid layui-word-aux">SESSION 存储作用域</div></td>
-        </tr>
+            <tr class="tr-normal tr-normal-SESSION_CMS_SCOPE" tag="SESSION_CMS_SCOPE">
+                <td><label type="button" class="layui-btn layui-btn-sm">登录信息-存储作用域</label></td>
+                <td class="td-value">
+                    <input type="text"
+                           name="SESSION_CMS_SCOPE" value="{$authConf.SESSION_CMS_SCOPE}" class="layui-input">
+                </td>
+                <td><div class="layui-form-mid layui-word-aux">SESSION 存储作用域</div></td>
+            </tr>
+            </tbody>
+        </table>
+        <button type="button"
+                class="btn-form-submit layui-btn layui-btn layui-btn-danger">
+            更新
+            <i class="layui-icon">&#xe666;</i>
+        </button>
+    </div>
+</form>
 
-        </tbody>
-    </table>
-</div>
+
 <style>
 
     .table-body{
@@ -95,7 +86,7 @@
     }
     .td-value input{
         color: #7274AB;
-        background-color: #7274AB;
+        background-color: #ebcccc;
     }
     .td-refresh .layui-btn{
         padding: 0px 0px;
@@ -106,6 +97,11 @@
     .layui-btn .layui-icon{
         margin-right: 0px;
     }
+    .btn-form-submit{
+        margin-top: -2%;
+        margin-right: 13%;
+        float: right;
+    }
 </style>
 {/block}
 
@@ -115,7 +111,7 @@
 
     $(".tr-normal .layui-input").click(function () {
         var auth_tag = $(this).parent().parent().attr('tag');
-        $(".tr-normal input").css('background','#7274AB');
+        $(".tr-normal input").css('background','#ebcccc');
         $(".tr-normal-"+auth_tag+" input").css('background','#fff');
         if(auth_tag == 'PWD_PRE_HALT'){
             var tipMsg = "注意！更新后,后台管理员暂时只能以【moTzxx@admin:admin】进行登录，后期密码需再次更新哦";
@@ -123,14 +119,9 @@
         }
     });
 
-    /**
-     * 触发更新操作
-     */
-    $(".tr-normal button").click(function () {
-        var auth_tag = $(this).parent().parent().attr('tag');
-        var auth_val = $(".tr-normal-"+auth_tag+" .layui-input").val();
+    $(".btn-form-submit").click(function (){
         var toUrl = "{:url('cms/sysConf/auth')}";
-        var postData = {auth_tag:auth_tag,auth_val:auth_val};
+        var postData = $(".form-auth-data").serialize();
         $.post(
             toUrl,
             postData,

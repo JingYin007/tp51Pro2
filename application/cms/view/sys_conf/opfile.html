@@ -43,7 +43,7 @@
                         </td>
                         <td class="td-refresh">
                             <button type="button" class="layui-btn layui-btn-danger layui-btn-radius">
-                                <i class="layui-icon">&#xe669;</i>
+                                <i class="layui-icon">&#xe666;</i>
                             </button>
                         </td>
                         <td><div class="layui-form-mid layui-word-aux">默认“/”,如果使用图片服务器，例：'http://img.xxxx.com/public/'</div></td>
@@ -80,7 +80,7 @@
                         </td>
                         <td class="td-refresh">
                             <button type="button" class="layui-btn layui-btn-disabled layui-btn-danger layui-btn-radius">
-                                <i class="layui-icon">&#xe669;</i>
+                                <i class="layui-icon">&#xe666;</i>
                             </button>
                         </td>
                         <td><div class="layui-form-mid layui-word-aux">对应的FTP服务器的图片存储路径</div></td>
@@ -93,7 +93,7 @@
                         </td>
                         <td class="td-refresh">
                             <button type="button" class="layui-btn layui-btn-primary layui-btn-radius">
-                                <i class="layui-icon">&#xe669;</i>
+                                <i class="layui-icon">&#xe666;</i>
                             </button>
                         </td>
                         <td><div class="layui-form-mid layui-word-aux">如果满足内网IP条件，可大大提高传输效率</div></td>
@@ -106,7 +106,7 @@
                         </td>
                         <td class="td-refresh">
                             <button type="button" class="layui-btn layui-btn-primary layui-btn-radius">
-                                <i class="layui-icon">&#xe669;</i>
+                                <i class="layui-icon">&#xe666;</i>
                             </button>
                         </td>
                         <td><div class="layui-form-mid layui-word-aux">保证输入的正确性</div></td>
@@ -119,7 +119,7 @@
                         </td>
                         <td class="td-refresh">
                             <button type="button" class="layui-btn layui-btn-primary layui-btn-radius">
-                                <i class="layui-icon">&#xe669;</i>
+                                <i class="layui-icon">&#xe666;</i>
                             </button>
                         </td>
                         <td><div class="layui-form-mid layui-word-aux">保证输入的正确性</div></td>
@@ -133,7 +133,7 @@
                         <td class="td-refresh">
                             <button type="button"
                                     class="layui-btn layui-btn-primary layui-btn-radius">
-                                <i class="layui-icon">&#xe669;</i>
+                                <i class="layui-icon">&#xe666;</i>
                             </button>
                         </td>
                         <td><div class="layui-form-mid layui-word-aux">ftp端口,默认为21</div></td>
@@ -142,8 +142,9 @@
                 </table>
             </div>
         </div>
-        <div class="layui-tab-item">
 
+
+        <div class="layui-tab-item">
             <div class="layui-form">
                 <table class="layui-table table-body" lay-skin="row">
                     <colgroup>
@@ -167,7 +168,7 @@
                         </td>
                         <td class="td-refresh">
                             <button type="button" class="layui-btn layui-btn-danger layui-btn-radius">
-                                <i class="layui-icon">&#xe669;</i>
+                                <i class="layui-icon">&#xe666;</i>
                             </button>
                         </td>
                     </tr>
@@ -178,7 +179,7 @@
                         </td>
                         <td class="td-refresh">
                             <button type="button" class="layui-btn layui-btn-danger layui-btn-radius">
-                                <i class="layui-icon">&#xe669;</i>
+                                <i class="layui-icon">&#xe666;</i>
                             </button>
                         </td>
                     </tr>
@@ -189,7 +190,7 @@
                         </td>
                         <td class="td-refresh">
                             <button type="button" class="layui-btn layui-btn-danger layui-btn-radius">
-                                <i class="layui-icon">&#xe669;</i>
+                                <i class="layui-icon">&#xe666;</i>
                             </button>
                         </td>
                     </tr>
@@ -200,7 +201,7 @@
                         </td>
                         <td class="td-refresh">
                             <button type="button" class="layui-btn layui-btn-danger layui-btn-radius">
-                                <i class="layui-icon">&#xe669;</i>
+                                <i class="layui-icon">&#xe666;</i>
                             </button>
                         </td>
                     </tr>
@@ -225,9 +226,7 @@
     label.layui-btn{
         cursor: default;
     }
-    .td-value input{
-        color: #7274AB;
-    }
+
     .td-refresh .layui-btn{
         padding: 0px 0px;
         width: 36px;
@@ -259,7 +258,7 @@
     }
     .td-value input{
         color: #7274AB;
-        background-color: #7274AB;
+        background-color: #ebcccc;
     }
 </style>
 {/block}
@@ -268,7 +267,7 @@
 <script>
     $(".tr-normal .layui-input").click(function () {
         var auth_tag = $(this).parent().parent().attr('tag');
-        $(".tr-normal input").css('background','#7274AB');
+        $(".tr-normal input").css('background','#ebcccc');
         $(".tr-normal-"+auth_tag+" input").css('background','#fff');
     });
 

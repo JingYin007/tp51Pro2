@@ -29,9 +29,7 @@ class SysConf extends CmsBase
      */
     public function auth(Request $request){
         if ($request->isPost()){
-            $auth_tag = $request->post('auth_tag',null);
-            $auth_val = $request->post('auth_val',null);
-            $opRes = $this->model->updateAuthConf($auth_tag,$auth_val);
+            $opRes = $this->model->updateAuthConf($request->post());
             return showMsg($opRes['tag'], $opRes['message']);
         }else{
             $authConf = config('sys_auth.');
