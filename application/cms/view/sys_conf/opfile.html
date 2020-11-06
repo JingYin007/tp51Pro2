@@ -12,7 +12,7 @@
 
 <div class="layui-tab layui-tab-card">
     <ul class="layui-tab-title layui-tab-title-zz">
-        <li>网站设置</li>
+        <li class="layui-this">网站设置</li>
         <li>FTP 配置</li>
         <li>七牛云配置</li>
     </ul>
@@ -237,12 +237,20 @@
         margin-right: 0px;
     }
 
-    .layui-tab-title-zz .layui-this{
-        background-color: #ce8483;
-        color: #3b4249;
-    }
-    .layui-tab-title-zz{
+
+    .layui-tab .layui-tab-title-zz{
         border-bottom: 3px solid #FFFFFF;
+        font-weight: lighter;
+    }
+    .layui-tab .layui-tab-title-zz .title-selected{
+        background-color: #f2f2f2;
+        color: #0C0C0C;
+        font-weight: lighter;
+    }
+    .layui-tab .layui-tab-title-zz .layui-this{
+        background-color: #FFFFFF;
+        color: #3b4249;
+        font-weight: bold;
     }
     .layui-tab-card{
         width: 55%;
