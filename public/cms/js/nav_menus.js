@@ -5,6 +5,11 @@ layui.use(['upload','form'], function () {
         $(".sel-parent-msg").hide();
         $(".sel-parent-msg-"+level).show();
     });
+    form.on('radio(navTypeSearch)', function(){
+        $(".form-op-search").submit();
+    });
+
+    form.render();//细节！这个好像要渲染一下！
 });
 /**
  * ajax 获取并加载每页的数据

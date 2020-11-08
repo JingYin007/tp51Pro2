@@ -9,7 +9,7 @@
     </button>
 </div>
 <div class="layui-inline layui-form">
-    <form class="form-search" action="{:url('cms/menu/index')}" method="get">
+    <form class="form-search form-op-search" action="{:url('cms/menu/index')}" method="get">
         <div class="layui-input-inline">
             <input type="hidden" name="curr_page" class="curr_page" value="1">
             <input type="text" value="{$search}" name="str_search" placeholder="请输入关键字"
@@ -21,8 +21,10 @@
 
         <div class="layui-input-inline" style="width: 800px">
             <div class="layui-input-block" style="width: 100%">
-                <input type="radio" name="navType" value="F" title="主菜单" {$navType=="F"?"checked":""}>
-                <input type="radio" name="navType" value="S" title="二级菜单" {$navType=="S"?"checked":""}>
+                <input type="radio" name="navType" value="F" lay-filter="navTypeSearch"
+                       title="主菜单" {$navType=="F"?"checked":""}>
+                <input type="radio" name="navType" value="S" lay-filter="navTypeSearch"
+                       title="二级菜单" {$navType=="S"?"checked":""}>
             </div>
         </div>
     </form>
