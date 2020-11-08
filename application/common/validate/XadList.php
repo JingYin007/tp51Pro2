@@ -17,8 +17,6 @@ class XadList extends Validate
     protected $rule = [
         'ad_name'         =>  'require|max:100',
         'original_img'         =>  'require',
-        'ad_url'         =>  'require',
-        //'ad_tag'         =>  'require|unique:xadLists',
         'ad_tag'         =>  'require',
         'start_time'         =>  'require',
         'end_time'         =>  'require|gt:start_time',
@@ -28,9 +26,7 @@ class XadList extends Validate
         'ad_name.require'  =>  '标题不能为空',
         'ad_name.max'      =>  '标题不能超过255个字符',
         'original_img'          =>  '配图未添加',
-        'ad_url'          =>  'adURL 路径未添加',
         'ad_tag.require'          =>  '标识字符串未添加',
-        //'ad_tag.unique'          =>  '此标识字符已存在',
         'start_time.require'    => '开始时间不能为空',
         'end_time'  =>  '结束时间不能早于开始时间',
         '__token__'     =>  'Token非法操作或失效',
@@ -41,7 +37,7 @@ class XadList extends Validate
      * @var array
      */
     protected $scene = [
-        'default'  =>  ['ad_name','original_img','ad_url','ad_tag','start_time','end_time'],
+        'default'  =>  ['ad_name','original_img','ad_tag','start_time','end_time'],
         'token'    =>  ['__token__'],
     ];
 }

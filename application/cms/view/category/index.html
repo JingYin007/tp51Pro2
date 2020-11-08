@@ -1,15 +1,15 @@
 {extend name="layouts/cms"}
 
 {block name='body-content'}
-<div class="layui-form-item">
-    <button class="layui-btn layui-btn-normal"
-            op_url="{:url('cms/category/add')}"
-            onclick="addForOpenPopups(this,'✚ 产品分类添加','51%', '82%')">
-        <i class="layui-icon">&#xe608;</i> 添加产品分类
-    </button>
-</div>
+
+<button class="layui-btn layui-btn-normal"
+        op_url="{:url('cms/category/add')}"
+        onclick="addForOpenPopups(this,'✚ 产品分类添加','44%', '52%')">
+    <i class="layui-icon">&#xe608;</i> 添加产品分类
+</button>
+
 <div class="layui-inline layui-form">
-    <form class="form-search " action="{:url('cms/category/index')}" method="get">
+    <form class="form-search form-op-search" action="{:url('cms/category/index')}" method="get">
         <div class="layui-input-inline">
             <input type="hidden" name="curr_page" class="curr_page" value="1">
             <input type="text" value="{$search}" name="str_search" placeholder="请输入名称"
@@ -19,10 +19,13 @@
             <i class="layui-icon">&#xe615;</i>
         </button>
         <div class="layui-input-inline" style="width: 800px">
-            <div class="layui-input-block" style="width: 100%">
-                <input type="radio" name="CatType" value="F" title="一级分类" {$cat_type=="F"?"checked":""}>
-                <input type="radio" name="CatType" value="S" title="二级分类" {$cat_type=="S"?"checked":""}>
-                <input type="radio" name="CatType" value="T" title="三级分类" {$cat_type=="T"?"checked":""}>
+            <div class="layui-input-inline div-radio-catType">
+                <input type="radio" name="CatType" value="F" lay-filter="CatType"
+                       title="一级分类" {$cat_type=="F"?"checked":""}>
+                <input type="radio" name="CatType" value="S" lay-filter="CatType"
+                       title="二级分类" {$cat_type=="S"?"checked":""}>
+                <input type="radio" name="CatType" value="T" lay-filter="CatType"
+                       title="三级分类" {$cat_type=="T"?"checked":""}>
             </div>
         </div>
     </form>
@@ -67,12 +70,12 @@
         <td>
             <input type="checkbox" class="switch_checked" lay-filter="switchCatID"
                    switch_cat_id="{$vo['cat_id']}" {$vo.status_checked}
-            lay-skin="switch" lay-text="显示|隐藏">
+                   lay-skin="switch" lay-text="显示|隐藏">
         </td>
         <td>
             <div class="layui-btn-group">
                 <button class="layui-btn layui-btn-sm" title="编辑分类"
-                        onclick="editForOpenPopups('✎ 产品分类修改','{$vo.cat_id}','51%', '82%')">
+                        onclick="editForOpenPopups('✎ 产品分类修改','{$vo.cat_id}','44%', '52%')">
                     <i class="layui-icon">&#xe642;</i>
                 </button>
                 <button class="layui-btn layui-btn-sm" title="删除分类"
@@ -87,16 +90,28 @@
 </table>
 <div id="demo2-1"></div>
 <style>
-    .table-body,#demo2-1{
+    .div-radio-catType{
+        width: 100%;
+        margin-left: 50px;
+    }
+
+    .table-body, #demo2-1 {
         width: 66%;
         margin: auto;
     }
-    .table-tbody-normal .title{
+
+    .table-body{
+        margin-top: 30px;
+    }
+
+    .table-tbody-normal .title {
         color: #7274A7;
     }
-    .table-tbody-normal .icon img{
+
+    .table-tbody-normal .icon img {
         width: 50px;
     }
+
     .table-tbody-normal .icon img:hover {
         transition: all 0.6s;
         transform: scale(5);
@@ -106,4 +121,13 @@
 
 {block name='single-content'}
 <script src="__CMS__/js/categorys.js"></script>
+<script>
+    layui.use(['form'], function() {
+        var form = layui.form;
+        form.on('radio(CatType)', function(data){
+            $(".form-op-search").submit();
+        });
+    })
+</script>
+
 {/block}

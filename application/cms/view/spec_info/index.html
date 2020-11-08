@@ -8,7 +8,7 @@
     </button>
 </div>
 <div class="layui-inline layui-form">
-    <form class="form-search " action="{:url('cms/specInfo/index')}" method="get">
+    <form class="form-search form-op-search" action="{:url('cms/specInfo/index')}" method="get">
         <div class="layui-input-inline">
             <div id="tree-sel-category" class="demo-tree"></div>
         </div>
@@ -110,7 +110,15 @@
 {block name='single-content'}
 <script src="__CMS__/js/spec_infos.js"></script>
 <script>
-
+    layui.use(['form'], function() {
+        var form = layui.form;
+        form.on('select(toSelCatID)', function(){
+            $(".form-op-search").submit();
+        });
+        form.render();//细节！这个好像要渲染一下！
+    })
+</script>
+<script>
     //添加导航菜单
     function addSpecInfo(id) {
         var toUrl = "{:url('cms/specInfo/add',['id'=>'AID'])}";
@@ -123,6 +131,5 @@
         toUrl = toUrl.replace('AID', id);
         ToOpenPopups(toUrl, '★ 规格数据展示', '70%', '85%');
     }
-
 </script>
 {/block}

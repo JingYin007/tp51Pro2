@@ -3,7 +3,7 @@
 
 <button class="layui-btn layui-btn-normal"
         op_url="{:url('cms/config/add')}"
-        onclick="addForOpenPopups(this,'✚ 添加配置','43%','76%')">
+        onclick="addForOpenPopups(this,'✚ 添加配置','40%','60%')">
     <i class="layui-icon">&#xe608;</i> 添加配置
 </button>
 
@@ -21,11 +21,14 @@
         <div class="layui-input-inline">
             <label class="layui-form-label"></label>
             <div class="layui-input-block">
-                <input type="radio" name="input_type" value="text" title="文本" {$input_type=="text"?"checked":""}>
+                <input type="radio" name="input_type" lay-filter="SelType"
+                       value="text" title="文本" {$input_type=="text"?"checked":""}>
                 <span class="layui-badge layui-bg-orange">{$arrCount['WB']}</span>
-                <input type="radio" name="input_type" value="checkbox" title="开关" {$input_type=="checkbox"?"checked":""}>
+                <input type="radio" name="input_type" lay-filter="SelType"
+                       value="checkbox" title="开关" {$input_type=="checkbox"?"checked":""}>
                 <span class="layui-badge layui-bg-orange">{$arrCount['KG']}</span>
-                <input type="radio" name="input_type" value="button" title="图片" {$input_type=="button"?"checked":""}>
+                <input type="radio" name="input_type" lay-filter="SelType"
+                       value="button" title="图片" {$input_type=="button"?"checked":""}>
                 <span class="layui-badge layui-bg-orange">{$arrCount['TP']}</span>
             </div>
         </div>
@@ -37,11 +40,11 @@
     <colgroup>
         <col width="5%">
         <col width="15%">
+        <col width="12%">
         <col width="15%">
         <col width="20%">
-        <col width="20%">
-        <col width="10%">
-        <col width="5%">
+        <col width="15%">
+        <col width="8%">
         <col width="10%">
     </colgroup>
     <thead>
@@ -76,7 +79,7 @@
         <td>
             <div class="layui-btn-group">
                 <button class="layui-btn layui-btn-sm" title="编辑"
-                        onclick="editForOpenPopups('✎ 配置修改','{$vo.id}','43%','76%')">
+                        onclick="editForOpenPopups('✎ 配置修改','{$vo.id}','40%','60%')">
                     <i class="layui-icon">&#xe642;</i>
                 </button>
                 <button class="layui-btn layui-btn-sm" title="删除"
@@ -101,6 +104,10 @@
     }
     .td-value img{
         height: 70px;
+    }
+    .table-body, #demo2-1 {
+        width: 72%;
+        margin: 15px auto;
     }
 </style>
 {/block}

@@ -25,31 +25,11 @@
         <label class="layui-form-label">标识TAG：</label>
         <div class="layui-input-inline">
             <input type="text" name="ad_tag" required lay-verify="required"
-                   placeholder="唯一标识字符串(建议大写)"
+                   placeholder="请输入标识字符串"
                    value="{$adData['ad_tag']}"
-                   autocomplete="off" class="layui-input input-title-mz">
+                   autocomplete="off" class="layui-input">
         </div>
-    </div>
-
-    <div class="layui-form-item">
-        <label class="layui-form-label">关联URL：</label>
-        <div class="layui-input-inline">
-            <input type="text" name="ad_url" required lay-verify="required"
-                   placeholder="请输入AD活动图对应路径"
-                   value="{$adData['ad_url']}"
-                   autocomplete="off" class="layui-input input-title-mz">
-        </div>
-    </div>
-
-    <div class="layui-form-item">
-        <label class="layui-form-label">广告类型：</label>
-        <div class="layui-input-inline">
-            <select name="ad_type" lay-verify="required">
-                <option value="0" {eq name="adData:ad_type" value="0" }selected{/eq} >首页幻灯片</option>
-                <option value="1" {eq name="adData:ad_type" value="1" }selected{/eq} >首页倒计时</option>
-                <option value="2" {eq name="adData:ad_type" value="2" }selected{/eq} >其他类型</option>
-            </select>
-        </div>
+        <div class="layui-form-mid layui-word-aux">(建议大写)</div>
     </div>
 
     <div class="layui-form-item">

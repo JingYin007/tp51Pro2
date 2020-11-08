@@ -65,18 +65,10 @@ class XadLists extends BaseModel
             ->field('*')
             ->where("status",'=',0)
             ->where('ad_name|ad_tag','like','%' . $search . '%')
-            //->whereLike('ad_name', '%' . $search . '%')
             ->order(['list_order' => 'asc', 'id' => 'desc'])
             ->limit($limit * ($curr_page - 1), $limit)
             ->select();
         foreach ($res as $key => $v) {
-            if ($v['ad_type'] == 0) {
-                $res[$key]['type_tip'] = "<span class=\"layui-badge layui-bg-blue\">首页幻灯片</span>";
-            } elseif ($v['ad_type'] == 1) {
-                $res[$key]['type_tip'] = "<span class=\"layui-badge layui-bg-cyan\">首页倒计时</span>";
-            }else{
-                $res[$key]['type_tip'] = "<span class=\"layui-badge layui-bg-orange\">其他类型</span>";
-            }
             if ($v['is_show'] == 1){
                 $res[$key]['status_checked'] = "checked";
             }else{
@@ -96,12 +88,10 @@ class XadLists extends BaseModel
     {
         $addData = [
             'ad_name' => isset($data['ad_name']) ? $data['ad_name'] : '',
-            'ad_url' => isset($data['ad_url']) ? $data['ad_url'] : '',
             'ad_tag' => isset($data['ad_tag']) ? $data['ad_tag'] : '',
             'original_img' => isset($data['original_img']) ? $data['original_img'] : '/',
             'list_order' => isset($data['list_order']) ? intval($data['list_order']) : 0,
             'is_show' => isset($data['is_show']) ? 1 : 0,
-            'ad_type' => isset($data['ad_type']) ? $data['ad_type'] : 2,
             'start_time' => isset($data['start_time'])?$data['start_time']:'',
             'end_time' => isset($data['end_time'])?$data['end_time']:'',
         ];
@@ -133,12 +123,10 @@ class XadLists extends BaseModel
         } else {
             $saveData = [
                 'ad_name' => isset($data['ad_name']) ? $data['ad_name'] : '',
-                'ad_url' => isset($data['ad_url']) ? $data['ad_url'] : '',
                 'ad_tag' => isset($data['ad_tag']) ? $data['ad_tag'] : '',
                 'original_img' => isset($data['original_img']) ? $data['original_img'] : '/',
                 'list_order' => isset($data['list_order']) ? intval($data['list_order']) : 0,
                 'is_show' => isset($data['is_show']) ? 1 : 0,
-                'ad_type' => isset($data['ad_type']) ? $data['ad_type'] : 2,
                 'start_time' => isset($data['start_time'])?$data['start_time']:'',
                 'end_time' => isset($data['end_time'])?$data['end_time']:'',
             ];

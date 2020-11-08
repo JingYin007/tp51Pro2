@@ -5,6 +5,10 @@ layui.use(['upload','form'], function () {
         $(".div-config-type").hide();
         $(".div-config-typeFor-"+sel_type).show();
     });
+    form.on('radio(SelType)', function(){
+        $(".form-search").submit();
+    });
+    form.render();//细节！这个好像要渲染一下！
 });
 layui.use(['form', 'layer'], function () {
     var form = layui.form;

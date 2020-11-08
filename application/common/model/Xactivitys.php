@@ -43,11 +43,13 @@ class Xactivitys extends BaseModel
      * @param null $search
      * @return int|string
      */
-    public function getActsCount($search = null)
+    public function getActsCount($search = null,$actType = null)
     {
+        $where = [['id', '>', '0'],['status','=',0]];
+        if ($actType){$where[] = ['act_type','=',$actType];}
         $res = $this
             ->field('id')
-            ->where([['id', '>', '0'],['status','=',0]])
+            ->where($where)
             ->whereLike('title', '%' . $search . '%')
             ->count();
         return $res;
@@ -61,18 +63,18 @@ class Xactivitys extends BaseModel
      * @param string $OrderType
      * @return array|\PDOStatement|string|\think\Collection
      */
-    public function getActsForPage($curr_page, $limit, $search = null,$OrderType = "W")
+    public function getActsForPage($curr_page, $limit, $search = null,$OrderType = "W",$actType = null)
     {
+        $where = [['id', '>', '0'],['status','=',0]];
         if ($OrderType == "W") {
-            $order["list_order"] = "desc";
-        }elseif ($OrderType == "A"){
-            $order["id"] = "desc";
+            $order["list_order"] = "asc";
         }else{
-            $order["updated_at"] = "desc";
+            $order["id"] = "desc";
         }
+        if ($actType){$where[] = ['act_type','=',$actType];}
         $res = $this
             ->field('*')
-            ->where([['id', '>', '0'],['status','=',0]])
+            ->where($where)
             ->whereLike('title', '%' . $search . '%')
             ->order($order)
             ->limit($limit * ($curr_page - 1), $limit)

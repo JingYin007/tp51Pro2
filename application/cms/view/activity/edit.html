@@ -27,7 +27,7 @@
             <input type="text" name="act_tag" required lay-verify="required"
                    placeholder="唯一标识字符串(建议大写)"
                    value="{$actData['act_tag']}"
-                   autocomplete="off" class="layui-input input-title-mz">
+                   autocomplete="off" class="layui-input">
         </div>
     </div>
 
@@ -75,7 +75,7 @@
                    value="{$actData['list_order']}" required lay-verify="required"
                    placeholder="" autocomplete="off" class="layui-input">
         </div>
-        <div class="layui-form-mid layui-word-aux">(数字越大，排序越靠前)</div>
+        <div class="layui-form-mid layui-word-aux">(数字越小，排序越靠前)</div>
     </div>
 
     <div class="layui-form-item" pane="">

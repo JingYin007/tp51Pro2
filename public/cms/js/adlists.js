@@ -59,13 +59,14 @@ function ToAjaxOpForPageAdvertisement(toUrl,postData) {
                 $.each(result.data,function (i,e) {
                     str_html +=
                         "<tr class=\"tr-normal-"+e.id+"\">\n" +
-                        "                <td>"+e.id+"</td>\n" +
                         "                <td>"+e.ad_name+"</td>\n" +
                         "                <td><img src='"+e.original_img+"'></td>\n" +
                         "                <td class=\"td-ad_tag\">"+e.ad_tag +"</td>\n" +
                         "                <td>"+e.ad_url +"</td>\n" +
-                        "                <td>"+e.start_time+"<hr/>"+ e.end_time +"</td>\n" +
-                        "                <td>"+e.type_tip +"</td>\n" +
+                        "                <td>" +
+                        "                   <span class=\"layui-badge layui-bg-green\">"+e.start_time+"</span><hr/>\n" +
+                        "                   <span class=\"layui-badge\">"+e.end_time+"</span>"+
+                        "                </td>\n" +
                         "                <td><input type=\"checkbox\" class=\"switch_checked\" lay-filter=\"switchActID\"\n" +
                         "switch_act_id=\""+e.id+"\" lay-skin=\"switch\""+e.status_checked+" lay-text=\"显示|隐藏\">"+
                         "                </td>\n" +

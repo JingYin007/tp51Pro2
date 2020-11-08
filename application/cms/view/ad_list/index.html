@@ -3,7 +3,7 @@
 {block name="body-content"}
 
 <button class="layui-btn layui-btn-normal" op_url="{:url('cms/adList/add')}"
-        onclick="addForOpenPopups(this,'✚ 添加活动','55%','92%')">
+        onclick="addForOpenPopups(this,'✚ 添加活动','50%','51%')">
     <i class="layui-icon">&#xe608;</i> 添加广告
 </button>
 <div class="layui-inline">
@@ -21,26 +21,20 @@
 
 <table class="layui-table table-body" lay-even="" lay-skin="row">
     <colgroup>
-        <col width="5%">
-        <col width="8%">
-        <col width="15%">
-        <col width="8%">
-        <col width="12%">
-        <col width="15%">
+        <col width="10%">
         <col width="10%">
         <col width="8%">
-        <col width="5%">
         <col width="12%">
+        <col width="8%">
+        <col width="5%">
+        <col width="10%">
     </colgroup>
     <thead>
     <tr>
-        <th>ID</th>
         <th>标题</th>
         <th>配图</th>
         <th>标识</th>
-        <th>关联URL</th>
-        <th>起始 —— 结束</th>
-        <th>广告类型</th>
+        <th>起止时间</th>
         <th>前端显示</th>
         <th>排序</th>
         <th>操作</th>
@@ -54,13 +48,13 @@
            page_url="{:url('cms/adList/index')}">
     {volist name="ads" id="vo"}
     <tr class="tr-normal-{$vo['id']}">
-        <td>{$vo['id']}</td>
         <td class="title">{$vo['ad_name']}</td>
         <td><img src="{$vo['original_img']}"></td>
         <td class="td-ad_tag">{$vo['ad_tag']}</td>
-        <td>{$vo['ad_url']}</td>
-        <td>{$vo['start_time']}<hr/>{$vo.end_time}</td>
-        <td>{php} echo $vo['type_tip']{/php}</td>
+        <td>
+            <span class="layui-badge layui-bg-green">{$vo['start_time']}</span><hr/>
+            <span class="layui-badge">{$vo.end_time}</span>
+        </td>
         <td>
             <input type="checkbox" class="switch_checked" lay-filter="switchActID"
                    switch_act_id="{$vo['id']}" {$vo.status_checked}
@@ -70,7 +64,7 @@
         <td>
             <div class="layui-btn-group">
                 <button class="layui-btn layui-btn-sm" title="编辑广告"
-                        onclick="editForOpenPopups('✎ 广告修改', '{$vo.id}','55%', '92%')">
+                        onclick="editForOpenPopups('✎ 广告修改', '{$vo.id}','50%', '51%')">
                     <i class="layui-icon">&#xe642;</i>
                 </button>
                 <button class="layui-btn layui-btn-sm" title="删除广告"
@@ -93,6 +87,10 @@
     }
     .td-ad_tag{
         color: #7274A7;
+    }
+    .table-body, #demo2-1 {
+        width: 60%;
+        margin: 10px auto;
     }
 </style>
 {/block}

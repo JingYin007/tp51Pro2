@@ -3,21 +3,29 @@
 {block name="body-content"}
 
 <button class="layui-btn layui-btn-normal" op_url="{:url('cms/activity/add')}"
-        onclick="addForOpenPopups(this,'✚ 添加活动','80%','90%')">
+        onclick="addForOpenPopups(this,'✚ 添加活动','60%','80%')">
     <i class="layui-icon">&#xe608;</i> 添加活动
 </button>
 <div class="layui-inline layui-form">
-    <form class="form-search" action="{:url('cms/activity/index')}" method="get">
+    <form class="form-search form-op-search" action="{:url('cms/activity/index')}" method="get">
         <div class="layui-input-inline">
             <input type="text" value="{$search}" name="str_search" placeholder="请输入关键字"
                    class="layui-input search_input">
             <input type="hidden" name="curr_page" class="curr_page" value="1">
         </div>
+
         <div class="layui-input-inline" style="width: 120px">
-            <select name="OrderType">
+            <select name="actType" lay-filter="actType">
+                <option value="" {$actType==""?"selected":""}>全部类型</option>
+                <option value="1" {$actType=="1"?"selected":""}>首页活动</option>
+                <option value="2" {$actType=="2"?"selected":""}>其他活动</option>
+            </select>
+        </div>
+
+        <div class="layui-input-inline" style="width: 120px">
+            <select name="OrderType" lay-filter="OrderType">
                 <option value="W" {$OrderType=="W"?"selected":""}>▼排序权重</option>
                 <option value="A" {$OrderType=="A"?"selected":""}>▼添加时间</option>
-                <option value="D" {$OrderType=="D"?"selected":""}>▼更新时间</option>
             </select>
         </div>
         <button class="layui-btn-warm btn-search-mz">
@@ -28,24 +36,22 @@
 
 <table class="layui-table table-body" lay-even="" lay-skin="row">
     <colgroup>
-        <col width="5%">
         <col width="12%">
         <col width="15%">
-        <col width="12%">
         <col width="10%">
-        <col width="20%">
+        <col width="8%">
         <col width="15%">
+        <col width="10%">
         <col width="5%">
         <col width="10%">
     </colgroup>
     <thead>
     <tr>
-        <th>ID</th>
         <th>活动标题</th>
         <th>活动配图</th>
         <th>标识字符串</th>
         <th>活动类型</th>
-        <th>起始 —— 结束</th>
+        <th>起止时间</th>
         <th>前端显示</th>
         <th>排序</th>
         <th>操作</th>
@@ -59,14 +65,13 @@
            page_url="{:url('cms/activity/index')}">
     {volist name="acts" id="vo"}
     <tr class="tr-normal-{$vo['id']}">
-        <td>{$vo['id']}</td>
         <td>{$vo['title']}</td>
         <td class="td-activity"><img src="{$vo['act_img']}"></td>
         <td class="td-act_tag">{$vo['act_tag']}</td>
         <td>{php} echo $vo['type_tip']{/php}</td>
-        <td>{$vo['start_time']}
-            <hr/>
-            {$vo.end_time}
+        <td>
+            <span class="layui-badge layui-bg-green">{$vo['start_time']}</span><hr/>
+            <span class="layui-badge">{$vo.end_time}</span>
         </td>
         <td>
             <input type="checkbox" class="switch_checked" lay-filter="switchActID"
@@ -77,7 +82,7 @@
         <td>
             <div class="layui-btn-group">
                 <button class="layui-btn layui-btn-sm" title="编辑活动"
-                        onclick="editForOpenPopups('✎ 活动修改','{$vo.id}', '80%', '90%')">
+                        onclick="editForOpenPopups('✎ 活动修改','{$vo.id}', '60%', '80%')">
                     <i class="layui-icon">&#xe642;</i>
                 </button>
                 <button class="layui-btn layui-btn-sm" title="删除活动"
@@ -98,9 +103,26 @@
     .td-act_tag {
         color: #ff7800;
     }
+    .table-body, #demo2-1 {
+        width: 76%;
+        margin: 10px auto;
+    }
 </style>
 {/block}
 
 {block name="single-content"}
 <script src="__CMS__/js/activitys.js"></script>
+<script>
+    layui.use(['form'], function() {
+        var form = layui.form;
+        form.on('select(OrderType)', function(data){
+            $(".form-op-search").submit();
+        });
+        form.on('select(actType)', function(data){
+            $(".form-op-search").submit();
+        });
+
+        form.render();//细节！这个好像要渲染一下！
+    })
+</script>
 {/block}

@@ -26,21 +26,23 @@ class Activity extends CmsBase
      */
     public function index(Request $request){
         $search = $request->param('str_search');
-        $OrderType = $request->param("OrderType", "A");
+        $OrderType = $request->param("OrderType", "W");
+        $actType = $request->param("actType", null);
         $curr_page = $request->param('curr_page',1);
         if ($request->isGet()){
-            $record_num = $this->actModel->getActsCount($search);
-            $list = $this->actModel->getActsForPage(1,$this->page_limit,$search,$OrderType);
+            $record_num = $this->actModel->getActsCount($search,$actType);
+            $list = $this->actModel->getActsForPage(1,$this->page_limit,$search,$OrderType,$actType);
             return view('index',
                 [
                     'acts' => $list,
                     'search' => $search,
                     'OrderType' => $OrderType,
+                    'actType' => $actType,
                     'record_num' => $record_num,
                     'page_limit' => $this->page_limit,
                 ]);
         }else{
-            $list = $this->actModel->getActsForPage($curr_page,$this->page_limit,$search,$OrderType);
+            $list = $this->actModel->getActsForPage($curr_page,$this->page_limit,$search,$OrderType,$actType);
             return showMsg(1,'success',$list);
         }
     }
