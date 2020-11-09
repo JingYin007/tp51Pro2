@@ -92,6 +92,10 @@ Route::any('cms/category/edit/:id','cms/category/edit');
 Route::post('cms/category/ajaxForShow','cms/category/ajaxForShow');
 Route::post('cms/category/ajaxGetToSelCategoryList','cms/category/ajaxGetToSelCategoryList');
 
+Route::any('cms/brand/index','cms/brand/index');
+Route::any('cms/brand/add','cms/brand/add');
+Route::any('cms/brand/edit/:id','cms/brand/edit');
+
 //商品管理
 Route::any('cms/goods/index','cms/goods/index');
 Route::any('cms/goods/add','cms/goods/add');

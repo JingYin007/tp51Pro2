@@ -6,20 +6,21 @@
         <div class="layui-input-inline">
             <input type="text" name="cat_name" required lay-verify="required"
                    value=""
-                   placeholder="请输入名称" autocomplete="off" class="layui-input input-title-mz">
+                   placeholder="请输入名称" autocomplete="off" class="layui-input">
         </div>
     </div>
 
     <div class="layui-form-item">
         <label class="layui-form-label">分类图标：</label>
-        <div class="layui-upload layui-input-inline">
-            <button type="button" name="icon" class="layui-btn btn_upload"
-                    lay-data="{key:1}">
+        <div class="layui-upload layui-input-block">
+            <button type="button" class="layui-btn btn_upload_img">
                 <i class="layui-icon">&#xe67c;</i>上传图标
             </button>
-            <img class="layui-upload-img img-upload-preview-small img-upload-icon"
-                 src="">
-            <input type="hidden" name="icon" class="upload-icon" value="">
+            <button type="button" class="layui-btn layui-btn-danger btn-clear-icon">
+                <i class="layui-icon">&#xe640;</i>清除
+            </button>
+            <img class="layui-upload-img img-upload-preview-small upload_img_preview" src="">
+            <input type="hidden" name="icon" class="upload_img_url" value="">
         </div>
     </div>
     <div class="layui-form-item">
@@ -41,6 +42,7 @@
         <div class="layui-input-inline sel-parent-msg sel-parent-msg-2"
              style="display:none">
             <select name="parent_id_2" lay-search="">
+                <option value="">搜索或直接选择</option>
                 {volist name="cat_list" id="vo"}
                 <option value="{$vo.cat_id}">{$vo.cat_name}</option>
                 {/volist}
@@ -64,7 +66,7 @@
     <div class="layui-form-item">
         <label class="layui-form-label">排序权重：</label>
         <div class="layui-input-inline">
-            <input type="number" name="list_order" value="0" required lay-verify="required"
+            <input type="number" name="list_order" value="999" required lay-verify="required"
                    autocomplete="off" class="layui-input">
         </div>
         <div class="layui-form-mid layui-word-aux">(数字越小，排序越靠前)</div>

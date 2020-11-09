@@ -29,7 +29,7 @@ class Xcategorys extends BaseModel
      */
     public function getCmsCategoryForPage($curr_page, $limit = 1, $search = null, $catType = "S")
     {
-        $where = [['status', '=', 0], ['cat_id', '<>', 0]];
+        $where = [['status', '=', 1], ['cat_id', '<>', 0]];
         if ($catType == "F") {
             $where[] = ['parent_id', '=', 0];
             $where[] = ['level', '=', 1];
@@ -54,7 +54,14 @@ class Xcategorys extends BaseModel
             }
             $parent = $this->getCmsCategoryByID($v['parent_id']);
             $res[$key]['parent_name'] = isset($parent['cat_name']) ? $parent['cat_name'] : '根级分类';
-            $res[$key]['icon'] = imgToServerView($v['icon']);
+
+            if (isset($v['icon']) && !empty($v['icon'])){
+                $img_url = imgToServerView($v['icon']);
+                $str_cat_icon = "<img src='$img_url' class='layui-circle'>";
+            }else{
+                $str_cat_icon = "——";
+            }
+            $res[$key]['tip_cat_icon'] = $str_cat_icon;
         }
         return isset($res) ? $res->toArray() : [];
     }
@@ -67,7 +74,7 @@ class Xcategorys extends BaseModel
      */
     public function getCmsCategoryCount($search = null, $catType = "S")
     {
-        $where = [['status', '=', 0], ['cat_id', '<>', 0]];
+        $where = [['status', '=', 1], ['cat_id', '<>', 0]];
         if ($catType == "F") {
             $where[] = ['parent_id', '=', 0];
             $where[] = ['level', '=', 1];
@@ -97,7 +104,7 @@ class Xcategorys extends BaseModel
         $str_parent_id = "parent_id_".$level;
         $addData = [
             'cat_name' => isset($data['cat_name'])?$data['cat_name']:'',
-            'parent_id' => isset($data[$str_parent_id])?$data[$str_parent_id]:0,
+            'parent_id' => isset($data[$str_parent_id])?$data[$str_parent_id]:null,
             'is_show' => isset($data['is_show'])?$data['is_show']:1,
             'icon' => isset($data['icon'])?$data['icon']:'',
             'level' => isset($data['level'])?$data['level']:1,
@@ -128,6 +135,14 @@ class Xcategorys extends BaseModel
             ->field('*')
             ->where('cat_id', $id)
             ->find();
+        if ($res){
+            if (isset($res['icon']) && !empty($res['icon'])){
+                $icon_full = imgToServerView($res['icon']);
+            }else{
+                $icon_full = "";
+            }
+            $res['icon_full'] = $icon_full;
+        }
         return isset($res)?$res:[];
     }
 
@@ -150,7 +165,7 @@ class Xcategorys extends BaseModel
             $str_parent_id = "parent_id_".$level;
             $saveData = [
                 'cat_name' => isset($input['cat_name'])?$input['cat_name']:'',
-                'parent_id' => isset($input[$str_parent_id])?$input[$str_parent_id]:0,
+                'parent_id' => isset($input[$str_parent_id])?$input[$str_parent_id]:null,
                 'is_show' => isset($input['is_show'])?$input['is_show']:1,
                 'icon' => isset($input['icon'])?$input['icon']:'',
                 'level' => isset($input['level'])?$input['level']:1,
@@ -218,7 +233,7 @@ class Xcategorys extends BaseModel
         } else {
             $map[] = ['parent_id', '=', $parent_id];
         }
-        $map[] = ['status', '=', 0];
+        $map[] = ['status', '=', 1];
         $res = $this
             ->field('cat_id,cat_name,parent_id')
             ->where($map)
@@ -273,7 +288,7 @@ class Xcategorys extends BaseModel
         } else {
             $map[] = ['parent_id', '=', $parent_id];
         }
-        $map[] = ['status', '=', 0];
+        $map[] = ['status', '=', 1];
         $res = $this
             ->field('cat_id id,cat_name title,parent_id')
             ->where($map)

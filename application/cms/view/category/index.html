@@ -4,7 +4,7 @@
 
 <button class="layui-btn layui-btn-normal"
         op_url="{:url('cms/category/add')}"
-        onclick="addForOpenPopups(this,'✚ 产品分类添加','44%', '52%')">
+        onclick="addForOpenPopups(this,'✚ 产品分类添加','44%', '62%')">
     <i class="layui-icon">&#xe608;</i> 添加产品分类
 </button>
 
@@ -62,11 +62,9 @@
     <tr class="tr-normal-{$vo['cat_id']}">
         <td>{$vo['cat_id']}</td>
         <td class="title">{$vo['cat_name']}</td>
-        <td class="icon">
-            <img src="{$vo['icon']}" class="layui-circle">
-        </td>
-        <td>{$vo['parent_name']}</td>
-        <td>{$vo['list_order']}</td>
+        <td class="icon">{php}{echo $vo['tip_cat_icon'];}{/php}</td>
+        <td><span class="span-parent_name">【{$vo['parent_name']}】</span></td>
+        <td><span class="span-list_order">{$vo['list_order']}</span></td>
         <td>
             <input type="checkbox" class="switch_checked" lay-filter="switchCatID"
                    switch_cat_id="{$vo['cat_id']}" {$vo.status_checked}
@@ -75,7 +73,7 @@
         <td>
             <div class="layui-btn-group">
                 <button class="layui-btn layui-btn-sm" title="编辑分类"
-                        onclick="editForOpenPopups('✎ 产品分类修改','{$vo.cat_id}','44%', '52%')">
+                        onclick="editForOpenPopups('✎ 产品分类修改','{$vo.cat_id}','44%', '62%')">
                     <i class="layui-icon">&#xe642;</i>
                 </button>
                 <button class="layui-btn layui-btn-sm" title="删除分类"
@@ -116,18 +114,15 @@
         transition: all 0.6s;
         transform: scale(5);
     }
+    .span-parent_name{
+        color: #ce8483;
+    }
+    .span-list_order{
+        color: #7ecff4;
+    }
 </style>
 {/block}
 
 {block name='single-content'}
 <script src="__CMS__/js/categorys.js"></script>
-<script>
-    layui.use(['form'], function() {
-        var form = layui.form;
-        form.on('radio(CatType)', function(data){
-            $(".form-op-search").submit();
-        });
-    })
-</script>
-
 {/block}

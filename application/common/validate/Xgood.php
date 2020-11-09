@@ -19,7 +19,7 @@ class Xgood extends Validate
         'reference_price' => 'require|float',
         'selling_price' => 'require|float',
         'thumbnail' => 'require|min:6',
-        'tip_word' => 'require|max:80',
+        'sketch' => 'require|max:80',
         'attr_info' => 'require',
         'stock' => 'require|number',
         'details' => 'require',
@@ -33,8 +33,8 @@ class Xgood extends Validate
         'reference_price' => '参考价为小数',
         'selling_price' => '售价为小数',
         'thumbnail' => '缩略图不能为空',
-        'tip_word.max' => '提示语不能超过80个字符',
-        'tip_word.require' => '购买提示语不能为空',
+        'sketch.max' => '提示语不能超过80个字符',
+        'sketch.require' => '购买提示语不能为空',
         'attr_info' => 'sku 规格信息不能为空',
         'cat_id' => '分类不能为空',
         'details' => '商品详情不能为空',
@@ -44,7 +44,7 @@ class Xgood extends Validate
     protected $scene = [
         'default' => ['goods_name', 'list_order',
             'details', 'stock', 'cat_id','attr_info',
-            'reference_price', 'selling_price', 'thumbnail','tip_word'],
+            'reference_price', 'selling_price', 'thumbnail','sketch'],
         'token' => ['__token__'],
     ];
 }

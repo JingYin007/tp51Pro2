@@ -10,7 +10,7 @@ Target Server Type    : MYSQL
 Target Server Version : 50553
 File Encoding         : 65001
 
-Date: 2020-11-08 17:26:03
+Date: 2020-11-09 21:14:49
 */
 
 SET FOREIGN_KEY_CHECKS=0;
@@ -69,22 +69,23 @@ INSERT INTO `tp5_xact_goods` VALUES ('28', '1', '3', '0');
 DROP TABLE IF EXISTS `tp5_xadmins`;
 CREATE TABLE `tp5_xadmins` (
   `id` int(10) unsigned NOT NULL AUTO_INCREMENT COMMENT 'ID',
+  `role_id` int(11) NOT NULL DEFAULT '0' COMMENT '角色ID',
   `user_name` varchar(50) NOT NULL DEFAULT '' COMMENT '管理员昵称',
   `picture` varchar(255) NOT NULL DEFAULT '' COMMENT '管理员头像',
   `password` varchar(200) NOT NULL DEFAULT '' COMMENT '管理员登录密码',
-  `role_id` int(11) NOT NULL DEFAULT '0' COMMENT '角色ID',
-  `created_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+  `created_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
   `status` tinyint(4) NOT NULL DEFAULT '1' COMMENT '状态标识 0：无效；1：正常；-1：删除',
   `content` varchar(500) NOT NULL DEFAULT '世界上没有两片完全相同的叶子！' COMMENT '备注信息',
-  PRIMARY KEY (`id`)
+  PRIMARY KEY (`id`),
+  KEY `index_role` (`role_id`)
 ) ENGINE=MyISAM AUTO_INCREMENT=9 DEFAULT CHARSET=utf8mb4 COMMENT='管理员表';
 
 -- ----------------------------
 -- Records of tp5_xadmins
 -- ----------------------------
-INSERT INTO `tp5_xadmins` VALUES ('1', 'moTzxx@admin', 'cms/images/headshot/wuHuang.png', '37993cfef6629b18d80d7be625aa2485', '1', '2020-09-04 17:01:10', '1', 'HELLO');
-INSERT INTO `tp5_xadmins` VALUES ('2', 'baZhaHei@admin', 'cms/images/headshot/baZhaHei.png', '52c59afc073ef974c23497beb7a87266', '2', '2020-10-21 18:02:01', '1', 'HELLO');
-INSERT INTO `tp5_xadmins` VALUES ('3', 'niuNengx@admin', 'cms/images/headshot/niuNeng.png', '74cc22bb9abcddc8a1cdafbae1fadc7a', '1', '2020-06-02 19:51:04', '1', 'HELLO');
+INSERT INTO `tp5_xadmins` VALUES ('1', '1', 'moTzxx@admin', 'cms/images/headshot/wuHuang.png', '37993cfef6629b18d80d7be625aa2485', '2020-09-04 17:01:10', '1', 'HELLO');
+INSERT INTO `tp5_xadmins` VALUES ('2', '2', 'baZhaHei@admin', 'cms/images/headshot/baZhaHei.png', '52c59afc073ef974c23497beb7a87266', '2020-10-21 18:02:01', '1', 'HELLO');
+INSERT INTO `tp5_xadmins` VALUES ('3', '1', 'niuNengx@admin', 'cms/images/headshot/niuNeng.png', '74cc22bb9abcddc8a1cdafbae1fadc7a', '2020-06-02 19:51:04', '1', 'HELLO');
 
 -- ----------------------------
 -- Table structure for tp5_xadmin_roles
@@ -102,7 +103,7 @@ CREATE TABLE `tp5_xadmin_roles` (
 -- ----------------------------
 -- Records of tp5_xadmin_roles
 -- ----------------------------
-INSERT INTO `tp5_xadmin_roles` VALUES ('1', '终级管理员', '138|139|140|141|1|2|7|6|3|4|5|93|73|49|48|50|67|61|76|133|134|', '2020-05-27 16:28:22', '1');
+INSERT INTO `tp5_xadmin_roles` VALUES ('1', '终级管理员', '138|139|140|141|1|2|7|6|3|4|5|93|61|76|73|49|50|48|142|67|133|134|', '2020-11-09 14:54:53', '1');
 INSERT INTO `tp5_xadmin_roles` VALUES ('2', '初级管理员', '1|2|6|3|4|5|', '2020-09-15 17:13:02', '1');
 
 -- ----------------------------
@@ -166,7 +167,8 @@ CREATE TABLE `tp5_xarticle_points` (
   `abstract` varchar(255) NOT NULL COMMENT '文章摘要',
   `recommend` tinyint(2) NOT NULL DEFAULT '0' COMMENT '推荐标志  0：未推荐   1：推荐',
   `status` tinyint(2) NOT NULL DEFAULT '0' COMMENT '状态标记    ：-1 删除；0：隐藏；1：显示 ',
-  PRIMARY KEY (`id`)
+  PRIMARY KEY (`id`),
+  KEY `index_article` (`article_id`)
 ) ENGINE=MyISAM AUTO_INCREMENT=5 DEFAULT CHARSET=utf8mb4 COMMENT='文章 要点表';
 
 -- ----------------------------
@@ -178,6 +180,45 @@ INSERT INTO `tp5_xarticle_points` VALUES ('4', '4', '0', '', 'home/images/articl
 INSERT INTO `tp5_xarticle_points` VALUES ('3', '3', '0', '', 'home/images/article3.png', '因为穷，所以要努力赚钱；努力赚钱，就会没时间找对象；找不到对象就算了，钱也没赚多少，难免开始焦虑；一旦焦虑，每天洗头的时候，掉出来的头发会告诉你什么才是真正的“绝望”。', '1', '1');
 
 -- ----------------------------
+-- Table structure for tp5_xbrands
+-- ----------------------------
+DROP TABLE IF EXISTS `tp5_xbrands`;
+CREATE TABLE `tp5_xbrands` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `brand_name` varchar(100) NOT NULL COMMENT '品牌名称',
+  `brand_icon` varchar(150) DEFAULT NULL COMMENT '品牌图标',
+  `cat_id` int(11) NOT NULL DEFAULT '0' COMMENT '所属分类编码',
+  `list_order` int(10) unsigned NOT NULL DEFAULT '999' COMMENT '排序',
+  `updated_at` timestamp NULL DEFAULT NULL ON UPDATE CURRENT_TIMESTAMP COMMENT '更新时间',
+  `status` tinyint(2) NOT NULL DEFAULT '1' COMMENT '-1:删除; 1：正常',
+  PRIMARY KEY (`id`),
+  KEY `index_cat` (`cat_id`) USING BTREE
+) ENGINE=MyISAM AUTO_INCREMENT=20 DEFAULT CHARSET=utf8mb4 COMMENT='品牌表';
+
+-- ----------------------------
+-- Records of tp5_xbrands
+-- ----------------------------
+INSERT INTO `tp5_xbrands` VALUES ('1', '戴森(DYSON)', '', '19', '1', '2020-11-09 20:14:16', '1');
+INSERT INTO `tp5_xbrands` VALUES ('2', '科沃斯（Ecovacs）', 'cms/images/brand/Ecovacs.jpg', '18', '1', '2020-11-09 20:36:09', '1');
+INSERT INTO `tp5_xbrands` VALUES ('3', 'dsds', 'upload/20201109/a5faa79f28ca328ce640e571ebf31448.png', '10', '999', '2020-11-09 18:32:09', '-1');
+INSERT INTO `tp5_xbrands` VALUES ('4', 'ddd', 'upload/20201109/0cf78945e58fe35494f74df95c9fa08e.png', '10', '999', '2020-11-09 18:39:03', '-1');
+INSERT INTO `tp5_xbrands` VALUES ('5', 'ss', 'upload/20201109/489ae9371ebc197fdf8d26bb725569b9.png', '10', '1', '2020-11-09 18:31:37', '-1');
+INSERT INTO `tp5_xbrands` VALUES ('6', '花花公子', 'cms/images/brand/PLAYBOY.jpg', '14', '1', '2020-11-09 20:36:10', '1');
+INSERT INTO `tp5_xbrands` VALUES ('7', '香飘飘', 'cms/images/brand/Xiangpiaopiao.png', '9', '1', '2020-11-09 20:36:11', '1');
+INSERT INTO `tp5_xbrands` VALUES ('8', '雀巢', '', '9', '2', '2020-11-09 20:36:11', '1');
+INSERT INTO `tp5_xbrands` VALUES ('9', '太古（taikoo）', 'cms/images/brand/taikoo.jpg', '9', '3', '2020-11-09 20:36:11', '1');
+INSERT INTO `tp5_xbrands` VALUES ('10', '伊利', 'cms/images/brand/Yili.jpg', '10', '1', '2020-11-09 20:36:11', '1');
+INSERT INTO `tp5_xbrands` VALUES ('11', '雅戈尔', '', '14', '2', '2020-11-09 20:36:12', '1');
+INSERT INTO `tp5_xbrands` VALUES ('12', '小米', 'cms/images/brand/xiaomi.gif', '18', '3', '2020-11-09 20:36:12', '1');
+INSERT INTO `tp5_xbrands` VALUES ('13', '华为', 'cms/images/brand/HUAWEI.jpg', '18', '3', '2020-11-09 20:36:17', '1');
+INSERT INTO `tp5_xbrands` VALUES ('14', '小米', 'cms/images/brand/xiaomi.gif', '20', '1', '2020-11-09 20:36:12', '1');
+INSERT INTO `tp5_xbrands` VALUES ('15', '小度', 'cms/images/brand/xiaodu.png', '20', '2', '2020-11-09 20:36:12', '1');
+INSERT INTO `tp5_xbrands` VALUES ('16', '索尼', 'cms/images/brand/SONY.jpg', '20', '3', '2020-11-09 20:36:13', '1');
+INSERT INTO `tp5_xbrands` VALUES ('17', '漫步者', 'cms/images/brand/EDIFIER.png', '21', '1', '2020-11-09 20:36:14', '1');
+INSERT INTO `tp5_xbrands` VALUES ('18', '索尼', 'cms/images/brand/SONY.jpg', '21', '2', '2020-11-09 20:36:14', '1');
+INSERT INTO `tp5_xbrands` VALUES ('19', '蒙牛', '', '10', '3', '2020-11-09 20:36:15', '1');
+
+-- ----------------------------
 -- Table structure for tp5_xcategorys
 -- ----------------------------
 DROP TABLE IF EXISTS `tp5_xcategorys`;
@@ -186,34 +227,38 @@ CREATE TABLE `tp5_xcategorys` (
   `cat_name` varchar(10) NOT NULL DEFAULT '' COMMENT '分类名称',
   `parent_id` smallint(5) unsigned NOT NULL DEFAULT '0' COMMENT '该分类的父id，取决于cat_id ',
   `is_show` tinyint(1) NOT NULL DEFAULT '1' COMMENT '是否在 app 首页导航栏显示  0：不显示  1：显示',
-  `icon` varchar(255) NOT NULL COMMENT '分类图标',
+  `icon` varchar(255) DEFAULT NULL COMMENT '分类图标',
   `level` tinyint(2) NOT NULL DEFAULT '2' COMMENT '类型  1：一级；2：二级； 3：三级',
   `list_order` int(11) NOT NULL DEFAULT '0' COMMENT '排序数字越小 越靠前',
-  `status` tinyint(2) NOT NULL DEFAULT '0' COMMENT '状态 0：正常  -1：已删除',
+  `status` tinyint(2) NOT NULL DEFAULT '1' COMMENT '状态 1：正常  -1：已删除',
   PRIMARY KEY (`cat_id`),
   KEY `parent_id` (`parent_id`)
-) ENGINE=MyISAM AUTO_INCREMENT=19 DEFAULT CHARSET=utf8mb4 COMMENT='商品分类表';
+) ENGINE=MyISAM AUTO_INCREMENT=23 DEFAULT CHARSET=utf8mb4 COMMENT='商品分类表';
 
 -- ----------------------------
 -- Records of tp5_xcategorys
 -- ----------------------------
-INSERT INTO `tp5_xcategorys` VALUES ('1', '图书', '0', '1', 'cms/images/category/books.png', '1', '0', '0');
-INSERT INTO `tp5_xcategorys` VALUES ('2', '电器', '0', '1', 'cms/images/category/electric.png', '1', '2', '0');
-INSERT INTO `tp5_xcategorys` VALUES ('4', '美食', '0', '1', 'cms/images/category/food.png', '1', '0', '0');
-INSERT INTO `tp5_xcategorys` VALUES ('3', '服饰', '0', '0', 'cms/images/category/clothing.png', '1', '0', '0');
-INSERT INTO `tp5_xcategorys` VALUES ('5', '电子书', '1', '1', 'cms/images/category/e-book.png', '2', '0', '0');
-INSERT INTO `tp5_xcategorys` VALUES ('7', '冰箱', '2', '1', 'cms/images/category/refrigerator.png', '2', '0', '0');
-INSERT INTO `tp5_xcategorys` VALUES ('6', '饮品', '4', '1', 'cms/images/category/drink.png', '2', '0', '0');
+INSERT INTO `tp5_xcategorys` VALUES ('1', '图书/文娱', '0', '0', 'cms/images/category/books.png', '1', '3', '1');
+INSERT INTO `tp5_xcategorys` VALUES ('2', '电器数码', '0', '1', 'cms/images/category/electric.png', '1', '4', '1');
+INSERT INTO `tp5_xcategorys` VALUES ('4', '美食/饮料', '0', '1', 'cms/images/category/food.png', '1', '1', '1');
+INSERT INTO `tp5_xcategorys` VALUES ('3', '穿搭服饰', '0', '1', 'cms/images/category/clothing.png', '1', '2', '1');
+INSERT INTO `tp5_xcategorys` VALUES ('5', '服饰配件', '3', '1', '', '2', '2', '1');
+INSERT INTO `tp5_xcategorys` VALUES ('7', '影音娱乐', '2', '1', '', '2', '2', '1');
+INSERT INTO `tp5_xcategorys` VALUES ('6', '饮料冲调', '4', '1', 'cms/images/category/drink.png', '2', '1', '1');
 INSERT INTO `tp5_xcategorys` VALUES ('8', '红酒', '4', '1', 'cms/images/category/red_wine.png', '2', '1', '-1');
-INSERT INTO `tp5_xcategorys` VALUES ('9', '咖啡', '6', '1', 'cms/images/category/coffee.png', '3', '0', '0');
-INSERT INTO `tp5_xcategorys` VALUES ('10', '牛奶', '6', '1', 'cms/images/category/milk.png', '3', '0', '0');
-INSERT INTO `tp5_xcategorys` VALUES ('12', '洗衣机', '2', '1', 'cms/images/category/washer.png', '2', '0', '0');
-INSERT INTO `tp5_xcategorys` VALUES ('13', '小说', '5', '1', 'cms/images/category/fiction.png', '3', '0', '0');
-INSERT INTO `tp5_xcategorys` VALUES ('14', '糖果', '15', '1', 'cms/images/category/candies.png', '3', '0', '0');
-INSERT INTO `tp5_xcategorys` VALUES ('15', '休闲食品', '4', '1', 'cms/images/category/leisure-food.png', '2', '0', '0');
-INSERT INTO `tp5_xcategorys` VALUES ('16', '酒类', '4', '1', 'cms/images/category/wine.png', '2', '0', '0');
-INSERT INTO `tp5_xcategorys` VALUES ('17', '白酒', '16', '1', 'cms/images/category/white-wine.png', '3', '0', '0');
-INSERT INTO `tp5_xcategorys` VALUES ('18', '葡萄酒', '16', '1', 'cms/images/category/grape-wine.png', '3', '0', '0');
+INSERT INTO `tp5_xcategorys` VALUES ('9', '咖啡奶茶', '6', '1', 'cms/images/category/coffee.png', '3', '2', '1');
+INSERT INTO `tp5_xcategorys` VALUES ('10', '牛奶酸奶', '6', '1', 'cms/images/category/milk.png', '3', '1', '1');
+INSERT INTO `tp5_xcategorys` VALUES ('12', '生活电器', '2', '1', 'cms/images/category/washer.png', '2', '1', '1');
+INSERT INTO `tp5_xcategorys` VALUES ('13', '衬衫', '16', '0', '', '3', '1', '1');
+INSERT INTO `tp5_xcategorys` VALUES ('14', '领带/领结', '5', '1', 'upload/20201109/04317e17dd6745d9b12b27256402904f.png', '3', '1', '1');
+INSERT INTO `tp5_xcategorys` VALUES ('15', '粮油调味', '4', '1', '', '2', '2', '1');
+INSERT INTO `tp5_xcategorys` VALUES ('16', '男装', '3', '1', '', '2', '1', '1');
+INSERT INTO `tp5_xcategorys` VALUES ('17', '食用油', '15', '1', '', '3', '1', '1');
+INSERT INTO `tp5_xcategorys` VALUES ('18', '扫地机器人', '12', '1', '', '3', '1', '1');
+INSERT INTO `tp5_xcategorys` VALUES ('19', '吸尘器', '12', '1', '', '3', '2', '1');
+INSERT INTO `tp5_xcategorys` VALUES ('20', '音箱/音响', '7', '1', '', '3', '1', '1');
+INSERT INTO `tp5_xcategorys` VALUES ('21', '耳机/耳麦', '7', '1', '', '3', '2', '1');
+INSERT INTO `tp5_xcategorys` VALUES ('22', 'xxxss', '6', '1', '', '3', '999', '-1');
 
 -- ----------------------------
 -- Table structure for tp5_xchat_logs
@@ -279,8 +324,9 @@ CREATE TABLE `tp5_xcms_logs` (
   `op_msg` varchar(12) NOT NULL COMMENT '操作备案',
   `admin_id` int(11) NOT NULL DEFAULT '0' COMMENT '操作管理员ID',
   `add_time` datetime NOT NULL COMMENT '记录添加时间',
-  PRIMARY KEY (`id`)
-) ENGINE=MyISAM AUTO_INCREMENT=124 DEFAULT CHARSET=utf8mb4;
+  PRIMARY KEY (`id`),
+  KEY `index_op_admin_id` (`op_id`,`admin_id`)
+) ENGINE=MyISAM AUTO_INCREMENT=129 DEFAULT CHARSET=utf8mb4;
 
 -- ----------------------------
 -- Records of tp5_xcms_logs
@@ -396,6 +442,11 @@ INSERT INTO `tp5_xcms_logs` VALUES ('120', 'ARTICLE', '1', '推荐商品', '1', 
 INSERT INTO `tp5_xcms_logs` VALUES ('121', 'ARTICLE', '1', '文章更新', '1', '2020-11-03 16:06:43');
 INSERT INTO `tp5_xcms_logs` VALUES ('122', 'ARTICLE', '1', '文章更新', '1', '2020-11-03 16:06:53');
 INSERT INTO `tp5_xcms_logs` VALUES ('123', 'ARTICLE', '1', '文章更新', '1', '2020-11-06 18:18:38');
+INSERT INTO `tp5_xcms_logs` VALUES ('124', 'GOODS', '2', '商品修改成功', '1', '2020-11-09 10:24:15');
+INSERT INTO `tp5_xcms_logs` VALUES ('125', 'GOODS', '2', '商品修改成功', '1', '2020-11-09 11:27:29');
+INSERT INTO `tp5_xcms_logs` VALUES ('126', 'GOODS', '2', '商品修改成功', '1', '2020-11-09 11:31:00');
+INSERT INTO `tp5_xcms_logs` VALUES ('127', 'GOODS', '2', '商品修改成功', '1', '2020-11-09 11:31:48');
+INSERT INTO `tp5_xcms_logs` VALUES ('128', 'GOODS', '4', '商品修改成功', '1', '2020-11-09 14:35:55');
 
 -- ----------------------------
 -- Table structure for tp5_xconfigs
@@ -433,33 +484,34 @@ CREATE TABLE `tp5_xgoods` (
   `goods_id` int(11) NOT NULL AUTO_INCREMENT COMMENT '商品ID',
   `goods_name` varchar(50) NOT NULL COMMENT '商品名称',
   `cat_id` int(11) NOT NULL DEFAULT '0' COMMENT '商品分类id',
+  `brand_id` int(11) NOT NULL DEFAULT '0' COMMENT '品牌编号',
   `thumbnail` varchar(200) NOT NULL COMMENT '缩略图，一般用于订单页的商品展示',
   `slide_imgs` varchar(600) NOT NULL COMMENT '轮播图片，以逗号隔开',
-  `tip_word` varchar(200) CHARACTER SET utf8 NOT NULL COMMENT '提示语，字数不要太多，一般一句话',
-  `list_order` int(11) NOT NULL DEFAULT '0' COMMENT '排序，越大越靠前',
+  `sketch` varchar(200) CHARACTER SET utf8 NOT NULL COMMENT '简述，字数不要太多，一般一句话',
+  `list_order` int(11) NOT NULL DEFAULT '999' COMMENT '排序，越小越靠前',
   `details` text NOT NULL COMMENT '商品描述详情',
-  `reference_price` decimal(11,2) NOT NULL DEFAULT '0.00' COMMENT '商品参考价',
+  `reference_price` decimal(11,2) NOT NULL DEFAULT '0.00' COMMENT '商品参考价 (市场价格)',
   `selling_price` decimal(11,2) NOT NULL DEFAULT '0.00' COMMENT '商品售价',
   `attr_info` text NOT NULL COMMENT 'json形式保存的属性数据',
   `stock` int(11) NOT NULL DEFAULT '0' COMMENT '库存，注意退货未支付订单时的数目变化',
   `created_at` timestamp NOT NULL DEFAULT '0000-00-00 00:00:00' COMMENT '商品创建时间',
   `updated_at` timestamp NOT NULL DEFAULT '0000-00-00 00:00:00' COMMENT '商品更新时间',
-  `status` tinyint(2) NOT NULL DEFAULT '0' COMMENT '状态 -1：删除 0：待上架 1：已上架 2：预售 ',
+  `status` tinyint(2) NOT NULL DEFAULT '0' COMMENT '状态 -1：删除 0：未上架 1：已上架 2：预售 ',
   `recommend` char(1) NOT NULL DEFAULT '0' COMMENT '推荐标志位',
-  `admin_id` int(11) NOT NULL DEFAULT '1' COMMENT '上传该商品的管理员ID',
-  PRIMARY KEY (`goods_id`)
+  PRIMARY KEY (`goods_id`),
+  KEY `INDEX` (`cat_id`,`brand_id`) USING BTREE
 ) ENGINE=MyISAM AUTO_INCREMENT=36 DEFAULT CHARSET=utf8mb4 COMMENT='商品表\r\n\r\n注意：status 的规定，app 上只显示上架的产品哦';
 
 -- ----------------------------
 -- Records of tp5_xgoods
 -- ----------------------------
-INSERT INTO `tp5_xgoods` VALUES ('1', '德芙 Dove分享碗 草莓白巧克力 221g（新旧包装随机发放）', '14', 'cms/images/goods/1/1.jpg', 'cms/images/goods/1/3.jpg', '办公室休闲零食 员工福利糖果巧克力 ', '1', '                                        <p><img style=\"display: block; margin-left: auto; margin-right: auto;\" title=\"175706NDMzOTQwNDUzNTE4.jpg\" src=\"/cms/images/goods/1/5.jpg\" alt=\"O1CN014zzptX1rlMcSpY1yn_!!1748365671.jpg\" width=\"107\" height=\"618\" /></p>                        ', '30.55', '32.90', '[{\"spec_id\":\"11\",\"spec_info\":[{\"spec_name\":\"221g\",\"spec_id\":\"12\",\"specFstID\":\"11\"},{\"spec_name\":\"300g\",\"spec_id\":\"13\",\"specFstID\":\"11\"}],\"spec_name\":\"重量【巧克力通用】\"}]', '5000', '2019-11-28 10:51:31', '2020-09-15 16:35:41', '1', '0', '1');
-INSERT INTO `tp5_xgoods` VALUES ('2', 'CandyLab【水晶棒棒糖组合】手工糖果创意水果味水晶棒棒糖定制', '14', 'cms/images/goods/2/1.jpg', 'cms/images/goods/2/2.jpg', '只是一件裙子嘛', '2', '                                                            <p><img title=\"100125MzY5NTI3NjY5OTU5.png\" src=\"/cms/images/goods/2/3.jpg\" alt=\"QQ截图20191129095547.png\" width=\"145\" height=\"117\" /></p>                                    ', '120.00', '105.00', '[{\"spec_id\":\"11\",\"spec_info\":[{\"spec_name\":\"300g\",\"spec_id\":\"13\",\"specFstID\":\"11\"}],\"spec_name\":\"重量【巧克力通用】\"}]', '600', '2019-03-11 18:03:26', '2020-09-15 16:53:11', '1', '0', '1');
-INSERT INTO `tp5_xgoods` VALUES ('4', '买1箱送1箱法国进口红酒赤霞珠希雅特酒堡干红葡萄酒红酒特价整箱', '18', 'cms/images/goods/4/1.jpg', '', '好咖啡，有精神头', '2', '<p>&nbsp;</p>\r\n<p><img title=\"093713NzI5OTYxNjkzNzQ4.jpg\" src=\"/cms/images/goods/4/5.jpg\" width=\"240\" height=\"259\" /></p>\r\n<p>&nbsp;</p>', '1980.00', '388.00', '[{\"spec_id\":\"18\",\"spec_info\":[{\"spec_name\":\"13%VOL\",\"spec_id\":\"19\",\"specFstID\":\"18\"}],\"spec_name\":\"酒精度\"},{\"spec_id\":\"21\",\"spec_info\":[{\"spec_name\":\"750ml*6\",\"spec_id\":\"23\",\"specFstID\":\"21\"},{\"spec_name\":\"750ml*12\",\"spec_id\":\"22\",\"specFstID\":\"21\"}],\"spec_name\":\"净含量\"}]', '5000', '2019-03-14 11:03:58', '2020-09-04 21:14:10', '1', '0', '1');
-INSERT INTO `tp5_xgoods` VALUES ('5', '江小白白酒500ml40度8瓶青春版清香型国产大瓶整箱正品包邮送礼', '17', 'cms/images/goods/5/1.jpg', '', '不给你喝，哈哈哈哈', '1', '<p><img src=\"/cms/images/goods/5/4.jpg\" title=\"094745Mjc4NjQ4NzcwNDU1.jpg\" alt=\"TB2OrSAsiCYBuNkSnaVXXcMsVXa_!!2961619882.jpg\"/></p>', '1280.00', '536.00', '[{\"spec_id\":\"4\",\"spec_info\":[{\"spec_name\":\"500ml\",\"spec_id\":\"5\",\"specFstID\":\"4\"}],\"spec_name\":\"容量【小瓶】\"},{\"spec_id\":\"7\",\"spec_info\":[{\"spec_name\":\"40度\",\"spec_id\":\"8\",\"specFstID\":\"7\"},{\"spec_name\":\"38度\",\"spec_id\":\"9\",\"specFstID\":\"7\"}],\"spec_name\":\"酒精度数【白酒类型】\"}]', '4121', '2019-03-18 17:03:17', '2019-11-29 15:13:48', '1', '0', '1');
-INSERT INTO `tp5_xgoods` VALUES ('7', '纽仕兰牧场Theland新西兰进口全脂纯牛奶4.0蛋白质钙250ml*24盒箱', '10', 'cms/images/goods/7/1.jpg', '', '一条裙子', '0', '<p><img src=\"/cms/images/goods/7/3.jpg\" title=\"100629MTMzMzg3NDQ4MTA0.png\" alt=\"TB2pn9Tqk7mBKNjSZFyXXbydFXa_!!82033576.png\"/></p>', '129.00', '99.00', '[{\"spec_id\":\"14\",\"spec_info\":[{\"spec_name\":\"250ml*24\",\"spec_id\":\"15\",\"specFstID\":\"14\"},{\"spec_name\":\"250ml*6\",\"spec_id\":\"16\",\"specFstID\":\"14\"}],\"spec_name\":\"规格【牛奶】\"}]', '2399', '2019-03-19 10:03:48', '2019-11-29 15:12:31', '1', '0', '1');
-INSERT INTO `tp5_xgoods` VALUES ('3', '蒙牛纯甄小蛮腰酸牛奶原味红西柚味瓶装230g×10瓶学生酸奶', '10', 'cms/images/goods/3/1.jpg', '', '8月产蒙牛纯甄小蛮腰酸牛奶', '0', '<p style=\"text-align: center;\"><span style=\"font-size: 24px;\"><strong><span style=\"color: #843fa1;\">好营养，喝蒙牛！</span></strong></span></p>', '30.00', '29.88', '[{\"spec_id\":\"14\",\"spec_info\":[{\"spec_name\":\"230g*10\",\"spec_id\":\"24\",\"specFstID\":\"14\"}],\"spec_name\":\"规格【牛奶】\"}]', '700', '2019-11-29 09:42:38', '2020-09-04 21:13:31', '1', '1', '3');
-INSERT INTO `tp5_xgoods` VALUES ('6', '马来西亚进口 零涩 蓝山风味速溶三合一咖啡 40条640g', '9', 'cms/images/goods/6/1.jpg', '', 'HHEEE', '2', '<p><img title=\"182640MTY0OTg5Njg2NTk0.jpg\" src=\"../../images/goods/6/4.jpg\" width=\"182\" height=\"134\" /></p>\r\n<p>&nbsp;</p>', '28.99', '29.99', '[{\"spec_id\":\"1\",\"spec_info\":[{\"spec_name\":\"640g\",\"spec_id\":\"2\",\"specFstID\":\"1\"}],\"spec_name\":\"容量【速溶咖啡】\"}]', '500', '2019-03-11 18:03:26', '2020-09-04 20:43:57', '1', '0', '1');
+INSERT INTO `tp5_xgoods` VALUES ('1', '德芙 Dove分享碗 草莓白巧克力 221g（新旧包装随机发放）', '14', '0', 'cms/images/goods/1/1.jpg', 'cms/images/goods/1/3.jpg', '办公室休闲零食 员工福利糖果巧克力 ', '1', '                                        <p><img style=\"display: block; margin-left: auto; margin-right: auto;\" title=\"175706NDMzOTQwNDUzNTE4.jpg\" src=\"/cms/images/goods/1/5.jpg\" alt=\"O1CN014zzptX1rlMcSpY1yn_!!1748365671.jpg\" width=\"107\" height=\"618\" /></p>                        ', '30.55', '32.90', '[{\"spec_id\":\"11\",\"spec_info\":[{\"spec_name\":\"221g\",\"spec_id\":\"12\",\"specFstID\":\"11\"},{\"spec_name\":\"300g\",\"spec_id\":\"13\",\"specFstID\":\"11\"}],\"spec_name\":\"重量【巧克力通用】\"}]', '5000', '2019-11-28 10:51:31', '2020-09-15 16:35:41', '1', '0');
+INSERT INTO `tp5_xgoods` VALUES ('2', '不二家 棒棒糖创意心形礼盒50支装 光棍节 送男女朋友礼物糖果年货糖果礼物', '14', '0', 'cms/images/goods/2/1.jpg', 'cms/images/goods/2/2.jpg', '光棍节 送男女朋友礼物糖果年货糖果礼物', '2', '                                                            <p>x</p>                                    ', '120.00', '105.00', '[{\"spec_id\":\"11\",\"spec_info\":[{\"spec_name\":\"300g\",\"spec_id\":\"13\",\"specFstID\":\"11\"}],\"spec_name\":\"重量【巧克力通用】\"}]', '600', '2019-03-11 18:03:26', '2020-11-09 11:31:48', '1', '0');
+INSERT INTO `tp5_xgoods` VALUES ('4', '科沃斯（Ecovacs）地宝T5 Power扫地机器人扫拖一体机智能家用吸尘器激光导航规划全自动洗擦', '9', '0', 'cms/images/goods/4/1.jpg', '', '扫拖一体机智能家用吸尘器激光导航规划全自动洗擦拖地机DX93', '2', '<p><span style=\"color: #843fa1; font-family: Arial, \'microsoft yahei\'; font-size: 16px; font-weight: bold; background-color: #c2e0f4;\">科沃斯（Ecovacs）地宝T5 Power扫地机器人扫拖一体机智能家用吸尘器激光导航规划全自动洗擦拖地机DX93</span></p>', '1980.00', '388.00', '[{\"spec_id\":\"18\",\"spec_info\":[{\"spec_name\":\"13%VOL\",\"spec_id\":\"19\",\"specFstID\":\"18\"}],\"spec_name\":\"酒精度\"},{\"spec_id\":\"21\",\"spec_info\":[{\"spec_name\":\"750ml*6\",\"spec_id\":\"23\",\"specFstID\":\"21\"},{\"spec_name\":\"750ml*12\",\"spec_id\":\"22\",\"specFstID\":\"21\"}],\"spec_name\":\"净含量\"}]', '5000', '2019-03-14 11:03:58', '2020-11-09 14:35:55', '1', '0');
+INSERT INTO `tp5_xgoods` VALUES ('5', '江小白白酒500ml40度8瓶青春版清香型国产大瓶整箱正品包邮送礼', '17', '0', 'cms/images/goods/5/1.jpg', '', '不给你喝，哈哈哈哈', '1', '<p><img src=\"/cms/images/goods/5/4.jpg\" title=\"094745Mjc4NjQ4NzcwNDU1.jpg\" alt=\"TB2OrSAsiCYBuNkSnaVXXcMsVXa_!!2961619882.jpg\"/></p>', '1280.00', '536.00', '[{\"spec_id\":\"4\",\"spec_info\":[{\"spec_name\":\"500ml\",\"spec_id\":\"5\",\"specFstID\":\"4\"}],\"spec_name\":\"容量【小瓶】\"},{\"spec_id\":\"7\",\"spec_info\":[{\"spec_name\":\"40度\",\"spec_id\":\"8\",\"specFstID\":\"7\"},{\"spec_name\":\"38度\",\"spec_id\":\"9\",\"specFstID\":\"7\"}],\"spec_name\":\"酒精度数【白酒类型】\"}]', '4121', '2019-03-18 17:03:17', '2019-11-29 15:13:48', '1', '0');
+INSERT INTO `tp5_xgoods` VALUES ('7', '纽仕兰牧场Theland新西兰进口全脂纯牛奶4.0蛋白质钙250ml*24盒箱', '10', '0', 'cms/images/goods/7/1.jpg', '', '一条裙子', '0', '<p><img src=\"/cms/images/goods/7/3.jpg\" title=\"100629MTMzMzg3NDQ4MTA0.png\" alt=\"TB2pn9Tqk7mBKNjSZFyXXbydFXa_!!82033576.png\"/></p>', '129.00', '99.00', '[{\"spec_id\":\"14\",\"spec_info\":[{\"spec_name\":\"250ml*24\",\"spec_id\":\"15\",\"specFstID\":\"14\"},{\"spec_name\":\"250ml*6\",\"spec_id\":\"16\",\"specFstID\":\"14\"}],\"spec_name\":\"规格【牛奶】\"}]', '2399', '2019-03-19 10:03:48', '2019-11-29 15:12:31', '1', '0');
+INSERT INTO `tp5_xgoods` VALUES ('3', '蒙牛纯甄小蛮腰酸牛奶原味红西柚味瓶装230g×10瓶学生酸奶', '10', '0', 'cms/images/goods/3/1.jpg', '', '8月产蒙牛纯甄小蛮腰酸牛奶', '0', '<p style=\"text-align: center;\"><span style=\"font-size: 24px;\"><strong><span style=\"color: #843fa1;\">好营养，喝蒙牛！</span></strong></span></p>', '30.00', '29.88', '[{\"spec_id\":\"14\",\"spec_info\":[{\"spec_name\":\"230g*10\",\"spec_id\":\"24\",\"specFstID\":\"14\"}],\"spec_name\":\"规格【牛奶】\"}]', '700', '2019-11-29 09:42:38', '2020-09-04 21:13:31', '1', '1');
+INSERT INTO `tp5_xgoods` VALUES ('6', '马来西亚进口 零涩 蓝山风味速溶三合一咖啡 40条640g', '9', '0', 'cms/images/goods/6/1.jpg', '', 'HHEEE', '2', '<p><img title=\"182640MTY0OTg5Njg2NTk0.jpg\" src=\"../../images/goods/6/4.jpg\" width=\"182\" height=\"134\" /></p>\r\n<p>&nbsp;</p>', '28.99', '29.99', '[{\"spec_id\":\"1\",\"spec_info\":[{\"spec_name\":\"640g\",\"spec_id\":\"2\",\"specFstID\":\"1\"}],\"spec_name\":\"容量【速溶咖啡】\"}]', '500', '2019-03-11 18:03:26', '2020-09-04 20:43:57', '1', '0');
 
 -- ----------------------------
 -- Table structure for tp5_xip_whites
@@ -499,7 +551,7 @@ CREATE TABLE `tp5_xnav_menus` (
   `type` tinyint(2) NOT NULL DEFAULT '0' COMMENT '导航类型 0：菜单类  1：权限链接',
   PRIMARY KEY (`id`),
   KEY `id` (`id`,`name`) USING BTREE
-) ENGINE=MyISAM AUTO_INCREMENT=142 DEFAULT CHARSET=utf8mb4 COMMENT='菜单导航表';
+) ENGINE=MyISAM AUTO_INCREMENT=145 DEFAULT CHARSET=utf8mb4 COMMENT='菜单导航表';
 
 -- ----------------------------
 -- Records of tp5_xnav_menus
@@ -507,11 +559,11 @@ CREATE TABLE `tp5_xnav_menus` (
 INSERT INTO `tp5_xnav_menus` VALUES ('136', '查看商品操作日志', '50', 'cms/goods/viewLogs', '', '1', '0', '2020-03-09 17:45:57', '1');
 INSERT INTO `tp5_xnav_menus` VALUES ('2', '菜单管理', '1', 'cms/menu/index', 'cms/images/icon/menu_list.png', '1', '0', '2020-06-02 19:54:40', '0');
 INSERT INTO `tp5_xnav_menus` VALUES ('3', '列表管理', '0', '/', 'cms/images/icon/desktop.png', '1', '2', '2020-06-02 19:54:42', '0');
-INSERT INTO `tp5_xnav_menus` VALUES ('4', '今日赠言', '3', 'cms/todayWord/index', 'cms/images/icon/diplom.png', '1', '0', '2020-06-02 19:54:44', '0');
-INSERT INTO `tp5_xnav_menus` VALUES ('5', '文章列表', '3', 'cms/article/index', 'cms/images/icon/adaptive.png', '1', '0', '2020-06-02 19:54:46', '0');
-INSERT INTO `tp5_xnav_menus` VALUES ('1', '管理分配', '0', '/', 'cms/images/icon/manage.png', '1', '1', '2020-06-02 19:54:49', '0');
-INSERT INTO `tp5_xnav_menus` VALUES ('6', '管理人员', '1', 'cms/admin/index', 'cms/images/icon/admin.png', '1', '3', '2020-06-02 19:54:51', '0');
-INSERT INTO `tp5_xnav_menus` VALUES ('7', '角色管理', '1', 'cms/admin/role', 'cms/images/icon/role.png', '1', '2', '2020-06-02 19:54:55', '0');
+INSERT INTO `tp5_xnav_menus` VALUES ('4', '今日赠言', '3', 'cms/todayWord/index', 'cms/images/icon/diplom.png', '1', '1', '2020-11-09 14:53:36', '0');
+INSERT INTO `tp5_xnav_menus` VALUES ('5', '文章列表', '3', 'cms/article/index', 'cms/images/icon/cms_adaptive.png', '1', '2', '2020-11-09 15:00:11', '0');
+INSERT INTO `tp5_xnav_menus` VALUES ('1', '管理分配', '0', '/', 'cms/images/icon/cms_manage.png', '1', '1', '2020-11-09 15:03:41', '0');
+INSERT INTO `tp5_xnav_menus` VALUES ('6', '管理人员', '1', 'cms/admin/index', 'cms/images/icon/cms_admin.png', '1', '3', '2020-11-09 15:03:13', '0');
+INSERT INTO `tp5_xnav_menus` VALUES ('7', '角色管理', '1', 'cms/admin/role', 'cms/images/icon/cms_role.png', '1', '2', '2020-11-09 15:02:51', '0');
 INSERT INTO `tp5_xnav_menus` VALUES ('29', '添加导航菜单', '2', 'cms/menu/add', '/', '1', '0', '2018-11-23 20:32:29', '1');
 INSERT INTO `tp5_xnav_menus` VALUES ('30', '导航菜单修改', '2', 'cms/menu/edit', '/', '1', '0', '2018-11-23 20:34:54', '1');
 INSERT INTO `tp5_xnav_menus` VALUES ('31', '菜单权限设置', '2', 'cms/menu/auth', '/', '1', '0', '2018-11-23 20:35:33', '1');
@@ -523,9 +575,9 @@ INSERT INTO `tp5_xnav_menus` VALUES ('38', '添加管理员', '6', 'cms/admin/ad
 INSERT INTO `tp5_xnav_menus` VALUES ('39', '修改管理员数据', '6', 'cms/admin/editAdmin', '/', '1', '0', '2019-08-11 17:05:46', '1');
 INSERT INTO `tp5_xnav_menus` VALUES ('41', '增加角色', '7', 'cms/admin/addRole', '/', '1', '0', '2018-11-23 20:48:52', '1');
 INSERT INTO `tp5_xnav_menus` VALUES ('42', '修改角色数据', '7', 'cms/admin/editRole', '/', '1', '0', '2018-11-23 20:49:08', '1');
-INSERT INTO `tp5_xnav_menus` VALUES ('48', '产品分类', '49', 'cms/category/index', 'cms/images/icon/goods_category.png', '1', '0', '2020-06-02 19:54:58', '0');
-INSERT INTO `tp5_xnav_menus` VALUES ('49', '商品管理', '0', '/', 'cms/images/icon/goods_manager.png', '1', '3', '2020-06-02 19:55:01', '0');
-INSERT INTO `tp5_xnav_menus` VALUES ('50', '商品列表', '49', 'cms/goods/index', 'cms/images/icon/goods.png', '1', '0', '2020-06-02 19:55:03', '0');
+INSERT INTO `tp5_xnav_menus` VALUES ('48', '产品分类', '49', 'cms/category/index', 'cms/images/icon/cms_category.png', '1', '1', '2020-11-09 15:01:23', '0');
+INSERT INTO `tp5_xnav_menus` VALUES ('49', '商品管理', '0', '/', 'cms/images/icon/cms_goods_manager.png', '1', '3', '2020-11-09 15:01:33', '0');
+INSERT INTO `tp5_xnav_menus` VALUES ('50', '商品列表', '49', 'cms/goods/index', 'cms/images/icon/cms_goods.png', '1', '0', '2020-11-09 15:00:56', '0');
 INSERT INTO `tp5_xnav_menus` VALUES ('51', '添加产品分类', '48', 'cms/category/add', '/', '1', '0', '2019-03-11 15:16:11', '1');
 INSERT INTO `tp5_xnav_menus` VALUES ('52', '修改产品分类', '48', 'cms/category/edit', '/', '1', '0', '2019-03-11 15:16:11', '1');
 INSERT INTO `tp5_xnav_menus` VALUES ('53', '删除产品分类', '48', 'cms/category/del', '/', '1', '0', '2019-03-11 15:16:11', '1');
@@ -536,23 +588,23 @@ INSERT INTO `tp5_xnav_menus` VALUES ('58', 'ajax 更改上下架状态', '50', '
 INSERT INTO `tp5_xnav_menus` VALUES ('59', 'ajax 首页显示状态修改', '48', 'cms/category/ajaxForShow', '/', '1', '0', '2019-03-21 11:52:13', '1');
 INSERT INTO `tp5_xnav_menus` VALUES ('60', 'ajax 删除上传的图片', '50', 'cms/goods/ajaxDelUploadImg', '/', '-1', '0', '2020-09-15 16:57:40', '1');
 INSERT INTO `tp5_xnav_menus` VALUES ('66', 'ajax 根据分类获取参加活动的商品', '50', 'cms/goods/ajaxGetCatGoodsForActivity', '/', '1', '0', '2019-03-30 12:00:17', '1');
-INSERT INTO `tp5_xnav_menus` VALUES ('67', '属性列表', '49', 'cms/specInfo/index', 'cms/images/icon/spec.png', '1', '0', '2020-06-02 19:55:07', '0');
+INSERT INTO `tp5_xnav_menus` VALUES ('67', '属性列表', '49', 'cms/specInfo/index', 'cms/images/icon/cms_spec.png', '1', '3', '2020-11-09 15:02:27', '0');
 INSERT INTO `tp5_xnav_menus` VALUES ('68', '属性添加', '67', 'cms/specInfo/add', '/', '1', '0', '2019-03-31 17:07:51', '1');
 INSERT INTO `tp5_xnav_menus` VALUES ('69', '属性修改', '67', 'cms/specInfo/edit', '/', '1', '0', '2019-03-31 17:08:14', '1');
 INSERT INTO `tp5_xnav_menus` VALUES ('70', 'ajax 根据商品分类ID查询 父级属性', '67', 'cms/specInfo/ajaxGetSpecInfoFstByCat', '/', '1', '0', '2019-03-31 18:07:57', '1');
 INSERT INTO `tp5_xnav_menus` VALUES ('72', 'ajax 根据父级属性ID查询次级属性', '67', 'cms/specInfo/ajaxGetSpecInfoBySpecFst', '/', '1', '0', '2019-04-04 10:50:43', '1');
-INSERT INTO `tp5_xnav_menus` VALUES ('61', '活动列表', '49', 'cms/activity/index', 'cms/images/icon/activity.png', '1', '0', '2020-06-02 19:55:12', '0');
+INSERT INTO `tp5_xnav_menus` VALUES ('61', '活动列表', '3', 'cms/activity/index', 'cms/images/icon/cms_activity.png', '1', '4', '2020-11-09 14:59:40', '0');
 INSERT INTO `tp5_xnav_menus` VALUES ('62', '活动添加', '61', 'cms/activity/add', '/', '1', '0', '2019-03-29 11:35:17', '1');
 INSERT INTO `tp5_xnav_menus` VALUES ('63', '活动修改', '61', 'cms/activity/edit', '/', '1', '0', '2019-03-29 11:35:38', '1');
 INSERT INTO `tp5_xnav_menus` VALUES ('65', 'ajax 首页显示状态修改', '61', 'cms/activity/ajaxForShow', '/', '1', '0', '2019-03-29 11:36:35', '1');
-INSERT INTO `tp5_xnav_menus` VALUES ('73', '用户列表', '3', 'cms/users/index', 'cms/images/icon/users.png', '1', '5', '2020-06-02 19:55:14', '0');
+INSERT INTO `tp5_xnav_menus` VALUES ('73', '用户列表', '3', 'cms/users/index', 'cms/images/icon/users.png', '1', '6', '2020-11-09 14:54:41', '0');
 INSERT INTO `tp5_xnav_menus` VALUES ('75', 'ajax 修改用户状态', '73', 'cms/users/ajaxUpdateUserStatus', '/', '1', '0', '2019-07-09 17:22:57', '1');
-INSERT INTO `tp5_xnav_menus` VALUES ('76', '广告列表', '49', 'cms/adList/index', 'cms/images/icon/cms_ad.png', '1', '0', '2020-06-02 19:55:22', '0');
+INSERT INTO `tp5_xnav_menus` VALUES ('76', '广告列表', '3', 'cms/adList/index', 'cms/images/icon/cms_ad.png', '1', '5', '2020-11-09 14:54:24', '0');
 INSERT INTO `tp5_xnav_menus` VALUES ('77', '广告添加', '76', 'cms/adList/add', '/', '1', '0', '2019-07-19 18:10:55', '1');
 INSERT INTO `tp5_xnav_menus` VALUES ('80', 'ajax 首页显示广告状态修改', '76', 'cms/adList/ajaxForShow', '/', '1', '0', '2019-07-19 18:11:23', '1');
 INSERT INTO `tp5_xnav_menus` VALUES ('78', '广告修改', '76', 'cms/adList/edit', '/', '1', '0', '2019-07-19 18:11:00', '1');
 INSERT INTO `tp5_xnav_menus` VALUES ('92', 'ajax 文章推荐操作', '5', 'cms/article/ajaxForRecommend', '/', '1', '0', '2019-07-22 16:22:01', '1');
-INSERT INTO `tp5_xnav_menus` VALUES ('93', '业务配置', '3', 'cms/config/index', 'cms/images/icon/cms_config.png', '1', '0', '2020-06-02 19:55:44', '0');
+INSERT INTO `tp5_xnav_menus` VALUES ('93', '业务配置', '3', 'cms/config/index', 'cms/images/icon/cms_config.png', '1', '3', '2020-11-09 14:53:56', '0');
 INSERT INTO `tp5_xnav_menus` VALUES ('94', '添加配置项', '93', 'cms/config/add', '/', '1', '0', '2019-07-26 15:08:38', '1');
 INSERT INTO `tp5_xnav_menus` VALUES ('95', '配置项修改', '93', 'cms/config/edit', '/', '1', '0', '2019-07-29 14:30:13', '1');
 INSERT INTO `tp5_xnav_menus` VALUES ('97', 'ajax 根据分类获取参加活动的商品', '61', 'cms/goods/ajaxGetCatGoodsForActivity', '/', '1', '0', '2019-08-16 09:31:52', '1');
@@ -565,6 +617,9 @@ INSERT INTO `tp5_xnav_menus` VALUES ('138', '系统配置', '0', '/', 'cms/image
 INSERT INTO `tp5_xnav_menus` VALUES ('139', '登录认证', '138', 'cms/sysConf/auth', 'cms/images/icon/cms_auth.png', '1', '1', '2020-06-02 19:55:31', '0');
 INSERT INTO `tp5_xnav_menus` VALUES ('140', '文件上传', '138', 'cms/sysConf/opfile', 'cms/images/icon/cms_upload.png', '1', '2', '2020-06-05 20:29:14', '0');
 INSERT INTO `tp5_xnav_menus` VALUES ('141', 'IP 白名单', '138', 'cms/sysConf/ipWhite', 'cms/images/icon/cms_ip.png', '1', '3', '2020-06-02 19:55:27', '0');
+INSERT INTO `tp5_xnav_menus` VALUES ('142', '品牌列表', '49', 'cms/brand/index', 'cms/images/icon/cms_brand.png', '1', '2', '2020-11-09 20:28:35', '0');
+INSERT INTO `tp5_xnav_menus` VALUES ('143', '品牌添加操作', '142', 'cms/brand/add', '/', '1', '0', '2020-11-09 20:28:32', '1');
+INSERT INTO `tp5_xnav_menus` VALUES ('144', '品牌的更新操作', '142', 'cms/brand/edit', '/', '1', '0', '2020-11-09 20:28:25', '1');
 
 -- ----------------------------
 -- Table structure for tp5_xphotos
@@ -604,7 +659,8 @@ CREATE TABLE `tp5_xskus` (
   `sold_num` int(11) NOT NULL DEFAULT '0' COMMENT '销量',
   `updated_at` timestamp NOT NULL DEFAULT '0000-00-00 00:00:00' ON UPDATE CURRENT_TIMESTAMP COMMENT '创建时间',
   `status` tinyint(2) NOT NULL DEFAULT '0' COMMENT '状态  0:显示（正常） -1：删除（失效）',
-  PRIMARY KEY (`sku_id`)
+  PRIMARY KEY (`sku_id`),
+  KEY `index_goods_id` (`goods_id`)
 ) ENGINE=MyISAM AUTO_INCREMENT=82 DEFAULT CHARSET=utf8mb4 COMMENT='商品 SKU 库存表\r\n\r\n用于存储商品不同属性搭配的数目、价格等';
 
 -- ----------------------------
@@ -617,10 +673,10 @@ INSERT INTO `tp5_xskus` VALUES ('76', '7', '', '16', '250ml*6', '52.00', '300', 
 INSERT INTO `tp5_xskus` VALUES ('77', '5', '', '5,8', '500ml,40度', '536.00', '3099', '1', '2019-11-29 15:13:48', '0');
 INSERT INTO `tp5_xskus` VALUES ('78', '5', '', '5,9', '500ml,38度', '506.00', '1022', '112', '2019-11-29 15:13:48', '0');
 INSERT INTO `tp5_xskus` VALUES ('79', '6', '', '2', '640g', '29.99', '500', '0', '2020-09-04 20:43:57', '0');
-INSERT INTO `tp5_xskus` VALUES ('80', '2', '', '13', '300g', '105.00', '600', '3', '2020-09-15 16:53:11', '0');
+INSERT INTO `tp5_xskus` VALUES ('80', '2', '', '13', '300g', '105.00', '600', '3', '2020-11-09 11:31:48', '0');
 INSERT INTO `tp5_xskus` VALUES ('81', '3', '', '24', '230g*10', '29.88', '700', '12', '2020-09-04 21:13:31', '0');
-INSERT INTO `tp5_xskus` VALUES ('71', '4', '', '19,22', '13%VOL,750ml*12', '388.00', '0', '0', '2020-09-04 21:14:10', '0');
-INSERT INTO `tp5_xskus` VALUES ('72', '4', '', '19,23', '13%VOL,750ml*6', '199.00', '0', '0', '2020-09-04 21:14:10', '0');
+INSERT INTO `tp5_xskus` VALUES ('71', '4', '', '19,22', '13%VOL,750ml*12', '388.00', '0', '0', '2020-11-09 14:35:55', '0');
+INSERT INTO `tp5_xskus` VALUES ('72', '4', '', '19,23', '13%VOL,750ml*6', '199.00', '0', '0', '2020-11-09 14:35:55', '0');
 
 -- ----------------------------
 -- Table structure for tp5_xspec_infos
@@ -632,9 +688,10 @@ CREATE TABLE `tp5_xspec_infos` (
   `cat_id` int(11) NOT NULL DEFAULT '0' COMMENT '分类ID ,主要用于父级ID=0的记录',
   `parent_id` int(11) NOT NULL DEFAULT '0' COMMENT '父级ID  0：初级分类',
   `status` tinyint(2) NOT NULL DEFAULT '1' COMMENT '状态，1：正常，-1：删除，发布后不要随意删除',
-  `list_order` tinyint(4) NOT NULL DEFAULT '0' COMMENT '排序标识，越大越靠前',
+  `list_order` tinyint(4) unsigned NOT NULL DEFAULT '99' COMMENT '排序标识，越小越靠前',
   `mark_msg` varchar(100) CHARACTER SET utf8 NOT NULL COMMENT '备注信息 主要为了区分识别，可不填',
-  PRIMARY KEY (`spec_id`)
+  PRIMARY KEY (`spec_id`),
+  KEY `index_cat` (`cat_id`)
 ) ENGINE=MyISAM AUTO_INCREMENT=25 DEFAULT CHARSET=utf8mb4 COMMENT='商品属性细则表\r\n\r\n一般只存储两级属性，注意 parent_id = 0 表示初级数据\r\n同时，注意添加后不要修改和删除';
 
 -- ----------------------------
@@ -647,20 +704,20 @@ INSERT INTO `tp5_xspec_infos` VALUES ('4', '容量', '17', '0', '1', '0', '小�
 INSERT INTO `tp5_xspec_infos` VALUES ('5', '500ml', '0', '4', '1', '0', '江小白');
 INSERT INTO `tp5_xspec_infos` VALUES ('6', '380ml', '0', '4', '1', '0', '北京二锅头');
 INSERT INTO `tp5_xspec_infos` VALUES ('7', '酒精度数', '17', '0', '1', '0', '白酒类型');
-INSERT INTO `tp5_xspec_infos` VALUES ('8', '40度', '0', '7', '1', '0', '白酒');
-INSERT INTO `tp5_xspec_infos` VALUES ('9', '38度', '0', '7', '1', '0', '');
-INSERT INTO `tp5_xspec_infos` VALUES ('10', '52度', '0', '7', '1', '0', '景芝酱香酒');
-INSERT INTO `tp5_xspec_infos` VALUES ('11', '重量', '14', '0', '1', '0', '巧克力通用');
+INSERT INTO `tp5_xspec_infos` VALUES ('8', '40度', '0', '7', '1', '2', '白酒');
+INSERT INTO `tp5_xspec_infos` VALUES ('9', '38度', '0', '7', '1', '1', '');
+INSERT INTO `tp5_xspec_infos` VALUES ('10', '52度', '0', '7', '1', '3', '景芝酱香酒');
+INSERT INTO `tp5_xspec_infos` VALUES ('11', '重量', '14', '0', '1', '2', '巧克力通用');
 INSERT INTO `tp5_xspec_infos` VALUES ('12', '221g', '0', '11', '1', '0', '');
 INSERT INTO `tp5_xspec_infos` VALUES ('13', '300g', '0', '11', '1', '0', '');
-INSERT INTO `tp5_xspec_infos` VALUES ('14', '规格', '10', '0', '1', '0', '牛奶');
+INSERT INTO `tp5_xspec_infos` VALUES ('14', '规格', '10', '0', '1', '1', '牛奶');
 INSERT INTO `tp5_xspec_infos` VALUES ('15', '250ml*24', '0', '14', '1', '0', '盒装');
 INSERT INTO `tp5_xspec_infos` VALUES ('16', '250ml*6', '0', '14', '1', '0', '6包装');
 INSERT INTO `tp5_xspec_infos` VALUES ('17', '500ml*2', '0', '14', '1', '0', '双瓶装');
 INSERT INTO `tp5_xspec_infos` VALUES ('18', '酒精度', '18', '0', '1', '0', '');
 INSERT INTO `tp5_xspec_infos` VALUES ('19', '13%VOL', '0', '18', '1', '0', '普通酒度数');
 INSERT INTO `tp5_xspec_infos` VALUES ('20', '11%VOL', '0', '18', '1', '0', '度数');
-INSERT INTO `tp5_xspec_infos` VALUES ('21', '净含量', '18', '0', '1', '0', '');
+INSERT INTO `tp5_xspec_infos` VALUES ('21', '净含量', '18', '0', '1', '0', 'zz');
 INSERT INTO `tp5_xspec_infos` VALUES ('22', '750ml*12', '0', '21', '1', '0', '12瓶装');
 INSERT INTO `tp5_xspec_infos` VALUES ('23', '750ml*6', '0', '21', '1', '0', '6瓶装');
 INSERT INTO `tp5_xspec_infos` VALUES ('24', '230g*10', '0', '14', '1', '0', '小蛮腰等');

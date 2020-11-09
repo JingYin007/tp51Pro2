@@ -1,6 +1,27 @@
 {extend name="layouts/cms"}
 {block name='body-content'}
+<style>
+    .table-body-normal .td-goods img {
+        width: 80px;
+    }
 
+    .td-goods_name {
+        color: #7274AB;
+    }
+
+    .td-selling_price {
+        color: #ff7800;
+    }
+
+    .td-weight{
+        color: #FF9233;
+    }
+    .td-stock{
+        font-weight: 700;
+        color: #A0522D;
+        background-color: #DBDBDB;
+    }
+</style>
 <button class="layui-btn layui-btn-normal"
         op_url="{:url('cms/goods/add')}"
         onclick="addForOpenPopups(this,'✚ 添加商品','85%','92%')">
@@ -9,40 +30,47 @@
 <div class="layui-inline layui-form">
     <form class="form-search" action="{:url('cms/goods/index')}" method="get">
         <div class="layui-input-inline" style="width: 100px">
-            <select name="SelStatus" lay-filter="SelStatus">
+            <select name="SelStatus">
                 <option value="Up" {$SelStatus=="Up"?"selected":""}>已上架</option>
                 <option value="Down" {$SelStatus=="Down"?"selected":""}>已下架</option>
             </select>
         </div>
-
+<!--        <div class="layui-input-inline" style="width: 160px">-->
+<!--            <select name="SelBrand">-->
+<!--                <option value="">所有品牌</option>-->
+<!--                {volist name="brandList" id="vo"}-->
+<!--                <option value="{$vo.id}" {$SelBrand==$vo.id?"selected":""}>{$vo.brand_name}</option>-->
+<!--                {/volist}-->
+<!--            </select>-->
+<!--        </div>-->
         <div class="layui-input-inline" style="width: 145px">
             <select name="CatType" lay-search="">
             <option value="">搜索或选择分类</option>
             {volist name="categoryList" id="vo"}
-            {volist name="vo.children" id="vo2"}
-            <optgroup label="{$vo2['title']}">
-                {volist name="vo2.children" id="vo3"}
-                <option value="{$vo3.id}" {$CatType==$vo3.id?"selected":""}>{$vo3.title}</option>
+                {volist name="vo.children" id="vo2"}
+                    <optgroup label="{$vo2['title']}">
+                        {volist name="vo2.children" id="vo3"}
+                        <option value="{$vo3.id}" {$CatType==$vo3.id?"selected":""}>{$vo3.title}</option>
+                        {/volist}
+                    </optgroup>
                 {/volist}
-            </optgroup>
-            {/volist}
             {/volist}
             </select>
-        </div>
-
-        <div class="layui-input-inline">
-            <input type="hidden" name="curr_page" class="curr_page" value="1">
-            <input type="text" value="{$search}" name="str_search" placeholder="请输入商品名称"
-                   class="layui-input search_input">
         </div>
         <div class="layui-input-inline" style="width: 120px">
             <select name="OrderType">
                 <option value="D" {$OrderType=="D"?"selected":""}>▼更新时间</option>
                 <option value="S" {$OrderType=="S"?"selected":""}>▲库存多少</option>
-                <option value="W" {$OrderType=="W"?"selected":""}>▼排序权重</option>
+                <option value="W" {$OrderType=="W"?"selected":""}>▲排序权重</option>
                 <option value="R" {$OrderType=="R"?"selected":""}>▼推荐与否</option>
             </select>
         </div>
+        <div class="layui-input-inline">
+            <input type="hidden" name="curr_page" class="curr_page" value="1">
+            <input type="text" value="{$search}" name="str_search" placeholder="请输入商品名称"
+                   class="layui-input search_input">
+        </div>
+
         <button class="layui-btn-warm btn-search-mz">
             <i class="layui-icon">&#xe615;</i>
         </button>
@@ -103,7 +131,6 @@
             <input type="checkbox" class="switch_checked" lay-filter="switchGoodsID"
                    switch_goods_id="{$vo['goods_id']}"
                    lay-skin="switch" {$vo.status_checked} lay-text="上架|下架">
-            {php} echo $vo['tip_admin_user']{/php}
         </td>
         <td>
             <div class="layui-btn-group">
@@ -126,7 +153,6 @@
     </tbody>
 </table>
 <div id="demo2-1"></div>
-<link href="__CMS__/css/goods.css" rel="stylesheet">
 {/block}
 
 {block name='single-content'}
@@ -160,6 +186,10 @@
                     }
                 }, "JSON");
         });
+        form.on('select()', function(data){
+            $(".form-search").submit();
+        });
+        form.render();//细节！这个好像要渲染一下！
     });
 </script>
 {/block}

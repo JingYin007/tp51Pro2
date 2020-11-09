@@ -48,15 +48,14 @@ class Xgoods extends BaseModel
         } elseif ($OrderType == "S") {
             $order["g.stock"] = "asc";
         } elseif ($OrderType == "W") {
-            $order["g.list_order"] = "desc";
+            $order["g.list_order"] = "asc";
         }else{
             $order["g.recommend"] = "desc";
         }
         $res = $this
             ->alias('g')
-            ->field('g.*,cat_name,a.user_name admin_user')
+            ->field('g.*,cat_name')
             ->join('xcategorys cat', 'cat.cat_id = g.cat_id')
-            ->join("xadmins a","a.id = g.admin_id")
             ->where($where)
             ->whereLike('g.goods_name|g.goods_id', '%' . $search . '%')
             ->order($order)
@@ -69,7 +68,6 @@ class Xgoods extends BaseModel
                 $res[$key]['status_checked'] = "";
             }
             $res[$key]['thumbnail'] = imgToServerView($v['thumbnail']);
-            $res[$key]['tip_admin_user'] = "<span class=\"layui-badge\">".$v['admin_user']."</span>";
         }
         return isset($res) ? $res->toArray() : [];
     }
@@ -147,7 +145,7 @@ class Xgoods extends BaseModel
                 'details' => isset($input['details']) ? $input['details'] : '',
                 'thumbnail' => isset($input['thumbnail']) ? $input['thumbnail'] : '',
                 'slide_imgs' => isset($input['slide_imgs'])? $input['slide_imgs']:'',
-                'tip_word' => isset($input['tip_word']) ? $input['tip_word'] : '',
+                'sketch' => isset($input['sketch']) ? $input['sketch'] : '',
                 'cat_id' => isset($input['cat_id']) ? intval($input['cat_id']) : 1,
                 'reference_price' => isset($input['reference_price']) ? round($input['reference_price'], 2) : 0.00,
                 'selling_price' => isset($input['selling_price']) ? round($input['selling_price'], 2) : 0.00,
@@ -213,7 +211,7 @@ class Xgoods extends BaseModel
             'details' => isset($data['details']) ? $data['details'] : '',
             'thumbnail' => isset($data['thumbnail']) ? $data['thumbnail'] : '',
             'slide_imgs' => isset($input['slide_imgs'])? $input['slide_imgs']:'',
-            'tip_word' => isset($data['tip_word']) ? $data['tip_word'] : '',
+            'sketch' => isset($data['sketch']) ? $data['sketch'] : '',
             'cat_id' => isset($data['cat_id']) ? intval($data['cat_id']) : 1,
             'reference_price' => isset($data['reference_price']) ? round($data['reference_price'], 2) : 0.00,
             'selling_price' => isset($data['selling_price']) ? round($data['selling_price'], 2) : 0.00,

@@ -19,7 +19,7 @@
                 {volist name="vo.children" id="vo2"}
                 <optgroup label="{$vo2['title']}">
                     {volist name="vo2.children" id="vo3"}
-                    <option value="{$vo3.id}" {$specInfo['cat_id']==$vo3.id?"selected":""}>{$vo3.title}</option>
+                    <option value="{$vo3.id}" {$specInfo.cat_id==$vo3.id?"selected":""}>{$vo3.title}</option>
                     {/volist}
                 </optgroup>
                 {/volist}
@@ -35,7 +35,7 @@
                    value="{$specInfo['list_order']}" required lay-verify="required"
                    placeholder="" autocomplete="off" class="layui-input">
         </div>
-        <div class="layui-form-mid layui-word-aux">(数字越大，排序越靠前)</div>
+        <div class="layui-form-mid layui-word-aux">(数字越小，排序越靠前)</div>
     </div>
 
     <div class="layui-form-item">

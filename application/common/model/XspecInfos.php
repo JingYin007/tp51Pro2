@@ -38,7 +38,7 @@ class XspecInfos extends BaseModel
             ->join('xcategorys c','c.cat_id = s1.cat_id')
             ->where($where)
             ->whereLike('s1.spec_name', '%' . $search . '%')
-            ->order(['s1.list_order' => 'desc', 's1.spec_id' => 'desc'])
+            ->order(['s1.list_order' => 'asc', 's1.spec_id' => 'desc'])
             ->limit($limit * ($curr_page - 1), $limit)
             ->select();
         foreach ($res as $key => $value){
@@ -190,7 +190,7 @@ class XspecInfos extends BaseModel
             ->alias("s1")
             ->field('s1.*')
             ->where($where)
-            ->order(['s1.list_order' => 'desc', 's1.spec_id' => 'desc'])
+            ->order(['s1.list_order' => 'asc', 's1.spec_id' => 'desc'])
             ->select();
         foreach ($specList as $key => $value) {
             if ($value && $value['mark_msg']) {
@@ -209,7 +209,7 @@ class XspecInfos extends BaseModel
             ->field('s1.*')
             ->where($where)
             ->whereLike('s1.spec_name', '%' . $search . '%')
-            ->order(['s1.list_order' => 'desc', 's1.spec_id' => 'desc'])
+            ->order(['s1.list_order' => 'asc', 's1.spec_id' => 'desc'])
             ->limit($limit * ($curr_page - 1), $limit)
             ->select();
         return isset($res)?$res->toArray():[];

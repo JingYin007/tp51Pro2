@@ -1,0 +1,113 @@
+{extend name="layouts/cms"}
+
+{block name='body-content'}
+
+<button class="layui-btn layui-btn-normal"
+        op_url="{:url('cms/brand/add')}"
+        onclick="addForOpenPopups(this,'✚ 品牌添加','41%', '52%')">
+    <i class="layui-icon">&#xe608;</i> 添加品牌
+</button>
+
+<div class="layui-inline layui-form">
+    <form class="form-search form-op-search" action="{:url('cms/brand/index')}" method="get">
+        <div class="layui-input-inline" style="width: 145px">
+            <select name="catID" lay-search="">
+                <option value="">搜索或选择分类</option>
+                {volist name="categoryList" id="vo"}
+                {volist name="vo.children" id="vo2"}
+                <optgroup label="{$vo2['title']}">
+                    {volist name="vo2.children" id="vo3"}
+                    <option value="{$vo3.id}" {$catID==$vo3.id?"selected":""}>{$vo3.title}</option>
+                    {/volist}
+                </optgroup>
+                {/volist}
+                {/volist}
+            </select>
+        </div>
+
+        <div class="layui-input-inline">
+            <input type="hidden" name="curr_page" class="curr_page" value="1">
+            <input type="text" value="{$search}" name="str_search" placeholder="请输入名称"
+                   class="layui-input search_input">
+        </div>
+        <button class="layui-btn-warm btn-search-mz">
+            <i class="layui-icon">&#xe615;</i>
+        </button>
+    </form>
+</div>
+
+<table class="layui-table table-body" lay-even="" lay-skin="row">
+    <colgroup>
+        <col width="20%">
+        <col width="8%">
+        <col width="15%">
+        <col width="8%">
+        <col width="15%">
+    </colgroup>
+    <thead>
+    <tr>
+        <th>品牌名称</th>
+        <th>品牌图标</th>
+        <th>分类</th>
+        <th>排序</th>
+        <th>操作</th>
+    </tr>
+    </thead>
+    <input type="hidden" class="op_url" value="{:url('cms/brand/edit',['id'=>'opid'])}">
+    <tbody class="table-tbody-normal layui-form"
+           ajax_page_fun="ToAjaxOpForPageBrands"
+           record_num="{$record_num}" page_limit="{$page_limit}"
+           page_url="{:url('cms/brand/index')}">
+    {volist name="list" id="vo"}
+    <tr class="tr-normal-{$vo['id']}">
+        <td class="title">{$vo['brand_name']}</td>
+        <td class="icon">{php}echo $vo['tip_brand_icon'];{/php}</td>
+        <td><span class="span-cat_name">【{$vo['cat_name']}】</span></td>
+        <td><span class="span-list_order">{$vo['list_order']}</span></td>
+        <td>
+            <div class="layui-btn-group">
+                <button class="layui-btn layui-btn-sm" title="编辑品牌"
+                        onclick="editForOpenPopups('✎ 品牌修改','{$vo.id}','41%', '52%')">
+                    <i class="layui-icon">&#xe642;</i>
+                </button>
+                <button class="layui-btn layui-btn-sm" title="删除品牌"
+                        onclick="delPostRecord('{$vo.id}')">
+                    <i class="layui-icon">&#xe640;</i>
+                </button>
+            </div>
+        </td>
+    </tr>
+    {/volist}
+    </tbody>
+</table>
+<div id="demo2-1"></div>
+<style>
+
+    .table-body, #demo2-1 {
+        width: 50%;
+        margin: auto;
+    }
+
+    .table-body{
+        margin-top: 30px;
+    }
+
+    .table-tbody-normal .title {
+        color: #7274A7;
+    }
+
+    .table-tbody-normal .icon img {
+        height: 46px;
+    }
+    .span-cat_name{
+        color: #ce8483;
+    }
+    .span-list_order{
+        color: #7ecff4;
+    }
+</style>
+{/block}
+
+{block name='single-content'}
+<script src="__CMS__/js/categorys.js"></script>
+{/block}

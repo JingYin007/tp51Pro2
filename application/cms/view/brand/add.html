@@ -2,19 +2,33 @@
 {block name='body-content'}
 <form class="layui-form form-op-normal layui-form-pane">
     <div class="layui-form-item">
-        <label class="layui-form-label">属性名称：</label>
+        <label class="layui-form-label">品牌名称：</label>
         <div class="layui-input-inline">
-            <input type="text" name="spec_name" required lay-verify="required"
+            <input type="text" name="brand_name" required lay-verify="required"
                    value=""
                    placeholder="请输入名称" autocomplete="off" class="layui-input">
-            <input type="hidden" name="id" value="{$spec_id}">
         </div>
     </div>
-    {eq name="spec_id" value="0" }
+
     <div class="layui-form-item">
-        <label class="layui-form-label">所属分类：</label>
+        <label class="layui-form-label">品牌图标：</label>
+        <div class="layui-upload layui-input-block">
+            <button type="button" class="layui-btn btn_upload_img">
+                <i class="layui-icon">&#xe67c;</i>上传图标
+            </button>
+            <button type="button" class="layui-btn layui-btn-danger btn-clear-icon">
+                <i class="layui-icon">&#xe640;</i>清除
+            </button>
+            <img class="layui-upload-img img-upload-preview-small upload_img_preview"
+                 src="">
+            <input type="hidden" name="brand_icon" class="upload_img_url" value="">
+        </div>
+    </div>
+
+    <div class="layui-form-item">
+        <label class="layui-form-label">选择分类：</label>
         <div class="layui-input-inline">
-            <select id="toSelCatID" lay-filter="toSelCatID" lay-search="" name="toSelCatID" lay-verify="required">
+            <select id="toSelCatID" name="cat_id" lay-search="">
                 <option value="">搜索或选择分类</option>
                 {volist name="categoryList" id="vo"}
                 {volist name="vo.children" id="vo2"}
@@ -28,29 +42,20 @@
             </select>
         </div>
     </div>
-    {/eq}
+
     <div class="layui-form-item">
         <label class="layui-form-label">排序权重：</label>
         <div class="layui-input-inline">
-            <input type="number" name="list_order" value="99" required lay-verify="required"
+            <input type="number" name="list_order" value="999" required lay-verify="required"
                    autocomplete="off" class="layui-input">
         </div>
         <div class="layui-form-mid layui-word-aux">(数字越小，排序越靠前)</div>
-    </div>
-
-    <div class="layui-form-item">
-        <label class="layui-form-label">备注信息：</label>
-        <div class="layui-input-inline">
-            <input type="text" name="mark_msg"
-                   placeholder="请输入...(建议五字以内)" autocomplete="off" class="layui-input">
-        </div>
-        <div class="layui-form-mid layui-word-aux">(主要为了区分识别，可不填)</div>
     </div>
     {:token()}
     <div class="layui-form-item">
         <div class="layui-input-block div-form-op">
             <button class="layui-btn" type="button"
-                    op_url="{:url('cms/specInfo/add')}" onclick="opFormPostRecord(this)">提交</button>
+                    op_url="{:url('cms/brand/add')}" onclick="opFormPostRecord(this)">提交</button>
             <button type="reset" class="layui-btn layui-btn-primary">放弃</button>
         </div>
     </div>
@@ -59,4 +64,5 @@
 {/block}
 
 {block name='single-content'}
+<script src="__CMS__/js/categorys.js"></script>
 {/block}

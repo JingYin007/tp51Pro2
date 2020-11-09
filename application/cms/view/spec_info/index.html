@@ -41,11 +41,11 @@
 
 <table class="layui-table table-body" lay-even="" lay-skin="row">
     <colgroup>
-        <col width="10%">
-        <col width="20%">
+        <col width="8%">
         <col width="15%">
-        <col width="20%">
-        <col width="10%">
+        <col width="15%">
+        <col width="25%">
+        <col width="7%">
         <col width="20%">
     </colgroup>
     <thead>
@@ -54,7 +54,7 @@
         <th>属性名称</th>
         <th>所属分类</th>
         <th>备注信息</th>
-        <th>排序权重</th>
+        <th>排序</th>
         <th>操作</th>
     </tr>
     </thead>
@@ -67,13 +67,15 @@
     <tr class="tr-normal-{$vo['spec_id']}">
         <td>{$vo['spec_id']}</td>
         <td class="spec_name">{$vo['spec_name']}</td>
-        <td>{$vo['cat_name']}</td>
+        <td>
+            <span class="span-cat_name">【{$vo['cat_name']}】</span>
+        </td>
         <td class="mark_msg">{$vo['mark_msg']}</td>
-        <td>{$vo['list_order']}</td>
+        <td><span class="span-list_order">{$vo['list_order']}</span></td>
         <td>
             <div class="layui-btn-group">
                 <button class="layui-btn layui-btn-sm" title="编辑属性"
-                        onclick="editForOpenPopups('✎ 产品属性修改','{$vo.spec_id}', '70%', '66%')">
+                        onclick="editForOpenPopups('✎ 产品属性修改','{$vo.spec_id}', '50%', '50%')">
                     <i class="layui-icon">&#xe642;</i>
                 </button>
                 <button class="layui-btn layui-btn-sm" title="删除"
@@ -96,12 +98,23 @@
 </table>
 <style>
     .spec_name{
-        background-color: #C9C5C5;
+        background-color: #fff9ec;
         font-size: larger;
         color: #7274A7;
     }
     .mark_msg{
-        color: #c17551;
+        color: #ffb86c;
+    }
+    .table-body,#demo2-1{
+        width: 66%;
+        margin: 10px auto;
+    }
+    .span-cat_name{
+        font-size: medium;
+        color: #ce8483;
+    }
+    .span-list_order{
+        color: #00a0e9;
     }
 </style>
 <div id="demo2-1"></div>
@@ -123,13 +136,13 @@
     function addSpecInfo(id) {
         var toUrl = "{:url('cms/specInfo/add',['id'=>'AID'])}";
         toUrl = toUrl.replace('AID', id);
-        ToOpenPopups(toUrl, '✚ 产品属性添加', '70%', '66%');
+        ToOpenPopups(toUrl, '✚ 产品规格添加', '50%', '50%');
     }
 
     function opSpecInfo(id) {
         var toUrl = "{:url('cms/specInfo/details',['id'=>'AID'])}";
         toUrl = toUrl.replace('AID', id);
-        ToOpenPopups(toUrl, '★ 规格数据展示', '70%', '85%');
+        ToOpenPopups(toUrl, '★ 规格数据展示', '60%', '75%');
     }
 </script>
 {/block}

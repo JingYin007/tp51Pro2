@@ -1,0 +1,74 @@
+{extend name='layouts/cms'}
+{block name='body-content'}
+<form class="layui-form form-op-normal layui-form-pane">
+    <div class="layui-form-item">
+        <label class="layui-form-label">品牌名称：</label>
+        <div class="layui-input-inline">
+            <input type="text" name="brand_name" required lay-verify="required"
+                   value="{$brand['brand_name']}"
+                   placeholder="请输入标题" autocomplete="off" class="layui-input">
+        </div>
+    </div>
+    <div class="layui-form-item">
+
+        <label class="layui-form-label">品牌图标：</label>
+        <div class="layui-upload layui-input-block">
+            <button type="button" class="layui-btn btn_upload_img">
+                <i class="layui-icon">&#xe67c;</i>上传图标
+            </button>
+            <button type="button" class="layui-btn layui-btn-danger btn-clear-icon">
+                <i class="layui-icon">&#xe640;</i>清除
+            </button>
+            <img class="layui-upload-img img-upload-preview-small upload_img_preview"
+                 src="{$brand['brand_icon_full']}">
+            <input type="hidden" name="brand_icon" class="upload_img_url" value="{$brand.brand_icon}">
+        </div>
+    </div>
+
+    <div class="layui-form-item">
+        <label class="layui-form-label">选择分类：</label>
+        <div class="layui-input-inline">
+            <select id="toSelCatID" name="cat_id" lay-search="">
+                <option value="" {$brand.cat_id==""?"selected":""}>搜索或选择分类</option>
+                {volist name="categoryList" id="vo"}
+                    {volist name="vo.children" id="vo2"}
+                    <optgroup label="{$vo2['title']}">
+                        {volist name="vo2.children" id="vo3"}
+                        <option value="{$vo3.id}" {$brand.cat_id==$vo3.id?"selected":""}>{$vo3.title}</option>
+                        {/volist}
+                    </optgroup>
+                    {/volist}
+                {/volist}
+            </select>
+        </div>
+    </div>
+
+    <div class="layui-form-item">
+        <label class="layui-form-label">排序权重：</label>
+        <div class="layui-input-inline">
+            <input type="number" name="list_order"
+                   value="{$brand['list_order']}" required lay-verify="required"
+                   placeholder="" autocomplete="off" class="layui-input">
+        </div>
+        <div class="layui-form-mid layui-word-aux">(数字越小，排序越靠前)</div>
+    </div>
+
+    {:token()}
+    <div class="layui-form-item">
+        <div class="layui-input-block div-form-op">
+            <button class="layui-btn" type="button"
+                    op_url="{:url('cms/brand/edit',['id'=>$brand.id])}" onclick="opFormPostRecord(this)">提交</button>
+            <button type="reset" class="layui-btn layui-btn-primary">放弃</button>
+        </div>
+    </div>
+</form>
+
+{/block}
+
+{block name='single-content'}
+<script src="__CMS__/js/categorys.js"></script>
+{/block}
+
+
+
+

@@ -31,20 +31,24 @@ class Goods extends CmsBase
         $curr_page = $request->param('curr_page', 1);
         $SelStatus = $request->param("SelStatus", "Up");
         $CatType = $request->param("CatType", "0");
+        $SelBrand = $request->param("SelBrand", null);
         $search = $request->param('str_search');
         $OrderType = $request->param("OrderType", "D");
         if ($request->isGet()){
             //获取所有的商品二级三級分类
             $categoryList = $this->categoryModel->getCmsToSelCategoryList();
+            $brandList = (new Xbrands())->getSelectableList();
             $goods = $this->model->getCmsGoodsForPage($curr_page, $this->page_limit, $search, $SelStatus, $CatType, $OrderType);
             $record_num = $this->model->getCmsGoodsCount($search, $SelStatus, $CatType);
             $data = [
                 'goods' => $goods,
                 'search' => $search,
                 'SelStatus' => $SelStatus,
+                'SelBrand' => $SelBrand,
                 'CatType' => $CatType,
                 'OrderType' => $OrderType,
                 'categoryList' => $categoryList,
+                'brandList' => $brandList,
                 'record_num' => $record_num,
                 'page_limit' => $this->page_limit,
             ];
