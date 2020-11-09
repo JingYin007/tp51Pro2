@@ -153,7 +153,7 @@ function goToMakeSaleGoodsMsg(arrSpecFull) {
             "                    <div class=\"layui-upload layui-input-inline\">\n" +
             "                        <button type=\"button\" class=\"layui-btn btn_sku_upload_img\"\n" +
             "                         lay-data=\"{sku_index:"+i+"}\">\n" +
-            "                            <i class=\"layui-icon\">&#xe67c;新</i>\n" +
+            "                            <i class=\"layui-icon\">&#xe67c;</i>\n" +
             "                        </button>\n" +
             "                        <img class=\"layui-upload-img sku-img-upload-preview-"+ i +" img-upload-preview-medium img-upload-view\"\n" +
             "                             src=\"\">\n" +

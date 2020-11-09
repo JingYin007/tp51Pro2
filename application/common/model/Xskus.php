@@ -68,7 +68,7 @@ class Xskus extends BaseModel
     {
         $skuData = $this
             ->field("*")
-            ->where([["goods_id", '=', intval($goodsID)], ["status", '=', 0]])
+            ->where([["goods_id", '=', intval($goodsID)], ["status", '<>', -1]])
             ->select();
         return isset($skuData) ? $skuData->toArray() : [];
     }

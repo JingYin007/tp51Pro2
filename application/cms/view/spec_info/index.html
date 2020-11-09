@@ -3,7 +3,7 @@
 {block name='body-content'}
 <div class="layui-form-item">
     <button class="layui-btn layui-btn-normal"
-            onclick="addSpecInfo(0)">
+            onclick="addSpecInfo(0,'✚ 属性添加')">
         <i class="layui-icon">&#xe608;</i> 添加产品属性
     </button>
 </div>
@@ -87,7 +87,7 @@
                     <i class="layui-icon">&#xe63c;</i>
                 </button>
                 <button class="layui-btn layui-btn-sm" title="添加规格"
-                        onclick="addSpecInfo('{$vo.spec_id}')">
+                        onclick="addSpecInfo('{$vo.spec_id}','✚ 规格添加')">
                     <i class="layui-icon">&#xe654;</i>
                 </button>
             </div>
@@ -133,10 +133,10 @@
 </script>
 <script>
     //添加导航菜单
-    function addSpecInfo(id) {
+    function addSpecInfo(id,title) {
         var toUrl = "{:url('cms/specInfo/add',['id'=>'AID'])}";
         toUrl = toUrl.replace('AID', id);
-        ToOpenPopups(toUrl, '✚ 产品规格添加', '50%', '50%');
+        ToOpenPopups(toUrl, title, '50%', '50%');
     }
 
     function opSpecInfo(id) {

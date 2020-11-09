@@ -34,7 +34,7 @@ function ToAjaxOpForPageSpecInfos(toUrl,postData) {
                         "                    <i class=\"layui-icon\">&#xe63c;</i>\n" +
                         "                </button>\n" +
                         "                <button class=\"layui-btn layui-btn-sm\" title=\"添加规格\"\n" +
-                        "                        onclick=\"addSpecInfo('"+e.spec_id+"')\">\n" +
+                        "                        onclick=\"addSpecInfo('"+e.spec_id+"','✚ 规格添加')\">\n" +
                         "                    <i class=\"layui-icon\">&#xe654;</i>\n" +
                         "                </button>"+
                         "                    </div>\n" +

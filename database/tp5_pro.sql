@@ -10,7 +10,7 @@ Target Server Type    : MYSQL
 Target Server Version : 50553
 File Encoding         : 65001
 
-Date: 2020-11-09 21:14:49
+Date: 2020-11-09 21:46:48
 */
 
 SET FOREIGN_KEY_CHECKS=0;
@@ -326,7 +326,7 @@ CREATE TABLE `tp5_xcms_logs` (
   `add_time` datetime NOT NULL COMMENT '记录添加时间',
   PRIMARY KEY (`id`),
   KEY `index_op_admin_id` (`op_id`,`admin_id`)
-) ENGINE=MyISAM AUTO_INCREMENT=129 DEFAULT CHARSET=utf8mb4;
+) ENGINE=MyISAM AUTO_INCREMENT=130 DEFAULT CHARSET=utf8mb4;
 
 -- ----------------------------
 -- Records of tp5_xcms_logs
@@ -447,6 +447,7 @@ INSERT INTO `tp5_xcms_logs` VALUES ('125', 'GOODS', '2', '商品修改成功', '
 INSERT INTO `tp5_xcms_logs` VALUES ('126', 'GOODS', '2', '商品修改成功', '1', '2020-11-09 11:31:00');
 INSERT INTO `tp5_xcms_logs` VALUES ('127', 'GOODS', '2', '商品修改成功', '1', '2020-11-09 11:31:48');
 INSERT INTO `tp5_xcms_logs` VALUES ('128', 'GOODS', '4', '商品修改成功', '1', '2020-11-09 14:35:55');
+INSERT INTO `tp5_xcms_logs` VALUES ('129', 'GOODS', '4', '商品修改成功', '1', '2020-11-09 21:36:24');
 
 -- ----------------------------
 -- Table structure for tp5_xconfigs
@@ -507,7 +508,7 @@ CREATE TABLE `tp5_xgoods` (
 -- ----------------------------
 INSERT INTO `tp5_xgoods` VALUES ('1', '德芙 Dove分享碗 草莓白巧克力 221g（新旧包装随机发放）', '14', '0', 'cms/images/goods/1/1.jpg', 'cms/images/goods/1/3.jpg', '办公室休闲零食 员工福利糖果巧克力 ', '1', '                                        <p><img style=\"display: block; margin-left: auto; margin-right: auto;\" title=\"175706NDMzOTQwNDUzNTE4.jpg\" src=\"/cms/images/goods/1/5.jpg\" alt=\"O1CN014zzptX1rlMcSpY1yn_!!1748365671.jpg\" width=\"107\" height=\"618\" /></p>                        ', '30.55', '32.90', '[{\"spec_id\":\"11\",\"spec_info\":[{\"spec_name\":\"221g\",\"spec_id\":\"12\",\"specFstID\":\"11\"},{\"spec_name\":\"300g\",\"spec_id\":\"13\",\"specFstID\":\"11\"}],\"spec_name\":\"重量【巧克力通用】\"}]', '5000', '2019-11-28 10:51:31', '2020-09-15 16:35:41', '1', '0');
 INSERT INTO `tp5_xgoods` VALUES ('2', '不二家 棒棒糖创意心形礼盒50支装 光棍节 送男女朋友礼物糖果年货糖果礼物', '14', '0', 'cms/images/goods/2/1.jpg', 'cms/images/goods/2/2.jpg', '光棍节 送男女朋友礼物糖果年货糖果礼物', '2', '                                                            <p>x</p>                                    ', '120.00', '105.00', '[{\"spec_id\":\"11\",\"spec_info\":[{\"spec_name\":\"300g\",\"spec_id\":\"13\",\"specFstID\":\"11\"}],\"spec_name\":\"重量【巧克力通用】\"}]', '600', '2019-03-11 18:03:26', '2020-11-09 11:31:48', '1', '0');
-INSERT INTO `tp5_xgoods` VALUES ('4', '科沃斯（Ecovacs）地宝T5 Power扫地机器人扫拖一体机智能家用吸尘器激光导航规划全自动洗擦', '9', '0', 'cms/images/goods/4/1.jpg', '', '扫拖一体机智能家用吸尘器激光导航规划全自动洗擦拖地机DX93', '2', '<p><span style=\"color: #843fa1; font-family: Arial, \'microsoft yahei\'; font-size: 16px; font-weight: bold; background-color: #c2e0f4;\">科沃斯（Ecovacs）地宝T5 Power扫地机器人扫拖一体机智能家用吸尘器激光导航规划全自动洗擦拖地机DX93</span></p>', '1980.00', '388.00', '[{\"spec_id\":\"18\",\"spec_info\":[{\"spec_name\":\"13%VOL\",\"spec_id\":\"19\",\"specFstID\":\"18\"}],\"spec_name\":\"酒精度\"},{\"spec_id\":\"21\",\"spec_info\":[{\"spec_name\":\"750ml*6\",\"spec_id\":\"23\",\"specFstID\":\"21\"},{\"spec_name\":\"750ml*12\",\"spec_id\":\"22\",\"specFstID\":\"21\"}],\"spec_name\":\"净含量\"}]', '5000', '2019-03-14 11:03:58', '2020-11-09 14:35:55', '1', '0');
+INSERT INTO `tp5_xgoods` VALUES ('4', '科沃斯（Ecovacs）地宝T5 Power扫地机器人扫拖一体机智能家用吸尘器激光导航规划全自动洗擦', '9', '0', 'cms/images/goods/4/1.jpg', '', '扫拖一体机智能家用吸尘器激光导航规划全自动洗擦拖地机DX93', '2', '                    <p><span style=\"color: #843fa1; font-family: Arial, \'microsoft yahei\'; font-size: 16px; font-weight: bold; background-color: #c2e0f4;\">科沃斯（Ecovacs）地宝T5 Power扫地机器人扫拖一体机智能家用吸尘器激光导航规划全自动洗擦拖地机DX93</span></p>            ', '1980.00', '388.00', '[{\"spec_id\":\"1\",\"spec_info\":[{\"spec_name\":\"640g\",\"spec_id\":\"2\",\"specFstID\":\"1\"},{\"spec_name\":\"1280g\",\"spec_id\":\"3\",\"specFstID\":\"1\"}],\"spec_name\":\"容量【速溶咖啡】\"}]', '5000', '2019-03-14 11:03:58', '2020-11-09 21:36:24', '1', '0');
 INSERT INTO `tp5_xgoods` VALUES ('5', '江小白白酒500ml40度8瓶青春版清香型国产大瓶整箱正品包邮送礼', '17', '0', 'cms/images/goods/5/1.jpg', '', '不给你喝，哈哈哈哈', '1', '<p><img src=\"/cms/images/goods/5/4.jpg\" title=\"094745Mjc4NjQ4NzcwNDU1.jpg\" alt=\"TB2OrSAsiCYBuNkSnaVXXcMsVXa_!!2961619882.jpg\"/></p>', '1280.00', '536.00', '[{\"spec_id\":\"4\",\"spec_info\":[{\"spec_name\":\"500ml\",\"spec_id\":\"5\",\"specFstID\":\"4\"}],\"spec_name\":\"容量【小瓶】\"},{\"spec_id\":\"7\",\"spec_info\":[{\"spec_name\":\"40度\",\"spec_id\":\"8\",\"specFstID\":\"7\"},{\"spec_name\":\"38度\",\"spec_id\":\"9\",\"specFstID\":\"7\"}],\"spec_name\":\"酒精度数【白酒类型】\"}]', '4121', '2019-03-18 17:03:17', '2019-11-29 15:13:48', '1', '0');
 INSERT INTO `tp5_xgoods` VALUES ('7', '纽仕兰牧场Theland新西兰进口全脂纯牛奶4.0蛋白质钙250ml*24盒箱', '10', '0', 'cms/images/goods/7/1.jpg', '', '一条裙子', '0', '<p><img src=\"/cms/images/goods/7/3.jpg\" title=\"100629MTMzMzg3NDQ4MTA0.png\" alt=\"TB2pn9Tqk7mBKNjSZFyXXbydFXa_!!82033576.png\"/></p>', '129.00', '99.00', '[{\"spec_id\":\"14\",\"spec_info\":[{\"spec_name\":\"250ml*24\",\"spec_id\":\"15\",\"specFstID\":\"14\"},{\"spec_name\":\"250ml*6\",\"spec_id\":\"16\",\"specFstID\":\"14\"}],\"spec_name\":\"规格【牛奶】\"}]', '2399', '2019-03-19 10:03:48', '2019-11-29 15:12:31', '1', '0');
 INSERT INTO `tp5_xgoods` VALUES ('3', '蒙牛纯甄小蛮腰酸牛奶原味红西柚味瓶装230g×10瓶学生酸奶', '10', '0', 'cms/images/goods/3/1.jpg', '', '8月产蒙牛纯甄小蛮腰酸牛奶', '0', '<p style=\"text-align: center;\"><span style=\"font-size: 24px;\"><strong><span style=\"color: #843fa1;\">好营养，喝蒙牛！</span></strong></span></p>', '30.00', '29.88', '[{\"spec_id\":\"14\",\"spec_info\":[{\"spec_name\":\"230g*10\",\"spec_id\":\"24\",\"specFstID\":\"14\"}],\"spec_name\":\"规格【牛奶】\"}]', '700', '2019-11-29 09:42:38', '2020-09-04 21:13:31', '1', '1');
@@ -588,7 +589,7 @@ INSERT INTO `tp5_xnav_menus` VALUES ('58', 'ajax 更改上下架状态', '50', '
 INSERT INTO `tp5_xnav_menus` VALUES ('59', 'ajax 首页显示状态修改', '48', 'cms/category/ajaxForShow', '/', '1', '0', '2019-03-21 11:52:13', '1');
 INSERT INTO `tp5_xnav_menus` VALUES ('60', 'ajax 删除上传的图片', '50', 'cms/goods/ajaxDelUploadImg', '/', '-1', '0', '2020-09-15 16:57:40', '1');
 INSERT INTO `tp5_xnav_menus` VALUES ('66', 'ajax 根据分类获取参加活动的商品', '50', 'cms/goods/ajaxGetCatGoodsForActivity', '/', '1', '0', '2019-03-30 12:00:17', '1');
-INSERT INTO `tp5_xnav_menus` VALUES ('67', '属性列表', '49', 'cms/specInfo/index', 'cms/images/icon/cms_spec.png', '1', '3', '2020-11-09 15:02:27', '0');
+INSERT INTO `tp5_xnav_menus` VALUES ('67', '属性/规格', '49', 'cms/specInfo/index', 'cms/images/icon/cms_spec.png', '1', '3', '2020-11-09 21:17:08', '0');
 INSERT INTO `tp5_xnav_menus` VALUES ('68', '属性添加', '67', 'cms/specInfo/add', '/', '1', '0', '2019-03-31 17:07:51', '1');
 INSERT INTO `tp5_xnav_menus` VALUES ('69', '属性修改', '67', 'cms/specInfo/edit', '/', '1', '0', '2019-03-31 17:08:14', '1');
 INSERT INTO `tp5_xnav_menus` VALUES ('70', 'ajax 根据商品分类ID查询 父级属性', '67', 'cms/specInfo/ajaxGetSpecInfoFstByCat', '/', '1', '0', '2019-03-31 18:07:57', '1');
@@ -658,25 +659,27 @@ CREATE TABLE `tp5_xskus` (
   `stock` int(11) NOT NULL DEFAULT '0' COMMENT '库存',
   `sold_num` int(11) NOT NULL DEFAULT '0' COMMENT '销量',
   `updated_at` timestamp NOT NULL DEFAULT '0000-00-00 00:00:00' ON UPDATE CURRENT_TIMESTAMP COMMENT '创建时间',
-  `status` tinyint(2) NOT NULL DEFAULT '0' COMMENT '状态  0:显示（正常） -1：删除（失效）',
+  `status` tinyint(2) NOT NULL DEFAULT '1' COMMENT '状态   -1：删除（失效）；0: 下架(未上架)；1:上架',
   PRIMARY KEY (`sku_id`),
   KEY `index_goods_id` (`goods_id`)
-) ENGINE=MyISAM AUTO_INCREMENT=82 DEFAULT CHARSET=utf8mb4 COMMENT='商品 SKU 库存表\r\n\r\n用于存储商品不同属性搭配的数目、价格等';
+) ENGINE=MyISAM AUTO_INCREMENT=84 DEFAULT CHARSET=utf8mb4 COMMENT='商品 SKU 库存表\r\n\r\n用于存储商品不同属性搭配的数目、价格等';
 
 -- ----------------------------
 -- Records of tp5_xskus
 -- ----------------------------
 INSERT INTO `tp5_xskus` VALUES ('73', '1', '', '12', '221g', '32.90', '3000', '11', '2020-09-15 16:35:41', '0');
 INSERT INTO `tp5_xskus` VALUES ('74', '1', '', '13', '300g', '50.00', '2000', '12', '2020-09-15 16:35:41', '0');
-INSERT INTO `tp5_xskus` VALUES ('75', '7', '', '15', '250ml*24', '99.00', '2099', '87', '2019-11-29 15:12:31', '0');
-INSERT INTO `tp5_xskus` VALUES ('76', '7', '', '16', '250ml*6', '52.00', '300', '77', '2019-11-29 15:12:31', '0');
-INSERT INTO `tp5_xskus` VALUES ('77', '5', '', '5,8', '500ml,40度', '536.00', '3099', '1', '2019-11-29 15:13:48', '0');
-INSERT INTO `tp5_xskus` VALUES ('78', '5', '', '5,9', '500ml,38度', '506.00', '1022', '112', '2019-11-29 15:13:48', '0');
-INSERT INTO `tp5_xskus` VALUES ('79', '6', '', '2', '640g', '29.99', '500', '0', '2020-09-04 20:43:57', '0');
-INSERT INTO `tp5_xskus` VALUES ('80', '2', '', '13', '300g', '105.00', '600', '3', '2020-11-09 11:31:48', '0');
-INSERT INTO `tp5_xskus` VALUES ('81', '3', '', '24', '230g*10', '29.88', '700', '12', '2020-09-04 21:13:31', '0');
-INSERT INTO `tp5_xskus` VALUES ('71', '4', '', '19,22', '13%VOL,750ml*12', '388.00', '0', '0', '2020-11-09 14:35:55', '0');
-INSERT INTO `tp5_xskus` VALUES ('72', '4', '', '19,23', '13%VOL,750ml*6', '199.00', '0', '0', '2020-11-09 14:35:55', '0');
+INSERT INTO `tp5_xskus` VALUES ('75', '7', '', '15', '250ml*24', '99.00', '2099', '87', '2020-11-09 21:31:00', '1');
+INSERT INTO `tp5_xskus` VALUES ('76', '7', '', '16', '250ml*6', '52.00', '300', '77', '2020-11-09 21:31:00', '1');
+INSERT INTO `tp5_xskus` VALUES ('77', '5', '', '5,8', '500ml,40度', '536.00', '3099', '1', '2020-11-09 21:31:00', '1');
+INSERT INTO `tp5_xskus` VALUES ('78', '5', '', '5,9', '500ml,38度', '506.00', '1022', '112', '2020-11-09 21:31:01', '1');
+INSERT INTO `tp5_xskus` VALUES ('79', '6', '', '2', '640g', '29.99', '500', '0', '2020-11-09 21:31:01', '1');
+INSERT INTO `tp5_xskus` VALUES ('80', '2', '', '13', '300g', '105.00', '600', '3', '2020-11-09 21:31:01', '1');
+INSERT INTO `tp5_xskus` VALUES ('81', '3', '', '24', '230g*10', '29.88', '700', '12', '2020-11-09 21:31:02', '1');
+INSERT INTO `tp5_xskus` VALUES ('71', '4', '', '19,22', '13%VOL,750ml*12', '388.00', '0', '0', '2020-11-09 21:36:24', '-1');
+INSERT INTO `tp5_xskus` VALUES ('72', '4', '', '19,23', '13%VOL,750ml*6', '199.00', '0', '0', '2020-11-09 21:36:24', '-1');
+INSERT INTO `tp5_xskus` VALUES ('82', '4', '', '2', '640g', '0.00', '0', '0', '2020-11-09 21:36:24', '1');
+INSERT INTO `tp5_xskus` VALUES ('83', '4', '', '3', '1280g', '0.00', '0', '0', '2020-11-09 21:36:24', '1');
 
 -- ----------------------------
 -- Table structure for tp5_xspec_infos
@@ -692,7 +695,7 @@ CREATE TABLE `tp5_xspec_infos` (
   `mark_msg` varchar(100) CHARACTER SET utf8 NOT NULL COMMENT '备注信息 主要为了区分识别，可不填',
   PRIMARY KEY (`spec_id`),
   KEY `index_cat` (`cat_id`)
-) ENGINE=MyISAM AUTO_INCREMENT=25 DEFAULT CHARSET=utf8mb4 COMMENT='商品属性细则表\r\n\r\n一般只存储两级属性，注意 parent_id = 0 表示初级数据\r\n同时，注意添加后不要修改和删除';
+) ENGINE=MyISAM AUTO_INCREMENT=25 DEFAULT CHARSET=utf8mb4 COMMENT='商品属性、规格细则表\r\n\r\n一般只存储两级属性，注意 parent_id = 0 表示为属性信息\r\n\r\nparent_id > 0 : 表示为规格信息';
 
 -- ----------------------------
 -- Records of tp5_xspec_infos
