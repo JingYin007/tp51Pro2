@@ -20,17 +20,15 @@
 
 <table class="layui-table table-body" lay-even="" lay-skin="row">
     <colgroup>
+        <col width="12%">
+        <col width="8%">
+        <col width="25%">
+        <col width="10%">
         <col width="5%">
-        <col width="15%">
         <col width="10%">
-        <col width="35%">
-        <col width="10%">
-        <col width="10%">
-        <col width="15%">
     </colgroup>
     <thead>
     <tr>
-        <th>ID</th>
         <th>出处</th>
         <th>图片</th>
         <th>内容</th>
@@ -46,7 +44,6 @@
            page_url="{:url('cms/todayWord/index')}">
     {volist name="todayWords" id="vo"}
     <tr class="tr-normal-{$vo['id']}">
-        <td>{$vo['id']}</td>
         <td class="from">《{$vo['from']}》</td>
         <td class="icon">
             <img src="{$vo['picture']}" class="layui-circle">
@@ -86,6 +83,10 @@
         padding-left: 3px;
         padding-bottom: 3px;
         height: 55px;
+    }
+    .table-body,#demo2-1{
+        width: 66%;
+        margin: 10px auto;
     }
 </style>
 {/block}
