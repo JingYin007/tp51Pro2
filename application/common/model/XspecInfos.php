@@ -123,7 +123,7 @@ class XspecInfos extends BaseModel
             $this
                 ->where('spec_id', $id)
                 ->update(['status' => -1]);
-            $validateRes = ['tag' => 1, 'message' => '删除成功'];
+            $validateRes = ['tag' => 1, 'message' => '数据删除成功'];
         } else {
             $tokenData = ['__token__' => isset($input['__token__']) ? $input['__token__'] : '',];
             if ($level == 1){
@@ -140,7 +140,7 @@ class XspecInfos extends BaseModel
                     'list_order' => intval($input['list_order']),
                     'mark_msg' => isset($input['mark_msg']) ? $input['mark_msg'] : '',
                 ];
-                $validateRes = ['tag' => 1, 'message' => '修改成功'];
+                $validateRes = ['tag' => 1, 'message' => '数据更新成功'];
             }
 
             if ($validateRes['tag']) {
@@ -148,7 +148,7 @@ class XspecInfos extends BaseModel
                     ->where('spec_id', $id)
                     ->update($saveData);
                 $validateRes['tag'] = $saveTag;
-                $validateRes['message'] = $saveTag ? '修改成功' : '数据无变动';
+                $validateRes['message'] = $saveTag ? '数据更新成功' : '数据无变动';
             }
         }
         return $validateRes;

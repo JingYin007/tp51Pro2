@@ -190,7 +190,7 @@ class XsysConf extends Model
     public function delIpWhite($ipVal = ''){
         if ($ipVal){
             $tag = Db::name('xipWhites')->where('ip',$ipVal)->update(['status'=>-1]);
-            $message = $tag?'删除成功':"删除失败";
+            $message = $tag?'数据删除成功':"删除失败";
         }else{
             $tag = 0;
             $message = "获取IP信息失败！";

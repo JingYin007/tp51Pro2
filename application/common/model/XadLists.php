@@ -119,7 +119,7 @@ class XadLists extends BaseModel
             $tag = $this
                 ->where('id', $id)
                 ->update(['status' => -1]);
-            $validateRes['message'] = $tag ? '删除成功' : '已删除';
+            $validateRes['message'] = $tag ? '数据删除成功' : '已删除';
         } else {
             $saveData = [
                 'ad_name' => isset($data['ad_name']) ? $data['ad_name'] : '',

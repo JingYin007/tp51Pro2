@@ -168,13 +168,13 @@ class Xadmins extends BaseModel
                         $tag = $this
                             ->where('id', $id)
                             ->update($saveData);
-                        $message = $tag ? '信息修改成功' : '数据无变动，修改失败';
+                        $message = $tag ? '信息修改成功' : '数据无变动，数据更新失败';
                     }
                 }else{
                     $tag = $this
                         ->where('id', $id)
                         ->update($saveData);
-                    $message = $tag ? '信息修改成功' : '数据无变动，修改失败';
+                    $message = $tag ? '信息修改成功' : '数据无变动，数据更新失败';
                 }
             }
         }else{
@@ -224,7 +224,7 @@ class Xadmins extends BaseModel
                 if ($validateRes['tag']) {
                     $tag = $this->allowField(true)->save($saveData, ['id' => $id]);
                     $validateRes['tag'] = $tag;
-                    $validateRes['message'] = $tag ? '管理员修改成功' : '数据无变动，修改失败';
+                    $validateRes['message'] = $tag ? '管理员修改成功' : '数据无变动或修改失败';
                 }
             }
         }

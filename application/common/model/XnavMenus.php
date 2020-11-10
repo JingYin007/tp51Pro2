@@ -270,7 +270,7 @@ class XnavMenus extends BaseModel
             $tag = $this
                 ->where('id', $id)
                 ->update(['status' => -1]);
-            $validateRes['message'] = $tag ? '删除成功' : '已删除';
+            $validateRes['message'] = $tag ? '数据删除成功' : '已删除';
         } else {
             $navType = isset($data['navType'])?$data['navType']:"F";
             $strNavType = "parent_id_".$navType;

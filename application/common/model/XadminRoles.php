@@ -112,7 +112,7 @@ class XadminRoles extends BaseModel
                     $tag = $this
                         ->where('id', $id)
                         ->update($saveData);
-                    $validateRes['message'] = $tag ? '角色修改成功' : '数据无变动，修改失败';
+                    $validateRes['message'] = $tag ? '角色修改成功' : '数据无变动，数据更新失败';
                 }
             }
         }

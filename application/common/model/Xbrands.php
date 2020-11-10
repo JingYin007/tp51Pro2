@@ -129,7 +129,7 @@ class Xbrands extends BaseModel
         if ($opTag == 'del') {
             $this->where('id', $id)
                 ->update(['status' => -1]);
-            $validateRes = ['tag' => 1, 'message' => '删除成功'];
+            $validateRes = ['tag' => 1, 'message' => '数据删除成功'];
         } else {
             $saveData = [
                 'brand_name' => isset($input['brand_name'])?$input['brand_name']:'',
@@ -145,7 +145,7 @@ class Xbrands extends BaseModel
                     ->where('id', $id)
                     ->update($saveData);
                 $validateRes['tag'] = $saveTag;
-                $validateRes['message'] = $saveTag ? '修改成功' : '数据无变动';
+                $validateRes['message'] = $saveTag ? '数据更新成功' : '数据无变动';
 
             }
         }

@@ -181,7 +181,7 @@ class Xarticles extends BaseModel
             Db::name('xarticle_points')
                 ->where('article_id', $id)
                 ->update(['status' => -1]);
-            $validateRes = ['tag' => 1, 'message' => '删除成功'];
+            $validateRes = ['tag' => 1, 'message' => '数据删除成功'];
             insertCmsOpLogs(1,'ARTICLE',$id,'文章删除操作');
         } else {
             $saveData = [
@@ -207,7 +207,7 @@ class Xarticles extends BaseModel
                     insertCmsOpLogs($saveTag,'ARTICLE',$id,'文章更新');
                 }
                 $validateRes['tag'] = $saveTag;
-                $validateRes['message'] = $saveTag ? '修改成功' : '数据无变动';
+                $validateRes['message'] = $saveTag ? '数据更新成功' : '数据无变动';
             }
         }
         return $validateRes;

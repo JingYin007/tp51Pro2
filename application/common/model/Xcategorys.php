@@ -159,9 +159,9 @@ class Xcategorys extends BaseModel
             Db::name('xcategorys')
                 ->where('cat_id', $id)
                 ->update(['status' => -1]);
-            $validateRes = ['tag' => 1, 'message' => '删除成功'];
+            $validateRes = ['tag' => 1, 'message' => '数据删除成功'];
         } else {
-            $level = isset($input['level'])?$input['level']:1;
+            $level = isset($input['level'])? $input['level'] : 1;
             $str_parent_id = "parent_id_".$level;
             $saveData = [
                 'cat_name' => isset($input['cat_name'])?$input['cat_name']:'',
@@ -178,7 +178,7 @@ class Xcategorys extends BaseModel
                     ->where('cat_id', $id)
                     ->update($saveData);
                 $validateRes['tag'] = $saveTag;
-                $validateRes['message'] = $saveTag ? '修改成功' : '数据无变动';
+                $validateRes['message'] = $saveTag ? '数据更新成功' : '数据无变动';
                 if ($saveTag){
                     $this->goToUpdateCategoryJsonData();
                 }

@@ -136,7 +136,7 @@ class XtodayWords extends BaseModel
         if ($validateRes['tag']) {
             $tag = $this->insert($addData);
             $validateRes['tag'] = $tag;
-            $validateRes['message'] = $tag ? '添加成功' : '添加失败';
+            $validateRes['message'] = $tag ? '数据添加成功' : '数据添加失败';
         }
         return $validateRes;
     }
@@ -155,7 +155,7 @@ class XtodayWords extends BaseModel
             $this
                 ->where('id', $id)
                 ->update(['status' => -1]);
-            $validateRes = ['tag' => 1, 'message' => '删除成功'];
+            $validateRes = ['tag' => 1, 'message' => '记录删除成功'];
         } else {
             $saveData = [
                 'from' => isset($data['from'])?$data['from']:'',
@@ -172,7 +172,7 @@ class XtodayWords extends BaseModel
                     ->where('id', $id)
                     ->update($saveData);
                 $validateRes['tag'] = $saveTag;
-                $validateRes['message'] = $saveTag ? '修改成功' : '数据无变动';
+                $validateRes['message'] = $saveTag ? '数据修改成功' : '数据无变动';
             }
         }
         return $validateRes;
