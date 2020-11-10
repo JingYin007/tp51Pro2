@@ -1,7 +1,7 @@
 {extend name="layouts/cms"}
 {block name='body-content'}
 <div class="layui-inline layui-form">
-    <form class="form-search" action="{:url('cms/users/index')}" method="get">
+    <form class="form-search form-op-search" action="{:url('cms/users/index')}" method="get">
         <div class="layui-input-inline" style="width: 100px">
             <select name="user_type" lay-filter="CatType">
                 <option value="0" {$user_type=="0"?"selected":""}>普通用户</option>
@@ -23,12 +23,11 @@
     <colgroup>
         <col width="5%">
         <col width="5%">
-        <col width="5%">
-        <col width="5%">
         <col width="10%">
         <col width="5%">
+        <col width="12%">
         <col width="5%">
-        <col width="10%">
+        <col width="15%">
         <col width="5%">
     </colgroup>
     <thead>
@@ -39,7 +38,6 @@
         <th>性别</th>
         <th>认证手机</th>
         <th>积分</th>
-        <th>状态</th>
         <th>注册时间</th>
         <th>操作</th>
     </tr>
@@ -52,12 +50,13 @@
     <tr class="tr-normal-{$vo['id']}">
         <td>{$vo['id']}</td>
         <td class="icon"><img class="layui-circle" src="{$vo.user_avatar}"></td>
-        <td><span class="span-FF9233">{$vo['nick_name']} </span></td>
+        <td><span class="span-nick_name">{$vo['nick_name']} </span></td>
         <td>{$vo['sex']}</td>
-        <td><span class="span-FF9233">{$vo['auth_tel']} </span></td>
-        <td><span class="span-7EC0EE">{$vo['integral']}</span><br></td>
-        <td>{php} echo $vo['user_status_tip']{/php}</td>
-        <td>{$vo['reg_time2']}</td>
+        <td><span class="span-auth_tel">{$vo['auth_tel']} </span></td>
+        <td><span class="span-integral">{$vo['integral']}</span><br></td>
+        <td>
+            {php} echo $vo['user_status_tip']{/php}<hr>
+            {$vo['reg_time2']}</td>
         <td>
             <div class="layui-btn-group">
                 <button class="layui-btn layui-btn-warm layui-btn-sm" title="状态审核"
@@ -75,6 +74,19 @@
         width: 56px;
         height: 56px;
     }
+    .span-nick_name{
+        color: #7274A7;
+    }
+    .span-auth_tel{
+        color: #f8b9b7;
+    }
+    .span-integral{
+        color: #468847;
+    }
+    .table-body, #demo2-1 {
+        width: 60%;
+        margin: 10px auto;
+    }
 </style>
 <div id="demo2-1"></div>
 {/block}
@@ -82,6 +94,13 @@
 {block name='single-content'}
 <script src="__CMS__/js/users.js"></script>
 <script>
+    layui.use(['form'], function() {
+        var form = layui.form;
+        form.on('select()', function(data){
+            $(".form-op-search").submit();
+        });
+        form.render();//细节！这个好像要渲染一下！
+    })
     //进行售后状态的更改
     function checkToStatus(user_id) {
         layer.msg('请更新用户状态', {

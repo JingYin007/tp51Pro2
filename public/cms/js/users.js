@@ -20,18 +20,18 @@ function ToAjaxOpForPageUsers(toUrl,postData) {
                         "            <img class=\"layui-circle\" src=\""+e.user_avatar+"\">\n" +
                         "        </td>\n" +
                         "        <td>\n" +
-                        "            <span class=\"span-FF9233\">"+e.nick_name+" </span>\n" +
+                        "            <span class=\"span-nick_name\">"+e.nick_name+" </span>\n" +
                         "        </td>\n" +
                         "        <td>"+e.sex+"</td>\n" +
                         "        <td>\n" +
-                        "            <span class=\"span-FF9233\">"+e.auth_tel+" </span>\n" +
+                        "            <span class=\"span-auth_tel\">"+e.auth_tel+" </span>\n" +
                         "        </td>\n" +
-                        "\n" +
                         "        <td>\n" +
-                        "            <span class=\"span-7EC0EE\">"+e.integral+"</span><br>\n" +
+                        "            <span class=\"span-integral\">"+e.integral+"</span><br>\n" +
                         "        </td>\n" +
-                        "        <td>"+e.user_status_tip+"</td>\n" +
-                        "        <td>"+e.reg_time2+"</td>\n" +
+                        "        <td>"
+                                    +e.user_status_tip+"<hr>\n"+e.reg_time2+
+                        "        </td>\n" +
                         "        <td>\n" +
                         "            <div class=\"layui-btn-group\">\n" +
                         "                <button class=\"layui-btn layui-btn-warm layui-btn-sm\" title=\"状态审核\"\n" +

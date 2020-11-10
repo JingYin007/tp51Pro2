@@ -31,7 +31,7 @@ class Xusers extends BaseModel
             $sex = $value['sex'];
             switch ($sex){
                 case 0:
-                    $sex = "未知";
+                    $sex = "-";
                     break;
                 case 1:
                     $sex = "男";
