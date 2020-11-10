@@ -10,7 +10,7 @@ Target Server Type    : MYSQL
 Target Server Version : 50553
 File Encoding         : 65001
 
-Date: 2020-11-10 19:45:19
+Date: 2020-11-10 19:50:47
 */
 
 SET FOREIGN_KEY_CHECKS=0;
@@ -696,7 +696,6 @@ DROP TABLE IF EXISTS `tp5_xskus`;
 CREATE TABLE `tp5_xskus` (
   `sku_id` int(11) NOT NULL AUTO_INCREMENT COMMENT '主键',
   `goods_id` int(11) NOT NULL DEFAULT '0' COMMENT '商品ID',
-  `sku_name` varchar(300) DEFAULT NULL COMMENT 'sku名称，为空时取对应商品名',
   `sku_img` varchar(150) CHARACTER SET utf8 NOT NULL COMMENT '对应的SKU商品缩略图',
   `spec_info` varchar(300) CHARACTER SET utf8 NOT NULL COMMENT '对应的商品 sku属性信息，以逗号隔开。举例：12,15,23',
   `spec_name` varchar(300) CHARACTER SET utf8 NOT NULL COMMENT 'sku 规格描述，仅供展示',
@@ -712,24 +711,24 @@ CREATE TABLE `tp5_xskus` (
 -- ----------------------------
 -- Records of tp5_xskus
 -- ----------------------------
-INSERT INTO `tp5_xskus` VALUES ('84', '1', null, 'cms/images/goods/1/1-1.jpg', '26', '桃桃红柚口味400ml 8杯', '49.90', '100', '3', '2020-11-10 19:40:38', '1');
-INSERT INTO `tp5_xskus` VALUES ('85', '1', null, 'cms/images/goods/1/1-2.jpg', '27', '樱桃莓莓口味400ml 8杯', '49.90', '200', '5', '2020-11-10 19:40:38', '1');
-INSERT INTO `tp5_xskus` VALUES ('86', '1', null, 'cms/images/goods/1/1-3.jpg', '28', '金桔柠檬口味400ml 8杯', '46.90', '200', '8', '2020-11-10 19:40:38', '0');
-INSERT INTO `tp5_xskus` VALUES ('87', '3', null, 'cms/images/goods/2/2-1.jpg', '31,33', '原味奶油,50粒装', '28.90', '200', '121', '2020-11-10 19:40:24', '1');
-INSERT INTO `tp5_xskus` VALUES ('88', '3', null, 'cms/images/goods/2/2-2.jpg', '32,33', '香浓奶油,50粒装', '39.90', '100', '2', '2020-11-10 19:40:24', '1');
-INSERT INTO `tp5_xskus` VALUES ('89', '2', null, 'cms/images/goods/3/3-1.jpg', '35', '【健康有机】有机全脂纯牛奶16盒', '94.90', '290', '1212', '2020-11-10 19:43:49', '1');
-INSERT INTO `tp5_xskus` VALUES ('90', '2', null, 'cms/images/goods/3/3-2.jpg', '36', '【不加糖高蛋白】植选植物奶10瓶', '49.90', '1209', '232', '2020-11-10 19:43:49', '1');
-INSERT INTO `tp5_xskus` VALUES ('91', '4', null, 'cms/images/goods/4/4-1.jpg', '38', 'T8 Power震动擦地抢购', '3399.00', '1000', '12', '2020-11-10 19:40:11', '1');
-INSERT INTO `tp5_xskus` VALUES ('92', '4', null, 'cms/images/goods/4/4-2.jpg', '39', '沁宝AVA（蓝色）空气净化机器人', '6999.00', '180', '3', '2020-11-10 19:40:11', '1');
-INSERT INTO `tp5_xskus` VALUES ('93', '6', null, 'cms/images/goods/5/5-1.jpg', '41', '【经典爆款】小度音箱旗舰版', '129.00', '112', '21', '2020-11-10 19:40:00', '1');
-INSERT INTO `tp5_xskus` VALUES ('94', '6', null, 'cms/images/goods/5/5-2.jpg', '42', '【红外遥控】小度音箱升级版', '99.00', '2', '2', '2020-11-10 19:40:00', '1');
-INSERT INTO `tp5_xskus` VALUES ('95', '6', null, 'cms/images/goods/5/5-3.jpg', '43', '【随身音箱】小芦蓝牙音箱', '59.00', '123', '11', '2020-11-10 19:40:00', '1');
-INSERT INTO `tp5_xskus` VALUES ('96', '7', null, 'cms/images/goods/7/7-1.jpg', '46,48', '黑色,WF-1000XM3随身降噪', '1099.00', '199', '1', '2020-11-10 19:39:15', '1');
-INSERT INTO `tp5_xskus` VALUES ('97', '7', null, 'cms/images/goods/7/7-2.jpg', '46,49', '黑色,WF-XB700防水运动', '699.00', '200', '21', '2020-11-10 19:39:15', '1');
-INSERT INTO `tp5_xskus` VALUES ('98', '7', null, 'cms/images/goods/7/7-3.jpg', '47,48', '铂金银,WF-1000XM3随身降噪', '1099.00', '123', '2', '2020-11-10 19:39:15', '1');
-INSERT INTO `tp5_xskus` VALUES ('99', '7', null, 'cms/images/goods/7/7-2.jpg', '47,49', '铂金银,WF-XB700防水运动', '699.00', '111', '2', '2020-11-10 19:39:15', '0');
-INSERT INTO `tp5_xskus` VALUES ('100', '36', null, 'upload/20201110/a7d273db28b80edc9ed9540a71b2ef65.jpg', '35', '【健康有机】有机全脂纯牛奶16盒', '4.00', '110', '0', '2020-11-10 19:41:04', '-1');
-INSERT INTO `tp5_xskus` VALUES ('101', '36', null, 'upload/20201110/71009c79c4832491adeff3ee6b6253f5.jpg', '36', '【不加糖高蛋白】植选植物奶10瓶', '3.00', '111', '0', '2020-11-10 19:44:23', '1');
+INSERT INTO `tp5_xskus` VALUES ('84', '1', 'cms/images/goods/1/1-1.jpg', '26', '桃桃红柚口味400ml 8杯', '49.90', '100', '3', '2020-11-10 19:40:38', '1');
+INSERT INTO `tp5_xskus` VALUES ('85', '1', 'cms/images/goods/1/1-2.jpg', '27', '樱桃莓莓口味400ml 8杯', '49.90', '200', '5', '2020-11-10 19:40:38', '1');
+INSERT INTO `tp5_xskus` VALUES ('86', '1', 'cms/images/goods/1/1-3.jpg', '28', '金桔柠檬口味400ml 8杯', '46.90', '200', '8', '2020-11-10 19:40:38', '0');
+INSERT INTO `tp5_xskus` VALUES ('87', '3', 'cms/images/goods/2/2-1.jpg', '31,33', '原味奶油,50粒装', '28.90', '200', '121', '2020-11-10 19:40:24', '1');
+INSERT INTO `tp5_xskus` VALUES ('88', '3', 'cms/images/goods/2/2-2.jpg', '32,33', '香浓奶油,50粒装', '39.90', '100', '2', '2020-11-10 19:40:24', '1');
+INSERT INTO `tp5_xskus` VALUES ('89', '2', 'cms/images/goods/3/3-1.jpg', '35', '【健康有机】有机全脂纯牛奶16盒', '94.90', '290', '1212', '2020-11-10 19:43:49', '1');
+INSERT INTO `tp5_xskus` VALUES ('90', '2', 'cms/images/goods/3/3-2.jpg', '36', '【不加糖高蛋白】植选植物奶10瓶', '49.90', '1209', '232', '2020-11-10 19:43:49', '1');
+INSERT INTO `tp5_xskus` VALUES ('91', '4', 'cms/images/goods/4/4-1.jpg', '38', 'T8 Power震动擦地抢购', '3399.00', '1000', '12', '2020-11-10 19:40:11', '1');
+INSERT INTO `tp5_xskus` VALUES ('92', '4', 'cms/images/goods/4/4-2.jpg', '39', '沁宝AVA（蓝色）空气净化机器人', '6999.00', '180', '3', '2020-11-10 19:40:11', '1');
+INSERT INTO `tp5_xskus` VALUES ('93', '6', 'cms/images/goods/5/5-1.jpg', '41', '【经典爆款】小度音箱旗舰版', '129.00', '112', '21', '2020-11-10 19:40:00', '1');
+INSERT INTO `tp5_xskus` VALUES ('94', '6', 'cms/images/goods/5/5-2.jpg', '42', '【红外遥控】小度音箱升级版', '99.00', '2', '2', '2020-11-10 19:40:00', '1');
+INSERT INTO `tp5_xskus` VALUES ('95', '6', 'cms/images/goods/5/5-3.jpg', '43', '【随身音箱】小芦蓝牙音箱', '59.00', '123', '11', '2020-11-10 19:40:00', '1');
+INSERT INTO `tp5_xskus` VALUES ('96', '7', 'cms/images/goods/7/7-1.jpg', '46,48', '黑色,WF-1000XM3随身降噪', '1099.00', '199', '1', '2020-11-10 19:39:15', '1');
+INSERT INTO `tp5_xskus` VALUES ('97', '7', 'cms/images/goods/7/7-2.jpg', '46,49', '黑色,WF-XB700防水运动', '699.00', '200', '21', '2020-11-10 19:39:15', '1');
+INSERT INTO `tp5_xskus` VALUES ('98', '7', 'cms/images/goods/7/7-3.jpg', '47,48', '铂金银,WF-1000XM3随身降噪', '1099.00', '123', '2', '2020-11-10 19:39:15', '1');
+INSERT INTO `tp5_xskus` VALUES ('99', '7', 'cms/images/goods/7/7-2.jpg', '47,49', '铂金银,WF-XB700防水运动', '699.00', '111', '2', '2020-11-10 19:39:15', '0');
+INSERT INTO `tp5_xskus` VALUES ('100', '36', 'upload/20201110/a7d273db28b80edc9ed9540a71b2ef65.jpg', '35', '【健康有机】有机全脂纯牛奶16盒', '4.00', '110', '0', '2020-11-10 19:41:04', '-1');
+INSERT INTO `tp5_xskus` VALUES ('101', '36', 'upload/20201110/71009c79c4832491adeff3ee6b6253f5.jpg', '36', '【不加糖高蛋白】植选植物奶10瓶', '3.00', '111', '0', '2020-11-10 19:44:23', '1');
 
 -- ----------------------------
 -- Table structure for tp5_xspec_infos
