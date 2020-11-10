@@ -72,16 +72,16 @@
         <td>{php} echo $vo['status_tip']{/php}</td>
         <td>
             <div class="layui-btn-group">
-                <button class="layui-btn layui-btn-sm" title="编辑菜单"
+                <button class="layui-btn layui-btn-sm layui-btn-normal" title="编辑菜单"
                         onclick="editForOpenPopups('✎ 菜单信息修改','{$vo.id}','56%','68%')">
                     <i class="layui-icon">&#xe642;</i>
                 </button>
-                <button class="layui-btn layui-btn-sm" title="删除菜单"
+                <button class="layui-btn layui-btn-sm layui-btn-danger" title="删除菜单"
                         onclick="delPostRecord('{$vo.id}')">
                     <i class="layui-icon">&#xe640;</i>
                 </button>
                 {neq name="vo.parent_id" value="0" }
-                <button class="layui-btn layui-btn-sm" title="权限列表"
+                <button class="layui-btn layui-btn-sm layui-btn-warm" title="权限列表"
                         onclick="authNavMenu('{$vo.id}')">
                     <i class="layui-icon">&#xe628;</i>
                 </button>

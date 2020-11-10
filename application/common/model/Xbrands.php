@@ -159,10 +159,12 @@ class Xbrands extends BaseModel
      * @throws \think\db\exception\ModelNotFoundException
      * @throws \think\exception\DbException
      */
-    public function getSelectableList(){
+    public function getSelectableList($seledCatID = null){
+        $where = [['status','=',1]];
+        if ($seledCatID){$where[] = ['cat_id','=',$seledCatID];}
         $list = $this
             ->field('id,brand_name')
-            ->where('status',1)
+            ->where($where)
             ->order(['list_order' => 'asc','id' => 'asc'])
             ->select();
         return isset($list)? $list->toArray(): [];

@@ -2,19 +2,19 @@
 {block name='body-content'}
 <form class="layui-form form-op-normal layui-form-pane">
     <div class="layui-form-item">
-        <label class="layui-form-label">属性名称：</label>
+        <label class="layui-form-label">名称：</label>
         <div class="layui-input-inline">
             <input type="text" name="spec_name" required lay-verify="required"
                    value=""
-                   placeholder="请输入..." autocomplete="off" class="layui-input">
+                   placeholder="请输入..." autocomplete="off" class="layui-input input-title-mz">
             <input type="hidden" name="id" value="{$spec_id}">
         </div>
     </div>
     {eq name="spec_id" value="0" }
     <div class="layui-form-item">
-        <label class="layui-form-label">所属分类：</label>
+        <label class="layui-form-label">分类：</label>
         <div class="layui-input-inline">
-            <select id="toSelCatID" lay-filter="toSelCatID" lay-search="" name="toSelCatID" lay-verify="required">
+            <select id="toSelCatID" lay-search="" name="toSelCatID" lay-verify="required">
                 <option value="">搜索或选择分类</option>
                 {volist name="categoryList" id="vo"}
                 {volist name="vo.children" id="vo2"}
@@ -30,7 +30,7 @@
     </div>
     {/eq}
     <div class="layui-form-item">
-        <label class="layui-form-label">排序权重：</label>
+        <label class="layui-form-label">排序：</label>
         <div class="layui-input-inline">
             <input type="number" name="list_order" value="99" required lay-verify="required"
                    autocomplete="off" class="layui-input">
@@ -39,12 +39,11 @@
     </div>
 
     <div class="layui-form-item">
-        <label class="layui-form-label">备注信息：</label>
+        <label class="layui-form-label">备注：</label>
         <div class="layui-input-inline">
             <input type="text" name="mark_msg"
-                   placeholder="请输入..." autocomplete="off" class="layui-input">
+                   placeholder="请输入..." autocomplete="off" class="layui-input input-title-mz">
         </div>
-        <div class="layui-form-mid layui-word-aux">(主要为了区分识别，可不填)</div>
     </div>
     {:token()}
     <div class="layui-form-item">

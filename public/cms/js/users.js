@@ -34,7 +34,7 @@ function ToAjaxOpForPageUsers(toUrl,postData) {
                         "        <td>"+e.reg_time2+"</td>\n" +
                         "        <td>\n" +
                         "            <div class=\"layui-btn-group\">\n" +
-                        "                <button class=\"layui-btn layui-btn-normal layui-btn-sm\" title=\"状态审核\"\n" +
+                        "                <button class=\"layui-btn layui-btn-warm layui-btn-sm\" title=\"状态审核\"\n" +
                         "                        onclick=\"checkToStatus('"+e.id+"')\">\n" +
                         "                    <i class=\"layui-icon\">&#xe60e;</i>\n" +
                         "                </button>\n" +

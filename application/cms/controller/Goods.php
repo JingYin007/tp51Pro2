@@ -6,6 +6,7 @@ use app\common\controller\CmsBase;
 use app\common\model\Xbrands;
 use app\common\model\Xcategorys;
 use app\common\model\Xgoods;
+use app\common\model\XspecInfos;
 use app\common\model\Xsuppliers;
 use think\Request;
 
@@ -136,5 +137,23 @@ class Goods extends CmsBase
     public function viewLogs($id){
         $logs = getCmsOpViewLogs($id,'GOODS');
         return view('view_logs',['logs' => $logs]);
+    }
+
+    /**
+     * ajax 根据商品分类查询 品牌和父级属性
+     * @param Request $request
+     */
+    public function ajaxGetBrandAndSpecInfoFstByCat(Request $request)
+    {
+        $seledCatID = $request->post("seledCatID");
+        $specList = (new XspecInfos())->getSpecInfoFstByCat($seledCatID);
+        $brandList = (new Xbrands())->getSelectableList($seledCatID);
+        $status = 1;
+        $message = "success";
+        if (!$specList && !$brandList) {
+            $status = 0;
+            $message = "未查到品牌和父级属性数据";
+        }
+        return showMsg($status, $message, ['specList'=>$specList,'brandList'=>$brandList]);
     }
 }

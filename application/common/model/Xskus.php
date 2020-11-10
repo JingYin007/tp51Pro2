@@ -20,12 +20,13 @@ class Xskus extends BaseModel
     public function opSKUforGoodsByID($goodsID = 0, $skuData = [])
     {
         $this->where('goods_id', $goodsID)
-            ->update(['status' => -1]);
+            ->update(['sku_status' => -1]);
         foreach ($skuData as $key => $value) {
             if ($value) {
                 $spec_info = isset($value['spec_id']) ? $value['spec_id'] : '';
                 $spec_name = isset($value['spec_name']) ? $value['spec_name'] : '';
                 $sku_img = isset($value['sku_img']) ? $value['sku_img'] : '';
+                $sku_status = isset($value['sku_status']) ? $value['sku_status'] : 1;
                 $selling_price = isset($value['selling_price']) ? $value['selling_price'] : '0.00';
                 $stock = isset($value['stock']) ? intval($value['stock']) : 0;
                 $sold_num = isset($value['sold_num']) ? intval($value['sold_num']) : 0;
@@ -37,7 +38,7 @@ class Xskus extends BaseModel
                     $this
                         ->where([['spec_info', '=', $spec_info], ['goods_id', '=', $goodsID]])
                         ->update([
-                            'status' => 0,
+                            'sku_status' => $sku_status,
                             'sku_img' => $sku_img,
                             'spec_name' => $spec_name,
                             'selling_price' => $selling_price,
@@ -52,6 +53,7 @@ class Xskus extends BaseModel
                         'spec_name' => $spec_name,
                         'selling_price' => $selling_price,
                         'stock' => $stock,
+                        'sku_status' => $sku_status,
                         'sold_num' => $sold_num,
                         'updated_at' => date('Y-m-d H:i:s', time())]);
                 }
@@ -68,8 +70,18 @@ class Xskus extends BaseModel
     {
         $skuData = $this
             ->field("*")
-            ->where([["goods_id", '=', intval($goodsID)], ["status", '<>', -1]])
+            ->where([["goods_id", '=', intval($goodsID)], ["sku_status", '<>', -1]])
+            ->order('sku_status','desc')
             ->select();
+        foreach ($skuData as $key => $value){
+            $sku_img = $value['sku_img'];
+            $skuData[$key]['full_sku_img'] = imgToServerView($sku_img);
+            if ($value['sku_status'] == 1) {
+                $skuData[$key]['status_checked'] = "checked";
+            } else {
+                $skuData[$key]['status_checked'] = "";
+            }
+        }
         return isset($skuData) ? $skuData->toArray() : [];
     }
 

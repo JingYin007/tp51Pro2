@@ -37,35 +37,41 @@ function ToAjaxOpForPageGoods(toUrl,postData) {
                     var tip = "";
                     if(e.recommend == 1){tip = "<span class=\"layui-badge\">荐</span>&nbsp;"};
                     str_html +=
-                        "<tr class=\"tr-normal-"+e.goods_id+"\">\n" +
+                        "<tr class=\"tr-normal tr-normal-"+e.goods_id+"\">\n" +
                         "                <td>"+e.goods_id+"</td>\n" +
                         "                <td class=\"td-goods_name\">"+tip+e.goods_name+"</td>\n" +
-                        "                <td class=\"td-goods\"><img src='"+e.thumbnail+"'></td>\n" +
-                        "                <td class=\"td-goods_name\">"+e.cat_name +"</td>\n" +
-                        "                <td class=\"td-greyxx\">"+e.reference_price +"</td>\n" +
-                        "                <td class=\"td-selling_price\">"+e.selling_price +"</td>\n" +
-                        "                <td class=\"td-stock\">"+e.stock +"</td>\n" +
-                        "                <td class=\"td-weight\">"+e.list_order +"</td>\n" +
-                        "                <td>"+e.updated_at +"</td>\n" +
-                        "                <td><input type=\"checkbox\" class=\"switch_checked\" lay-filter=\"switchGoodsID\"\n" +
-                        "switch_goods_id=\""+e.goods_id+"\" lay-skin=\"switch\""+e.status_checked+" lay-text=\"上架|下架\">"+
-                        "                </td>\n" +
-                        "                <td>\n" +
-                        "                    <div class=\"layui-btn-group\">\n" +
-                        "                        <button class=\"layui-btn layui-btn-sm\" title='编辑商品' \n" +
-                        "                                onclick=\"editForOpenPopups('✎ 商品修改','"+e.goods_id+"','85%','92%')\">\n" +
-                        "                            <i class=\"layui-icon\">&#xe642;</i>\n" +
-                        "                        </button>\n" +
-                        "                        <button class=\"layui-btn layui-btn-sm\" title='删除商品' \n" +
-                        "                                onclick=\"delPostRecord('"+e.goods_id+"')\">\n" +
-                        "                            <i class=\"layui-icon\">&#xe640;</i>\n" +
-                        "                        </button>\n" +
-                        "<button class=\"layui-btn layui-btn-sm\" title=\"操作记录\"\n" +
+                        "                <td><img class=\"img-thumbnail\" src=\""+e.thumbnail+"\"></td>\n" +
+                        "        <td>\n" +
+                        "            <span class=\"span-cat_name\" title=\"分类\">【"+e.cat_name+"】</span><hr>\n" +
+                        "            <span class=\"layui-badge-dot layui-bg-blue\"></span>\n" +
+                        "            <span class=\"span-brand_name\" title=\"品牌\">"+e.brand_name+"</span>\n" +
+                        "\n" +
+                        "        </td>\n" +
+                        "        <td><span class=\"selling_price\">￥"+e.selling_price+"</span></td>\n" +
+                        "        <td><span class=\"span-stock\">"+e.stock+"</span></td>\n" +
+                        "        <td><span class=\"span-list_order\">"+e.list_order+"</span></td>\n" +
+                        "        <td>\n" +
+                        "            <input type=\"checkbox\" class=\"switch_checked\" lay-filter=\"switchGoodsID\"\n" +
+                        "                   switch_goods_id=\""+e.goods_id+"\"\n" +
+                        "                   lay-skin=\"switch\" "+e.status_checked+" lay-text=\"上架|下架\">\n" +
+                        "            <hr><span class=\"span-updated_at\">"+e.updated_at+"</span>\n" +
+                        "        </td>\n" +
+                        "        <td>\n" +
+                        "            <div class=\"layui-btn-group\">\n" +
+                        "                <button class=\"layui-btn layui-btn-sm layui-btn-normal\" title=\"编辑商品\"\n" +
+                        "                        onclick=\"editForOpenPopups('✎ 商品修改','"+e.goods_id+"','70%','86%')\">\n" +
+                        "                    <i class=\"layui-icon\">&#xe642;</i>\n" +
+                        "                </button>\n" +
+                        "                <button class=\"layui-btn layui-btn-sm layui-btn-danger\" title=\"删除商品\"\n" +
+                        "                        onclick=\"delPostRecord('"+e.goods_id+"')\">\n" +
+                        "                    <i class=\"layui-icon\">&#xe640;</i>\n" +
+                        "                </button>\n" +
+                        "                <button class=\"layui-btn layui-btn-sm layui-btn-warm\" title=\"操作记录\"\n" +
                         "                        onclick=\"viewLogOpenPopups('☁ 操作日志','"+e.goods_id+"')\">\n" +
                         "                    <i class=\"layui-icon\">&#xe60e;</i>\n" +
-                        "                </button>"+
-                        "                    </div>\n" +
-                        "                </td>\n" +
+                        "                </button>\n" +
+                        "            </div>\n" +
+                        "        </td>" +
                         "            </tr>";
                 });
                 $(".table-tbody-normal").html(str_html);
@@ -145,7 +151,7 @@ function goToMakeSaleGoodsMsg(arrSpecFull) {
     $(".tbody-specInfo-msg").html("");
     $.each(resultArr["spec_info"], function (i, e) {
         var eachHtml = "<tr>\n" +
-            "                <td>" + e.spec_name +
+            "                <td><span class=\"span-spec_name\">" + e.spec_name +"</span>"+
             "<input type='hidden' name=\"sku_arr[" + e.spec_id + "][spec_id]\" value='" + e.spec_id + "'>" +
             "<input type='hidden' name=\"sku_arr[" + e.spec_id + "][spec_name]\" value='" + e.spec_name + "'>" +
             "                </td>\n" +
@@ -165,7 +171,7 @@ function goToMakeSaleGoodsMsg(arrSpecFull) {
 
             "                <td>\n" +
             "                    <input type=\"number\" name=\"sku_arr[" + e.spec_id + "][selling_price]\"\n" +
-            "                           value=\"0.00\" required class=\"layui-input\">\n" +
+            "                           value=\"0.00\" required class=\"layui-input input-selling_price\">\n" +
             "                </td>\n" +
             "                <td>\n" +
             "                    <input type=\"number\" name=\"sku_arr[" + e.spec_id + "][stock]\"\n" +
@@ -173,10 +179,18 @@ function goToMakeSaleGoodsMsg(arrSpecFull) {
             "                </td>\n" +
             "                <td>\n" +
             "                    <input type=\"number\" name=\"sku_arr[" + e.spec_id + "][sold_num]\"\n" +
-            "                           value=\"0\" required class=\"layui-input\">\n" +
+            "                           value=\"0\" required class=\"layui-input input-sold_num\">\n" +
             "                </td>\n" +
+            "                <td>\n" +
+            "                    <select name=\"sku_arr["+e.spec_id+"][sku_status]\">\n" +
+            "                        <option value='1'>上架</option>\n" +
+            "                        <option value='0'>下架</option>\n" +
+            "                        <option value='-1'>删除</option>\n" +
+            "                    </select>\n" +
+            "                </td>"+
             "            </tr>";
         $(".tbody-specInfo-msg").append(eachHtml);
+        layui.form.render();
     });
     layui.use(['form', 'upload'], function() {
         var upload = layui.upload;
@@ -312,26 +326,39 @@ function goToToSelSpecFst(toUrl,data,form) {
 }
 
 /**
- * 选择商品的分类
+ * 根据所选择商品的分类 展示对应的品牌和属性列表
  * @param toUrl
- * @param data
+ * @param catID
  * @param form
+ * @param initTag 'init'：触发事件时的操作；'click'：初始化加载
  */
-function goToToSelCatID(toUrl,catID,form) {
+function goToToSelCatID(toUrl,catID,form,initTag) {
     //初始化 商品选择下拉列表
     var seledCatID = catID;//.value;
-    $("#toSelSpecFst").html("<option value=\"\">直接选择或搜索选择</option>");
+    $("#toSelSpecFst").html("<option value=\"\">直接选择或搜索</option>");
     $.post(
         toUrl,
         {seledCatID: seledCatID},
         function (result) {
             if (result.status > 0) {
-                var replaceHtml = "";
-                $.each(result.data, function (i, e) {
-                    replaceHtml += " <option title='" + e.spec_name + e.mark_msg
-                        + "' value=\"" + e.spec_id + "\">" + e.spec_name + e.mark_msg + "</option>"
-                });
-                $("#toSelSpecFst").append(replaceHtml);
+                var replaceSpecHtml = "";
+                var replaceBrandHtml = "";
+                if(result.data.specList.length > 0){
+                    $.each(result.data.specList, function (i, e) {
+                        replaceSpecHtml += " <option title='" + e.spec_name + e.mark_msg
+                            + "' value=\"" + e.spec_id + "\">" + e.spec_name + e.mark_msg + "</option>"
+                    });
+                }
+                if ((initTag == 'click') && (result.data.brandList.length > 0)){
+                    $("#toSelBrand").html("<option value=\"\">直接选择或搜索</option>");
+                    $.each(result.data.brandList, function (i, e) {
+                        replaceBrandHtml += " <option title='" + e.brand_name
+                            + "' value=\"" + e.id + "\">" + e.brand_name + "</option>"
+                    });
+                    $("#toSelBrand").append(replaceBrandHtml);
+                }
+
+                $("#toSelSpecFst").append(replaceSpecHtml);
                 form.render();
             } else {
                 //失败

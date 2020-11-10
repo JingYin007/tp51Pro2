@@ -64,7 +64,7 @@ function ToAjaxOpForPageConfigs(toUrl,postData) {
                         "                                onclick=\"editForOpenPopups('✎ 配置修改','"+e.id+"','43%','76%')\">\n" +
                         "                            <i class=\"layui-icon\">&#xe642;</i>\n" +
                         "                        </button>\n" +
-                        "                        <button class=\"layui-btn layui-btn-sm\" title='删除' \n" +
+                        "                        <button class=\"layui-btn layui-btn-sm layui-btn-danger\" title='删除' \n" +
                         "                                onclick=\"delPostRecord('"+e.id+"')\">\n" +
                         "                            <i class=\"layui-icon\">&#xe640;</i>\n" +
                         "                        </button>\n" +

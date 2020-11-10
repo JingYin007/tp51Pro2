@@ -74,7 +74,7 @@ function ToAjaxOpForPageActivitys(toUrl, postData) {
                         "                                onclick=\"editForOpenPopups('✎ 活动修改','" + e.id + "','80%', '90%')\">\n" +
                         "                            <i class=\"layui-icon\">&#xe642;</i>\n" +
                         "                        </button>\n" +
-                        "                        <button class=\"layui-btn layui-btn-sm\" title='删除活动' \n" +
+                        "                        <button class=\"layui-btn layui-btn-sm layui-btn-danger\" title='删除活动' \n" +
                         "                                onclick=\"delPostRecord('" + e.id + "')\">\n" +
                         "                            <i class=\"layui-icon\">&#xe640;</i>\n" +
                         "                        </button>\n" +

@@ -1,23 +1,63 @@
-.table-body-normal .td-goods img {
-    width: 80px;
+
+.table-specInfo th,.table-specInfo td,
+.table-specInfo td input{
+    text-align: center;
+}
+.tbody-specInfo-msg .span-spec_name{
+    font-weight: bold;
+    font-size: 14px;
+    color: #7274A7;
+}
+.tbody-specInfo-msg .input-selling_price{
+    color: #ffadad;
+}
+.tbody-specInfo-msg .input-sku-stock{
+    color: #0e90d2;
+}
+.tbody-specInfo-msg .input-sold_num{
+    color: #8a8f97;
+}
+.tbody-specInfo-msg .option-sku_status-1{
+    background-color: #468847;
+}
+.tbody-specInfo-msg .option-sku_status-0,
+.tbody-specInfo-msg .option-sku_status--1{
+    background-color: #9F9F9F;
 }
 
-.td-goods_name {
+
+
+
+.table-tbody-normal .tr-normal .img-thumbnail {
+    max-height: 68px;
+}
+
+.table-tbody-normal .td-goods_name {
     color: #7274AB;
 }
 
-.td-selling_price {
-    color: #ff7800;
+.table-tbody-normal .span-cat_name {
+    color: #ce8483;
 }
 
-.td-greyxx {
-    color: #999999;
+.table-tbody-normal .span-brand_name{
+    color: #5b9dfd;
 }
-.td-weight{
-    color: #FF9233;
+.table-tbody-normal .selling_price{
+    color: #f55790;
 }
-.td-stock{
-    font-weight: 700;
-    color: #A0522D;
-    background-color: #DBDBDB;
+
+.table-tbody-normal .span-stock{
+    color: #8a8f97;
+}
+.table-tbody-normal .span-updated_at{
+    color: #468847;
+}
+
+.table-tbody-normal .span-list_order{
+    color: #bb99ff;
+}
+.table-tbody-normal .table-body, #demo2-1 {
+    width: 80%;
+    margin: 10px auto;
 }

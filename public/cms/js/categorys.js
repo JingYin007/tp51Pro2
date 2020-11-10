@@ -74,11 +74,11 @@ function ToAjaxOpForPageCategorys(toUrl,postData) {
                         "                </td>\n" +
                         "                <td>\n" +
                         "                    <div class=\"layui-btn-group\">\n" +
-                        "                        <button class=\"layui-btn layui-btn-sm\" title='编辑分类' \n" +
+                        "                        <button class=\"layui-btn layui-btn-sm layui-btn-normal\" title='编辑分类' \n" +
                         "                                onclick=\"editForOpenPopups('✎ 产品分类修改','"+e.cat_id+"','44%', '62%')\">\n" +
                         "                            <i class=\"layui-icon\">&#xe642;</i>\n" +
                         "                        </button>\n" +
-                        "                        <button class=\"layui-btn layui-btn-sm\" title='删除分类' \n" +
+                        "                        <button class=\"layui-btn layui-btn-sm layui-btn-danger\" title='删除分类' \n" +
                         "                                onclick=\"delPostRecord('"+e.cat_id+"')\">\n" +
                         "                            <i class=\"layui-icon\">&#xe640;</i>\n" +
                         "                        </button>\n" +
@@ -110,11 +110,11 @@ function ToAjaxOpForPageBrands(toUrl,postData) {
                         "        <td><span class=\"span-list_order\">"+e.list_order+"</span></td>\n" +
                         "        <td>\n" +
                         "            <div class=\"layui-btn-group\">\n" +
-                        "                <button class=\"layui-btn layui-btn-sm\" title=\"编辑品牌\"\n" +
+                        "                <button class=\"layui-btn layui-btn-sm layui-btn-normal\" title=\"编辑品牌\"\n" +
                         "                        onclick=\"editForOpenPopups('✎ 品牌修改','"+e.id+"','41%', '52%')\">\n" +
                         "                    <i class=\"layui-icon\">&#xe642;</i>\n" +
                         "                </button>\n" +
-                        "                <button class=\"layui-btn layui-btn-sm\" title=\"删除品牌\"\n" +
+                        "                <button class=\"layui-btn layui-btn-sm layui-btn-danger\" title=\"删除品牌\"\n" +
                         "                        onclick=\"delPostRecord('"+e.id+"')\">\n" +
                         "                    <i class=\"layui-icon\">&#xe640;</i>\n" +
                         "                </button>\n" +

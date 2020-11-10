@@ -99,23 +99,6 @@ class SpecInfo extends CmsBase
      * ajax 根据商品分类查询 父级属性
      * @param Request $request
      */
-    public function ajaxGetSpecInfoFstByCat(Request $request)
-    {
-        $seledCatID = $request->post("seledCatID");
-        $goodsList = $this->model->getSpecInfoFstByCat($seledCatID);
-        $status = 1;
-        $message = "success";
-        if (!$goodsList) {
-            $status = 0;
-            $message = "未查到父级属性数据";
-        }
-        return showMsg($status, $message, $goodsList);
-    }
-
-    /**
-     * ajax 根据商品分类查询 父级属性
-     * @param Request $request
-     */
     public function ajaxGetSpecInfoBySpecFst(Request $request)
     {
         $seledSpecFstID = $request->post("seledSpecFstID");

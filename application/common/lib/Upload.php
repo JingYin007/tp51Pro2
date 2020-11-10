@@ -38,12 +38,12 @@ class Upload
             $data['full_url'] = config('ftp.IMG_SERVER_PATH').$local_file_path;
             if ($ftpTag) {
                 $status = 1;
-                $message = '上传成功';
+                $message = '文件上传成功';
             } else {
                 $message = "FTP 上传失败，请稍后再试";
             }
         }else{
-            $message = "上传失败 ".$file->getError();
+            $message = "文件上传失败 ".$file->getError();
         }
         return ['status' => $status,'message'=>$message,'data'=>$data];
     }

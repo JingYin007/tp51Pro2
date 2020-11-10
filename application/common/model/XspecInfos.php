@@ -37,7 +37,7 @@ class XspecInfos extends BaseModel
             ->field('s1.*,c.cat_name')
             ->join('xcategorys c','c.cat_id = s1.cat_id')
             ->where($where)
-            ->whereLike('s1.spec_name', '%' . $search . '%')
+            ->whereLike('s1.spec_name|s1.mark_msg', '%' . $search . '%')
             ->order(['s1.list_order' => 'asc', 's1.spec_id' => 'desc'])
             ->limit($limit * ($curr_page - 1), $limit)
             ->select();
@@ -64,7 +64,7 @@ class XspecInfos extends BaseModel
             ->field('s1.spec_id')
             ->join('xcategorys c','c.cat_id = s1.cat_id')
             ->where($where)
-            ->whereLike('s1.spec_name', '%' . $search . '%')
+            ->whereLike('s1.spec_name|s1.mark_msg', '%' . $search . '%')
             ->count();
         return $count;
     }
@@ -89,7 +89,7 @@ class XspecInfos extends BaseModel
         if ($validateRes['tag']) {
             $tag = $this->insert($addData);
             $validateRes['tag'] = $tag;
-            $validateRes['message'] = $tag ? '属性添加成功' : '属性添加失败';
+            $validateRes['message'] = $tag ? '数据添加成功' : '数据添加失败';
         }
         return $validateRes;
     }

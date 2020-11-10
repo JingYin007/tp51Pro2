@@ -78,11 +78,11 @@ function ToAjaxOpForPageTodayWords(toUrl,postData) {
                         "                <td>" +e.status_tip +"</td>\n" +
                         "                <td>\n" +
                         "                    <div class=\"layui-btn-group\">\n" +
-                        "                        <button class=\"layui-btn layui-btn-sm\" title='编辑' \n" +
+                        "                        <button class=\"layui-btn layui-btn-sm layui-btn-normal\" title='编辑' \n" +
                         "                                onclick=\"editForOpenPopups('✌ 今日赠言修改','"+e.id+"','40%')\">\n" +
                         "                            <i class=\"layui-icon\">&#xe642;</i>\n" +
                         "                        </button>\n" +
-                        "                        <button class=\"layui-btn layui-btn-sm\" title='删除' \n" +
+                        "                        <button class=\"layui-btn layui-btn-sm layui-btn-danger\" title='删除' \n" +
                         "                                onclick=\"delPostRecord('"+e.id+"')\">\n" +
                         "                            <i class=\"layui-icon\">&#xe640;</i>\n" +
                         "                        </button>\n" +

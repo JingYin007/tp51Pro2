@@ -54,10 +54,11 @@ class Xgoods extends BaseModel
         }
         $res = $this
             ->alias('g')
-            ->field('g.*,cat_name')
+            ->field('g.*,cat_name,brand_name')
             ->join('xcategorys cat', 'cat.cat_id = g.cat_id')
+            ->join('xbrands b', 'b.id = g.brand_id')
             ->where($where)
-            ->whereLike('g.goods_name|g.goods_id', '%' . $search . '%')
+            ->whereLike('g.goods_name|b.brand_name', '%' . $search . '%')
             ->order($order)
             ->limit($limit * ($curr_page - 1), $limit)
             ->select();
@@ -93,8 +94,9 @@ class Xgoods extends BaseModel
             ->alias('g')
             ->field('g.status')
             ->join('xcategorys cat', 'cat.cat_id = g.cat_id')
+            ->join('xbrands b', 'b.id = g.brand_id')
             ->where($where)
-            ->whereLike('g.goods_name|g.goods_id', '%' . $search . '%')
+            ->whereLike('g.goods_name|b.brand_name', '%' . $search . '%')
             ->count();
         return $count;
     }
@@ -116,11 +118,14 @@ class Xgoods extends BaseModel
             $images_str = $res['slide_imgs'];
             if ($images_str){$img_list = explode(',',$images_str);}
             $res['img_list'] = isset($img_list)?$img_list:[];
+
+            //初始化 SKU 数组
+            $sku_arr = (new Xskus())->getSKUDataByGoodsID($id);
+            $res['sku_arr'] = $sku_arr;
+            $brandList = (new Xbrands())->getSelectableList(intval($res['cat_id']));
+            $res['brandList'] = $brandList;
         }
-        $skuModle = new Xskus();
-        //初始化 SKU 数组
-        $sku_arr = $skuModle->getSKUDataByGoodsID($id);
-        $res['sku_arr'] = $sku_arr;
+
         return isset($res) ? $res->toArray() : [];
     }
 
@@ -136,7 +141,7 @@ class Xgoods extends BaseModel
         if ($opTag == 'del') {
             $status = $this->where('goods_id', $id)
                 ->update(['status' => -1]);
-            $validateRes = ['tag' => 1, 'message' => '删除成功'];
+            $validateRes = ['tag' => 1, 'message' => '记录删除成功'];
             insertCmsOpLogs($status,'GOODS',$id,'删除商品');
         } else {
             $saveData = [
@@ -147,7 +152,8 @@ class Xgoods extends BaseModel
                 'slide_imgs' => isset($input['slide_imgs'])? $input['slide_imgs']:'',
                 'sketch' => isset($input['sketch']) ? $input['sketch'] : '',
                 'cat_id' => isset($input['cat_id']) ? intval($input['cat_id']) : 1,
-                'reference_price' => isset($input['reference_price']) ? round($input['reference_price'], 2) : 0.00,
+                'brand_id' => isset($input['brand_id']) ? intval($input['brand_id']) : 0,
+                'market_price' => isset($input['market_price']) ? round($input['market_price'], 2) : 0.00,
                 'selling_price' => isset($input['selling_price']) ? round($input['selling_price'], 2) : 0.00,
                 'attr_info' => isset($input['attr_info']) ? $input['attr_info'] : '',
                 'stock' => isset($input['stock']) ? intval($input['stock']) : 0,
@@ -162,7 +168,7 @@ class Xgoods extends BaseModel
                     ->where('goods_id', $id)
                     ->update($saveData);
                 $validateRes['tag'] = $saveTag;
-                $validateRes['message'] = $saveTag ? '修改成功' : '数据无变动';
+                $validateRes['message'] = $saveTag ? '数据修改成功' : '数据无变动';
                 if ($saveTag) {
                     //TODO 此时进行 sku库存信息的上传
                     $skuModle = new Xskus();
@@ -213,7 +219,8 @@ class Xgoods extends BaseModel
             'slide_imgs' => isset($input['slide_imgs'])? $input['slide_imgs']:'',
             'sketch' => isset($data['sketch']) ? $data['sketch'] : '',
             'cat_id' => isset($data['cat_id']) ? intval($data['cat_id']) : 1,
-            'reference_price' => isset($data['reference_price']) ? round($data['reference_price'], 2) : 0.00,
+            'brand_id' => isset($data['brand_id']) ? intval($data['brand_id']) : 0,
+            'market_price' => isset($data['market_price']) ? round($data['market_price'], 2) : 0.00,
             'selling_price' => isset($data['selling_price']) ? round($data['selling_price'], 2) : 0.00,
             'attr_info' => isset($data['attr_info']) ? $data['attr_info'] : '',
             'stock' => isset($data['stock']) ? intval($data['stock']) : 0,
@@ -225,16 +232,15 @@ class Xgoods extends BaseModel
         $tokenData = ['__token__' => isset($data['__token__']) ? $data['__token__'] : '',];
         $validateRes = $this->validate($this->validate, $addData, $tokenData);
         if ($validateRes['tag']) {
-            $addData['admin_id'] = IAuth::getAdminIDCurrLogged();
             $tag = $this->insert($addData);
             $validateRes['tag'] = $tag;
-            $validateRes['message'] = $tag ? '添加成功' : '添加失败';
+            $validateRes['message'] = $tag ? '数据添加成功' : '数据添加失败';
             if ($tag) {
                 $goodsId = $this->getLastInsID();
                 //TODO 此时进行 sku库存信息的上传
-                $skuModle = new Xskus();
+                $skuModel = new Xskus();
                 $sku_arr = isset($data['sku_arr']) ? $data['sku_arr'] : [];
-                $skuModle->opSKUforGoodsByID($goodsId, $sku_arr);
+                $skuModel->opSKUforGoodsByID($goodsId, $sku_arr);
                 insertCmsOpLogs($tag,'GOODS',$goodsId,'添加商品');
             }
         }

@@ -30,7 +30,7 @@
 
         <div class="layui-input-inline">
             <input type="hidden" name="curr_page" class="curr_page" value="1">
-            <input type="text" value="{$search}" name="str_search" placeholder="请输入名称"
+            <input type="text" value="{$search}" name="str_search" placeholder="请输入名称/备注"
                    class="layui-input search_input">
         </div>
         <button class="layui-btn-warm btn-search-mz">
@@ -74,15 +74,15 @@
         <td><span class="span-list_order">{$vo['list_order']}</span></td>
         <td>
             <div class="layui-btn-group">
-                <button class="layui-btn layui-btn-sm" title="编辑属性"
+                <button class="layui-btn layui-btn-sm layui-btn-normal" title="编辑属性"
                         onclick="editForOpenPopups('✎ 产品属性修改','{$vo.spec_id}', '50%', '50%')">
                     <i class="layui-icon">&#xe642;</i>
                 </button>
-                <button class="layui-btn layui-btn-sm" title="删除"
+                <button class="layui-btn layui-btn-sm layui-btn-danger" title="删除"
                         onclick="delPostRecord('{$vo.spec_id}')">
                     <i class="layui-icon">&#xe640;</i>
                 </button>
-                <button class="layui-btn layui-btn-sm" title="规格数据"
+                <button class="layui-btn layui-btn-sm layui-btn-warm" title="规格数据"
                         onclick="opSpecInfo('{$vo.spec_id}')">
                     <i class="layui-icon">&#xe63c;</i>
                 </button>

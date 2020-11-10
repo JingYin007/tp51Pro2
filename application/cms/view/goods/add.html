@@ -19,13 +19,13 @@
             <img class="layui-upload-img img-upload-preview upload_img_preview" src="">
         </div>
     </div>
-    <input type="hidden" name="thumbnail" class="menu-icon" value="">
+    <input type="hidden" name="thumbnail" class="upload_img_url" value="">
     <input type="hidden" name="slide_show" class="multiple-show-img" value="">
     <div class="layui-form-item">
         <label class="layui-form-label">轮播图片：</label>
         <div class="layui-upload layui-input-block">
-            <button type="button" class="layui-btn" id="btn_multiple_upload_img">多图上传</button>
-            <button type="button" class="layui-btn" id="btn_image_clear">清空多图</button>
+            <button type="button" class="layui-btn layui-btn-normal" id="btn_multiple_upload_img">多图上传</button>
+            <button type="button" class="layui-btn layui-btn-danger" id="btn_image_clear">清空多图</button>
             <blockquote class="layui-elem-quote layui-quote-nm" style="margin-top: 10px;">
                 <div class="layui-upload-list" id="upload_image_list"></div>
                 <input type="hidden" name="slide_imgs" class="upload_image_url" value="">
@@ -44,10 +44,9 @@
 
     <div class="layui-form-item">
         <label class="layui-form-label">状态：</label>
-        <div class="layui-input-block">
+        <div class="layui-input-inline">
             <input type="radio" name="status" value="0" title="下架" checked>
             <input type="radio" name="status" value="1" title="上架">
-            <input type="radio" name="status" value="-1" title="删除" disabled>
         </div>
     </div>
     <div class="layui-form-item">
@@ -56,16 +55,16 @@
                lay-skin="switch" lay-filter="switchTest" lay-text="打开|关闭">
     </div>
     <div class="layui-form-item">
-        <label class="layui-form-label">官网正价：</label>
+        <label class="layui-form-label">售价：</label>
         <div class="layui-input-inline">
             <input type="number" name="selling_price"
                    value="0" required lay-verify="required"
                    autocomplete="off" class="layui-input">
         </div>
 
-        <label class="layui-form-label">原价：</label>
+        <label class="layui-form-label">市场价：</label>
         <div class="layui-input-inline">
-            <input type="number" name="reference_price"
+            <input type="number" name="market_price"
                    value="0" required lay-verify="required"
                    autocomplete="off" class="layui-input">
         </div>
@@ -76,16 +75,16 @@
         <label class="layui-form-label">排序权重：</label>
         <div class="layui-input-inline">
             <input type="number" name="list_order"
-                   value="0" required lay-verify="required"
+                   value="999" required lay-verify="required"
                    autocomplete="off" class="layui-input">
         </div>
-        <div class="layui-form-mid layui-word-aux">(数字越大，排序越靠前)</div>
+        <div class="layui-form-mid layui-word-aux">(数字越小，排序越靠前)</div>
     </div>
 
     <div class="layui-form-item">
         <label class="layui-form-label">选择分类：</label>
         <div class="layui-input-inline">
-            <select id="toSelCatID" lay-filter="toSelCatID" name="cat_id" lay-search="">
+            <select id="toSelCatID" lay-filter="GoodsToSelCatID" name="cat_id" lay-search="">
                 <option value="">搜索或选择分类</option>
                 {volist name="categoryList" id="vo"}
                 {volist name="vo.children" id="vo2"}
@@ -98,6 +97,15 @@
                 {/volist}
             </select>
         </div>
+        <label class="layui-form-label">选择品牌：</label>
+        <div class="layui-input-inline">
+            <select name="brand_id" id="toSelBrand" lay-verify="required" lay-search="">
+                <option value="">直接选择或搜索</option>
+            </select>
+        </div>
+    </div>
+
+    <div class="layui-form-item">
         <label class="layui-form-label">添加属性：</label>
         <div class="layui-input-inline">
             <select id="toSelSpecFst" lay-filter="toSelSpecFst"
@@ -125,44 +133,28 @@
         </table>
 
         <button type="button" class="layui-btn layui-btn-danger">销售规格：</button>
-        <table class="layui-table" lay-size="sm">
+        <table class="layui-table table-specInfo" lay-size="sm">
             <colgroup>
-                <col width="150">
-                <col width="200">
-                <col width="100">
-                <col width="100">
-                <col width="100">
-                <col width="100">
-                <col width="100">
+                <col width="25%">
+                <col width="30%">
+                <col width="10%">
+                <col width="10%">
+                <col width="10%">
+                <col width="10%">
             </colgroup>
             <thead>
             <tr class="tr-specInfo-key tr-specInfo-msg">
                 <th>规格信息</th>
                 <th>规格配图</th>
-                <th>官网正价</th>
-                <th>库存量(件)</th>
-                <th>已售量(件)</th>
-                <th class="th-supply_price">供货价格</th>
+                <th>售价</th>
+                <th>库存量</th>
+                <th>已售量</th>
+                <th>状态</th>
             </tr>
             </thead>
             <tbody class="tbody-specInfo-msg">
-            <!--<tr>-->
-                <!--<td>S(建议80-90斤左右)<input type="hidden" name="sku_arr[16][spec_id]" value="16"><input type="hidden"-->
-                                                                                                    <!--name="sku_arr[16][spec_name]"-->
-                                                                                                    <!--value="S(建议80-90斤左右)">-->
-                <!--</td>-->
-                <!--<td>-->
-                    <!--<input type="number" name="sku_arr[16][selling_price]" value="0.00" required="" class="layui-input">-->
-                <!--</td>-->
-                <!--<td>-->
-                    <!--<input type="number" name="sku_arr[16][stock]" value="0" required="" class="layui-input">-->
-                <!--</td>-->
-                <!--<td>-->
-                    <!--<input type="number" name="sku_arr[16][sold_num]" value="0" required="" class="layui-input">-->
-                <!--</td>-->
-            <!--</tr>-->
-            </tbody>
 
+            </tbody>
         </table>
         <input type="hidden" class="attr_info" name="attr_info" value="[]">
     </blockquote>
@@ -197,12 +189,13 @@
 <script src="__CMS__/js/goods.js"></script>
 {include file='layouts/tinymce-js'/}
 <script>
+    var arrSpecFull = [];
     layui.use(['form'], function () {
         var form = layui.form;
-        form.on('select(toSelCatID)', function (data) {
+        form.on('select(GoodsToSelCatID)', function (data) {
             //TODO 此时进行ajax的服务器访问，如果返回数据正常，则进行后面代码的调用
-            var toUrl = "{:url('cms/specInfo/ajaxGetSpecInfoFstByCat')}";
-            goToToSelCatID(toUrl,data.value,form);
+            var toUrl = "{:url('cms/goods/ajaxGetBrandAndSpecInfoFstByCat')}";
+            goToToSelCatID(toUrl,data.value,form,'click');
         });
         //点击获取子级属性信息
         form.on('select(toSelSpecFst)', function (data) {

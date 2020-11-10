@@ -21,15 +21,15 @@ function ToAjaxOpForPageSpecInfos(toUrl,postData) {
                         "                <td>"+e.list_order +"</td>\n" +
                         "                <td>\n" +
                         "                    <div class=\"layui-btn-group\">\n" +
-                        "                        <button class=\"layui-btn layui-btn-sm\" title=\"编辑属性\"\n" +
+                        "                        <button class=\"layui-btn layui-btn-sm layui-btn-normal\" title=\"编辑属性\"\n" +
                         "                                onclick=\"editForOpenPopups('✎ 产品属性修改','"+e.spec_id+"', '70%', '66%')\">\n" +
                         "                            <i class=\"layui-icon\">&#xe642;</i>\n" +
                         "                        </button>\n" +
-                        "                        <button class=\"layui-btn layui-btn-sm\" title=\"删除\"\n" +
+                        "                        <button class=\"layui-btn layui-btn-sm layui-btn-danger\" title=\"删除\"\n" +
                         "                                onclick=\"delPostRecord('"+e.spec_id+"')\">\n" +
                         "                            <i class=\"layui-icon\">&#xe640;</i>\n" +
                         "                        </button>\n" +
-                        "<button class=\"layui-btn layui-btn-sm\" title=\"规格数据\"\n" +
+                        "<button class=\"layui-btn layui-btn-sm layui-btn-warm\" title=\"规格数据\"\n" +
                         "                        onclick=\"opSpecInfo('"+e.spec_id+"')\">\n" +
                         "                    <i class=\"layui-icon\">&#xe63c;</i>\n" +
                         "                </button>\n" +

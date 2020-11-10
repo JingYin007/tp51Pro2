@@ -72,15 +72,15 @@
         <td>{php} echo $vo['status_tip']{/php}</td>
         <td>
             <div class="layui-btn-group">
-                <button class="layui-btn layui-btn-sm" title="编辑文章"
+                <button class="layui-btn layui-btn-sm layui-btn-normal" title="编辑文章"
                         onclick="editForOpenPopups('✎ 文章编辑','{$vo.id}', '', '76%')">
                     <i class="layui-icon">&#xe642;</i>
                 </button>
-                <button class="layui-btn layui-btn-sm" title="删除文章"
+                <button class="layui-btn layui-btn-sm layui-btn-danger" title="删除文章"
                         onclick="delPostRecord('{$vo.id}')">
                     <i class="layui-icon">&#xe640;</i>
                 </button>
-                <button class="layui-btn layui-btn-sm" title="操作记录"
+                <button class="layui-btn layui-btn-sm layui-btn-warm" title="操作记录"
                         onclick="viewLogOpenPopups('☁ 操作日志', '{$vo.id}')">
                     <i class="layui-icon">&#xe60e;</i>
                 </button>

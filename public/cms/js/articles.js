@@ -57,15 +57,15 @@ function ToAjaxOpForPageArticles(toUrl,postData) {
                         "                <td>" +e.status_tip +"</td>\n" +
                         "                <td>\n" +
                         "                    <div class=\"layui-btn-group\">\n" +
-                        "                        <button class=\"layui-btn layui-btn-sm\" title='编辑文章' \n" +
+                        "                        <button class=\"layui-btn layui-btn-sm layui-btn-normal\" title='编辑文章' \n" +
                         "                                onclick=\"editForOpenPopups('✎ 文章编辑','"+e.id+"','','76%')\">\n" +
                         "                            <i class=\"layui-icon\">&#xe642;</i>\n" +
                         "                        </button>\n" +
-                        "                        <button class=\"layui-btn layui-btn-sm\" title='删除文章' \n" +
+                        "                        <button class=\"layui-btn layui-btn-sm layui-btn-danger\" title='删除文章' \n" +
                         "                                onclick=\"delPostRecord('"+e.id+"')\">\n" +
                         "                            <i class=\"layui-icon\">&#xe640;</i>\n" +
                         "                        </button>\n" +
-                        "<button class=\"layui-btn layui-btn-sm\" title=\"操作记录\"\n" +
+                        "<button class=\"layui-btn layui-btn-sm layui-btn-warm\" title=\"操作记录\"\n" +
                         "                        onclick=\"viewLogOpenPopups('☁ 操作日志','"+e.id+"')\">\n" +
                         "                    <i class=\"layui-icon\">&#xe60e;</i>\n" +
                         "                </button>"+
