@@ -33,8 +33,19 @@
                    placeholder="京东、顺丰必填【?】" autocomplete="off" class="layui-input">
         </div>
     </div>
-
     <input type="hidden" name="opID" value="{$opID}">
+
+
+    <div class="layui-form-item">
+        <fieldset class="layui-elem-field layui-field-title" style="margin-top: 30px;">
+            <legend>物流使用须知：</legend>
+        </fieldset>
+        <blockquote class="layui-elem-quote layui-quote-nm">
+            <span class="layui-badge-dot layui-bg-orange"></span> 注册快递鸟<br>
+            <span class="layui-badge-dot"></span> 修改 'config/bird_express.php' 配置信息'<br>
+            <span class="layui-badge-dot layui-bg-gray"></span> 若是其他第三方物流，请类比拓展 ...<br>
+        </blockquote>
+    </div>
     {:token()}
     <div class="layui-form-item">
         <div class="layui-input-block div-form-op">
@@ -48,6 +59,10 @@
         float: right;
         position:absolute;
         bottom:10%;
+    }
+    .layui-form-item blockquote{
+        background-color: #008B8B;
+        color: #ffffff;
     }
 </style>
 <script src="__CMS__/js/moZhang.js"></script>
