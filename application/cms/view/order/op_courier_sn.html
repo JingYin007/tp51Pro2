@@ -1,0 +1,78 @@
+{extend name='layouts/cms'}
+{block name='body-content'}
+
+<form class="layui-form form-op-normal layui-form-pane">
+    <div class="layui-form-item">
+        <label class="layui-form-label">快递公司：</label>
+        <div class="layui-input-inline">
+            <select lay-filter="toSelSpecFst" name="courier_code"
+                    lay-verify="required" lay-search="">
+                <option value="">直接选择或搜索选择</option>
+                {volist name="birdExpList" id="vo"}
+                <option value="{$vo.code}" {$courierInfo.courier_code==$vo.code?"selected":""}>{$vo.name}</option>
+                {/volist}
+            </select>
+        </div>
+    </div>
+
+    <div class="layui-form-item">
+        <label class="layui-form-label">快递单号：</label>
+        <div class="layui-input-inline">
+            <input type="text" name="courier_sn"
+                   value="{$courierInfo.courier_sn}"
+                   placeholder="请输入快递单号" autocomplete="off" class="layui-input">
+        </div>
+    </div>
+    <div class="layui-form-item">
+        <label class="layui-form-label">商家编码：</label>
+        <div class="layui-input-inline">
+            <input type="text" name="customer_name"
+                   value="{$courierInfo.customer_name}"
+                   title="若是京东，请填写青龙配送编码;若是顺丰，请填写收件人或者寄件人的手机号后四位数字;其他无需填写"
+                   id="span-tip" onclick="tipMsg()"
+                   placeholder="京东、顺丰必填【?】" autocomplete="off" class="layui-input">
+        </div>
+    </div>
+
+    <input type="hidden" name="opID" value="{$opID}">
+    {:token()}
+    <div class="layui-form-item">
+        <div class="layui-input-block div-form-op">
+            <button class="layui-btn" type="button" onclick="addCourierNum()">提交</button>
+            <button type="reset" class="layui-btn layui-btn-primary">放弃</button>
+        </div>
+    </div>
+</form>
+<style>
+    .div-form-op{
+        float: right;
+        position:absolute;
+        bottom:10%;
+    }
+</style>
+<script src="__CMS__/js/moZhang.js"></script>
+<script>
+    function addCourierNum() {
+        var toUrl = "{:url('cms/order/opCourierSn',['id'=>'AID'])}";
+        toUrl = toUrl.replace('AID', 0);
+        var postData = $(".form-op-normal").serialize();
+        ToPostPopupsDeal(toUrl, postData);
+    }
+    function tipMsg() {
+        layui.use(['layer'], function () {
+            layer.tips('若是京东，请填写青龙配送编码;' +
+                '若是顺丰，请填写收件人或者寄件人的手机号后四位数字;其他无需填写', '#span-tip',
+                {
+                    tips: [3],
+                    time: 200000, //20s后自动关闭
+                    shade:0.3,
+                    shadeClose:true,
+                });
+        });
+    }
+
+
+</script>
+{/block}
+{block name='single-content'}{/block}
+

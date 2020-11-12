@@ -1,0 +1,151 @@
+{extend name="layouts/cms"}
+{block name='body-content'}
+<div class="layui-inline layui-form">
+    <form class="form-search form-op-search" action="{:url('cms/order/details')}" method="get">
+        <div class="layui-input-inline" style="width: 120px">
+            <select name="orderStatus">
+                <option value="" {$orderStatus==""?"selected":""}>全部状态</option>
+                <option value="1" {$orderStatus=="1"?"selected":""}>待发货</option>
+                <option value="2" {$orderStatus=="2"?"selected":""}>已发货</option>
+                <option value="3" {$orderStatus=="3"?"selected":""}>已收货</option>
+                <option value="4" {$orderStatus=="4"?"selected":""}>已评价</option>
+                <option value="5" {$orderStatus=="5"?"selected":""}>售后申请中</option>
+                <option value="6" {$orderStatus=="6"?"selected":""}>售后已完成</option>
+            </select>
+        </div>
+        <div class="layui-input-inline">
+            <input type="hidden" name="curr_page" class="curr_page" value="1">
+            <input type="text" value="{$search}" name="str_search" placeholder="编号、商品、用户信息 ..."
+                   class="layui-input search_input">
+        </div>
+        <button class="layui-btn-warm btn-search-mz">
+            <i class="layui-icon">&#xe615;</i>
+        </button>
+    </form>
+</div>
+
+<table class="layui-table table-body" lay-even="" lay-skin="row">
+    <colgroup>
+        <col width="5%">
+        <col width="5%">
+        <col width="12%">
+        <col width="5%">
+        <col width="5%">
+        <col width="18%">
+        <col width="8%">
+        <col width="12%">
+        <col width="5%">
+    </colgroup>
+    <thead>
+    <tr>
+        <th>订单编号</th>
+        <th>缩略图</th>
+        <th>商品信息</th>
+        <th>单价</th>
+        <th>数量</th>
+        <th>收货地址</th>
+        <th>物流单号</th>
+        <th>支付信息</th>
+        <th>状态</th>
+    </tr>
+    </thead>
+    <tbody class="table-tbody-normal layui-form"
+           ajax_page_fun="ToAjaxOpForPageOrderDetails"
+           record_num="{$record_num}" page_limit="{$page_limit}"
+           page_url="{:url('cms/order/details')}">
+    {volist name="detailList" id="vo"}
+    <tr class="tr-normal-{$vo['id']}">
+        <td><span class="span-order_sn">{$vo['order_sn']}</span></td>
+        <td><img class="img-goods_thumbnail" src="{$vo.goods_thumbnail}"></td>
+        <td>
+            <span class="span-goods_name">{$vo.goods_name}</span>
+            {php}echo $vo['tip_sku_spec_msg'];{/php}
+        </td>
+        <td>
+            <span class="span-goods_price">￥{$vo.goods_price}</span>
+        </td>
+        <td>
+            <button type="button"
+                    class="layui-btn layui-btn-primary layui-btn-sm">
+                {$vo.goods_num} 件
+            </button>
+        </td>
+        <td>
+            <span class="span-consignee">{$vo['consignee']}</span><br>
+            <span class="span-mobile">{$vo['mobile']}</span><br>
+            <span class="span-address">{$vo['address']}</span><br>
+        </td>
+        <td>
+            {php}echo $vo['tip_courier_msg'];{/php}
+            <i class="layui-icon" title="添加物流单号" onclick="addCourierNum('{$vo.id}')">&#xe608;</i>
+            <i class="layui-icon" title="查看物流信息" onclick="lookLogistics('{$vo.id}')">&#xe715;</i>
+        </td>
+        <td>
+            <span class="span-pay_channel">【{$vo['pay_channel']}】</span><br>
+            {php}echo $vo['tip_pay_msg'];{/php}<br>
+            <span class="span-pay_time">
+                <i class="layui-icon">&#xe60e;</i> {$vo['pay_time']}
+            </span>
+        </td>
+        <td>{php}echo $vo['tip_status_msg'];{/php}</td>
+    </tr>
+    {/volist}
+    </tbody>
+</table>
+<style>
+    .img-goods_thumbnail{
+        height: 80px;
+    }
+    .span-goods_name{
+        color: #FF6666;
+    }
+    .span-order_sn{
+        color: #7274A7;
+    }
+    .span-goods_price{
+        color: #339999;
+    }
+    .span-consignee{
+        font-size: medium;
+        color: #FF9966;
+    }
+    .span-mobile{
+        color: #CC99CC;
+    }
+    .span-address{
+        color: #6699CC;
+    }
+    .span-pay_channel{
+        color: #6699FF;
+    }
+    .span-pay_time{
+        color: #FF9999;
+    }
+    .btn-courier_sn{
+        background-color: #9999CC;
+    }
+    .table-tbody-normal .layui-icon{
+        float: right;
+        margin: 0 5px;
+    }
+</style>
+<div id="demo2-1"></div>
+{/block}
+
+{block name='single-content'}
+<script src="__CMS__/js/orders.js"></script>
+<script>
+    //添加物流单号
+    function addCourierNum(id) {
+        var toUrl = "{:url('cms/order/opCourierSn',['id'=>'AID'])}";
+        toUrl = toUrl.replace('AID', id);
+        ToOpenPopups(toUrl, '✎ 添加物流单号', '360px', '80%');
+    }
+    //根据订单ID 查看物流信息
+    function lookLogistics(id) {
+        var toUrl = "{:url('cms/order/lookLogistics',['op_id'=>'AID'])}";
+        toUrl = toUrl.replace('AID', id ? id : '0');
+        ToOpenPopups(toUrl, '✎ 物流信息', '360px', '80%');
+    }
+</script>
+{/block}

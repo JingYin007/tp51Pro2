@@ -53,7 +53,8 @@
         <col width="5%">
         <col width="12%">
         <col width="5%">
-        <col width="12%">
+        <col width="8%">
+        <col width="8%">
         <col width="5%">
         <col width="5%">
         <col width="5%">
@@ -66,6 +67,7 @@
         <th>商品名称</th>
         <th>缩略图片</th>
         <th>分类</th>
+        <th>品牌</th>
         <th>售价</th>
         <th>库存</th>
         <th>排序</th>
@@ -86,11 +88,10 @@
             {eq name="vo.recommend" value="1"}<span class="layui-badge">荐</span>{/eq}
              {$vo['goods_name']}</td>
         <td><img class="img-thumbnail" src="{$vo['thumbnail']}"></td>
+        <td><span class="span-cat_name" title="分类">【{$vo['cat_name']}】</span></td>
         <td>
-            <span class="span-cat_name" title="分类">【{$vo['cat_name']}】</span><hr>
             <span class="layui-badge-dot layui-bg-blue"></span>
             <span class="span-brand_name" title="品牌">{$vo['brand_name']}</span>
-
         </td>
         <td><span class="selling_price">￥{$vo['selling_price']}</span></td>
         <td><span class="span-stock">{$vo['stock']}</span></td>

@@ -1,0 +1,38 @@
+{extend name='layouts/cms'}
+{block name='body-content'}
+
+<fieldset class="layui-elem-field layui-field-title" style="margin-top: 30px;">
+    <legend>{$shipperName}：{$logisticCode}</legend>
+</fieldset>
+<ul class="layui-timeline">
+    {if isset($expressMsg)}
+        {volist name="expressMsg.Traces" id="vo"}
+            <li class="layui-timeline-item">
+                <i class="layui-icon layui-timeline-axis"></i>
+                <div class="layui-timeline-content layui-text">
+                    <div class="layui-timeline-title">
+                        {$vo.AcceptTime}<br>{$vo.AcceptStation}
+                    </div>
+                </div>
+            </li>
+        {/volist}
+    {/if}
+</ul>
+<style>
+    body{
+        background-color: #E0FFFF;
+    }
+    .div-body-show .layui-field-title legend{
+        font-weight: bolder;
+        color: #DDA0DD;
+    }
+    .layui-timeline .layui-timeline-title{
+        font-weight: bolder;
+        font-family: 'Open Sans', Arial, sans-serif;
+        color: #339999;
+    }
+</style>
+{/block}
+
+{block name='single-content'}{/block}
+

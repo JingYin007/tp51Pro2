@@ -1,0 +1,135 @@
+{extend name="layouts/cms"}
+{block name='body-content'}
+<div class="layui-inline layui-form" style="width: 100%;height: 100%">
+    <form class="form-search" action="{:url('cms/analyze/timeSale')}" method="get">
+        <div class="layui-inline">
+            <label class="layui-form-label">选择日期：</label>
+            <div class="layui-input-inline"  style="width: 127px">
+                <input type="text" class="layui-input"
+                       value="{$date_sel}" autocomplete="off"
+                       name="date_sel" id="date_sel" placeholder=" - ">
+            </div>
+        </div>
+        <button class="layui-btn-warm btn-search-mz">
+            <i class="layui-icon">&#xe615;</i>
+        </button>
+        <button type="button" id="all_amount"
+                style="float: right" title="销售总额"
+                class="layui-btn layui-btn-radius layui-btn-danger">HELLO</button>
+    </form>
+
+
+    <!-- 为 ECharts 准备一个具备大小（宽高）的 DOM -->
+    <div id="main" style="width: 98%;height:630px;margin-top: 5px"></div>
+
+</div>
+
+{/block}
+
+{block name='single-content'}
+<script src="__CMS__/js/moZhang.js"></script>
+<script>
+    layui.use(['form','laydate'], function() {
+        var laydate = layui.laydate;
+        laydate.render({
+            elem: '#date_sel',
+            type:'date',
+            done:function (){
+                ajax_getData_again();
+            }
+        });
+    });
+</script>
+<script>
+    // 基于准备好的dom，初始化echarts实例
+    var myChart = echarts.init(document.getElementById('main'));
+
+    // 显示标题，图例和空的坐标轴
+    myChart.setOption({
+        tooltip: {
+            trigger: 'axis',
+            axisPointer: {
+                type: 'cross',
+                crossStyle: {
+                    color: '#999'
+                }
+            }
+        },
+        toolbox: {
+            feature: {
+                dataView: {show: true, readOnly: false},
+                magicType: {show: true, type: ['line', 'bar']},
+                saveAsImage: {show: true}
+            }
+        },
+        legend: {
+            data: [ '销售总额', '销售份数']
+        },
+        xAxis: [
+            {
+                type: 'category',
+                data: [
+                    '00:00-01:00','01:00-02:00','02:00-03:00','03:00-04:00',
+                    '04:00-05:00','05:00-06:00','06:00-07:00','07:00-08:00',
+                    '08:00-09:00','09:00-10:00','10:00-11:00','11:00-12:00',
+                    '12:00-13:00','13:00-14:00','14:00-15:00','15:00-16:00',
+                    '16:00-17:00','17:00-18:00','18:00-19:00','19:00-20:00',
+                    '20:00-21:00','21:00-22:00','22:00-23:00','23:00-00:00'
+                ],
+                axisPointer: {
+                    type: 'shadow'
+                }
+            }
+        ],
+        yAxis: [
+            {
+                type: 'value',
+                name: '销售总额',
+                axisLabel: {
+                    formatter: '{value} 元'
+                }
+            },
+            {
+                type: 'value',
+                name: '销售份数',
+                axisLabel: {
+                    formatter: '{value} 份'
+                }
+            }
+        ],
+        series: [
+            {
+                name: '销售总额',
+                type: 'bar',
+                data: []
+            },
+
+            {
+                name: '销售份数',
+                type: 'line',
+                yAxisIndex: 1,
+                data: []
+            }
+        ]
+    });
+
+    ajax_getData_again();
+    function ajax_getData_again(){
+        $.post("{:url('cms/analyze/timeSale')}",
+            {"date_sel":$("#date_sel").val()}).done(function (data) {
+            var resData = JSON.parse(data);
+            console.log('resData.data',resData.data);
+            if(!resData.data.sale_amount_Res.length){dialog.tip('Sorry，当前没有数据哦！');}
+            $("#all_amount").html("￥"+resData.data.sale_amount_sum);
+            myChart.setOption({
+                series: [ {
+                    data:resData.data.sale_amount_Res,
+                }, {
+                    data: resData.data.sale_num_Res
+                }],
+            });
+        });
+    }
+
+</script>
+{/block}

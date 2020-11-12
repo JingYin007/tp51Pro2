@@ -1,0 +1,164 @@
+{extend name="layouts/cms"}
+{block name='body-content'}
+<div class="layui-inline layui-form">
+    <form class="form-search" action="{:url('cms/analyze/hotSale')}" method="get">
+        <div class="layui-inline">
+            <label class="layui-form-label">日期范围：</label>
+            <div class="layui-input-inline">
+                <input type="text" class="layui-input"
+                       value="{$date_sel}" autocomplete="off"
+                       name="date_sel" id="date_sel" placeholder=" - ">
+            </div>
+        </div>
+        <button class="layui-btn-warm btn-search-mz">
+            <i class="layui-icon">&#xe615;</i>
+        </button>
+    </form>
+
+    <div class="div-echarts">
+        <!-- 为 ECharts 准备一个具备大小（宽高）的 DOM -->
+        <div id="main">
+
+        </div>
+    </div>
+
+</div>
+<style>
+    .layui-form{
+        float: left;
+        width:100%;
+        height:auto;
+    }
+    .div-echarts{
+        float: left;
+        width:100%;
+        height:auto;
+    }
+    #main{
+        width: 100%;
+        height: 750px;
+        float: right;
+    }
+</style>
+{/block}
+
+{block name='single-content'}
+<script src="__CMS__/js/moZhang.js"></script>
+<script>
+    layui.use(['laydate','form'], function() {
+        var laydate = layui.laydate;
+        laydate.render({
+            elem: '#date_sel'
+            ,range: true
+            ,done:function (value){
+                console.log(value);
+                $("#date_sel").val(value);
+                ajax_getData_again();
+            }
+        });
+    });
+</script>
+<script>
+
+    // 基于准备好的dom，初始化echarts实例
+    var myChart = echarts.init(document.getElementById('main'));
+    // 显示标题，图例和空的坐标轴
+    myChart.setOption({
+        backgroundColor: '#F0FFFF',
+        tooltip: {
+            trigger: 'item',
+            formatter: "{a} <br/>{b}: {c} ({d}%)"
+        },
+        series: [
+            {
+                name:'产品分类',
+                type:'pie',
+                selectedMode: 'single',
+                radius: ['33%', '56%'],
+
+                label: {
+                    normal: {
+                        position: 'inner'
+                    }
+                },
+                labelLine: {
+                    normal: {
+                        show: false
+                    }
+                }
+            },
+            {
+                name:'热卖产品',
+                type:'pie',
+                radius: ['77%', '91%'],
+
+                grid: { // 控制图的大小，调整下面这些值就可以，
+                    x: 40,
+                    x2: 100,
+                    y2: 150 // y2可以控制 X轴跟Zoom控件之间的间隔，避免以为倾斜后造成 label重叠到zoom上
+                },
+                xAxis: [
+                    {
+                        name: "",
+                        type: 'category',
+                        axisLabel:{
+                            interval:0,//横轴信息全部显示
+                            rotate:-30 //-30度角倾斜显示
+                        }
+                    }],
+
+                label: {
+                    normal: {
+                        formatter: '{a|{a}}{abg|}\n{hr|}\n  {b|{b}：}{c}  {per|{d}%}  ',
+                        backgroundColor: '#eee',
+                        borderColor: '#aaa',
+                        borderWidth: 1,
+                        borderRadius: 4,
+                        rich: {
+                            a: {
+                                color: '#999',
+                                lineHeight: 22,
+                                align: 'center'
+                            },
+                            hr: {
+                                borderColor: '#aaa',
+                                width: '100%',
+                                borderWidth: 0.5,
+                                height: 0
+                            },
+                            b: {
+                                fontSize: 16,
+                                lineHeight: 33
+                            },
+                            per: {
+                                color: '#eee',
+                                backgroundColor: '#334455',
+                                padding: [2, 4],
+                                borderRadius: 2
+                            }
+                        }
+                    }
+                },
+            }
+        ]
+    });
+
+    ajax_getData_again();
+
+    function ajax_getData_again(){
+        //动态绑定数据
+        $.post("{:url('cms/analyze/hotSale')}"
+            ,{"date_sel":$("#date_sel").val()}).done(function (data) {
+            var resData = JSON.parse(data);
+            if(!resData.data.catInfo.length ){dialog.tip('Sorry，当前没有数据哦！');}
+            myChart.setOption({
+                series: [
+                    {data:resData.data.catInfo},
+                    {data:resData.data.goodsInfo}
+                ]
+            });
+        });
+    }
+
+</script>
+{/block}

@@ -10,7 +10,7 @@ Target Server Type    : MYSQL
 Target Server Version : 50553
 File Encoding         : 65001
 
-Date: 2020-11-10 19:50:47
+Date: 2020-11-12 16:55:52
 */
 
 SET FOREIGN_KEY_CHECKS=0;
@@ -103,7 +103,7 @@ CREATE TABLE `tp5_xadmin_roles` (
 -- ----------------------------
 -- Records of tp5_xadmin_roles
 -- ----------------------------
-INSERT INTO `tp5_xadmin_roles` VALUES ('1', '终级管理员', '138|139|140|141|1|2|7|6|3|4|5|93|61|76|73|49|50|48|142|67|133|134|', '2020-11-09 14:54:53', '1');
+INSERT INTO `tp5_xadmin_roles` VALUES ('1', '终级管理员', '138|139|140|141|1|2|7|6|3|4|5|93|61|76|73|49|50|48|142|67|145|146|147|133|134|151|', '2020-11-12 14:22:12', '1');
 INSERT INTO `tp5_xadmin_roles` VALUES ('2', '初级管理员', '1|2|6|3|4|5|', '2020-09-15 17:13:02', '1');
 
 -- ----------------------------
@@ -178,6 +178,439 @@ INSERT INTO `tp5_xarticle_points` VALUES ('1', '1', '2', '', 'home/images/articl
 INSERT INTO `tp5_xarticle_points` VALUES ('2', '2', '12', '', 'home/images/article2.png', '我的小天地，我闯荡的大江湖，我的浩瀚星辰和璀璨日月，再与你无关；而你的天地，你行走的江湖，你的日月和星辰，我也再不惦念。从此，一别两宽，各生欢喜。', '1', '1');
 INSERT INTO `tp5_xarticle_points` VALUES ('4', '4', '0', '', 'home/images/article4.png', '人都是对喜欢的东西最上心。他若真的在乎你，一分一秒都不想失去你的消息，更不会不时玩消失，不会对你忽冷忽热，因为他比你还害怕失去。所有的不主动都是由于不喜欢，喜欢你的人永远不忙。', '0', '0');
 INSERT INTO `tp5_xarticle_points` VALUES ('3', '3', '0', '', 'home/images/article3.png', '因为穷，所以要努力赚钱；努力赚钱，就会没时间找对象；找不到对象就算了，钱也没赚多少，难免开始焦虑；一旦焦虑，每天洗头的时候，掉出来的头发会告诉你什么才是真正的“绝望”。', '1', '1');
+
+-- ----------------------------
+-- Table structure for tp5_xbird_express
+-- ----------------------------
+DROP TABLE IF EXISTS `tp5_xbird_express`;
+CREATE TABLE `tp5_xbird_express` (
+  `id` int(11) NOT NULL AUTO_INCREMENT COMMENT '主键ID',
+  `name` varchar(50) NOT NULL COMMENT '快递公司 名称',
+  `code` varchar(50) NOT NULL COMMENT '快递公司 对应编码 （快递鸟）',
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=1824 DEFAULT CHARSET=utf8;
+
+-- ----------------------------
+-- Records of tp5_xbird_express
+-- ----------------------------
+INSERT INTO `tp5_xbird_express` VALUES ('1406', '顺丰速运', 'SF');
+INSERT INTO `tp5_xbird_express` VALUES ('1407', '百世快递', 'HTKY');
+INSERT INTO `tp5_xbird_express` VALUES ('1408', '中通快递', 'ZTO');
+INSERT INTO `tp5_xbird_express` VALUES ('1409', '申通快递', 'STO');
+INSERT INTO `tp5_xbird_express` VALUES ('1410', '圆通速递', 'YTO');
+INSERT INTO `tp5_xbird_express` VALUES ('1411', '韵达速递', 'YD');
+INSERT INTO `tp5_xbird_express` VALUES ('1412', '邮政快递包裹', 'YZPY');
+INSERT INTO `tp5_xbird_express` VALUES ('1413', 'EMS', 'EMS');
+INSERT INTO `tp5_xbird_express` VALUES ('1414', '天天快递', 'HHTT');
+INSERT INTO `tp5_xbird_express` VALUES ('1415', '京东快递', 'JD');
+INSERT INTO `tp5_xbird_express` VALUES ('1416', '优速快递', 'UC');
+INSERT INTO `tp5_xbird_express` VALUES ('1417', '德邦快递', 'DBL');
+INSERT INTO `tp5_xbird_express` VALUES ('1418', '宅急送', 'ZJS');
+INSERT INTO `tp5_xbird_express` VALUES ('1419', 'TNT快递', 'TNT');
+INSERT INTO `tp5_xbird_express` VALUES ('1420', 'UPS', 'UPS');
+INSERT INTO `tp5_xbird_express` VALUES ('1421', 'DHL', 'DHL');
+INSERT INTO `tp5_xbird_express` VALUES ('1422', 'FEDEX联邦(国内件）', 'FEDEX');
+INSERT INTO `tp5_xbird_express` VALUES ('1423', 'FEDEX联邦(国际件）', 'FEDEX_GJ');
+INSERT INTO `tp5_xbird_express` VALUES ('1424', '安捷快递', 'AJ');
+INSERT INTO `tp5_xbird_express` VALUES ('1425', '阿里跨境电商物流', 'ALKJWL');
+INSERT INTO `tp5_xbird_express` VALUES ('1426', '安迅物流', 'AX');
+INSERT INTO `tp5_xbird_express` VALUES ('1427', '安邮美国', 'AYUS');
+INSERT INTO `tp5_xbird_express` VALUES ('1428', '亚马逊物流', 'AMAZON');
+INSERT INTO `tp5_xbird_express` VALUES ('1429', '澳门邮政', 'AOMENYZ');
+INSERT INTO `tp5_xbird_express` VALUES ('1430', '安能物流', 'ANE');
+INSERT INTO `tp5_xbird_express` VALUES ('1431', '澳多多', 'ADD');
+INSERT INTO `tp5_xbird_express` VALUES ('1432', '澳邮专线', 'AYCA');
+INSERT INTO `tp5_xbird_express` VALUES ('1433', '安鲜达', 'AXD');
+INSERT INTO `tp5_xbird_express` VALUES ('1434', '安能快运', 'ANEKY');
+INSERT INTO `tp5_xbird_express` VALUES ('1435', '八达通  ', 'BDT');
+INSERT INTO `tp5_xbird_express` VALUES ('1436', '百腾物流', 'BETWL');
+INSERT INTO `tp5_xbird_express` VALUES ('1437', '北极星快运', 'BJXKY');
+INSERT INTO `tp5_xbird_express` VALUES ('1438', '奔腾物流', 'BNTWL');
+INSERT INTO `tp5_xbird_express` VALUES ('1439', '百福东方', 'BFDF');
+INSERT INTO `tp5_xbird_express` VALUES ('1440', '贝海国际 ', 'BHGJ');
+INSERT INTO `tp5_xbird_express` VALUES ('1441', '八方安运', 'BFAY');
+INSERT INTO `tp5_xbird_express` VALUES ('1442', '百世快运', 'BTWL');
+INSERT INTO `tp5_xbird_express` VALUES ('1443', '春风物流', 'CFWL');
+INSERT INTO `tp5_xbird_express` VALUES ('1444', '诚通物流', 'CHTWL');
+INSERT INTO `tp5_xbird_express` VALUES ('1445', '传喜物流', 'CXHY');
+INSERT INTO `tp5_xbird_express` VALUES ('1446', '程光   ', 'CG');
+INSERT INTO `tp5_xbird_express` VALUES ('1447', '城市100', 'CITY100');
+INSERT INTO `tp5_xbird_express` VALUES ('1448', '城际快递', 'CJKD');
+INSERT INTO `tp5_xbird_express` VALUES ('1449', 'CNPEX中邮快递', 'CNPEX');
+INSERT INTO `tp5_xbird_express` VALUES ('1450', 'COE东方快递', 'COE');
+INSERT INTO `tp5_xbird_express` VALUES ('1451', '长沙创一', 'CSCY');
+INSERT INTO `tp5_xbird_express` VALUES ('1452', '成都善途速运', 'CDSTKY');
+INSERT INTO `tp5_xbird_express` VALUES ('1453', '联合运通', 'CTG');
+INSERT INTO `tp5_xbird_express` VALUES ('1454', '疯狂快递', 'CRAZY');
+INSERT INTO `tp5_xbird_express` VALUES ('1455', 'CBO钏博物流', 'CBO');
+INSERT INTO `tp5_xbird_express` VALUES ('1456', '承诺达', 'CND');
+INSERT INTO `tp5_xbird_express` VALUES ('1457', 'D速物流', 'DSWL');
+INSERT INTO `tp5_xbird_express` VALUES ('1458', '到了港', 'DLG ');
+INSERT INTO `tp5_xbird_express` VALUES ('1459', '大田物流', 'DTWL');
+INSERT INTO `tp5_xbird_express` VALUES ('1460', '东骏快捷物流', 'DJKJWL');
+INSERT INTO `tp5_xbird_express` VALUES ('1461', '德坤', 'DEKUN');
+INSERT INTO `tp5_xbird_express` VALUES ('1462', '德邦快运', 'DBLKY');
+INSERT INTO `tp5_xbird_express` VALUES ('1463', '大马鹿', 'DML');
+INSERT INTO `tp5_xbird_express` VALUES ('1464', 'E特快', 'ETK');
+INSERT INTO `tp5_xbird_express` VALUES ('1465', 'EWE', 'EWE');
+INSERT INTO `tp5_xbird_express` VALUES ('1466', '快服务', 'KFW');
+INSERT INTO `tp5_xbird_express` VALUES ('1467', '飞康达', 'FKD');
+INSERT INTO `tp5_xbird_express` VALUES ('1468', '富腾达  ', 'FTD');
+INSERT INTO `tp5_xbird_express` VALUES ('1469', '凡宇货的', 'FYKD');
+INSERT INTO `tp5_xbird_express` VALUES ('1470', '速派快递', 'FASTGO');
+INSERT INTO `tp5_xbird_express` VALUES ('1471', '丰通快运', 'FT');
+INSERT INTO `tp5_xbird_express` VALUES ('1472', '冠达   ', 'GD');
+INSERT INTO `tp5_xbird_express` VALUES ('1473', '国通快递', 'GTO');
+INSERT INTO `tp5_xbird_express` VALUES ('1474', '广东邮政', 'GDEMS');
+INSERT INTO `tp5_xbird_express` VALUES ('1475', '共速达', 'GSD');
+INSERT INTO `tp5_xbird_express` VALUES ('1476', '广通       ', 'GTONG');
+INSERT INTO `tp5_xbird_express` VALUES ('1477', '迦递快递', 'GAI');
+INSERT INTO `tp5_xbird_express` VALUES ('1478', '港快速递', 'GKSD');
+INSERT INTO `tp5_xbird_express` VALUES ('1479', '高铁速递', 'GTSD');
+INSERT INTO `tp5_xbird_express` VALUES ('1480', '汇丰物流', 'HFWL');
+INSERT INTO `tp5_xbird_express` VALUES ('1481', '黑狗冷链', 'HGLL');
+INSERT INTO `tp5_xbird_express` VALUES ('1482', '恒路物流', 'HLWL');
+INSERT INTO `tp5_xbird_express` VALUES ('1483', '天地华宇', 'HOAU');
+INSERT INTO `tp5_xbird_express` VALUES ('1484', '鸿桥供应链', 'HOTSCM');
+INSERT INTO `tp5_xbird_express` VALUES ('1485', '海派通物流公司', 'HPTEX');
+INSERT INTO `tp5_xbird_express` VALUES ('1486', '华强物流', 'hq568');
+INSERT INTO `tp5_xbird_express` VALUES ('1487', '环球速运  ', 'HQSY');
+INSERT INTO `tp5_xbird_express` VALUES ('1488', '华夏龙物流', 'HXLWL');
+INSERT INTO `tp5_xbird_express` VALUES ('1489', '豪翔物流 ', 'HXWL');
+INSERT INTO `tp5_xbird_express` VALUES ('1490', '合肥汇文', 'HFHW');
+INSERT INTO `tp5_xbird_express` VALUES ('1491', '辉隆物流', 'HLONGWL');
+INSERT INTO `tp5_xbird_express` VALUES ('1492', '华企快递', 'HQKD');
+INSERT INTO `tp5_xbird_express` VALUES ('1493', '韩润物流', 'HRWL');
+INSERT INTO `tp5_xbird_express` VALUES ('1494', '青岛恒通快递', 'HTKD');
+INSERT INTO `tp5_xbird_express` VALUES ('1495', '货运皇物流', 'HYH');
+INSERT INTO `tp5_xbird_express` VALUES ('1496', '好来运快递', 'HYLSD');
+INSERT INTO `tp5_xbird_express` VALUES ('1497', '皇家物流', 'HJWL');
+INSERT INTO `tp5_xbird_express` VALUES ('1498', '捷安达  ', 'JAD');
+INSERT INTO `tp5_xbird_express` VALUES ('1499', '京广速递', 'JGSD');
+INSERT INTO `tp5_xbird_express` VALUES ('1500', '九曳供应链', 'JIUYE');
+INSERT INTO `tp5_xbird_express` VALUES ('1501', '急先达', 'JXD');
+INSERT INTO `tp5_xbird_express` VALUES ('1502', '晋越快递', 'JYKD');
+INSERT INTO `tp5_xbird_express` VALUES ('1503', '加运美', 'JYM');
+INSERT INTO `tp5_xbird_express` VALUES ('1504', '景光物流', 'JGWL');
+INSERT INTO `tp5_xbird_express` VALUES ('1505', '佳怡物流', 'JYWL');
+INSERT INTO `tp5_xbird_express` VALUES ('1506', '京东快运', 'JDKY');
+INSERT INTO `tp5_xbird_express` VALUES ('1507', '佳吉快运', 'CNEX');
+INSERT INTO `tp5_xbird_express` VALUES ('1508', '跨越速运', 'KYSY');
+INSERT INTO `tp5_xbird_express` VALUES ('1509', '跨越物流', 'KYWL');
+INSERT INTO `tp5_xbird_express` VALUES ('1510', '快速递物流', 'KSDWL');
+INSERT INTO `tp5_xbird_express` VALUES ('1511', '快8速运', 'KBSY');
+INSERT INTO `tp5_xbird_express` VALUES ('1512', '龙邦快递', 'LB');
+INSERT INTO `tp5_xbird_express` VALUES ('1513', '立即送', 'LJSKD');
+INSERT INTO `tp5_xbird_express` VALUES ('1514', '联昊通速递', 'LHT');
+INSERT INTO `tp5_xbird_express` VALUES ('1515', '民邦快递', 'MB');
+INSERT INTO `tp5_xbird_express` VALUES ('1516', '民航快递', 'MHKD');
+INSERT INTO `tp5_xbird_express` VALUES ('1517', '美快    ', 'MK');
+INSERT INTO `tp5_xbird_express` VALUES ('1518', '门对门快递', 'MDM');
+INSERT INTO `tp5_xbird_express` VALUES ('1519', '迈隆递运', 'MRDY');
+INSERT INTO `tp5_xbird_express` VALUES ('1520', '明亮物流', 'MLWL');
+INSERT INTO `tp5_xbird_express` VALUES ('1521', '南方', 'NF');
+INSERT INTO `tp5_xbird_express` VALUES ('1522', '能达速递', 'NEDA');
+INSERT INTO `tp5_xbird_express` VALUES ('1523', '平安达腾飞快递', 'PADTF');
+INSERT INTO `tp5_xbird_express` VALUES ('1524', '泛捷快递', 'PANEX');
+INSERT INTO `tp5_xbird_express` VALUES ('1525', '品骏快递', 'PJ');
+INSERT INTO `tp5_xbird_express` VALUES ('1526', 'PCA Express', 'PCA');
+INSERT INTO `tp5_xbird_express` VALUES ('1527', '全晨快递', 'QCKD');
+INSERT INTO `tp5_xbird_express` VALUES ('1528', '全日通快递', 'QRT');
+INSERT INTO `tp5_xbird_express` VALUES ('1529', '快客快递', 'QUICK');
+INSERT INTO `tp5_xbird_express` VALUES ('1530', '全信通', 'QXT');
+INSERT INTO `tp5_xbird_express` VALUES ('1531', '荣庆物流', 'RQ');
+INSERT INTO `tp5_xbird_express` VALUES ('1532', '七曜中邮', 'QYZY');
+INSERT INTO `tp5_xbird_express` VALUES ('1533', '如风达', 'RFD');
+INSERT INTO `tp5_xbird_express` VALUES ('1534', '日日顺物流', 'RRS');
+INSERT INTO `tp5_xbird_express` VALUES ('1535', '瑞丰速递', 'RFEX');
+INSERT INTO `tp5_xbird_express` VALUES ('1536', '赛澳递', 'SAD');
+INSERT INTO `tp5_xbird_express` VALUES ('1537', '苏宁物流', 'SNWL');
+INSERT INTO `tp5_xbird_express` VALUES ('1538', '圣安物流', 'SAWL');
+INSERT INTO `tp5_xbird_express` VALUES ('1539', '晟邦物流', 'SBWL');
+INSERT INTO `tp5_xbird_express` VALUES ('1540', '上大物流', 'SDWL');
+INSERT INTO `tp5_xbird_express` VALUES ('1541', '盛丰物流', 'SFWL');
+INSERT INTO `tp5_xbird_express` VALUES ('1542', '速通物流', 'ST');
+INSERT INTO `tp5_xbird_express` VALUES ('1543', '速腾快递', 'STWL');
+INSERT INTO `tp5_xbird_express` VALUES ('1544', '速必达物流', 'SUBIDA');
+INSERT INTO `tp5_xbird_express` VALUES ('1545', '速递e站', 'SDEZ');
+INSERT INTO `tp5_xbird_express` VALUES ('1546', '速呈宅配', 'SCZPDS');
+INSERT INTO `tp5_xbird_express` VALUES ('1547', '速尔快递', 'SURE');
+INSERT INTO `tp5_xbird_express` VALUES ('1548', '闪送', 'SS');
+INSERT INTO `tp5_xbird_express` VALUES ('1549', '盛通快递', 'STKD');
+INSERT INTO `tp5_xbird_express` VALUES ('1550', '台湾邮政', 'TAIWANYZ');
+INSERT INTO `tp5_xbird_express` VALUES ('1551', '唐山申通', 'TSSTO');
+INSERT INTO `tp5_xbird_express` VALUES ('1552', '特急送', 'TJS');
+INSERT INTO `tp5_xbird_express` VALUES ('1553', '通用物流', 'TYWL');
+INSERT INTO `tp5_xbird_express` VALUES ('1554', '腾林物流', 'TLWL');
+INSERT INTO `tp5_xbird_express` VALUES ('1555', '全一快递', 'UAPEX');
+INSERT INTO `tp5_xbird_express` VALUES ('1556', '优联吉运', 'ULUCKEX');
+INSERT INTO `tp5_xbird_express` VALUES ('1557', 'UEQ Express', 'UEQ');
+INSERT INTO `tp5_xbird_express` VALUES ('1558', '万家康  ', 'WJK');
+INSERT INTO `tp5_xbird_express` VALUES ('1559', '万家物流', 'WJWL');
+INSERT INTO `tp5_xbird_express` VALUES ('1560', '武汉同舟行', 'WHTZX');
+INSERT INTO `tp5_xbird_express` VALUES ('1561', '维普恩', 'WPE');
+INSERT INTO `tp5_xbird_express` VALUES ('1562', '万象物流', 'WXWL');
+INSERT INTO `tp5_xbird_express` VALUES ('1563', '微特派', 'WTP');
+INSERT INTO `tp5_xbird_express` VALUES ('1564', '温通物流', 'WTWL');
+INSERT INTO `tp5_xbird_express` VALUES ('1565', '迅驰物流  ', 'XCWL');
+INSERT INTO `tp5_xbird_express` VALUES ('1566', '信丰物流', 'XFEX');
+INSERT INTO `tp5_xbird_express` VALUES ('1567', '希优特', 'XYT');
+INSERT INTO `tp5_xbird_express` VALUES ('1568', '新杰物流', 'XJ');
+INSERT INTO `tp5_xbird_express` VALUES ('1569', '源安达快递', 'YADEX');
+INSERT INTO `tp5_xbird_express` VALUES ('1570', '远成物流', 'YCWL');
+INSERT INTO `tp5_xbird_express` VALUES ('1571', '远成快运', 'YCSY');
+INSERT INTO `tp5_xbird_express` VALUES ('1572', '义达国际物流', 'YDH');
+INSERT INTO `tp5_xbird_express` VALUES ('1573', '易达通  ', 'YDT');
+INSERT INTO `tp5_xbird_express` VALUES ('1574', '原飞航物流', 'YFHEX');
+INSERT INTO `tp5_xbird_express` VALUES ('1575', '亚风快递', 'YFSD');
+INSERT INTO `tp5_xbird_express` VALUES ('1576', '运通快递', 'YTKD');
+INSERT INTO `tp5_xbird_express` VALUES ('1577', '亿翔快递', 'YXKD');
+INSERT INTO `tp5_xbird_express` VALUES ('1578', '运东西网', 'YUNDX');
+INSERT INTO `tp5_xbird_express` VALUES ('1579', '壹米滴答', 'YMDD');
+INSERT INTO `tp5_xbird_express` VALUES ('1580', '邮政国内标快', 'YZBK');
+INSERT INTO `tp5_xbird_express` VALUES ('1581', '一站通速运', 'YZTSY');
+INSERT INTO `tp5_xbird_express` VALUES ('1582', '驭丰速运', 'YFSUYUN');
+INSERT INTO `tp5_xbird_express` VALUES ('1583', '余氏东风', 'YSDF');
+INSERT INTO `tp5_xbird_express` VALUES ('1584', '耀飞快递', 'YF');
+INSERT INTO `tp5_xbird_express` VALUES ('1585', '韵达快运', 'YDKY');
+INSERT INTO `tp5_xbird_express` VALUES ('1586', '云路', 'YL');
+INSERT INTO `tp5_xbird_express` VALUES ('1587', '增益快递', 'ZENY');
+INSERT INTO `tp5_xbird_express` VALUES ('1588', '汇强快递', 'ZHQKD');
+INSERT INTO `tp5_xbird_express` VALUES ('1589', '众通快递', 'ZTE');
+INSERT INTO `tp5_xbird_express` VALUES ('1590', '中铁快运', 'ZTKY');
+INSERT INTO `tp5_xbird_express` VALUES ('1591', '中铁物流', 'ZTWL');
+INSERT INTO `tp5_xbird_express` VALUES ('1592', '郑州速捷', 'SJ');
+INSERT INTO `tp5_xbird_express` VALUES ('1593', '中通快运', 'ZTOKY');
+INSERT INTO `tp5_xbird_express` VALUES ('1594', '中邮快递', 'ZYKD');
+INSERT INTO `tp5_xbird_express` VALUES ('1595', '中粮我买网', 'WM');
+INSERT INTO `tp5_xbird_express` VALUES ('1596', '芝麻开门', 'ZMKM');
+INSERT INTO `tp5_xbird_express` VALUES ('1597', '中骅物流', 'ZHWL');
+INSERT INTO `tp5_xbird_express` VALUES ('1598', 'AAE全球专递', 'AAE');
+INSERT INTO `tp5_xbird_express` VALUES ('1599', 'ACS雅仕快递', 'ACS');
+INSERT INTO `tp5_xbird_express` VALUES ('1600', 'ADP Express Tracking', 'ADP');
+INSERT INTO `tp5_xbird_express` VALUES ('1601', '安圭拉邮政', 'ANGUILAYOU');
+INSERT INTO `tp5_xbird_express` VALUES ('1602', 'APAC', 'APAC');
+INSERT INTO `tp5_xbird_express` VALUES ('1603', 'Aramex', 'ARAMEX');
+INSERT INTO `tp5_xbird_express` VALUES ('1604', '奥地利邮政', 'AT');
+INSERT INTO `tp5_xbird_express` VALUES ('1605', 'Australia Post Tracking', 'AUSTRALIA');
+INSERT INTO `tp5_xbird_express` VALUES ('1606', '比利时邮政', 'BEL');
+INSERT INTO `tp5_xbird_express` VALUES ('1607', 'BHT快递', 'BHT');
+INSERT INTO `tp5_xbird_express` VALUES ('1608', '秘鲁邮政', 'BILUYOUZHE');
+INSERT INTO `tp5_xbird_express` VALUES ('1609', '巴西邮政', 'BR');
+INSERT INTO `tp5_xbird_express` VALUES ('1610', '不丹邮政', 'BUDANYOUZH');
+INSERT INTO `tp5_xbird_express` VALUES ('1611', 'CDEK', 'CDEK');
+INSERT INTO `tp5_xbird_express` VALUES ('1612', '加拿大邮政', 'CA');
+INSERT INTO `tp5_xbird_express` VALUES ('1613', '递必易国际物流', 'DBYWL');
+INSERT INTO `tp5_xbird_express` VALUES ('1614', '大道物流', 'DDWL');
+INSERT INTO `tp5_xbird_express` VALUES ('1615', '德国云快递', 'DGYKD');
+INSERT INTO `tp5_xbird_express` VALUES ('1616', '到乐国际', 'DLGJ');
+INSERT INTO `tp5_xbird_express` VALUES ('1617', 'DHL德国', 'DHL_DE');
+INSERT INTO `tp5_xbird_express` VALUES ('1618', 'DHL(英文版)', 'DHL_EN');
+INSERT INTO `tp5_xbird_express` VALUES ('1619', 'DHL全球', 'DHL_GLB');
+INSERT INTO `tp5_xbird_express` VALUES ('1620', 'DHL Global Mail', 'DHLGM');
+INSERT INTO `tp5_xbird_express` VALUES ('1621', '丹麦邮政', 'DK');
+INSERT INTO `tp5_xbird_express` VALUES ('1622', 'DPD', 'DPD');
+INSERT INTO `tp5_xbird_express` VALUES ('1623', 'DPEX', 'DPEX');
+INSERT INTO `tp5_xbird_express` VALUES ('1624', '递四方速递', 'D4PX');
+INSERT INTO `tp5_xbird_express` VALUES ('1625', 'EMS国际', 'EMSGJ');
+INSERT INTO `tp5_xbird_express` VALUES ('1626', '易客满', 'EKM');
+INSERT INTO `tp5_xbird_express` VALUES ('1627', 'EPS (联众国际快运)', 'EPS');
+INSERT INTO `tp5_xbird_express` VALUES ('1628', 'EShipper', 'ESHIPPER');
+INSERT INTO `tp5_xbird_express` VALUES ('1629', '丰程物流', 'FCWL');
+INSERT INTO `tp5_xbird_express` VALUES ('1630', '法翔速运', 'FX');
+INSERT INTO `tp5_xbird_express` VALUES ('1631', 'FQ', 'FQ');
+INSERT INTO `tp5_xbird_express` VALUES ('1632', '芬兰邮政', 'FLYZ');
+INSERT INTO `tp5_xbird_express` VALUES ('1633', '方舟国际速递', 'FZGJ');
+INSERT INTO `tp5_xbird_express` VALUES ('1634', '国际e邮宝', 'GJEYB');
+INSERT INTO `tp5_xbird_express` VALUES ('1635', '国际邮政包裹', 'GJYZ');
+INSERT INTO `tp5_xbird_express` VALUES ('1636', 'GE2D', 'GE2D');
+INSERT INTO `tp5_xbird_express` VALUES ('1637', '冠泰', 'GT');
+INSERT INTO `tp5_xbird_express` VALUES ('1638', 'GLS', 'GLS');
+INSERT INTO `tp5_xbird_express` VALUES ('1639', '欧洲专线(邮政)', 'IOZYZ');
+INSERT INTO `tp5_xbird_express` VALUES ('1640', '澳大利亚邮政', 'IADLYYZ');
+INSERT INTO `tp5_xbird_express` VALUES ('1641', '阿尔巴尼亚邮政', 'IAEBNYYZ');
+INSERT INTO `tp5_xbird_express` VALUES ('1642', '阿尔及利亚邮政', 'IAEJLYYZ');
+INSERT INTO `tp5_xbird_express` VALUES ('1643', '阿富汗邮政', 'IAFHYZ');
+INSERT INTO `tp5_xbird_express` VALUES ('1644', '安哥拉邮政', 'IAGLYZ');
+INSERT INTO `tp5_xbird_express` VALUES ('1645', '埃及邮政', 'IAJYZ');
+INSERT INTO `tp5_xbird_express` VALUES ('1646', '阿鲁巴邮政', 'IALBYZ');
+INSERT INTO `tp5_xbird_express` VALUES ('1647', '阿联酋邮政', 'IALYYZ');
+INSERT INTO `tp5_xbird_express` VALUES ('1648', '阿塞拜疆邮政', 'IASBJYZ');
+INSERT INTO `tp5_xbird_express` VALUES ('1649', '博茨瓦纳邮政', 'IBCWNYZ');
+INSERT INTO `tp5_xbird_express` VALUES ('1650', '波多黎各邮政', 'IBDLGYZ');
+INSERT INTO `tp5_xbird_express` VALUES ('1651', '冰岛邮政', 'IBDYZ');
+INSERT INTO `tp5_xbird_express` VALUES ('1652', '白俄罗斯邮政', 'IBELSYZ');
+INSERT INTO `tp5_xbird_express` VALUES ('1653', '波黑邮政', 'IBHYZ');
+INSERT INTO `tp5_xbird_express` VALUES ('1654', '保加利亚邮政', 'IBJLYYZ');
+INSERT INTO `tp5_xbird_express` VALUES ('1655', '巴基斯坦邮政', 'IBJSTYZ');
+INSERT INTO `tp5_xbird_express` VALUES ('1656', '黎巴嫩邮政', 'IBLNYZ');
+INSERT INTO `tp5_xbird_express` VALUES ('1657', '波兰邮政', 'IBOLYZ');
+INSERT INTO `tp5_xbird_express` VALUES ('1658', '宝通达', 'IBTD');
+INSERT INTO `tp5_xbird_express` VALUES ('1659', '贝邮宝', 'IBYB');
+INSERT INTO `tp5_xbird_express` VALUES ('1660', '出口易', 'ICKY');
+INSERT INTO `tp5_xbird_express` VALUES ('1661', '德国邮政', 'IDGYZ');
+INSERT INTO `tp5_xbird_express` VALUES ('1662', '危地马拉邮政', 'IWDMLYZ');
+INSERT INTO `tp5_xbird_express` VALUES ('1663', '乌干达邮政', 'IWGDYZ');
+INSERT INTO `tp5_xbird_express` VALUES ('1664', '乌克兰EMS', 'IWKLEMS');
+INSERT INTO `tp5_xbird_express` VALUES ('1665', '乌克兰邮政', 'IWKLYZ');
+INSERT INTO `tp5_xbird_express` VALUES ('1666', '乌拉圭邮政', 'IWLGYZ');
+INSERT INTO `tp5_xbird_express` VALUES ('1667', '林克快递', 'ILKKD');
+INSERT INTO `tp5_xbird_express` VALUES ('1668', '文莱邮政', 'IWLYZ');
+INSERT INTO `tp5_xbird_express` VALUES ('1669', '新喀里多尼亚邮政', 'IXGLDNYYZ');
+INSERT INTO `tp5_xbird_express` VALUES ('1670', '爱尔兰邮政', 'IE');
+INSERT INTO `tp5_xbird_express` VALUES ('1671', '夏浦物流', 'IXPWL');
+INSERT INTO `tp5_xbird_express` VALUES ('1672', '印度邮政', 'IYDYZ');
+INSERT INTO `tp5_xbird_express` VALUES ('1673', '夏浦世纪', 'IXPSJ');
+INSERT INTO `tp5_xbird_express` VALUES ('1674', '厄瓜多尔邮政', 'IEGDEYZ');
+INSERT INTO `tp5_xbird_express` VALUES ('1675', '俄罗斯邮政', 'IELSYZ');
+INSERT INTO `tp5_xbird_express` VALUES ('1676', '飞特物流', 'IFTWL');
+INSERT INTO `tp5_xbird_express` VALUES ('1677', '瓜德罗普岛邮政', 'IGDLPDYZ');
+INSERT INTO `tp5_xbird_express` VALUES ('1678', '哥斯达黎加邮政', 'IGSDLJYZ');
+INSERT INTO `tp5_xbird_express` VALUES ('1679', '韩国邮政', 'IHGYZ');
+INSERT INTO `tp5_xbird_express` VALUES ('1680', '华翰物流', 'IHHWL');
+INSERT INTO `tp5_xbird_express` VALUES ('1681', '互联易', 'IHLY');
+INSERT INTO `tp5_xbird_express` VALUES ('1682', '哈萨克斯坦邮政', 'IHSKSTYZ');
+INSERT INTO `tp5_xbird_express` VALUES ('1683', '黑山邮政', 'IHSYZ');
+INSERT INTO `tp5_xbird_express` VALUES ('1684', '津巴布韦邮政', 'IJBBWYZ');
+INSERT INTO `tp5_xbird_express` VALUES ('1685', '吉尔吉斯斯坦邮政', 'IJEJSSTYZ');
+INSERT INTO `tp5_xbird_express` VALUES ('1686', '捷克邮政', 'IJKYZ');
+INSERT INTO `tp5_xbird_express` VALUES ('1687', '加纳邮政', 'IJNYZ');
+INSERT INTO `tp5_xbird_express` VALUES ('1688', '柬埔寨邮政', 'IJPZYZ');
+INSERT INTO `tp5_xbird_express` VALUES ('1689', '克罗地亚邮政', 'IKNDYYZ');
+INSERT INTO `tp5_xbird_express` VALUES ('1690', '肯尼亚邮政', 'IKNYYZ');
+INSERT INTO `tp5_xbird_express` VALUES ('1691', '科特迪瓦EMS', 'IKTDWEMS');
+INSERT INTO `tp5_xbird_express` VALUES ('1692', '罗马尼亚邮政', 'ILMNYYZ');
+INSERT INTO `tp5_xbird_express` VALUES ('1693', '摩尔多瓦邮政', 'IMEDWYZ');
+INSERT INTO `tp5_xbird_express` VALUES ('1694', '马耳他邮政', 'IMETYZ');
+INSERT INTO `tp5_xbird_express` VALUES ('1695', '尼日利亚邮政', 'INRLYYZ');
+INSERT INTO `tp5_xbird_express` VALUES ('1696', '塞尔维亚邮政', 'ISEWYYZ');
+INSERT INTO `tp5_xbird_express` VALUES ('1697', '塞浦路斯邮政', 'ISPLSYZ');
+INSERT INTO `tp5_xbird_express` VALUES ('1698', '乌兹别克斯坦邮政', 'IWZBKSTYZ');
+INSERT INTO `tp5_xbird_express` VALUES ('1699', '西班牙邮政', 'IXBYYZ');
+INSERT INTO `tp5_xbird_express` VALUES ('1700', '新加坡EMS', 'IXJPEMS');
+INSERT INTO `tp5_xbird_express` VALUES ('1701', '希腊邮政', 'IXLYZ');
+INSERT INTO `tp5_xbird_express` VALUES ('1702', '新西兰邮政', 'IXXLYZ');
+INSERT INTO `tp5_xbird_express` VALUES ('1703', '意大利邮政', 'IYDLYZ');
+INSERT INTO `tp5_xbird_express` VALUES ('1704', '英国邮政', 'IYGYZ');
+INSERT INTO `tp5_xbird_express` VALUES ('1705', '亚美尼亚邮政', 'IYMNYYZ');
+INSERT INTO `tp5_xbird_express` VALUES ('1706', '也门邮政', 'IYMYZ');
+INSERT INTO `tp5_xbird_express` VALUES ('1707', '智利邮政', 'IZLYZ');
+INSERT INTO `tp5_xbird_express` VALUES ('1708', '日本邮政', 'JP');
+INSERT INTO `tp5_xbird_express` VALUES ('1709', '今枫国际', 'JFGJ');
+INSERT INTO `tp5_xbird_express` VALUES ('1710', '极光转运', 'JGZY');
+INSERT INTO `tp5_xbird_express` VALUES ('1711', '吉祥邮转运', 'JXYKD');
+INSERT INTO `tp5_xbird_express` VALUES ('1712', '嘉里国际', 'JLDT');
+INSERT INTO `tp5_xbird_express` VALUES ('1713', '绝配国际速递', 'JPKD');
+INSERT INTO `tp5_xbird_express` VALUES ('1714', '佳惠尔', 'SYJHE');
+INSERT INTO `tp5_xbird_express` VALUES ('1715', '联运通', 'LYT');
+INSERT INTO `tp5_xbird_express` VALUES ('1716', '联合快递', 'LHKDS');
+INSERT INTO `tp5_xbird_express` VALUES ('1717', '林道国际', 'SHLDHY');
+INSERT INTO `tp5_xbird_express` VALUES ('1718', '荷兰邮政', 'NL');
+INSERT INTO `tp5_xbird_express` VALUES ('1719', '新顺丰', 'NSF');
+INSERT INTO `tp5_xbird_express` VALUES ('1720', 'ONTRAC', 'ONTRAC');
+INSERT INTO `tp5_xbird_express` VALUES ('1721', 'OCS', 'OCS');
+INSERT INTO `tp5_xbird_express` VALUES ('1722', '全球邮政', 'QQYZ');
+INSERT INTO `tp5_xbird_express` VALUES ('1723', 'POSTEIBE', 'POSTEIBE');
+INSERT INTO `tp5_xbird_express` VALUES ('1724', '啪啪供应链', 'PAPA');
+INSERT INTO `tp5_xbird_express` VALUES ('1725', '秦远海运', 'QYHY');
+INSERT INTO `tp5_xbird_express` VALUES ('1726', '启辰国际', 'VENUCIA');
+INSERT INTO `tp5_xbird_express` VALUES ('1727', '瑞典邮政', 'RDSE');
+INSERT INTO `tp5_xbird_express` VALUES ('1728', 'SKYPOST', 'SKYPOST');
+INSERT INTO `tp5_xbird_express` VALUES ('1729', '瑞士邮政', 'SWCH');
+INSERT INTO `tp5_xbird_express` VALUES ('1730', '首达速运', 'SDSY');
+INSERT INTO `tp5_xbird_express` VALUES ('1731', '穗空物流', 'SK');
+INSERT INTO `tp5_xbird_express` VALUES ('1732', '首通快运', 'STONG');
+INSERT INTO `tp5_xbird_express` VALUES ('1733', '申通快递国际单', 'STO_INTL');
+INSERT INTO `tp5_xbird_express` VALUES ('1734', '上海久易国际', 'JYSD');
+INSERT INTO `tp5_xbird_express` VALUES ('1735', '泰国138', 'TAILAND138');
+INSERT INTO `tp5_xbird_express` VALUES ('1736', 'USPS美国邮政', 'USPS');
+INSERT INTO `tp5_xbird_express` VALUES ('1737', '万国邮政', 'UPU');
+INSERT INTO `tp5_xbird_express` VALUES ('1738', '中越国际物流', 'VCTRANS');
+INSERT INTO `tp5_xbird_express` VALUES ('1739', '星空国际', 'XKGJ');
+INSERT INTO `tp5_xbird_express` VALUES ('1740', '迅达国际', 'XD');
+INSERT INTO `tp5_xbird_express` VALUES ('1741', '香港邮政', 'XGYZ');
+INSERT INTO `tp5_xbird_express` VALUES ('1742', '喜来快递', 'XLKD');
+INSERT INTO `tp5_xbird_express` VALUES ('1743', '鑫世锐达', 'XSRD');
+INSERT INTO `tp5_xbird_express` VALUES ('1744', '新元国际', 'XYGJ');
+INSERT INTO `tp5_xbird_express` VALUES ('1745', 'ADLER雄鹰国际速递', 'XYGJSD');
+INSERT INTO `tp5_xbird_express` VALUES ('1746', '日本大和运输(Yamato)', 'YAMA');
+INSERT INTO `tp5_xbird_express` VALUES ('1747', 'YODEL', 'YODEL');
+INSERT INTO `tp5_xbird_express` VALUES ('1748', '一号线', 'YHXGJSD');
+INSERT INTO `tp5_xbird_express` VALUES ('1749', '约旦邮政', 'YUEDANYOUZ');
+INSERT INTO `tp5_xbird_express` VALUES ('1750', '玥玛速运', 'YMSY');
+INSERT INTO `tp5_xbird_express` VALUES ('1751', '鹰运', 'YYSD');
+INSERT INTO `tp5_xbird_express` VALUES ('1752', '易境达', 'YJD');
+INSERT INTO `tp5_xbird_express` VALUES ('1753', '洋包裹', 'YBG');
+INSERT INTO `tp5_xbird_express` VALUES ('1754', '友家速递', 'YJ');
+INSERT INTO `tp5_xbird_express` VALUES ('1755', 'AOL（澳通）', 'AOL');
+INSERT INTO `tp5_xbird_express` VALUES ('1756', 'BCWELT   ', 'BCWELT');
+INSERT INTO `tp5_xbird_express` VALUES ('1757', '笨鸟国际', 'BN');
+INSERT INTO `tp5_xbird_express` VALUES ('1758', '优邦国际速运', 'UBONEX');
+INSERT INTO `tp5_xbird_express` VALUES ('1759', 'UEX   ', 'UEX');
+INSERT INTO `tp5_xbird_express` VALUES ('1760', '韵达国际', 'YDGJ');
+INSERT INTO `tp5_xbird_express` VALUES ('1761', '爱购转运', 'ZY_AG');
+INSERT INTO `tp5_xbird_express` VALUES ('1762', '爱欧洲', 'ZY_AOZ');
+INSERT INTO `tp5_xbird_express` VALUES ('1763', '澳世速递', 'ZY_AUSE');
+INSERT INTO `tp5_xbird_express` VALUES ('1764', 'AXO', 'ZY_AXO');
+INSERT INTO `tp5_xbird_express` VALUES ('1765', '贝海速递', 'ZY_BH');
+INSERT INTO `tp5_xbird_express` VALUES ('1766', '蜜蜂速递', 'ZY_BEE');
+INSERT INTO `tp5_xbird_express` VALUES ('1767', '百利快递', 'ZY_BL');
+INSERT INTO `tp5_xbird_express` VALUES ('1768', '斑马物流', 'ZY_BM');
+INSERT INTO `tp5_xbird_express` VALUES ('1769', '百通物流', 'ZY_BT');
+INSERT INTO `tp5_xbird_express` VALUES ('1770', '策马转运', 'ZY_CM');
+INSERT INTO `tp5_xbird_express` VALUES ('1771', 'EFS POST', 'ZY_EFS');
+INSERT INTO `tp5_xbird_express` VALUES ('1772', '宜送转运', 'ZY_ESONG');
+INSERT INTO `tp5_xbird_express` VALUES ('1773', '飞碟快递', 'ZY_FD');
+INSERT INTO `tp5_xbird_express` VALUES ('1774', '飞鸽快递', 'ZY_FG');
+INSERT INTO `tp5_xbird_express` VALUES ('1775', '风行快递', 'ZY_FX');
+INSERT INTO `tp5_xbird_express` VALUES ('1776', '风行速递', 'ZY_FXSD');
+INSERT INTO `tp5_xbird_express` VALUES ('1777', '飞洋快递', 'ZY_FY');
+INSERT INTO `tp5_xbird_express` VALUES ('1778', '皓晨快递', 'ZY_HC');
+INSERT INTO `tp5_xbird_express` VALUES ('1779', '海悦速递', 'ZY_HYSD');
+INSERT INTO `tp5_xbird_express` VALUES ('1780', '君安快递', 'ZY_JA');
+INSERT INTO `tp5_xbird_express` VALUES ('1781', '时代转运', 'ZY_JD');
+INSERT INTO `tp5_xbird_express` VALUES ('1782', '骏达快递', 'ZY_JDKD');
+INSERT INTO `tp5_xbird_express` VALUES ('1783', '骏达转运', 'ZY_JDZY');
+INSERT INTO `tp5_xbird_express` VALUES ('1784', '久禾快递', 'ZY_JH');
+INSERT INTO `tp5_xbird_express` VALUES ('1785', '金海淘', 'ZY_JHT');
+INSERT INTO `tp5_xbird_express` VALUES ('1786', '联邦转运FedRoad', 'ZY_LBZY');
+INSERT INTO `tp5_xbird_express` VALUES ('1787', '龙象快递', 'ZY_LX');
+INSERT INTO `tp5_xbird_express` VALUES ('1788', '美国转运', 'ZY_MGZY');
+INSERT INTO `tp5_xbird_express` VALUES ('1789', '美速通', 'ZY_MST');
+INSERT INTO `tp5_xbird_express` VALUES ('1790', '美西转运', 'ZY_MXZY');
+INSERT INTO `tp5_xbird_express` VALUES ('1791', 'QQ-EX', 'ZY_QQEX');
+INSERT INTO `tp5_xbird_express` VALUES ('1792', '瑞天快递', 'ZY_RT');
+INSERT INTO `tp5_xbird_express` VALUES ('1793', '瑞天速递', 'ZY_RTSD');
+INSERT INTO `tp5_xbird_express` VALUES ('1794', '速达快递', 'ZY_SDKD');
+INSERT INTO `tp5_xbird_express` VALUES ('1795', '四方转运', 'ZY_SFZY');
+INSERT INTO `tp5_xbird_express` VALUES ('1796', '上腾快递', 'ZY_ST');
+INSERT INTO `tp5_xbird_express` VALUES ('1797', '天际快递', 'ZY_TJ');
+INSERT INTO `tp5_xbird_express` VALUES ('1798', '天马转运', 'ZY_TM');
+INSERT INTO `tp5_xbird_express` VALUES ('1799', '滕牛快递', 'ZY_TN');
+INSERT INTO `tp5_xbird_express` VALUES ('1800', '太平洋快递', 'ZY_TPY');
+INSERT INTO `tp5_xbird_express` VALUES ('1801', '唐三藏转运', 'ZY_TSZ');
+INSERT INTO `tp5_xbird_express` VALUES ('1802', 'TWC转运世界', 'ZY_TWC');
+INSERT INTO `tp5_xbird_express` VALUES ('1803', '润东国际快线', 'ZY_RDGJ');
+INSERT INTO `tp5_xbird_express` VALUES ('1804', '同心快递', 'ZY_TX');
+INSERT INTO `tp5_xbird_express` VALUES ('1805', '天翼快递', 'ZY_TY');
+INSERT INTO `tp5_xbird_express` VALUES ('1806', '德国海淘之家', 'ZY_DGHT');
+INSERT INTO `tp5_xbird_express` VALUES ('1807', '德运网', 'ZY_DYW');
+INSERT INTO `tp5_xbird_express` VALUES ('1808', '文达国际DCS', 'ZY_WDCS');
+INSERT INTO `tp5_xbird_express` VALUES ('1809', '同舟快递', 'ZY_TZH');
+INSERT INTO `tp5_xbird_express` VALUES ('1810', 'UCS合众快递', 'ZY_UCS');
+INSERT INTO `tp5_xbird_express` VALUES ('1811', '星辰快递', 'ZY_XC');
+INSERT INTO `tp5_xbird_express` VALUES ('1812', '先锋快递', 'ZY_XF');
+INSERT INTO `tp5_xbird_express` VALUES ('1813', '西邮寄', 'ZY_XIYJ');
+INSERT INTO `tp5_xbird_express` VALUES ('1814', '云骑快递', 'ZY_YQ');
+INSERT INTO `tp5_xbird_express` VALUES ('1815', '优晟速递', 'ZY_YSSD');
+INSERT INTO `tp5_xbird_express` VALUES ('1816', '运淘美国', 'ZY_YTUSA');
+INSERT INTO `tp5_xbird_express` VALUES ('1817', '至诚速递', 'ZY_ZCSD');
+INSERT INTO `tp5_xbird_express` VALUES ('1818', '增速海淘', 'ZYZOOM');
+INSERT INTO `tp5_xbird_express` VALUES ('1819', '中驰物流', 'ZH');
+INSERT INTO `tp5_xbird_express` VALUES ('1820', '中欧快运', 'ZO');
+INSERT INTO `tp5_xbird_express` VALUES ('1821', '准实快运', 'ZSKY');
+INSERT INTO `tp5_xbird_express` VALUES ('1822', '中外速运', 'ZWSY');
+INSERT INTO `tp5_xbird_express` VALUES ('1823', '郑州建华', 'ZZJH');
 
 -- ----------------------------
 -- Table structure for tp5_xbrands
@@ -596,7 +1029,7 @@ CREATE TABLE `tp5_xnav_menus` (
   `type` tinyint(2) NOT NULL DEFAULT '0' COMMENT '导航类型 0：菜单类  1：权限链接',
   PRIMARY KEY (`id`),
   KEY `id` (`id`,`name`) USING BTREE
-) ENGINE=MyISAM AUTO_INCREMENT=145 DEFAULT CHARSET=utf8mb4 COMMENT='菜单导航表';
+) ENGINE=MyISAM AUTO_INCREMENT=152 DEFAULT CHARSET=utf8mb4 COMMENT='菜单导航表';
 
 -- ----------------------------
 -- Records of tp5_xnav_menus
@@ -642,7 +1075,7 @@ INSERT INTO `tp5_xnav_menus` VALUES ('61', '活动列表', '3', 'cms/activity/in
 INSERT INTO `tp5_xnav_menus` VALUES ('62', '活动添加', '61', 'cms/activity/add', '/', '1', '0', '2019-03-29 11:35:17', '1');
 INSERT INTO `tp5_xnav_menus` VALUES ('63', '活动修改', '61', 'cms/activity/edit', '/', '1', '0', '2019-03-29 11:35:38', '1');
 INSERT INTO `tp5_xnav_menus` VALUES ('65', 'ajax 首页显示状态修改', '61', 'cms/activity/ajaxForShow', '/', '1', '0', '2019-03-29 11:36:35', '1');
-INSERT INTO `tp5_xnav_menus` VALUES ('73', '用户列表', '3', 'cms/users/index', 'cms/images/icon/users.png', '1', '6', '2020-11-09 14:54:41', '0');
+INSERT INTO `tp5_xnav_menus` VALUES ('73', '用户列表', '3', 'cms/users/index', 'cms/images/icon/cms_users.png', '1', '6', '2020-11-11 11:09:04', '0');
 INSERT INTO `tp5_xnav_menus` VALUES ('75', 'ajax 修改用户状态', '73', 'cms/users/ajaxUpdateUserStatus', '/', '1', '0', '2019-07-09 17:22:57', '1');
 INSERT INTO `tp5_xnav_menus` VALUES ('76', '广告列表', '3', 'cms/adList/index', 'cms/images/icon/cms_ad.png', '1', '5', '2020-11-09 14:54:24', '0');
 INSERT INTO `tp5_xnav_menus` VALUES ('77', '广告添加', '76', 'cms/adList/add', '/', '1', '0', '2019-07-19 18:10:55', '1');
@@ -654,8 +1087,8 @@ INSERT INTO `tp5_xnav_menus` VALUES ('94', '添加配置项', '93', 'cms/config/
 INSERT INTO `tp5_xnav_menus` VALUES ('95', '配置项修改', '93', 'cms/config/edit', '/', '1', '0', '2019-07-29 14:30:13', '1');
 INSERT INTO `tp5_xnav_menus` VALUES ('97', 'ajax 根据分类获取参加活动的商品', '61', 'cms/goods/ajaxGetCatGoodsForActivity', '/', '1', '0', '2019-08-16 09:31:52', '1');
 INSERT INTO `tp5_xnav_menus` VALUES ('99', '规格数据展示', '67', 'cms/specInfo/details', '/', '1', '0', '2019-11-14 16:08:47', '1');
-INSERT INTO `tp5_xnav_menus` VALUES ('133', '监控统计', '0', '/', 'cms/images/icon/cms_analyze.png', '1', '4', '2020-09-08 15:31:44', '0');
-INSERT INTO `tp5_xnav_menus` VALUES ('134', '商品价格分布饼图', '133', 'cms/analyze/goodsPricePie', 'cms/images/icon/cms_pie.png', '1', '0', '2020-06-02 19:55:37', '0');
+INSERT INTO `tp5_xnav_menus` VALUES ('133', '监控统计', '0', '/', 'cms/images/icon/cms_analyze.png', '1', '5', '2020-11-11 09:18:03', '0');
+INSERT INTO `tp5_xnav_menus` VALUES ('134', '热销商品', '133', 'cms/analyze/hotSale', 'cms/images/icon/cms_hot_sale_pie.png', '1', '0', '2020-11-12 14:28:00', '0');
 INSERT INTO `tp5_xnav_menus` VALUES ('135', '查看文章操作日志', '5', 'cms/article/viewLogs', '', '1', '0', '2020-03-09 17:06:40', '1');
 INSERT INTO `tp5_xnav_menus` VALUES ('137', '动态配置开关状态', '93', 'cms/config/ajaxUpdateSwitchValue', '/', '1', '0', '2020-05-25 18:05:34', '1');
 INSERT INTO `tp5_xnav_menus` VALUES ('138', '系统配置', '0', '/', 'cms/images/icon/cms_config_system.png', '1', '0', '2020-06-02 19:55:33', '0');
@@ -665,6 +1098,92 @@ INSERT INTO `tp5_xnav_menus` VALUES ('141', 'IP 白名单', '138', 'cms/sysConf/
 INSERT INTO `tp5_xnav_menus` VALUES ('142', '品牌列表', '49', 'cms/brand/index', 'cms/images/icon/cms_brand.png', '1', '2', '2020-11-09 20:28:35', '0');
 INSERT INTO `tp5_xnav_menus` VALUES ('143', '品牌添加操作', '142', 'cms/brand/add', '/', '1', '0', '2020-11-09 20:28:32', '1');
 INSERT INTO `tp5_xnav_menus` VALUES ('144', '品牌的更新操作', '142', 'cms/brand/edit', '/', '1', '0', '2020-11-09 20:28:25', '1');
+INSERT INTO `tp5_xnav_menus` VALUES ('145', '订单管理', '0', '/', 'cms/images/icon/cms_order_manager.png', '1', '4', '2020-11-11 09:21:15', '0');
+INSERT INTO `tp5_xnav_menus` VALUES ('146', '支付订单', '145', 'cms/order/index', 'cms/images/icon/cms_order_info.png', '1', '1', '2020-11-11 09:20:35', '0');
+INSERT INTO `tp5_xnav_menus` VALUES ('147', '售货清单', '145', 'cms/order/details', 'cms/images/icon/cms_order_details.png', '1', '2', '2020-11-11 09:21:40', '0');
+INSERT INTO `tp5_xnav_menus` VALUES ('148', 'ajax 获取购物清单', '146', 'cms/order/ajaxGetShoppingList', '/', '1', '0', '2020-11-11 16:31:15', '1');
+INSERT INTO `tp5_xnav_menus` VALUES ('149', '添加物流单号', '147', 'cms/order/opCourierSn', '/', '1', '0', '2020-11-11 21:15:32', '1');
+INSERT INTO `tp5_xnav_menus` VALUES ('150', '查看物流信息', '147', 'cms/order/lookLogistics', '/', '1', '0', '2020-11-11 20:56:55', '1');
+INSERT INTO `tp5_xnav_menus` VALUES ('151', '24时销量图', '133', 'cms/analyze/timeSale', 'cms/images/icon/cms_time_sale.png', '1', '0', '2020-11-12 14:21:58', '0');
+
+-- ----------------------------
+-- Table structure for tp5_xorder_details
+-- ----------------------------
+DROP TABLE IF EXISTS `tp5_xorder_details`;
+CREATE TABLE `tp5_xorder_details` (
+  `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
+  `order_id` int(11) NOT NULL COMMENT '订单编码',
+  `goods_id` int(11) NOT NULL COMMENT '商品编码，便于后期统计',
+  `goods_name` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL COMMENT '商品名称，记录以免后期商家更改',
+  `goods_thumbnail` varchar(150) COLLATE utf8mb4_unicode_ci DEFAULT NULL COMMENT '记录商品的缩略图',
+  `goods_price` decimal(12,2) DEFAULT '0.00' COMMENT '商品单价 记录以防变化',
+  `goods_num` int(11) NOT NULL DEFAULT '1' COMMENT '购买数量',
+  `goods_amount` decimal(12,2) DEFAULT '0.00' COMMENT '商品总价，(不能单纯的以为是 单价*数量)',
+  `discount_amount` decimal(12,2) DEFAULT '0.00' COMMENT '折扣额度',
+  `sku_id` int(11) NOT NULL DEFAULT '0' COMMENT '商品SKU_ID,方便后期统计分析',
+  `sku_spec_msg` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL COMMENT '记录 商品规格信息，避免后期变动',
+  `remark` varchar(100) COLLATE utf8mb4_unicode_ci DEFAULT NULL COMMENT '客户商品备注',
+  `courier_sn` varchar(100) CHARACTER SET utf8 DEFAULT '' COMMENT '快递单号',
+  `courier_code` varchar(50) CHARACTER SET utf8 DEFAULT '' COMMENT '快递公司编号 (比如：快递鸟对应 )',
+  `customer_name` varchar(20) CHARACTER SET utf8 DEFAULT NULL COMMENT 'courier_code 为 JD，必填，对应京东的青龙配送编码，也叫商家编码',
+  `created_at` timestamp NULL DEFAULT NULL,
+  `updated_at` timestamp NULL DEFAULT NULL,
+  `delivery_time` int(11) DEFAULT '0' COMMENT '发货时间',
+  `status` tinyint(2) NOT NULL DEFAULT '0' COMMENT '订单状态 -1：已取消；0：正常订单； 1：已支付; 2：已发货； 3：已收货 4：已评价 ；5：售后申请中 6：售后已完成  ',
+  PRIMARY KEY (`id`),
+  KEY `order_detail_order_id_index` (`order_id`)
+) ENGINE=InnoDB AUTO_INCREMENT=12 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+-- ----------------------------
+-- Records of tp5_xorder_details
+-- ----------------------------
+INSERT INTO `tp5_xorder_details` VALUES ('1', '1', '2', '伊利 金典 纯牛奶250ml*16盒/箱', 'cms/images/goods/3/3-2.jpg', '79.90', '3', '220.00', '12.00', '101', '【不加糖高蛋白】植选植物奶10瓶', null, '', '', null, null, null, '0', '1');
+INSERT INTO `tp5_xorder_details` VALUES ('2', '2', '3', '雀巢 Nestle 咖啡奶茶伴侣', 'cms/images/goods/2/2-1.jpg', '28.90', '1', '28.90', '3.88', '87', '原味奶油,50粒装', null, 'SF1043866372860', 'SF', '8776', null, null, '1605152135', '2');
+INSERT INTO `tp5_xorder_details` VALUES ('3', '2', '4', '科沃斯（Ecovacs）地宝T5 Power扫地机器人', 'cms/images/goods/4/4-1.jpg', '3388.00', '2', '6689.00', '120.00', '91', 'T8 Power震动擦地抢购', null, '', '', null, null, null, '0', '6');
+INSERT INTO `tp5_xorder_details` VALUES ('4', '3', '7', '索尼（SONY）WF-1000XM3 真无线蓝牙降噪耳机', 'cms/images/goods/7/7-3.jpg', '1099.00', '3', '3281.00', '3.50', '3', null, null, '', '', null, null, null, '0', '3');
+INSERT INTO `tp5_xorder_details` VALUES ('5', '1', '1', '香飘飘奶茶 Meco蜜谷果汁茶', 'cms/images/goods/1/1-1.jpg', '49.90', '2', '99.80', '0.00', '84', '桃桃红柚口味400ml 8杯', null, '', '', null, null, null, '0', '0');
+INSERT INTO `tp5_xorder_details` VALUES ('6', '5', '1', '香飘飘奶茶 Meco蜜谷果汁茶', 'cms/images/goods/1/1-1.jpg', '49.90', '1', '49.90', '0.00', '84', '桃桃红柚口味400ml 8杯', null, '', '', null, null, null, '0', '-1');
+INSERT INTO `tp5_xorder_details` VALUES ('7', '5', '3', '雀巢 Nestle 咖啡奶茶伴侣', 'cms/images/goods/2/2-2.jpg', '28.90', '2', '55.68', '1.25', '88', '香浓奶油,50粒装', null, '73141396805899', 'ZTO', '', null, null, '1605149346', '2');
+INSERT INTO `tp5_xorder_details` VALUES ('8', '5', '6', '小度智能音箱 旗舰版', 'cms/images/goods/5/5-1.jpg', '129.99', '2', '250.00', '6.50', '93', '【经典爆款】小度音箱旗舰版', null, 'JDX001665245202', 'JD', '', null, null, '1605152295', '2');
+INSERT INTO `tp5_xorder_details` VALUES ('9', '4', '2', '伊利 金典 纯牛奶250ml*16盒/箱', 'cms/images/goods/3/3-1.jpg', '79.90', '1', '79.90', '0.00', '100', '【健康有机】有机全脂纯牛奶16盒', null, '', '', null, null, null, '0', '0');
+INSERT INTO `tp5_xorder_details` VALUES ('10', '6', '7', '索尼（SONY）WF-1000XM3 真无线蓝牙降噪耳机', 'cms/images/goods/7/7-3.jpg', '1099.00', '2', '2000.00', '188.00', '2', null, null, '', '', null, null, null, '0', '4');
+INSERT INTO `tp5_xorder_details` VALUES ('11', '7', '7', '索尼（SONY）WF 重低音真无线耳机', 'cms/images/goods/7/7-2.jpg', '99.00', '1', '99.00', '0.00', '96', '黑色,WF-1000XM3随身降噪', null, '', '', null, null, null, '0', '5');
+
+-- ----------------------------
+-- Table structure for tp5_xorder_infos
+-- ----------------------------
+DROP TABLE IF EXISTS `tp5_xorder_infos`;
+CREATE TABLE `tp5_xorder_infos` (
+  `id` int(10) unsigned NOT NULL AUTO_INCREMENT COMMENT '订单ID,标识',
+  `order_sn` varchar(100) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL COMMENT '订单编号，方便用户查询',
+  `user_id` int(11) NOT NULL DEFAULT '0' COMMENT '客户编号',
+  `pay_channel` tinyint(2) NOT NULL DEFAULT '0' COMMENT '支付渠道  0:微信; 1:支付宝; 2:余额',
+  `pay_amount` decimal(10,2) NOT NULL DEFAULT '0.00' COMMENT '实际付款金额',
+  `reduce_amount` decimal(10,2) DEFAULT '0.00' COMMENT '减免金额 ，一般用于记录积分抵扣的额度',
+  `logistics_fee` decimal(10,2) DEFAULT '0.00' COMMENT '运费金额',
+  `consignee` varchar(50) DEFAULT NULL COMMENT '收货人的姓名',
+  `mobile` varchar(20) DEFAULT NULL COMMENT '收货人的手机',
+  `address` varchar(255) DEFAULT NULL COMMENT '收货人的详细地址',
+  `pay_time` int(11) DEFAULT '0' COMMENT '付款时间',
+  `pay_result_json` varchar(500) DEFAULT NULL COMMENT '支付结果的json数据，比如微信小程序支付后的 返回信息 json形式,方便后期的退款操作',
+  `created_at` timestamp NULL DEFAULT NULL,
+  `updated_at` timestamp NULL DEFAULT NULL,
+  `deleted_at` timestamp NULL DEFAULT NULL,
+  `order_status` tinyint(2) NOT NULL DEFAULT '0' COMMENT '订单状态 0:未付款, 1:已付款，2：用户删除',
+  PRIMARY KEY (`id`),
+  KEY `index_user_id` (`user_id`)
+) ENGINE=MyISAM AUTO_INCREMENT=8 DEFAULT CHARSET=utf8mb4 COMMENT='订单信息表';
+
+-- ----------------------------
+-- Records of tp5_xorder_infos
+-- ----------------------------
+INSERT INTO `tp5_xorder_infos` VALUES ('1', 'MT202011110725678', '2', '0', '280.50', '0.00', '12.00', '鲁班大师', '18890459021', '鬼谷子山脉-稷下星之队-机关科学研究院303室', '1605067929', null, null, null, null, '1');
+INSERT INTO `tp5_xorder_infos` VALUES ('2', 'MT202011100715190', '1', '1', '500.00', '35.62', '10.00', '东皇太一', '181-2298-9098', '战国时期楚国-祭礼仪式和祭神场一号洞窟北30米', '1605077946', null, null, null, null, '1');
+INSERT INTO `tp5_xorder_infos` VALUES ('3', 'MT202011090223189', '2', '0', '300.50', '0.00', '6.00', '宫本武藏', '121-3345-9980', '日本-大和故乡 忍者部落夜行者7号院 0071', '1604980800', null, null, null, null, '-1');
+INSERT INTO `tp5_xorder_infos` VALUES ('4', 'MT202011098872345', '3', '1', '129.90', '0.00', null, '上官婉儿', '18988988836', '北海部落-掖庭一号图书馆北里303号', null, null, null, null, null, '0');
+INSERT INTO `tp5_xorder_infos` VALUES ('5', 'MT202011083299813', '4', '0', '127.88', '2.80', '6.00', '太乙真人', '151-0909-2928', '九重天-吾乃太乙，胆小的太乙，懦弱的太乙，傻瓜的太乙', '1605009180', null, null, null, null, '1');
+INSERT INTO `tp5_xorder_infos` VALUES ('6', 'MT202011083325667', '6', '0', '38.99', '2.88', null, '不知火舞', '188-3398-3349', '日本-饿狼传说-不知火流忍术派-不老药修炼室', '1604891040', null, null, null, null, '1');
+INSERT INTO `tp5_xorder_infos` VALUES ('7', 'MT202011078878990', '3', '0', '289.88', '0.00', '6.00', '鲁班七号', '18756879879', '战国外邦-鲁班大师精修第一班级北门守卫室', '1605057721', null, null, null, null, '1');
 
 -- ----------------------------
 -- Table structure for tp5_xphotos
@@ -797,7 +1316,7 @@ INSERT INTO `tp5_xtoday_words` VALUES ('1', '谁的青春不迷茫，其实我�
 INSERT INTO `tp5_xtoday_words` VALUES ('2', '想和你重新认识一次 从你叫什么名字说起', '你的名字', 'home/images/ps2.png', '1', '2020-06-02 19:57:03', '');
 INSERT INTO `tp5_xtoday_words` VALUES ('3', '我是一只雁，你是南方云烟。但愿山河宽，相隔只一瞬间.                ', '秦时明月', 'home/images/ps3.png', '1', '2020-06-02 19:57:08', '');
 INSERT INTO `tp5_xtoday_words` VALUES ('4', '人老了的好处，就是可失去的东西越来越少了.', '哈尔的移动城堡', 'home/images/ps4.png', '1', '2020-06-02 19:57:10', '');
-INSERT INTO `tp5_xtoday_words` VALUES ('5', '到底要怎么才能证明自己成长了 那种事情我也不知道啊 但是只要那一抹笑容尚存 我便心无旁骛 ', '声之形', 'home/images/ps5.png', '1', '2020-06-02 19:57:11', '');
+INSERT INTO `tp5_xtoday_words` VALUES ('5', '到底要怎么才能证明自己成长了 那种事情我也不知道啊 但是只要那一抹笑容尚存 我便心无旁骛 ', '声之形', 'home/images/ps5.png', '1', '2020-11-10 19:57:58', '');
 INSERT INTO `tp5_xtoday_words` VALUES ('6', '你觉得被圈养的鸟儿为什么无法自由地翱翔天际？是因为鸟笼不是属于它的东西', '东京食尸鬼A', 'home/images/ps6.png', '1', '2020-11-10 16:48:09', '');
 INSERT INTO `tp5_xtoday_words` VALUES ('7', '我手里拿着刀，没法抱你。我放下刀，没法保护你', '死神', 'home/images/ps7.png', '1', '2020-09-15 16:41:15', '');
 INSERT INTO `tp5_xtoday_words` VALUES ('8', '不管前方的路有多苦，只要走的方向正确，不管多么崎岖不平，都比站在原地更接近幸福!', '千与千寻', 'home/images/ps8.png', '-1', '2020-09-08 15:33:00', '');
@@ -825,10 +1344,10 @@ CREATE TABLE `tp5_xusers` (
 -- ----------------------------
 -- Records of tp5_xusers
 -- ----------------------------
-INSERT INTO `tp5_xusers` VALUES ('1', '龙猫', 'https://c-ssl.duitang.com/uploads/item/201412/29/20141229151653_HiM8B.jpeg', '15118988888', '0', '1555735686', '0', '0', '700', '0', '', '');
-INSERT INTO `tp5_xusers` VALUES ('2', '大熊', 'https://c-ssl.duitang.com/uploads/item/201603/21/20160321174127_AH5sw.jpeg', '18898888877', '2', '1555738810', '0', '0', '0', '0', '', '');
-INSERT INTO `tp5_xusers` VALUES ('3', '红猪', 'https://c-ssl.duitang.com/uploads/item/201509/17/20150917192807_8ZLKv.jpeg', '15577888878', '2', '1555738881', '0', '0', '0', '1', '', '');
-INSERT INTO `tp5_xusers` VALUES ('4', '卡卡西', 'https://c-ssl.duitang.com/uploads/item/201510/06/20151006221403_xjnCh.jpeg', '15112322322', '1', '1555739036', '1', '0', '0', '2', '', '');
-INSERT INTO `tp5_xusers` VALUES ('5', '佐罗', 'https://c-ssl.duitang.com/uploads/item/201509/27/20150927200243_YmaQB.jpeg', '18988777787', '1', '1555748309', '1', '0', '0', '0', '', '');
-INSERT INTO `tp5_xusers` VALUES ('6', '龙溪', 'https://c-ssl.duitang.com/uploads/item/201901/19/20190119231949_buetu.jpg', '18788777788', '0', '1555748365', '0', '0', '0', '1', '', '');
-INSERT INTO `tp5_xusers` VALUES ('7', '安若', 'https://c-ssl.duitang.com/uploads/item/201509/16/20150916031123_dyaiY.png', '16888777787', '1', '1555748448', '0', '0', '0', '0', '', '');
+INSERT INTO `tp5_xusers` VALUES ('1', '龙猫', 'https://wx.qlogo.cn/mmopen/vi_32/DYAIOgq83erME8I67DDYDfduLmFr6dI6zySrUOPP16N4YP32t1QBiaqic7aXy6dA7TZPA9ibFxXQdILNbKLJrF1WA/132', '15118988888', '0', '1555735686', '0', '0', '700', '0', '', '');
+INSERT INTO `tp5_xusers` VALUES ('2', '大熊', 'https://wx.qlogo.cn/mmopen/vi_32/ph3pTayT2Y2DgMa2jiaicqv0ba9cMibhd44v1QY9IJiaVhTG5W3PQwibncRpoumZMZBJia3TRd4P3tSKWqaAcqJsDqOQ/132', '18898888877', '2', '1555738810', '0', '0', '0', '0', '', '');
+INSERT INTO `tp5_xusers` VALUES ('3', '红猪', 'https://wx.qlogo.cn/mmopen/vi_32/Q0j4TwGTfTKGCoCBnXlicTo9DHHJKNgKjiauCXUzVCGRFibIOnEJD4EFibsyLaGFZRKwN58tw5HlUQWTufRKOLjVzQ/132', '15577888878', '2', '1555738881', '0', '0', '0', '1', '', '');
+INSERT INTO `tp5_xusers` VALUES ('4', '卡卡西', 'https://wx.qlogo.cn/mmopen/vi_32/Q0j4TwGTfTLr5yvbicZQjpfvlicja0mBfaSRG4ibnRX3ibUq9Rak1QvzOV8YC6qKeyrapftlSulZdo7PKpGvzHibwag/132', '15112322322', '1', '1555739036', '1', '0', '0', '2', '', '');
+INSERT INTO `tp5_xusers` VALUES ('5', '佐罗', 'https://wx.qlogo.cn/mmopen/vi_32/Q0j4TwGTfTIxAIXQL4JxsoBWf0GP9HFu0RjIPoPymPjuK0qia7ibrI0x34gmvPuZwo6iaXbFkb875b76Kr1CDicZdQ/132', '18988777787', '1', '1555748309', '1', '0', '0', '0', '', '');
+INSERT INTO `tp5_xusers` VALUES ('6', '龙溪', 'https://wx.qlogo.cn/mmhead/dbmbvl7UYS8hcRelNJTkocl0MhM0LLmDlApB27KHLlw/132', '18788777788', '0', '1555748365', '0', '0', '0', '1', '', '');
+INSERT INTO `tp5_xusers` VALUES ('7', '安若', 'https://wx.qlogo.cn/mmopen/vi_32/Q0j4TwGTfTIE3lcO5EBP17qaibIT5wwuLxKk5Ccb4anTiaRSKgjqmyPchZ1MkxfkgtOM4V0u5yNytVorqhsKDn2Q/132', '16888777787', '1', '1555748448', '0', '0', '0', '0', '', '');

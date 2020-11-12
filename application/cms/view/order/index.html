@@ -1,0 +1,188 @@
+{extend name="layouts/cms"}
+{block name='body-content'}
+<div class="layui-inline layui-form">
+    <form class="form-search form-op-search" action="{:url('cms/order/index')}" method="get">
+        <div class="layui-input-inline">
+            <input type="hidden" name="curr_page" class="curr_page" value="1">
+            <input type="text" value="{$search}" name="str_search" placeholder="订单编号/用户信息..."
+                   class="layui-input search_input">
+        </div>
+        <button class="layui-btn-warm btn-search-mz">
+            <i class="layui-icon">&#xe615;</i>
+        </button>
+    </form>
+</div>
+
+<table class="layui-table table-body" lay-even="" lay-skin="row">
+    <colgroup>
+        <col width="12%">
+        <col width="12%">
+        <col width="10%">
+        <col width="8%">
+        <col width="5%">
+        <col width="5%">
+        <col width="5%">
+        <col width="18%">
+        <col width="5%">
+    </colgroup>
+    <thead>
+    <tr>
+        <th>订单编号</th>
+        <th>用户</th>
+        <th>商品总价</th>
+        <th>总件数</th>
+        <th>优惠</th>
+        <th>运费</th>
+        <th>支付</th>
+        <th>支付方式</th>
+        <th>操作</th>
+    </tr>
+    </thead>
+    <tbody class="table-tbody-normal layui-form"
+           ajax_page_fun="ToAjaxOpForPageOrders"
+           record_num="{$record_num}" page_limit="{$page_limit}"
+           page_url="{:url('cms/order/index')}">
+    {volist name="users" id="vo"}
+    <tr class="tr-normal-{$vo['id']}">
+        <td><span class="span-order_sn">{$vo['order_sn']}</span></td>
+        <td>
+            <img class="layui-circle img-user_avatar" src="{$vo.user_avatar}"><br>
+            <span class="span-nick_name">【{$vo['nick_name']}】</span>
+        </td>
+        <td onclick="viewShoppingList('{$vo.id}')">
+            <span class="span-goods_amount_total">￥{$vo['goods_amount_total']}</span>
+        </td>
+        <td><span class="span-goods_num_total">{$vo['goods_num_total']} 件</span></td>
+        <td><span class='layui-badge layui-bg-green' title='优惠额度'>￥{$vo.reduce_amount}</span></td>
+        <td><span class='layui-badge layui-bg-gray' title='运费总额'>￥{$vo['logistics_fee']}</span></td>
+        <td>
+            <button type="button" title='实际支付'
+                    class="layui-btn layui-btn-sm layui-btn-radius layui-btn-danger">￥{$vo['pay_amount']}</button>
+        </td>
+        <td>
+            <span class="span-pay_channel">【{$vo['pay_channel']}】</span><br>
+            <span class="span-pay_time"><i class="layui-icon">&#xe60e;</i> {$vo['pay_time']}</span>
+        </td>
+        <td>
+            <button class="layui-btn layui-btn-sm layui-btn-warm" title="商品清单"
+                    onclick="viewShoppingList('{$vo.id}')">
+                <i class="layui-icon">&#xe66a;</i> 清单
+            </button>
+        </td>
+    </tr>
+    {/volist}
+    </tbody>
+</table>
+<style>
+    .img-user_avatar{
+        width: 50px;
+        height: 50px;
+    }
+    .span-nick_name{
+        color: #ffadad;
+    }
+    .span-order_sn{
+        color: #7274A7;
+    }
+    .span-pay_channel{
+        color: #2ea8e5;
+    }
+    .span-pay_time{
+        color: #ffadad;
+    }
+    .span-goods_amount_total{
+        color: #99CCCC;
+    }
+    .span-goods_num_total{
+        color: #CC9999;
+    }
+    .table-body, #demo2-1 {
+        width: 70%;
+        margin: 10px auto;
+    }
+
+    .table-shoppingList{
+        background-color: #CCFFFF;
+        color: #FF6600;
+        font-weight: bold;
+    }
+    .table-shoppingList td{
+        color: #339999;
+        font-weight: bold;
+    }
+    .table-shoppingList th,.table-shoppingList tbody td{
+        text-align: center
+    }
+</style>
+<div id="demo2-1"></div>
+{/block}
+
+{block name='single-content'}
+<script src="__CMS__/js/orders.js"></script>
+<script>
+    function viewShoppingList(order_id){
+        var toUrl = "{:url('cms/order/ajaxGetShoppingList')}";
+        ToViewShoppingList(toUrl,order_id);
+    }
+    /**
+     * ajax 获取订单商品清单
+     * @param toUrl
+     * @param order_id
+     * @constructor
+     */
+    function ToViewShoppingList(toUrl,order_id){
+        var str_tab_1 =
+            "<table class=\"layui-table table-shoppingList\">\n" +
+            "  <colgroup>\n" +
+            "    <col width=\"30%\">\n" +
+            "    <col width=\"30%\">\n" +
+            "    <col width=\"20%\">\n" +
+            "    <col width='10%'>\n" +
+            "  </colgroup>\n" +
+            "  <thead>\n" +
+            "    <tr>\n" +
+            "      <th>商品</th>\n" +
+            "      <th>规格</th>\n" +
+            "      <th>数量</th>\n" +
+            "      <th>总价</th>\n" +
+            "    </tr> \n" +
+            "  </thead>\n" +
+            "  <tbody>\n";
+
+        var str_tab_2 =
+            "  </tbody>\n" +
+            "</table>";
+
+        $.post(
+            toUrl, {order_id:order_id},
+            function (result) {
+                if (result.status == 1) {
+                    var str_html = '';
+                    $.each(result.data, function (i, e) {
+                        str_html +=
+                            "    <tr>\n" +
+                            "      <td>"+e.goods_name+"</td>\n" +
+                            "      <td>"+e.sku_spec_msg+"</td>\n" +
+                            "      <td>"+e.goods_price+" * "+e.goods_num+"</td>\n" +
+                            "      <td>"+e.goods_amount+"</td>\n" +
+                            "    </tr>\n" ;
+                    });
+                    str_tab = str_tab_1+str_html+str_tab_2;
+                    layer.tips(str_tab,
+                        ".tr-normal-"+order_id+" .span-goods_amount_total",
+                        {
+                            area:['540px',],
+                            tips: [3, '#66CCCC'],
+                            time: 200000, //20s后自动关闭
+                            shade:0.3,
+                            shadeClose:true,
+                        });
+                    layui.form.render();//细节！这个好像要渲染一下！
+                } else {
+                    //失败
+                    layer.msg(result.message);
+                }
+            }, "JSON");
+    }
+</script>
+{/block}

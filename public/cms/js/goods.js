@@ -42,10 +42,11 @@ function ToAjaxOpForPageGoods(toUrl,postData) {
                         "                <td class=\"td-goods_name\">"+tip+e.goods_name+"</td>\n" +
                         "                <td><img class=\"img-thumbnail\" src=\""+e.thumbnail+"\"></td>\n" +
                         "        <td>\n" +
-                        "            <span class=\"span-cat_name\" title=\"分类\">【"+e.cat_name+"】</span><hr>\n" +
+                        "            <span class=\"span-cat_name\" title=\"分类\">【"+e.cat_name+"】</span>\n" +
+                        "        </td>\n" +
+                        "        <td>\n" +
                         "            <span class=\"layui-badge-dot layui-bg-blue\"></span>\n" +
                         "            <span class=\"span-brand_name\" title=\"品牌\">"+e.brand_name+"</span>\n" +
-                        "\n" +
                         "        </td>\n" +
                         "        <td><span class=\"selling_price\">￥"+e.selling_price+"</span></td>\n" +
                         "        <td><span class=\"span-stock\">"+e.stock+"</span></td>\n" +

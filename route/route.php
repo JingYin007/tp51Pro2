@@ -128,9 +128,16 @@ Route::post('cms/adList/ajaxForShow','cms/adList/ajaxForShow');
 Route::any('cms/users/index','cms/users/index');
 Route::post('cms/users/ajaxUpdateUserStatus','cms/users/ajaxUpdateUserStatus');
 
-//统计分析
-Route::any('cms/analyze/goodsPricePie','cms/analyze/goodsPricePie');
+// 订单管理
+Route::any('cms/order/index','cms/order/index');
+Route::any('cms/order/details','cms/order/details');
+Route::post('cms/order/ajaxGetShoppingList','cms/order/ajaxGetShoppingList');
+Route::any('cms/order/opCourierSn','cms/order/opCourierSn');
+Route::any('cms/order/lookLogistics/:op_id','cms/order/lookLogistics');
 
+//统计分析
+Route::any('cms/analyze/hotSale','cms/analyze/hotSale');
+Route::any('cms/analyze/timeSale','cms/analyze/timeSale');
 
 
 /**
