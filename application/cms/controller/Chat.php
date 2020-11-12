@@ -28,12 +28,17 @@ class Chat
         $this->web_socket_url = config('workerman.WEB_SOCKET_URL');
     }
 
+    /**
+     * 聊天列表
+     * @param Request $request
+     * @return \think\response\View|void
+     */
     public function lists(Request $request){
-        $from_id = $this->cmsAID;
-        $chatList = $this->chatModel->getChatList($from_id);
+        $curr_id = $this->cmsAID;
+        $chatList = $this->chatModel->getChatList($curr_id);
         if ($request->isGet()){
             return view('lists', [
-                'from_id' => $from_id,
+                'from_id' => $curr_id,
                 'chatList' => $chatList,
                 'web_socket_url' => $this->web_socket_url]);
         }else{return showMsg(1,'get_list',$chatList);}

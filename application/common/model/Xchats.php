@@ -123,23 +123,24 @@ class Xchats extends BaseModel
      * @return array
      */
     public function getChatList($curr_id){
-        $chatList = Db::name('xchat_logs cl')
-            ->field('from_id,to_id,log_time')
-            ->join('xadmins a','a.id = cl.from_id')
-            ->where([['to_id|from_id','=',$curr_id],['a.status','=',1]])
-            ->order('cl.id','desc')
-            ->group('from_id')
-            ->select();
+        //TODO 这玩意可得花点时间好好整下 ！！！
+        $sql =
+            "SELECT count(is_read = 0 or null) AS countNoRead,receiver,newTable.content as last_message,log_time,type,user_name,picture 
+	            FROM (	
+					SELECT to_id as receiver,content,1 as is_read,log_time,type 
+						FROM tp5_xchat_logs WHERE (from_id = $curr_id) AND (to_id <> $curr_id) 
+							UNION 
+										SELECT from_id as receiver,content as content,is_read,log_time,type 
+											FROM tp5_xchat_logs WHERE (from_id <> $curr_id) AND (to_id = $curr_id) ORDER BY log_time DESC
+				) as newTable 
+	        INNER JOIN tp5_xadmins on receiver = tp5_xadmins.id GROUP BY receiver ORDER BY log_time DESC";
 
+       $chatList = Db::query($sql);
+        //var_dump($chatList);
         foreach ($chatList as $key => $value){
-            $from_id = $value['from_id'];
-            $to_id = $value['to_id'];
-            $head_id = ($from_id == $curr_id) ? $to_id:$from_id;
-
-            $chatList[$key]['head_url'] = $this->getAdminUserInfo($head_id)['picture'];
-            $chatList[$key]['user_name'] = $this->getAdminUserInfo($head_id)['user_name'];
-            $chatList[$key]['countNoRead'] = $this->getCountNoread($curr_id,$head_id);
-            $chatList[$key]['last_message'] = $this->getLastMessage($curr_id,$head_id);
+            $head_id = $value['receiver'];
+            $chatList[$key]['head_url'] = imgToServerView($value['picture']);
+            $chatList[$key]['last_message'] = (intval($value['type']) == 2)? "【图片】" : $value['last_message'];
             $chatList[$key]['redi_url'] = url("/cms/chat/index/$head_id");
         }
         return $chatList;

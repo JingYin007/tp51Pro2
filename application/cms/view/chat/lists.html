@@ -21,9 +21,9 @@
                 <div class="chat-info">
                     <p class="chat-merch flex">
                         <span class="title t-28">{$vo.user_name}</span>
-                        <span class="time">{$vo.last_message.log_time|date="Y/m/d H:i:s"}</span>
+                        <span class="time">{$vo.log_time|date="Y/m/d H:i:s"}</span>
                     </p>
-                    <p class="chat-text">{$vo.last_message.content}</p>
+                    <p class="chat-text">{$vo.last_message}</p>
                 </div>
             </div>
             {/volist}
