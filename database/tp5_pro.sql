@@ -10,7 +10,7 @@ Target Server Type    : MYSQL
 Target Server Version : 50553
 File Encoding         : 65001
 
-Date: 2020-11-12 16:55:52
+Date: 2020-11-12 21:15:07
 */
 
 SET FOREIGN_KEY_CHECKS=0;
@@ -78,7 +78,7 @@ CREATE TABLE `tp5_xadmins` (
   `content` varchar(500) NOT NULL DEFAULT '世界上没有两片完全相同的叶子！' COMMENT '备注信息',
   PRIMARY KEY (`id`),
   KEY `index_role` (`role_id`)
-) ENGINE=MyISAM AUTO_INCREMENT=9 DEFAULT CHARSET=utf8mb4 COMMENT='管理员表';
+) ENGINE=MyISAM AUTO_INCREMENT=10 DEFAULT CHARSET=utf8mb4 COMMENT='管理员表';
 
 -- ----------------------------
 -- Records of tp5_xadmins
@@ -86,6 +86,7 @@ CREATE TABLE `tp5_xadmins` (
 INSERT INTO `tp5_xadmins` VALUES ('1', '1', 'moTzxx@admin', 'cms/images/headshot/wuHuang.png', '37993cfef6629b18d80d7be625aa2485', '2020-09-04 17:01:10', '1', 'HELLO');
 INSERT INTO `tp5_xadmins` VALUES ('2', '2', 'baZhaHei@admin', 'cms/images/headshot/baZhaHei.png', '52c59afc073ef974c23497beb7a87266', '2020-10-21 18:02:01', '1', 'HELLO');
 INSERT INTO `tp5_xadmins` VALUES ('3', '1', 'niuNengx@admin', 'cms/images/headshot/niuNeng.png', '74cc22bb9abcddc8a1cdafbae1fadc7a', '2020-06-02 19:51:04', '1', 'HELLO');
+INSERT INTO `tp5_xadmins` VALUES ('4', '2', 'wuHuang@admin', 'cms/images/headshot/wuHuang.png', 'xxxxxx', '2020-11-12 19:48:25', '1', '世界上没有两片完全相同的叶子！');
 
 -- ----------------------------
 -- Table structure for tp5_xadmin_roles
@@ -707,44 +708,29 @@ CREATE TABLE `tp5_xchat_logs` (
   `type` tinyint(1) NOT NULL DEFAULT '1' COMMENT '1：文字；2：图片',
   PRIMARY KEY (`id`),
   KEY `INDEX` (`from_id`,`to_id`)
-) ENGINE=MyISAM AUTO_INCREMENT=574 DEFAULT CHARSET=utf8mb4 COMMENT='聊天记录表';
+) ENGINE=MyISAM AUTO_INCREMENT=577 DEFAULT CHARSET=utf8mb4 COMMENT='聊天记录表';
 
 -- ----------------------------
 -- Records of tp5_xchat_logs
 -- ----------------------------
 INSERT INTO `tp5_xchat_logs` VALUES ('539', '1', '2', '巴扎黑，快出来玩！', '1603515063', '1', '1');
-INSERT INTO `tp5_xchat_logs` VALUES ('540', '1', '2', '牛能在吗', '1603515089', '0', '1');
+INSERT INTO `tp5_xchat_logs` VALUES ('540', '3', '2', '牛能在吗', '1603515089', '0', '1');
 INSERT INTO `tp5_xchat_logs` VALUES ('541', '3', '1', '在吗？', '1603515098', '1', '1');
 INSERT INTO `tp5_xchat_logs` VALUES ('542', '3', '1', '快说啊', '1603515089', '1', '1');
 INSERT INTO `tp5_xchat_logs` VALUES ('543', '1', '3', '在的', '1603517973', '0', '1');
 INSERT INTO `tp5_xchat_logs` VALUES ('544', '1', '2', '想吃饭了', '1603518013', '0', '1');
-INSERT INTO `tp5_xchat_logs` VALUES ('547', '1', '2', '本带', '1603588131', '0', '1');
-INSERT INTO `tp5_xchat_logs` VALUES ('548', '1', '3', 'ss', '1603795868', '0', '1');
-INSERT INTO `tp5_xchat_logs` VALUES ('549', '1', '3', 'dd', '1603796838', '0', '1');
-INSERT INTO `tp5_xchat_logs` VALUES ('550', '1', '3', 'ssa', '1603797272', '0', '1');
-INSERT INTO `tp5_xchat_logs` VALUES ('551', '1', '3', 'we', '1603797679', '0', '1');
-INSERT INTO `tp5_xchat_logs` VALUES ('552', '1', '3', '[em_20]', '1603797833', '0', '1');
-INSERT INTO `tp5_xchat_logs` VALUES ('553', '1', '3', 'aaa', '1603797855', '0', '1');
-INSERT INTO `tp5_xchat_logs` VALUES ('554', '1', '3', 'aaaa', '1603797882', '0', '1');
-INSERT INTO `tp5_xchat_logs` VALUES ('555', '1', '3', '[em_19]', '1603797976', '0', '1');
+INSERT INTO `tp5_xchat_logs` VALUES ('576', '1', '4', 'https://img2.woyaogexing.com/2020/11/09/4f1ef13eb2064270b0c607db37d6715c!400x400.jpeg', '1605181769', '0', '2');
+INSERT INTO `tp5_xchat_logs` VALUES ('554', '1', '3', '你这臭家伙！', '1603797882', '0', '1');
+INSERT INTO `tp5_xchat_logs` VALUES ('555', '3', '1', '[em_19]', '1603797976', '1', '1');
 INSERT INTO `tp5_xchat_logs` VALUES ('556', '1', '2', 'sssss', '1603799084', '0', '1');
-INSERT INTO `tp5_xchat_logs` VALUES ('557', '1', '3', 'aa', '1603799362', '0', '1');
-INSERT INTO `tp5_xchat_logs` VALUES ('558', '1', '3', 'aa', '1603800948', '0', '1');
 INSERT INTO `tp5_xchat_logs` VALUES ('559', '1', '3', '[em_20]', '1603801020', '0', '1');
-INSERT INTO `tp5_xchat_logs` VALUES ('560', '1', '3', 'lll', '1603801216', '0', '1');
-INSERT INTO `tp5_xchat_logs` VALUES ('561', '1', '3', '[em_20]', '1603801221', '0', '1');
-INSERT INTO `tp5_xchat_logs` VALUES ('562', '1', '3', '[em_5]', '1603801365', '0', '1');
-INSERT INTO `tp5_xchat_logs` VALUES ('563', '1', '2', '[em_5]', '1603801447', '0', '1');
-INSERT INTO `tp5_xchat_logs` VALUES ('564', '1', '2', '[em_21]', '1603801615', '0', '1');
-INSERT INTO `tp5_xchat_logs` VALUES ('565', '1', '2', 'ss', '1603802442', '0', '1');
-INSERT INTO `tp5_xchat_logs` VALUES ('566', '1', '3', 'HELLO', '1603802679', '0', '1');
-INSERT INTO `tp5_xchat_logs` VALUES ('567', '1', '3', 'a', '1603803774', '0', '1');
-INSERT INTO `tp5_xchat_logs` VALUES ('568', '1', '3', 'aa', '1603803778', '0', '1');
-INSERT INTO `tp5_xchat_logs` VALUES ('569', '1', '2', '99', '1603803810', '0', '1');
-INSERT INTO `tp5_xchat_logs` VALUES ('570', '1', '2', '[em_34]', '1603803846', '0', '1');
-INSERT INTO `tp5_xchat_logs` VALUES ('571', '1', '3', '/upload/20201027/e75b041fa8f18ccd7b92fda14f26f842.jpg', '1603804312', '0', '2');
-INSERT INTO `tp5_xchat_logs` VALUES ('572', '1', '3', '[em_8]', '1603804393', '0', '1');
-INSERT INTO `tp5_xchat_logs` VALUES ('573', '1', '2', '三生三世', '1603805237', '0', '1');
+INSERT INTO `tp5_xchat_logs` VALUES ('564', '2', '1', '[em_21]', '1603801615', '0', '1');
+INSERT INTO `tp5_xchat_logs` VALUES ('566', '1', '3', 'HELLO', '1603802679', '1', '1');
+INSERT INTO `tp5_xchat_logs` VALUES ('575', '4', '1', '啊哈哈哈', '1605181760', '1', '1');
+INSERT INTO `tp5_xchat_logs` VALUES ('569', '2', '1', '99', '1603803810', '0', '1');
+INSERT INTO `tp5_xchat_logs` VALUES ('570', '2', '1', '[em_34]', '1603803846', '1', '1');
+INSERT INTO `tp5_xchat_logs` VALUES ('572', '2', '3', '[em_8]', '1603804393', '1', '1');
+INSERT INTO `tp5_xchat_logs` VALUES ('573', '2', '1', '三生三世', '1603805237', '1', '1');
 
 -- ----------------------------
 -- Table structure for tp5_xcms_logs
