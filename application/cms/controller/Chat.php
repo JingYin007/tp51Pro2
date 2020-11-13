@@ -11,6 +11,7 @@ namespace app\cms\controller;
 
 use app\common\lib\IAuth;
 use app\common\model\Xchats;
+use think\App;
 use think\Controller;
 use think\Request;
 
@@ -19,8 +20,10 @@ class Chat extends Controller
     protected $cmsAID;
     protected $chatModel;
     protected $web_socket_url;
-    public function initialize()
+
+    public function __construct()
     {
+        parent::__construct();
         $this->cmsAID = IAuth::getAdminIDCurrLogged();
         if (!$this->cmsAID) {
             echo "Sorry，您已离线！";die;

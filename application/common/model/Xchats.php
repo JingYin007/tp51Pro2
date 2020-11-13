@@ -13,6 +13,11 @@ use think\Db;
 
 class Xchats extends BaseModel
 {
+    public function __construct($data = [])
+    {
+        parent::__construct($data);
+    }
+
     /**
      * 聊天记录保存
      * @param null $postData
@@ -130,13 +135,13 @@ class Xchats extends BaseModel
 	            FROM (	
 					SELECT to_id as receiver,content,1 as is_read,log_time,type 
 						FROM ".$tab_prefix."xchat_logs WHERE (from_id = $curr_id) AND (to_id <> $curr_id) 
-							UNION 
+					UNION 
 					SELECT from_id as receiver,content as content,is_read,log_time,type 
-						FROM ".$tab_prefix."xchat_logs WHERE (from_id <> $curr_id) AND (to_id = $curr_id) ORDER BY log_time DESC
-				) as uniTable 
+						FROM ".$tab_prefix."xchat_logs WHERE (from_id <> $curr_id) AND (to_id = $curr_id) 
+					ORDER BY log_time DESC) as uniTable 
 	        INNER JOIN ".$tab_prefix."xadmins on receiver = ".$tab_prefix."xadmins.id GROUP BY receiver ORDER BY log_time DESC";
 
-       $chatList = Db::query($sql);
+        $chatList = Db::query($sql);
         //var_dump($chatList);
         foreach ($chatList as $key => $value){
             $head_id = $value['receiver'];

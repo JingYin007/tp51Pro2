@@ -3,7 +3,6 @@
 namespace app\common\model;
 
 use app\common\validate\Xbrand;
-use think\Db;
 
 
 class Xbrands extends BaseModel
