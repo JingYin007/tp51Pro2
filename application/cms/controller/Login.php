@@ -7,6 +7,7 @@ use app\common\lib\IAuth;
 use app\common\model\Xadmins;
 use app\common\model\XnavMenus;
 use app\common\model\XsysConf;
+use think\Controller;
 use think\Request;
 
 /**
@@ -14,13 +15,14 @@ use think\Request;
  * Class Login
  * @package app\cms\Controller
  */
-class Login
+class Login extends Controller
 {
     protected $adminModel;
     protected $navMenuModel;
 
     public function __construct()
     {
+        parent::__construct();
         $this->adminModel = new Xadmins();
         $this->navMenuModel = new XnavMenus();
     }
@@ -32,7 +34,7 @@ class Login
     public function index()
     {
         if (IAuth::getAdminIDCurrLogged()) {
-            return redirect('cms/index/index');
+            $this->redirect('cms/index/index');
         } else {
             return view('index');
         }
@@ -45,7 +47,7 @@ class Login
     public function logout()
     {
         IAuth::logoutAdminCurrLogged();
-        return redirect('cms/login/index');
+        $this->redirect('cms/login/index');
     }
 
     /**

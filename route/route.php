@@ -22,16 +22,14 @@ Route::get('/index/contact','index/index/contact');
 Route::rule('cmsx','cms/index/index');
 Route::get('cms/index/index','cms/index/index');
 Route::get('cms/home','cms/index/home');
+
 Route::get('cms/chat/index/:to_id','cms/chat/index');
 Route::any('cms/chat/lists','cms/chat/lists');
-
 Route::post('cms/chat/save_message','cms/chat/save_message');
 Route::post('cms/chat/load','cms/chat/load');
 Route::post('cms/chat/changeNoRead','cms/chat/changeNoRead');
 Route::post('cms/chat/ajax_get_noReadCount','cms/chat/ajax_get_noReadCount');
 Route::post('cms/chat/ajax_get_user_list','cms/chat/ajax_get_user_list');
-
-
 
 Route::any('cms/index/admin/:id','cms/index/admin');
 
