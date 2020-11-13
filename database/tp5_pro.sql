@@ -10,7 +10,7 @@ Target Server Type    : MYSQL
 Target Server Version : 50553
 File Encoding         : 65001
 
-Date: 2020-11-12 21:15:07
+Date: 2020-11-13 17:10:46
 */
 
 SET FOREIGN_KEY_CHECKS=0;
@@ -83,7 +83,7 @@ CREATE TABLE `tp5_xadmins` (
 -- ----------------------------
 -- Records of tp5_xadmins
 -- ----------------------------
-INSERT INTO `tp5_xadmins` VALUES ('1', '1', 'moTzxx@admin', 'cms/images/headshot/wuHuang.png', '37993cfef6629b18d80d7be625aa2485', '2020-09-04 17:01:10', '1', 'HELLO');
+INSERT INTO `tp5_xadmins` VALUES ('1', '1', 'moTzxx@admin', 'cms/images/headshot/wuHuang.png', '37993cfef6629b18d80d7be625aa2485', '2020-09-04 17:01:10', '1', 'HELLOX');
 INSERT INTO `tp5_xadmins` VALUES ('2', '2', 'baZhaHei@admin', 'cms/images/headshot/baZhaHei.png', '52c59afc073ef974c23497beb7a87266', '2020-10-21 18:02:01', '1', 'HELLO');
 INSERT INTO `tp5_xadmins` VALUES ('3', '1', 'niuNengx@admin', 'cms/images/headshot/niuNeng.png', '74cc22bb9abcddc8a1cdafbae1fadc7a', '2020-06-02 19:51:04', '1', 'HELLO');
 INSERT INTO `tp5_xadmins` VALUES ('4', '2', 'wuHuang@admin', 'cms/images/headshot/wuHuang.png', 'xxxxxx', '2020-11-12 19:48:25', '1', '世界上没有两片完全相同的叶子！');
@@ -719,10 +719,9 @@ INSERT INTO `tp5_xchat_logs` VALUES ('541', '3', '1', '在吗？', '1603515098',
 INSERT INTO `tp5_xchat_logs` VALUES ('542', '3', '1', '快说啊', '1603515089', '1', '1');
 INSERT INTO `tp5_xchat_logs` VALUES ('543', '1', '3', '在的', '1603517973', '0', '1');
 INSERT INTO `tp5_xchat_logs` VALUES ('544', '1', '2', '想吃饭了', '1603518013', '0', '1');
-INSERT INTO `tp5_xchat_logs` VALUES ('576', '1', '4', 'https://img2.woyaogexing.com/2020/11/09/4f1ef13eb2064270b0c607db37d6715c!400x400.jpeg', '1605181769', '0', '2');
+INSERT INTO `tp5_xchat_logs` VALUES ('576', '1', '4', 'https://www.baidu.com/img/flexible/logo/pc/result.png', '1605181769', '0', '2');
 INSERT INTO `tp5_xchat_logs` VALUES ('554', '1', '3', '你这臭家伙！', '1603797882', '0', '1');
 INSERT INTO `tp5_xchat_logs` VALUES ('555', '3', '1', '[em_19]', '1603797976', '1', '1');
-INSERT INTO `tp5_xchat_logs` VALUES ('556', '1', '2', 'sssss', '1603799084', '0', '1');
 INSERT INTO `tp5_xchat_logs` VALUES ('559', '1', '3', '[em_20]', '1603801020', '0', '1');
 INSERT INTO `tp5_xchat_logs` VALUES ('564', '2', '1', '[em_21]', '1603801615', '0', '1');
 INSERT INTO `tp5_xchat_logs` VALUES ('566', '1', '3', 'HELLO', '1603802679', '1', '1');
