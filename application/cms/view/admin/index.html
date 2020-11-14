@@ -10,7 +10,7 @@
         <form class="form-search" action="{:url('cms/admin/index')}" method="get">
             <input type="hidden" name="curr_page" class="curr_page" value="1">
             <input type="text" value="{$search}" name="str_search" placeholder="请输入昵称或备注信息"
-                   class="layui-input search_input">
+                   class="layui-input search_input" autocomplete="off">
         </form>
     </div>
     <button class="layui-btn-warm btn-search-mz">
