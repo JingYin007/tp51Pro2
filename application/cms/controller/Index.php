@@ -29,7 +29,13 @@ class Index extends Controller
         parent::__construct();
         $this->cmsAID = IAuth::getAdminIDCurrLogged();
         if (!$this->cmsAID) {
-            return showMsg(0,'You are offline,please logon again!');
+            $action = trim(strtolower(request()->action()));
+            if ($action == 'index'){
+                //TODO 后台入口路径 处理方法！
+                $this->redirect('cms/login/index');
+            }else{
+                return showMsg(0,'You are offline,please logon again!');
+            }
         }else{
             $this->menuModel = new XnavMenus();
             $this->adminModel = new Xadmins();
@@ -45,14 +51,14 @@ class Index extends Controller
     {
         //获取 登录的管理员有效期ID
         if($request->isGet()) {
-            $menuList = $this->menuModel->getNavMenusShow($this->cmsAID);
-            $adminInfo = $this->adminModel->getAdminData($this->cmsAID);
-            $data = [
-                'menus' => $menuList,
-                'admin' => $adminInfo,
-                'web_socket_url' => config('workerman.WEB_SOCKET_URL')
-            ];
-            return view('index', $data);
+                $menuList = $this->menuModel->getNavMenusShow($this->cmsAID);
+                $adminInfo = $this->adminModel->getAdminData($this->cmsAID);
+                $data = [
+                    'menus' => $menuList,
+                    'admin' => $adminInfo,
+                    'web_socket_url' => config('workerman.WEB_SOCKET_URL')
+                ];
+                return view('index', $data);
         }else{
             return showMsg(0,'Sorry,您的请求不合法！');
         }

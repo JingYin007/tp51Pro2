@@ -21,15 +21,6 @@ $(document).ready(function () {
         }
     });
 
-    $(".layui-tab-title .layui-this").click(function () {
-        var tag = $(this).hasClass('title-selected');
-        if(!tag){
-            $(".layui-tab-title .layui-this").removeClass('title-selected');
-            $(this).addClass('title-selected');
-            var url = $(this).attr('url');
-            $(".layui-body .iframe-body").attr('src',url);
-        }
-    });
     /**
      * 导航菜单栏 触发事件
      */

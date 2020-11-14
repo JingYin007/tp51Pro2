@@ -59,7 +59,7 @@
     overflow: hidden;
 }
 
-.layui-tab-title .title-selected {
+.layui-tab-title .refreshHome{
     background-color: #009688;
     color: white;
     font-weight: 600;

@@ -30,13 +30,24 @@
                 }
             },'JSON');
     }
-
-    $(".refresh").click(function () {
-        if ($(this).hasClass("refreshThis")) {
-            $(this).removeClass("refreshThis");
+    /**
+     * 主页刷新事件
+     */
+    $(".refreshHome").click(function () {
+        $(this).addClass('title-selected');
+        var url = $(this).attr('url');
+        $(".layui-body .iframe-body").attr('src',url);
+    });
+    /**
+     * 当前页面刷新事件
+     */
+    $(".refreshThis").click(function () {
+        var mkTag = $(this).hasClass("refreshTag");
+        if (mkTag) {
+            $(this).removeClass("refreshTag");
             $(".layui-layout-admin .layui-body").find("iframe")[0].contentWindow.location.reload(true);
             setTimeout(function () {
-                $(".refresh").addClass("refreshThis");
+                $(".refreshThis").addClass("refreshTag");
             }, 2000);
         } else {
             layer.msg("您的刷新速度太快，还是等两秒再刷新吧！");
