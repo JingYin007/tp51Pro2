@@ -30,7 +30,7 @@ function ToAjaxOpForPageUsers(toUrl,postData) {
                         "            <span class=\"span-integral\">"+e.integral+"</span><br>\n" +
                         "        </td>\n" +
                         "        <td>"
-                                    +e.user_status_tip+"<hr>\n"+e.reg_time2+
+                                    +e.user_status_tip+"<hr><span class='span-reg_time'>\n"+e.reg_time2+"</span>"+
                         "        </td>\n" +
                         "        <td>\n" +
                         "            <div class=\"layui-btn-group\">\n" +

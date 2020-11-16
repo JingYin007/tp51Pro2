@@ -75,7 +75,7 @@
             <span class="span-mobile">{$vo['mobile']}</span><br>
             <span class="span-address">{$vo['address']}</span><br>
         </td>
-        <td>
+        <td class="td-courier_info">
             {php}echo $vo['tip_courier_msg'];{/php}
             <i class="layui-icon" title="添加物流单号" onclick="addCourierNum('{$vo.id}')">&#xe608;</i>
             <i class="layui-icon" title="查看物流信息" onclick="lookLogistics('{$vo.id}')">&#xe715;</i>
@@ -124,7 +124,7 @@
     .btn-courier_sn{
         background-color: #9999CC;
     }
-    .table-tbody-normal .layui-icon{
+    .table-tbody-normal .td-courier_info .layui-icon{
         float: right;
         margin: 0 5px;
     }

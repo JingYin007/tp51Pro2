@@ -56,7 +56,7 @@
         <td><span class="span-integral">{$vo['integral']}</span><br></td>
         <td>
             {php} echo $vo['user_status_tip']{/php}<hr>
-            {$vo['reg_time2']}</td>
+            <span class="span-reg_time">{$vo['reg_time2']}</span></td>
         <td>
             <div class="layui-btn-group">
                 <button class="layui-btn layui-btn-warm layui-btn-sm" title="状态审核"
@@ -76,6 +76,9 @@
     }
     .span-nick_name{
         color: #7274A7;
+    }
+    .span-reg_time{
+        color: #9b95c9;
     }
     .span-auth_tel{
         color: #f8b9b7;

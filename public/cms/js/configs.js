@@ -56,7 +56,7 @@ function ToAjaxOpForPageConfigs(toUrl,postData) {
                         "                <td>"+e.tag+"</td>\n" +
                         "                <td class='td-value'>"+e.value_tip +"</td>\n" +
                         "                <td><span class=\"span-FF9233\">"+e.tip+"</span></td>\n" +
-                        "                <td>"+e.add_time+"</td>\n" +
+                        "                <td><span class='span-add_time'>"+e.add_time+"</span></td>\n" +
                         "                <td>"+e.list_order +"</td>\n" +
                         "                <td>\n" +
                         "                    <div class=\"layui-btn-group\">\n" +

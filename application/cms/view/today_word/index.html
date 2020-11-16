@@ -49,7 +49,7 @@
             <img src="{$vo['picture']}" class="layui-circle">
         </td>
         <td class="word">{php}echo $vo['image_list_view'];{/php}<br>{$vo['word']}</td>
-        <td>{$vo['updated_at']}</td>
+        <td><span class="span-updated_at">{$vo['updated_at']}</span></td>
         <td>{php} echo $vo['status_tip']{/php}</td>
         <td>
             <div class="layui-btn-group">
@@ -79,13 +79,16 @@
         width: 66px;
         height: 66px;
     }
+    .span-updated_at{
+        color: #9b95c9;
+    }
     .view_image{
         padding-left: 3px;
         padding-bottom: 3px;
         height: 55px;
     }
     .table-body,#demo2-1{
-        width: 66%;
+        width: 76%;
         margin: 10px auto;
     }
 </style>

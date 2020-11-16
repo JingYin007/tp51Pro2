@@ -93,7 +93,7 @@ function ToAjaxOpForPageOrderDetails(toUrl,postData) {
                         "            <span class=\"span-mobile\">"+e.mobile+"</span><br>\n" +
                         "            <span class=\"span-address\">"+e.address+"</span><br>\n" +
                         "        </td>\n" +
-                        "        <td>\n" + e.tip_courier_msg+
+                        "        <td class=\"td-courier_info\">\n" + e.tip_courier_msg+
                         "            <i class=\"layui-icon\" title=\"添加物流单号\" onclick=\"addCourierNum('"+e.id+"')\">&#xe608;</i>\n" +
                         "            <i class=\"layui-icon\" title=\"查看物流信息\" onclick=\"lookLogistics('"+e.id+"')\">&#xe715;</i>\n" +
                         "        </td>\n" +

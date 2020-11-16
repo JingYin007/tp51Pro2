@@ -62,7 +62,7 @@
             {php} echo $vo['all_images_view'];{/php}
             <p class="p-article-abstract">{$vo['abstract']}</p>
         </td>
-        <td>{$vo['updated_at']}</td>
+        <td><span class="span-updated_at">{$vo['updated_at']}</span></td>
         <td>{$vo.list_order}</td>
         <td>
             <input type="checkbox" class="switch_checked" lay-filter="switchArticleID"
@@ -112,6 +112,9 @@
         transform: scale(3);
         position: relative;
         z-index: 100;
+    }
+    .span-updated_at{
+        color: #9b95c9;
     }
     .img_content{
         height: 53px;

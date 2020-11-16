@@ -49,7 +49,7 @@ function ToAjaxOpForPageArticles(toUrl,postData) {
                         "                <td class=\"title\">《"+e.title+"》</td>\n" +
                         "                <td class=\"td-article\"><img src='"+e.picture+"'></td>\n" +
                         "                <td><p class=\"p-article-abstract\">"+e.abstract+"</p></td>\n" +
-                        "                <td>"+e.updated_at +"</td>\n" +
+                        "                <td><span class='span-updated_at'>"+e.updated_at +"</span></td>\n" +
                         "                <td>"+e.list_order +"</td>\n" +
                         "                <td><input type=\"checkbox\" class=\"switch_checked\" lay-filter=\"switchArticleID\"\n" +
                         "switch_article_id=\""+e.id+"\" lay-skin=\"switch\""+e.status_checked+" lay-text=\"推荐|NO\">"+
