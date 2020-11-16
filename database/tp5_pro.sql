@@ -10,7 +10,7 @@ Target Server Type    : MYSQL
 Target Server Version : 50553
 File Encoding         : 65001
 
-Date: 2020-11-16 17:50:04
+Date: 2020-11-16 19:06:05
 */
 
 SET FOREIGN_KEY_CHECKS=0;
@@ -97,7 +97,7 @@ CREATE TABLE `tp5_xadmin_roles` (
   `user_name` varchar(50) NOT NULL DEFAULT '' COMMENT '角色称呼',
   `nav_menu_ids` text NOT NULL COMMENT '权限下的菜单ID',
   `updated_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
-  `status` tinyint(2) NOT NULL DEFAULT '1' COMMENT '状态标识  0：失效；1：正常',
+  `status` tinyint(2) NOT NULL DEFAULT '1' COMMENT '状态标识 -1:删除；  0：失效；1：正常',
   PRIMARY KEY (`id`)
 ) ENGINE=MyISAM AUTO_INCREMENT=5 DEFAULT CHARSET=utf8mb4 COMMENT='管理员角色表';
 
@@ -630,7 +630,7 @@ CREATE TABLE `tp5_xbrands` (
   `status` tinyint(2) NOT NULL DEFAULT '1' COMMENT '-1:删除; 1：正常',
   PRIMARY KEY (`id`),
   KEY `index_cat` (`cat_id`) USING BTREE,
-  KEY `index_sel` (`brand_name`)
+  KEY `index_sel` (`brand_name`,`list_order`) USING BTREE
 ) ENGINE=InnoDB AUTO_INCREMENT=20 DEFAULT CHARSET=utf8mb4 COMMENT='品牌表';
 
 -- ----------------------------
@@ -671,7 +671,7 @@ CREATE TABLE `tp5_xcategorys` (
   `status` tinyint(2) NOT NULL DEFAULT '1' COMMENT '状态 1：正常  -1：已删除',
   PRIMARY KEY (`cat_id`),
   KEY `parent_id` (`parent_id`),
-  KEY `index_sel` (`cat_name`)
+  KEY `index_sel` (`cat_name`,`list_order`) USING BTREE
 ) ENGINE=InnoDB AUTO_INCREMENT=23 DEFAULT CHARSET=utf8mb4 COMMENT='商品分类表';
 
 -- ----------------------------
@@ -967,7 +967,7 @@ CREATE TABLE `tp5_xgoods` (
   `status` tinyint(2) NOT NULL DEFAULT '0' COMMENT '状态 -1：删除 0：未上架 1：已上架 2：预售 ',
   PRIMARY KEY (`goods_id`),
   KEY `INDEX` (`cat_id`,`brand_id`) USING BTREE,
-  KEY `index_name` (`goods_name`)
+  KEY `index_name` (`goods_name`,`list_order`) USING BTREE
 ) ENGINE=InnoDB AUTO_INCREMENT=37 DEFAULT CHARSET=utf8mb4 COMMENT='商品表\r\n\r\n注意：status 的规定，app 上只显示上架的产品哦';
 
 -- ----------------------------
@@ -1019,7 +1019,7 @@ CREATE TABLE `tp5_xnav_menus` (
   `created_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
   `type` tinyint(2) NOT NULL DEFAULT '0' COMMENT '导航类型 0：菜单类  1：权限链接',
   PRIMARY KEY (`id`),
-  KEY `id` (`id`,`name`) USING BTREE
+  KEY `index_sel` (`id`,`name`,`list_order`) USING BTREE
 ) ENGINE=MyISAM AUTO_INCREMENT=152 DEFAULT CHARSET=utf8mb4 COMMENT='菜单导航表';
 
 -- ----------------------------
@@ -1258,7 +1258,7 @@ CREATE TABLE `tp5_xspec_infos` (
   `status` tinyint(2) NOT NULL DEFAULT '1' COMMENT '状态，1：正常，-1：删除，发布后不要随意删除',
   PRIMARY KEY (`spec_id`),
   KEY `index_cat` (`cat_id`),
-  KEY `index_sel` (`spec_name`)
+  KEY `index_sel` (`spec_name`,`list_order`) USING BTREE
 ) ENGINE=MyISAM AUTO_INCREMENT=50 DEFAULT CHARSET=utf8mb4 COMMENT='商品属性、规格细则表\r\n\r\n一般只存储两级属性，注意 parent_id = 0 表示为属性信息\r\n\r\nparent_id > 0 : 表示为规格信息';
 
 -- ----------------------------

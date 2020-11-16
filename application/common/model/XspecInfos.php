@@ -166,7 +166,7 @@ class XspecInfos extends BaseModel
             ->where([
                 ['parent_id', '=', 0],
                 ['cat_id', '=', intval($seledCatID)],
-                ['status','<>',-1]])
+                ['status','>',-1]])
             ->select();
         foreach ($specList as $key => $value) {
             if ($value && $value['mark_msg']) {
@@ -185,7 +185,7 @@ class XspecInfos extends BaseModel
     {
         $where = [['s1.status', '=', 1],
             ['s1.parent_id', '=', $specFstID],
-            ['s1.parent_id', '<>', 0]];
+            ['s1.parent_id', '>', 0]];
         $specList = $this
             ->alias("s1")
             ->field('s1.*')

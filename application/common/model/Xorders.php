@@ -34,7 +34,7 @@ class Xorders extends BaseModel
      * @throws \think\exception\DbException
      */
     public function getPayOrdersForPage($curr_page = 1, $page_limit = 1, $search  = null){
-        $where = [['pay_time','<>',0]];
+        $where = [['pay_time','>',0]];
         $res = $this
             ->alias('oi')
             ->field("oi.*,user_avatar,nick_name")
@@ -97,7 +97,7 @@ class Xorders extends BaseModel
      * @return float|int|string
      */
     public function getPayOrdersCount($search = null){
-        $where = [['pay_time','<>',0]];
+        $where = [['pay_time','>',0]];
         $count = $this
             ->alias('oi')
             ->join('xusers u','u.id = oi.user_id')
@@ -119,7 +119,7 @@ class Xorders extends BaseModel
      * @throws \think\exception\DbException
      */
     public function getOrderDetailsForPage($curr_page = 1, $page_limit = 1, $search  = null, $orderStatus = null){
-        $where = [['pay_time','<>',0],['od.status','>',0]];
+        $where = [['pay_time','>',0],['od.status','>',0]];
         if ($orderStatus){$where[] = ['od.status','=',$orderStatus];}
         $res = $this
             ->alias('oi')
@@ -191,7 +191,7 @@ class Xorders extends BaseModel
      * @return float|int|string
      */
     public function getOrderDetailsCount($search = null,$orderStatus = null){
-        $where = [['pay_time','<>',0],['od.status','>',0]];
+        $where = [['pay_time','>',0],['od.status','>',0]];
         if ($orderStatus){$where[] = ['od.status','=',$orderStatus];}
         $count = $this
             ->alias('oi')

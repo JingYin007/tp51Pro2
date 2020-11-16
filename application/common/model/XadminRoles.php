@@ -34,10 +34,9 @@ class XadminRoles extends BaseModel
     public function getAllRoles()
     {
         $res = $this
-            ->where('status', '<>', -1)
-            ->order('status', 'desc')
-            ->order('updated_at', 'desc')
-            ->select()->toArray();
+            ->where([['status','>',-1]])
+            ->order(['updated_at'=>'desc'])
+            ->select();
         foreach ($res as $key => $v) {
             $role_name = $v['user_name'];
             $res[$key]['role_tip'] = "$role_name";
@@ -47,7 +46,7 @@ class XadminRoles extends BaseModel
                 $res[$key]['status_tip'] = "<span class=\"layui-badge layui-bg-cyan\">删除</span>";
             }
         }
-        return $res;
+        return isset($res) ? $res->toArray(): [];
     }
 
     /**
@@ -127,12 +126,12 @@ class XadminRoles extends BaseModel
      */
     public function chkSameUserName($user_name, $id = 0)
     {
-        $tag = $this
+        $tagCount = $this
             ->field('user_name')
             ->where('user_name', $user_name)
             ->where('id', '<>', $id)
             ->count();
-        return $tag;
+        return $tagCount;
     }
 
     /**

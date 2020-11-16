@@ -27,7 +27,7 @@ class Xbrands extends BaseModel
      */
     public function getCmsBrandForPage($curr_page, $limit = 1, $search = null, $catID = null)
     {
-        $where = [['b.status', '<>', -1]];
+        $where = [['b.status', '>', -1]];
         if ($catID){$where[] = ['b.cat_id','=',$catID];}
         $res = $this
             ->field('b.*,c.cat_name')

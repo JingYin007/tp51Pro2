@@ -70,7 +70,7 @@ class Xskus extends BaseModel
     {
         $skuData = $this
             ->field("*")
-            ->where([["goods_id", '=', intval($goodsID)], ["sku_status", '<>', -1]])
+            ->where([["goods_id", '=', intval($goodsID)], ["sku_status", '>', -1]])
             ->order('sku_status','desc')
             ->select();
         foreach ($skuData as $key => $value){

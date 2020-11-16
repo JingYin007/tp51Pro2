@@ -38,11 +38,7 @@ class Xgoods extends BaseModel
     {
         $status = $SelStatus == "Down" ? 0 : 1;
         $where = [["g.status", '=', $status]];
-        if ($CatType != 0) {
-            $where[] = ["g.cat_id", '=', $CatType];
-        } else {
-            $where[] = ["g.cat_id", '<>', 0];
-        }
+        if ($CatType != 0) {$where[] = ["g.cat_id", '=', $CatType];}
         if ($OrderType == "D") {
             $order["g.updated_at"] = "desc";
         } elseif ($OrderType == "S") {
@@ -85,11 +81,7 @@ class Xgoods extends BaseModel
         $where = [
             ["g.status", '=', $status]
         ];
-        if ($CatType != 0) {
-            $where[] = ["g.cat_id", '=', $CatType];
-        } else {
-            $where[] = ["g.cat_id", '<>', 0];
-        }
+        if ($CatType != 0) {$where[] = ["g.cat_id", '=', $CatType];}
         $count = $this
             ->alias('g')
             ->field('g.status')

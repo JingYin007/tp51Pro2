@@ -29,7 +29,7 @@ class Xcategorys extends BaseModel
      */
     public function getCmsCategoryForPage($curr_page, $limit = 1, $search = null, $catType = "S")
     {
-        $where = [['status', '=', 1], ['cat_id', '<>', 0]];
+        $where = [['status', '=', 1]];
         if ($catType == "F") {
             $where[] = ['parent_id', '=', 0];
             $where[] = ['level', '=', 1];
@@ -74,7 +74,7 @@ class Xcategorys extends BaseModel
      */
     public function getCmsCategoryCount($search = null, $catType = "S")
     {
-        $where = [['status', '=', 1], ['cat_id', '<>', 0]];
+        $where = [['status', '=', 1]];
         if ($catType == "F") {
             $where[] = ['parent_id', '=', 0];
             $where[] = ['level', '=', 1];
