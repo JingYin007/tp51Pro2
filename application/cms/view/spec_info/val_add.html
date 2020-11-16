@@ -1,0 +1,43 @@
+{extend name="layouts/cms"}
+{block name='body-content'}
+<form class="layui-form form-op-normal layui-form-pane">
+    <div class="layui-form-item">
+        <label class="layui-form-label">名称：</label>
+        <div class="layui-input-inline">
+            <input type="text" name="spec_name" required lay-verify="required"
+                   value=""
+                   placeholder="请输入..." autocomplete="off" class="layui-input input-title-mz">
+            <input type="hidden" name="id" value="{$spec_id}">
+        </div>
+    </div>
+
+    <div class="layui-form-item">
+        <label class="layui-form-label">排序：</label>
+        <div class="layui-input-inline">
+            <input type="number" name="list_order" value="99" required lay-verify="required"
+                   autocomplete="off" class="layui-input">
+        </div>
+        <div class="layui-form-mid layui-word-aux">(数字越小，排序越靠前)</div>
+    </div>
+
+    <div class="layui-form-item">
+        <label class="layui-form-label">备注：</label>
+        <div class="layui-input-inline">
+            <input type="text" name="mark_msg"
+                   placeholder="请输入..." autocomplete="off" class="layui-input input-title-mz">
+        </div>
+    </div>
+    {:token()}
+    <div class="layui-form-item">
+        <div class="layui-input-block div-form-op">
+            <button class="layui-btn layui-btn-danger" type="button"
+                    op_url="{:url('cms/specInfo/add')}" onclick="opFormPostRecord(this)">提交</button>
+            <button type="reset" class="layui-btn layui-btn-primary">重置</button>
+        </div>
+    </div>
+</form>
+
+{/block}
+
+{block name='single-content'}
+{/block}

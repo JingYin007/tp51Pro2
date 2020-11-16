@@ -67,7 +67,8 @@ class SpecInfo extends CmsBase
                 'categoryList' => $categoryList,
                 'spec_id' => $spec_id
             ];
-            return view('add', $data);
+            $pageView = $spec_id ? "val_add": "spec_add";
+            return view($pageView, $data);
         }
     }
 

@@ -75,7 +75,7 @@
         <td>
             <div class="layui-btn-group">
                 <button class="layui-btn layui-btn-sm layui-btn-normal" title="编辑属性"
-                        onclick="editForOpenPopups('✎ 产品属性修改','{$vo.spec_id}', '50%', '50%')">
+                        onclick="editForOpenPopups('✎ 产品属性修改','{$vo.spec_id}', '45%', '50%')">
                     <i class="layui-icon">&#xe642;</i>
                 </button>
                 <button class="layui-btn layui-btn-sm layui-btn-danger" title="删除"
@@ -136,13 +136,18 @@
     function addSpecInfo(id,title) {
         var toUrl = "{:url('cms/specInfo/add',['id'=>'AID'])}";
         toUrl = toUrl.replace('AID', id);
-        ToOpenPopups(toUrl, title, '50%', '50%');
+        if (id == 0){
+            ToOpenPopups(toUrl, title, '38%', '50%');
+        }else {
+            ToOpenPopups(toUrl, title, '38%', '35%');
+        }
+
     }
 
     function opSpecInfo(id) {
         var toUrl = "{:url('cms/specInfo/details',['id'=>'AID'])}";
         toUrl = toUrl.replace('AID', id);
-        ToOpenPopups(toUrl, '★ 规格数据展示', '60%', '75%');
+        ToOpenPopups(toUrl, '★ 规格数据展示', '40%', '75%');
     }
 </script>
 {/block}
