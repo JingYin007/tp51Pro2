@@ -10,7 +10,7 @@ Target Server Type    : MYSQL
 Target Server Version : 50553
 File Encoding         : 65001
 
-Date: 2020-11-13 17:10:46
+Date: 2020-11-16 17:07:03
 */
 
 SET FOREIGN_KEY_CHECKS=0;
@@ -144,7 +144,8 @@ CREATE TABLE `tp5_xarticles` (
   `updated_at` timestamp NOT NULL DEFAULT '0000-00-00 00:00:00',
   `list_order` int(11) NOT NULL DEFAULT '0' COMMENT '排序标识 越大越靠前',
   `content` text NOT NULL COMMENT '文章内容',
-  PRIMARY KEY (`id`)
+  PRIMARY KEY (`id`),
+  KEY `index_title` (`title`)
 ) ENGINE=MyISAM AUTO_INCREMENT=5 DEFAULT CHARSET=utf8mb4 COMMENT='文章表';
 
 -- ----------------------------
@@ -169,7 +170,8 @@ CREATE TABLE `tp5_xarticle_points` (
   `recommend` tinyint(2) NOT NULL DEFAULT '0' COMMENT '推荐标志  0：未推荐   1：推荐',
   `status` tinyint(2) NOT NULL DEFAULT '0' COMMENT '状态标记    ：-1 删除；0：隐藏；1：显示 ',
   PRIMARY KEY (`id`),
-  KEY `index_article` (`article_id`)
+  KEY `index_article` (`article_id`),
+  KEY `index_key_words` (`keywords`)
 ) ENGINE=MyISAM AUTO_INCREMENT=5 DEFAULT CHARSET=utf8mb4 COMMENT='文章 要点表';
 
 -- ----------------------------
@@ -188,7 +190,8 @@ CREATE TABLE `tp5_xbird_express` (
   `id` int(11) NOT NULL AUTO_INCREMENT COMMENT '主键ID',
   `name` varchar(50) NOT NULL COMMENT '快递公司 名称',
   `code` varchar(50) NOT NULL COMMENT '快递公司 对应编码 （快递鸟）',
-  PRIMARY KEY (`id`)
+  PRIMARY KEY (`id`),
+  KEY `index_code` (`code`)
 ) ENGINE=InnoDB AUTO_INCREMENT=1824 DEFAULT CHARSET=utf8;
 
 -- ----------------------------
@@ -626,7 +629,8 @@ CREATE TABLE `tp5_xbrands` (
   `updated_at` timestamp NULL DEFAULT NULL ON UPDATE CURRENT_TIMESTAMP COMMENT '更新时间',
   `status` tinyint(2) NOT NULL DEFAULT '1' COMMENT '-1:删除; 1：正常',
   PRIMARY KEY (`id`),
-  KEY `index_cat` (`cat_id`) USING BTREE
+  KEY `index_cat` (`cat_id`) USING BTREE,
+  KEY `index_sel` (`brand_name`)
 ) ENGINE=MyISAM AUTO_INCREMENT=20 DEFAULT CHARSET=utf8mb4 COMMENT='品牌表';
 
 -- ----------------------------
@@ -666,7 +670,8 @@ CREATE TABLE `tp5_xcategorys` (
   `list_order` int(11) NOT NULL DEFAULT '0' COMMENT '排序数字越小 越靠前',
   `status` tinyint(2) NOT NULL DEFAULT '1' COMMENT '状态 1：正常  -1：已删除',
   PRIMARY KEY (`cat_id`),
-  KEY `parent_id` (`parent_id`)
+  KEY `parent_id` (`parent_id`),
+  KEY `index_sel` (`cat_name`)
 ) ENGINE=MyISAM AUTO_INCREMENT=23 DEFAULT CHARSET=utf8mb4 COMMENT='商品分类表';
 
 -- ----------------------------
@@ -961,7 +966,8 @@ CREATE TABLE `tp5_xgoods` (
   `recommend` char(1) NOT NULL DEFAULT '0' COMMENT '推荐标志位',
   `status` tinyint(2) NOT NULL DEFAULT '0' COMMENT '状态 -1：删除 0：未上架 1：已上架 2：预售 ',
   PRIMARY KEY (`goods_id`),
-  KEY `INDEX` (`cat_id`,`brand_id`) USING BTREE
+  KEY `INDEX` (`cat_id`,`brand_id`) USING BTREE,
+  KEY `index_name` (`goods_name`)
 ) ENGINE=MyISAM AUTO_INCREMENT=37 DEFAULT CHARSET=utf8mb4 COMMENT='商品表\r\n\r\n注意：status 的规定，app 上只显示上架的产品哦';
 
 -- ----------------------------
@@ -1116,7 +1122,8 @@ CREATE TABLE `tp5_xorder_details` (
   `delivery_time` int(11) DEFAULT '0' COMMENT '发货时间',
   `status` tinyint(2) NOT NULL DEFAULT '0' COMMENT '订单状态 -1：已取消；0：正常订单； 1：已支付; 2：已发货； 3：已收货 4：已评价 ；5：售后申请中 6：售后已完成  ',
   PRIMARY KEY (`id`),
-  KEY `order_detail_order_id_index` (`order_id`)
+  KEY `order_detail_order_id_index` (`order_id`),
+  KEY `index_sel` (`order_id`,`goods_id`,`goods_name`(191),`sku_id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=12 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 -- ----------------------------
@@ -1149,15 +1156,18 @@ CREATE TABLE `tp5_xorder_infos` (
   `consignee` varchar(50) DEFAULT NULL COMMENT '收货人的姓名',
   `mobile` varchar(20) DEFAULT NULL COMMENT '收货人的手机',
   `address` varchar(255) DEFAULT NULL COMMENT '收货人的详细地址',
-  `pay_time` int(11) DEFAULT '0' COMMENT '付款时间',
-  `pay_result_json` varchar(500) DEFAULT NULL COMMENT '支付结果的json数据，比如微信小程序支付后的 返回信息 json形式,方便后期的退款操作',
+  `pay_time` int(11) NOT NULL DEFAULT '0' COMMENT '付款时间',
+  `pay_result_json` text COMMENT '支付结果的json数据，比如微信小程序支付后的 返回信息 json形式,方便后期的退款操作',
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL,
   `deleted_at` timestamp NULL DEFAULT NULL,
   `order_status` tinyint(2) NOT NULL DEFAULT '0' COMMENT '订单状态 0:未付款, 1:已付款，2：用户删除',
   PRIMARY KEY (`id`),
-  KEY `index_user_id` (`user_id`)
-) ENGINE=MyISAM AUTO_INCREMENT=8 DEFAULT CHARSET=utf8mb4 COMMENT='订单信息表';
+  KEY `index_user_id` (`user_id`),
+  KEY `index_order_sn` (`order_sn`),
+  KEY `index_address` (`consignee`,`mobile`),
+  KEY `index_pay_time` (`pay_time`)
+) ENGINE=MyISAM AUTO_INCREMENT=9 DEFAULT CHARSET=utf8mb4 COMMENT='订单信息表';
 
 -- ----------------------------
 -- Records of tp5_xorder_infos
@@ -1165,7 +1175,7 @@ CREATE TABLE `tp5_xorder_infos` (
 INSERT INTO `tp5_xorder_infos` VALUES ('1', 'MT202011110725678', '2', '0', '280.50', '0.00', '12.00', '鲁班大师', '18890459021', '鬼谷子山脉-稷下星之队-机关科学研究院303室', '1605067929', null, null, null, null, '1');
 INSERT INTO `tp5_xorder_infos` VALUES ('2', 'MT202011100715190', '1', '1', '500.00', '35.62', '10.00', '东皇太一', '181-2298-9098', '战国时期楚国-祭礼仪式和祭神场一号洞窟北30米', '1605077946', null, null, null, null, '1');
 INSERT INTO `tp5_xorder_infos` VALUES ('3', 'MT202011090223189', '2', '0', '300.50', '0.00', '6.00', '宫本武藏', '121-3345-9980', '日本-大和故乡 忍者部落夜行者7号院 0071', '1604980800', null, null, null, null, '-1');
-INSERT INTO `tp5_xorder_infos` VALUES ('4', 'MT202011098872345', '3', '1', '129.90', '0.00', null, '上官婉儿', '18988988836', '北海部落-掖庭一号图书馆北里303号', null, null, null, null, null, '0');
+INSERT INTO `tp5_xorder_infos` VALUES ('4', 'MT202011098872345', '3', '1', '129.90', '0.00', null, '上官婉儿', '18988988836', '北海部落-掖庭一号图书馆北里303号', '0', null, null, null, null, '0');
 INSERT INTO `tp5_xorder_infos` VALUES ('5', 'MT202011083299813', '4', '0', '127.88', '2.80', '6.00', '太乙真人', '151-0909-2928', '九重天-吾乃太乙，胆小的太乙，懦弱的太乙，傻瓜的太乙', '1605009180', null, null, null, null, '1');
 INSERT INTO `tp5_xorder_infos` VALUES ('6', 'MT202011083325667', '6', '0', '38.99', '2.88', null, '不知火舞', '188-3398-3349', '日本-饿狼传说-不知火流忍术派-不老药修炼室', '1604891040', null, null, null, null, '1');
 INSERT INTO `tp5_xorder_infos` VALUES ('7', 'MT202011078878990', '3', '0', '289.88', '0.00', '6.00', '鲁班七号', '18756879879', '战国外邦-鲁班大师精修第一班级北门守卫室', '1605057721', null, null, null, null, '1');
@@ -1209,7 +1219,7 @@ CREATE TABLE `tp5_xskus` (
   `updated_at` timestamp NOT NULL DEFAULT '0000-00-00 00:00:00' ON UPDATE CURRENT_TIMESTAMP COMMENT '创建时间',
   `sku_status` tinyint(2) NOT NULL DEFAULT '1' COMMENT '状态   -1：删除（失效）；0: 下架(未上架)；1:上架',
   PRIMARY KEY (`sku_id`),
-  KEY `index_goods_id` (`goods_id`)
+  KEY `index_sel` (`goods_id`,`sku_id`,`spec_name`) USING BTREE
 ) ENGINE=MyISAM AUTO_INCREMENT=102 DEFAULT CHARSET=utf8mb4 COMMENT='商品 SKU 库存表\r\n\r\n用于存储商品不同属性搭配的数目、价格等';
 
 -- ----------------------------
@@ -1247,7 +1257,8 @@ CREATE TABLE `tp5_xspec_infos` (
   `mark_msg` varchar(100) CHARACTER SET utf8 NOT NULL COMMENT '备注信息 主要为了区分识别，可不填',
   `status` tinyint(2) NOT NULL DEFAULT '1' COMMENT '状态，1：正常，-1：删除，发布后不要随意删除',
   PRIMARY KEY (`spec_id`),
-  KEY `index_cat` (`cat_id`)
+  KEY `index_cat` (`cat_id`),
+  KEY `index_sel` (`spec_name`)
 ) ENGINE=MyISAM AUTO_INCREMENT=50 DEFAULT CHARSET=utf8mb4 COMMENT='商品属性、规格细则表\r\n\r\n一般只存储两级属性，注意 parent_id = 0 表示为属性信息\r\n\r\nparent_id > 0 : 表示为规格信息';
 
 -- ----------------------------
@@ -1291,7 +1302,8 @@ CREATE TABLE `tp5_xtoday_words` (
   `status` tinyint(4) NOT NULL DEFAULT '1' COMMENT '状态，1：正常，-1：删除',
   `updated_at` timestamp NOT NULL DEFAULT '0000-00-00 00:00:00' ON UPDATE CURRENT_TIMESTAMP COMMENT '更新时间',
   `images_str` varchar(500) NOT NULL COMMENT '多图列表，逗号隔开，建议三张以内',
-  PRIMARY KEY (`id`)
+  PRIMARY KEY (`id`),
+  KEY `index_sel` (`id`,`word`)
 ) ENGINE=InnoDB AUTO_INCREMENT=9 DEFAULT CHARSET=utf8mb4 COMMENT='今日赠言表';
 
 -- ----------------------------
