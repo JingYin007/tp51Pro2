@@ -10,7 +10,7 @@ Target Server Type    : MYSQL
 Target Server Version : 50553
 File Encoding         : 65001
 
-Date: 2020-11-16 21:22:30
+Date: 2020-11-17 14:13:13
 */
 
 SET FOREIGN_KEY_CHECKS=0;
@@ -34,7 +34,7 @@ CREATE TABLE `tp5_xactivitys` (
   PRIMARY KEY (`id`,`act_tag`),
   UNIQUE KEY `act_tag` (`act_tag`) USING BTREE COMMENT '唯一标识索引',
   KEY `select` (`id`,`title`) USING BTREE COMMENT '便于查询'
-) ENGINE=InnoDB AUTO_INCREMENT=11 DEFAULT CHARSET=utf8 COMMENT='活动表\r\n\r\n一般用于显示app首页上的活动专栏，注意status的规定';
+) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8 COMMENT='活动表\r\n\r\n一般用于显示app首页上的活动专栏，注意status的规定';
 
 -- ----------------------------
 -- Records of tp5_xactivitys
@@ -666,13 +666,13 @@ CREATE TABLE `tp5_xcategorys` (
   `cat_name` varchar(10) NOT NULL DEFAULT '' COMMENT '分类名称',
   `parent_id` smallint(5) unsigned NOT NULL DEFAULT '0' COMMENT '该分类的父id，取决于cat_id ',
   `is_show` tinyint(1) NOT NULL DEFAULT '1' COMMENT '是否在 app 首页导航栏显示  0：不显示  1：显示',
-  `icon` varchar(255) DEFAULT NULL COMMENT '分类图标',
+  `icon` varchar(255) NOT NULL COMMENT '分类图标',
   `level` tinyint(2) NOT NULL DEFAULT '2' COMMENT '类型  1：一级；2：二级； 3：三级',
   `list_order` int(11) NOT NULL DEFAULT '0' COMMENT '排序数字越小 越靠前',
   `status` tinyint(2) NOT NULL DEFAULT '1' COMMENT '状态 1：正常  -1：已删除',
   PRIMARY KEY (`cat_id`),
-  KEY `parent_id` (`parent_id`),
-  KEY `index_sel` (`cat_name`,`list_order`) USING BTREE
+  KEY `pk_index` (`cat_id`) USING BTREE,
+  KEY `index_sel` (`cat_name`,`parent_id`,`list_order`) USING BTREE
 ) ENGINE=InnoDB AUTO_INCREMENT=23 DEFAULT CHARSET=utf8mb4 COMMENT='商品分类表';
 
 -- ----------------------------
@@ -749,7 +749,8 @@ CREATE TABLE `tp5_xcms_logs` (
   `admin_id` int(11) NOT NULL DEFAULT '0' COMMENT '操作管理员ID',
   `add_time` datetime NOT NULL COMMENT '记录添加时间',
   PRIMARY KEY (`id`),
-  KEY `index_op_admin_id` (`op_id`,`admin_id`)
+  KEY `index_op_admin_id` (`op_id`,`admin_id`),
+  KEY `tag_index` (`tag`)
 ) ENGINE=MyISAM AUTO_INCREMENT=172 DEFAULT CHARSET=utf8mb4;
 
 -- ----------------------------
@@ -931,8 +932,9 @@ CREATE TABLE `tp5_xconfigs` (
   `status` tinyint(2) NOT NULL DEFAULT '0' COMMENT '状态  -1：删除  0：正常',
   `add_time` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT '添加时间',
   PRIMARY KEY (`id`,`tag`),
-  UNIQUE KEY `tag` (`tag`) USING BTREE,
-  KEY `selcct` (`id`,`title`,`tag`) USING BTREE COMMENT '便于查询'
+  UNIQUE KEY `tag_index` (`tag`) USING BTREE,
+  KEY `sel_index` (`title`,`tag`) USING BTREE COMMENT '便于查询',
+  KEY `pk_index` (`id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=utf8 COMMENT='配置表';
 
 -- ----------------------------
@@ -963,25 +965,26 @@ CREATE TABLE `tp5_xgoods` (
   `stock` int(11) NOT NULL DEFAULT '0' COMMENT '库存，注意退货未支付订单时的数目变化',
   `created_at` timestamp NOT NULL DEFAULT '0000-00-00 00:00:00' COMMENT '商品创建时间',
   `updated_at` timestamp NOT NULL DEFAULT '0000-00-00 00:00:00' COMMENT '商品更新时间',
-  `str_tags` varchar(300) DEFAULT NULL COMMENT '标签，可用于搜索，以逗号隔开',
+  `str_tags` varchar(300) NOT NULL DEFAULT '' COMMENT '标签，可用于搜索，以逗号隔开',
   `recommend` char(1) NOT NULL DEFAULT '0' COMMENT '推荐标志位',
   `status` tinyint(2) NOT NULL DEFAULT '0' COMMENT '状态 -1：删除 0：未上架 1：已上架 2：预售 ',
   PRIMARY KEY (`goods_id`),
-  KEY `INDEX` (`cat_id`,`brand_id`) USING BTREE,
-  KEY `index_name` (`goods_name`,`list_order`) USING BTREE
+  KEY `idx_index` (`cat_id`,`brand_id`) USING BTREE,
+  KEY `sel_index` (`goods_name`,`list_order`) USING BTREE,
+  KEY `pk_index` (`goods_id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=37 DEFAULT CHARSET=utf8mb4 COMMENT='商品表\r\n\r\n注意：status 的规定，app 上只显示上架的产品哦';
 
 -- ----------------------------
 -- Records of tp5_xgoods
 -- ----------------------------
-INSERT INTO `tp5_xgoods` VALUES ('1', '香飘飘奶茶 Meco蜜谷果汁茶', '9', '7', 'cms/images/goods/1/1-1.jpg', '', '香飘飘奶茶 Meco蜜谷果汁茶 400ml 15杯 即饮饮料 整箱', '1', '                    <p>·</p>            ', '50.55', '49.90', '[{\"spec_id\":\"25\",\"spec_info\":[{\"spec_name\":\"桃桃红柚口味400ml 8杯\",\"spec_id\":\"26\",\"specFstID\":\"25\"},{\"spec_name\":\"樱桃莓莓口味400ml 8杯\",\"spec_id\":\"27\",\"specFstID\":\"25\"},{\"spec_name\":\"金桔柠檬口味400ml 8杯\",\"spec_id\":\"28\",\"specFstID\":\"25\"}],\"spec_name\":\"类别【香飘飘奶茶】\"}]', '500', '2019-11-28 10:51:31', '2020-11-10 19:40:38', null, '0', '1');
-INSERT INTO `tp5_xgoods` VALUES ('2', '伊利 金典 纯牛奶250ml*16盒/箱（礼盒装）3.6g乳蛋白 120mg原生高钙', '10', '10', 'cms/images/goods/3/3-1.jpg', '', '光棍节 送男女朋友礼物糖果年货糖果礼物', '2', '                                                                                                                        <p>x</p>                                                                        ', '120.00', '79.90', '[{\"spec_id\":\"34\",\"spec_info\":[{\"spec_name\":\"【健康有机】有机全脂纯牛奶16盒\",\"spec_id\":\"35\",\"specFstID\":\"34\"},{\"spec_name\":\"【不加糖高蛋白】植选植物奶10瓶\",\"spec_id\":\"36\",\"specFstID\":\"34\"}],\"spec_name\":\"规格【伊利金典纯牛奶】\"}]', '1499', '2019-03-11 18:03:26', '2020-11-10 19:43:49', null, '0', '0');
-INSERT INTO `tp5_xgoods` VALUES ('3', '雀巢 Nestle 咖啡奶茶伴侣 风味饮料 无反式脂肪酸 奶油球 奶精球', '9', '8', 'cms/images/goods/2/2-1.jpg', '', '8月产蒙牛纯甄小蛮腰酸牛奶', '2', '                                                            <p style=\"text-align: center;\"><span style=\"font-size: 24px;\"><strong><span style=\"color: #843fa1;\">好营养，喝蒙牛！</span></strong></span></p>                                    ', '32.00', '28.90', '[{\"spec_id\":\"29\",\"spec_info\":[{\"spec_name\":\"原味奶油\",\"spec_id\":\"31\",\"specFstID\":\"29\"},{\"spec_name\":\"香浓奶油\",\"spec_id\":\"32\",\"specFstID\":\"29\"}],\"spec_name\":\"口味【雀巢口味】\"},{\"spec_id\":\"30\",\"spec_info\":[{\"spec_name\":\"50粒装\",\"spec_id\":\"33\",\"specFstID\":\"30\"}],\"spec_name\":\"数量【雀巢 每包含量】\"}]', '300', '2019-11-29 09:42:38', '2020-11-10 19:40:24', null, '1', '1');
-INSERT INTO `tp5_xgoods` VALUES ('4', '科沃斯（Ecovacs）地宝T5 Power扫地机器人扫拖一体机智能家用吸尘器激光导航规划全自动洗擦', '18', '2', 'cms/images/goods/4/4-1.jpg', '', '扫拖一体机智能家用吸尘器激光导航规划全自动洗擦拖地机DX93', '2', '                                                            <p><span style=\"color: #843fa1; font-family: Arial, \'microsoft yahei\'; font-size: 16px; font-weight: bold; background-color: #c2e0f4;\">科沃斯（Ecovacs）地宝T5 Power扫地机器人扫拖一体机智能家用吸尘器激光导航规划全自动洗擦拖地机DX93</span></p>                                    ', '3980.00', '3388.00', '[{\"spec_id\":\"37\",\"spec_info\":[{\"spec_name\":\"T8 Power震动擦地抢购\",\"spec_id\":\"38\",\"specFstID\":\"37\"},{\"spec_name\":\"沁宝AVA（蓝色）空气净化机器人\",\"spec_id\":\"39\",\"specFstID\":\"37\"}],\"spec_name\":\"颜色【科沃斯 Ecovacs 扫地机器人】\"}]', '1180', '2019-03-14 11:03:58', '2020-11-10 19:40:11', null, '0', '1');
-INSERT INTO `tp5_xgoods` VALUES ('5', '索尼（SONY）WF-1000XM3 真无线蓝牙降噪耳机 ', '21', '18', 'cms/images/goods/6/6-0.jpg', '', '真无线蓝牙降噪耳机 智能降噪 触控面板 苹果/安卓手机适用 ', '1', '                    <p>x</p>            ', '1299.00', '1099.00', '[{\"spec_id\":\"4\",\"spec_info\":[{\"spec_name\":\"500ml\",\"spec_id\":\"5\",\"specFstID\":\"4\"}],\"spec_name\":\"容量【小瓶】\"},{\"spec_id\":\"7\",\"spec_info\":[{\"spec_name\":\"40度\",\"spec_id\":\"8\",\"specFstID\":\"7\"},{\"spec_name\":\"38度\",\"spec_id\":\"9\",\"specFstID\":\"7\"}],\"spec_name\":\"酒精度数【白酒类型】\"}]', '4121', '2019-03-18 17:03:17', '2020-11-10 19:39:44', null, '0', '1');
-INSERT INTO `tp5_xgoods` VALUES ('6', '小度智能音箱 旗舰版 ', '20', '15', 'cms/images/goods/5/5-1.jpg', '', '家居中控台 闹钟 收音机 智能机器人 迷你音响 早教机 送礼 礼品', '2', '                                        <p>q</p>\r\n<p> </p>                        ', '158.99', '129.99', '[{\"spec_id\":\"40\",\"spec_info\":[{\"spec_name\":\"【经典爆款】小度音箱旗舰版\",\"spec_id\":\"41\",\"specFstID\":\"40\"},{\"spec_name\":\"【红外遥控】小度音箱升级版\",\"spec_id\":\"42\",\"specFstID\":\"40\"},{\"spec_name\":\"【随身音箱】小芦蓝牙音箱\",\"spec_id\":\"43\",\"specFstID\":\"40\"}],\"spec_name\":\"颜色【小度智能音箱 】\"}]', '237', '2019-03-11 18:03:26', '2020-11-10 19:40:00', null, '0', '1');
-INSERT INTO `tp5_xgoods` VALUES ('7', '索尼（SONY）WF 重低音真无线耳机 IPX4防水防汗 智能操控', '21', '18', 'cms/images/goods/7/7-1.jpg', '', ' 重低音真无线耳机 IPX4防水防汗 智能操控', '0', '                    <p>X</p>            ', '129.00', '99.00', '[{\"spec_id\":\"44\",\"spec_info\":[{\"spec_name\":\"黑色\",\"spec_id\":\"46\",\"specFstID\":\"44\"},{\"spec_name\":\"铂金银\",\"spec_id\":\"47\",\"specFstID\":\"44\"}],\"spec_name\":\"颜色【索尼（SONY）WF】\"},{\"spec_id\":\"45\",\"spec_info\":[{\"spec_name\":\"WF-1000XM3随身降噪\",\"spec_id\":\"48\",\"specFstID\":\"45\"},{\"spec_name\":\"WF-XB700防水运动\",\"spec_id\":\"49\",\"specFstID\":\"45\"}],\"spec_name\":\"版本【索尼（SONY）WF】\"}]', '633', '2019-03-19 10:03:48', '2020-11-10 19:39:15', null, '0', '1');
-INSERT INTO `tp5_xgoods` VALUES ('36', '商品测试数据', '14', '6', 'upload/20201110/3f2d55e101aa2a6a41e47408d128c21e.jpg', 'upload/20201110/32f23ff2b1b3846078e8a743cc869e61.jpg,upload/20201110/4e3518b39c465e2e7e9e5be7c14737e3.jpg', 'sd', '12', '                                                                                                                                                                                                                                                                                                                                                    <p>sd</p>                                                                                                                                                                                                            ', '4.00', '1.00', '[{\"spec_id\":\"34\",\"spec_info\":[{\"spec_name\":\"【健康有机】有机全脂纯牛奶16盒\",\"spec_id\":\"35\",\"specFstID\":\"34\"},{\"spec_name\":\"【不加糖高蛋白】植选植物奶10瓶\",\"spec_id\":\"36\",\"specFstID\":\"34\"}],\"spec_name\":\"规格【伊利金典纯牛奶】\"}]', '221', '2020-11-10 14:34:49', '2020-11-10 19:44:23', null, '0', '1');
+INSERT INTO `tp5_xgoods` VALUES ('1', '香飘飘奶茶 Meco蜜谷果汁茶', '9', '7', 'cms/images/goods/1/1-1.jpg', '', '香飘飘奶茶 Meco蜜谷果汁茶 400ml 15杯 即饮饮料 整箱', '1', '                    <p>·</p>            ', '50.55', '49.90', '[{\"spec_id\":\"25\",\"spec_info\":[{\"spec_name\":\"桃桃红柚口味400ml 8杯\",\"spec_id\":\"26\",\"specFstID\":\"25\"},{\"spec_name\":\"樱桃莓莓口味400ml 8杯\",\"spec_id\":\"27\",\"specFstID\":\"25\"},{\"spec_name\":\"金桔柠檬口味400ml 8杯\",\"spec_id\":\"28\",\"specFstID\":\"25\"}],\"spec_name\":\"类别【香飘飘奶茶】\"}]', '500', '2019-11-28 10:51:31', '2020-11-10 19:40:38', '', '0', '1');
+INSERT INTO `tp5_xgoods` VALUES ('2', '伊利 金典 纯牛奶250ml*16盒/箱（礼盒装）3.6g乳蛋白 120mg原生高钙', '10', '10', 'cms/images/goods/3/3-1.jpg', '', '光棍节 送男女朋友礼物糖果年货糖果礼物', '2', '                                                                                                                        <p>x</p>                                                                        ', '120.00', '79.90', '[{\"spec_id\":\"34\",\"spec_info\":[{\"spec_name\":\"【健康有机】有机全脂纯牛奶16盒\",\"spec_id\":\"35\",\"specFstID\":\"34\"},{\"spec_name\":\"【不加糖高蛋白】植选植物奶10瓶\",\"spec_id\":\"36\",\"specFstID\":\"34\"}],\"spec_name\":\"规格【伊利金典纯牛奶】\"}]', '1499', '2019-03-11 18:03:26', '2020-11-10 19:43:49', '', '0', '0');
+INSERT INTO `tp5_xgoods` VALUES ('3', '雀巢 Nestle 咖啡奶茶伴侣 风味饮料 无反式脂肪酸 奶油球 奶精球', '9', '8', 'cms/images/goods/2/2-1.jpg', '', '8月产蒙牛纯甄小蛮腰酸牛奶', '2', '                                                            <p style=\"text-align: center;\"><span style=\"font-size: 24px;\"><strong><span style=\"color: #843fa1;\">好营养，喝蒙牛！</span></strong></span></p>                                    ', '32.00', '28.90', '[{\"spec_id\":\"29\",\"spec_info\":[{\"spec_name\":\"原味奶油\",\"spec_id\":\"31\",\"specFstID\":\"29\"},{\"spec_name\":\"香浓奶油\",\"spec_id\":\"32\",\"specFstID\":\"29\"}],\"spec_name\":\"口味【雀巢口味】\"},{\"spec_id\":\"30\",\"spec_info\":[{\"spec_name\":\"50粒装\",\"spec_id\":\"33\",\"specFstID\":\"30\"}],\"spec_name\":\"数量【雀巢 每包含量】\"}]', '300', '2019-11-29 09:42:38', '2020-11-10 19:40:24', '', '1', '1');
+INSERT INTO `tp5_xgoods` VALUES ('4', '科沃斯（Ecovacs）地宝T5 Power扫地机器人扫拖一体机智能家用吸尘器激光导航规划全自动洗擦', '18', '2', 'cms/images/goods/4/4-1.jpg', '', '扫拖一体机智能家用吸尘器激光导航规划全自动洗擦拖地机DX93', '2', '                                                            <p><span style=\"color: #843fa1; font-family: Arial, \'microsoft yahei\'; font-size: 16px; font-weight: bold; background-color: #c2e0f4;\">科沃斯（Ecovacs）地宝T5 Power扫地机器人扫拖一体机智能家用吸尘器激光导航规划全自动洗擦拖地机DX93</span></p>                                    ', '3980.00', '3388.00', '[{\"spec_id\":\"37\",\"spec_info\":[{\"spec_name\":\"T8 Power震动擦地抢购\",\"spec_id\":\"38\",\"specFstID\":\"37\"},{\"spec_name\":\"沁宝AVA（蓝色）空气净化机器人\",\"spec_id\":\"39\",\"specFstID\":\"37\"}],\"spec_name\":\"颜色【科沃斯 Ecovacs 扫地机器人】\"}]', '1180', '2019-03-14 11:03:58', '2020-11-10 19:40:11', '', '0', '1');
+INSERT INTO `tp5_xgoods` VALUES ('5', '索尼（SONY）WF-1000XM3 真无线蓝牙降噪耳机 ', '21', '18', 'cms/images/goods/6/6-0.jpg', '', '真无线蓝牙降噪耳机 智能降噪 触控面板 苹果/安卓手机适用 ', '1', '                    <p>x</p>            ', '1299.00', '1099.00', '[{\"spec_id\":\"4\",\"spec_info\":[{\"spec_name\":\"500ml\",\"spec_id\":\"5\",\"specFstID\":\"4\"}],\"spec_name\":\"容量【小瓶】\"},{\"spec_id\":\"7\",\"spec_info\":[{\"spec_name\":\"40度\",\"spec_id\":\"8\",\"specFstID\":\"7\"},{\"spec_name\":\"38度\",\"spec_id\":\"9\",\"specFstID\":\"7\"}],\"spec_name\":\"酒精度数【白酒类型】\"}]', '4121', '2019-03-18 17:03:17', '2020-11-10 19:39:44', '', '0', '1');
+INSERT INTO `tp5_xgoods` VALUES ('6', '小度智能音箱 旗舰版 ', '20', '15', 'cms/images/goods/5/5-1.jpg', '', '家居中控台 闹钟 收音机 智能机器人 迷你音响 早教机 送礼 礼品', '2', '                                        <p>q</p>\r\n<p> </p>                        ', '158.99', '129.99', '[{\"spec_id\":\"40\",\"spec_info\":[{\"spec_name\":\"【经典爆款】小度音箱旗舰版\",\"spec_id\":\"41\",\"specFstID\":\"40\"},{\"spec_name\":\"【红外遥控】小度音箱升级版\",\"spec_id\":\"42\",\"specFstID\":\"40\"},{\"spec_name\":\"【随身音箱】小芦蓝牙音箱\",\"spec_id\":\"43\",\"specFstID\":\"40\"}],\"spec_name\":\"颜色【小度智能音箱 】\"}]', '237', '2019-03-11 18:03:26', '2020-11-10 19:40:00', '', '0', '1');
+INSERT INTO `tp5_xgoods` VALUES ('7', '索尼（SONY）WF 重低音真无线耳机 IPX4防水防汗 智能操控', '21', '18', 'cms/images/goods/7/7-1.jpg', '', ' 重低音真无线耳机 IPX4防水防汗 智能操控', '0', '                    <p>X</p>            ', '129.00', '99.00', '[{\"spec_id\":\"44\",\"spec_info\":[{\"spec_name\":\"黑色\",\"spec_id\":\"46\",\"specFstID\":\"44\"},{\"spec_name\":\"铂金银\",\"spec_id\":\"47\",\"specFstID\":\"44\"}],\"spec_name\":\"颜色【索尼（SONY）WF】\"},{\"spec_id\":\"45\",\"spec_info\":[{\"spec_name\":\"WF-1000XM3随身降噪\",\"spec_id\":\"48\",\"specFstID\":\"45\"},{\"spec_name\":\"WF-XB700防水运动\",\"spec_id\":\"49\",\"specFstID\":\"45\"}],\"spec_name\":\"版本【索尼（SONY）WF】\"}]', '633', '2019-03-19 10:03:48', '2020-11-10 19:39:15', '', '0', '1');
+INSERT INTO `tp5_xgoods` VALUES ('36', '商品测试数据', '14', '6', 'upload/20201110/3f2d55e101aa2a6a41e47408d128c21e.jpg', 'upload/20201110/32f23ff2b1b3846078e8a743cc869e61.jpg,upload/20201110/4e3518b39c465e2e7e9e5be7c14737e3.jpg', 'sd', '12', '                                                                                                                                                                                                                                                                                                                                                    <p>sd</p>                                                                                                                                                                                                            ', '4.00', '1.00', '[{\"spec_id\":\"34\",\"spec_info\":[{\"spec_name\":\"【健康有机】有机全脂纯牛奶16盒\",\"spec_id\":\"35\",\"specFstID\":\"34\"},{\"spec_name\":\"【不加糖高蛋白】植选植物奶10瓶\",\"spec_id\":\"36\",\"specFstID\":\"34\"}],\"spec_name\":\"规格【伊利金典纯牛奶】\"}]', '221', '2020-11-10 14:34:49', '2020-11-10 19:44:23', '', '0', '1');
 
 -- ----------------------------
 -- Table structure for tp5_xip_whites
@@ -1020,7 +1023,8 @@ CREATE TABLE `tp5_xnav_menus` (
   `created_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
   `type` tinyint(2) NOT NULL DEFAULT '0' COMMENT '导航类型 0：菜单类  1：权限链接',
   PRIMARY KEY (`id`),
-  KEY `index_sel` (`id`,`name`,`list_order`) USING BTREE
+  KEY `index_sel` (`name`,`list_order`) USING BTREE,
+  KEY `pk_index` (`id`)
 ) ENGINE=MyISAM AUTO_INCREMENT=152 DEFAULT CHARSET=utf8mb4 COMMENT='菜单导航表';
 
 -- ----------------------------
@@ -1107,40 +1111,40 @@ CREATE TABLE `tp5_xorder_details` (
   `order_id` int(11) NOT NULL COMMENT '订单编码',
   `goods_id` int(11) NOT NULL COMMENT '商品编码，便于后期统计',
   `goods_name` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL COMMENT '商品名称，记录以免后期商家更改',
-  `goods_thumbnail` varchar(150) COLLATE utf8mb4_unicode_ci DEFAULT NULL COMMENT '记录商品的缩略图',
-  `goods_price` decimal(12,2) DEFAULT '0.00' COMMENT '商品单价 记录以防变化',
+  `goods_thumbnail` varchar(150) COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT '' COMMENT '记录商品的缩略图',
+  `goods_price` decimal(12,2) NOT NULL DEFAULT '0.00' COMMENT '商品单价 记录以防变化',
   `goods_num` int(11) NOT NULL DEFAULT '1' COMMENT '购买数量',
-  `goods_amount` decimal(12,2) DEFAULT '0.00' COMMENT '商品总价，(不能单纯的以为是 单价*数量)',
-  `discount_amount` decimal(12,2) DEFAULT '0.00' COMMENT '折扣额度',
+  `goods_amount` decimal(12,2) NOT NULL DEFAULT '0.00' COMMENT '商品总价，(不能单纯的以为是 单价*数量)',
+  `discount_amount` decimal(12,2) NOT NULL DEFAULT '0.00' COMMENT '折扣额度',
   `sku_id` int(11) NOT NULL DEFAULT '0' COMMENT '商品SKU_ID,方便后期统计分析',
-  `sku_spec_msg` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL COMMENT '记录 商品规格信息，避免后期变动',
-  `remark` varchar(100) COLLATE utf8mb4_unicode_ci DEFAULT NULL COMMENT '客户商品备注',
-  `courier_sn` varchar(100) CHARACTER SET utf8 DEFAULT '' COMMENT '快递单号',
-  `courier_code` varchar(50) CHARACTER SET utf8 DEFAULT '' COMMENT '快递公司编号 (比如：快递鸟对应 )',
-  `customer_name` varchar(20) CHARACTER SET utf8 DEFAULT NULL COMMENT 'courier_code 为 JD，必填，对应京东的青龙配送编码，也叫商家编码',
-  `created_at` timestamp NULL DEFAULT NULL,
-  `updated_at` timestamp NULL DEFAULT NULL,
-  `delivery_time` int(11) DEFAULT '0' COMMENT '发货时间',
+  `sku_spec_msg` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT '' COMMENT '记录 商品规格信息，避免后期变动',
+  `remark` varchar(100) COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT '' COMMENT '客户商品备注',
+  `courier_sn` varchar(100) CHARACTER SET utf8 NOT NULL DEFAULT '' COMMENT '快递单号',
+  `courier_code` varchar(50) CHARACTER SET utf8 NOT NULL DEFAULT '' COMMENT '快递公司编号 (比如：快递鸟对应 )',
+  `customer_name` varchar(20) CHARACTER SET utf8 NOT NULL DEFAULT '' COMMENT 'courier_code 为 JD，必填，对应京东的青龙配送编码，也叫商家编码',
+  `created_at` timestamp NOT NULL DEFAULT '0000-00-00 00:00:00',
+  `updated_at` timestamp NOT NULL DEFAULT '0000-00-00 00:00:00' ON UPDATE CURRENT_TIMESTAMP,
+  `delivery_time` int(11) NOT NULL DEFAULT '0' COMMENT '发货时间',
   `status` tinyint(2) NOT NULL DEFAULT '0' COMMENT '订单状态 -1：已取消；0：正常订单； 1：已支付; 2：已发货； 3：已收货 4：已评价 ；5：售后申请中 6：售后已完成  ',
   PRIMARY KEY (`id`),
   KEY `order_detail_order_id_index` (`order_id`),
-  KEY `index_sel` (`order_id`,`goods_id`,`goods_name`(191),`sku_id`)
+  KEY `index_sel` (`goods_id`,`goods_name`(191),`sku_id`) USING BTREE
 ) ENGINE=InnoDB AUTO_INCREMENT=12 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 -- ----------------------------
 -- Records of tp5_xorder_details
 -- ----------------------------
-INSERT INTO `tp5_xorder_details` VALUES ('1', '1', '2', '伊利 金典 纯牛奶250ml*16盒/箱', 'cms/images/goods/3/3-2.jpg', '79.90', '3', '220.00', '12.00', '101', '【不加糖高蛋白】植选植物奶10瓶', null, '', '', null, null, null, '0', '1');
-INSERT INTO `tp5_xorder_details` VALUES ('2', '2', '3', '雀巢 Nestle 咖啡奶茶伴侣', 'cms/images/goods/2/2-1.jpg', '28.90', '1', '28.90', '3.88', '87', '原味奶油,50粒装', null, 'SF1043866372860', 'SF', '8776', null, null, '1605152135', '2');
-INSERT INTO `tp5_xorder_details` VALUES ('3', '2', '4', '科沃斯（Ecovacs）地宝T5 Power扫地机器人', 'cms/images/goods/4/4-1.jpg', '3388.00', '2', '6689.00', '120.00', '91', 'T8 Power震动擦地抢购', null, '', '', null, null, null, '0', '6');
-INSERT INTO `tp5_xorder_details` VALUES ('4', '3', '7', '索尼（SONY）WF-1000XM3 真无线蓝牙降噪耳机', 'cms/images/goods/7/7-3.jpg', '1099.00', '3', '3281.00', '3.50', '3', null, null, '', '', null, null, null, '0', '3');
-INSERT INTO `tp5_xorder_details` VALUES ('5', '1', '1', '香飘飘奶茶 Meco蜜谷果汁茶', 'cms/images/goods/1/1-1.jpg', '49.90', '2', '99.80', '0.00', '84', '桃桃红柚口味400ml 8杯', null, '', '', null, null, null, '0', '0');
-INSERT INTO `tp5_xorder_details` VALUES ('6', '5', '1', '香飘飘奶茶 Meco蜜谷果汁茶', 'cms/images/goods/1/1-1.jpg', '49.90', '1', '49.90', '0.00', '84', '桃桃红柚口味400ml 8杯', null, '', '', null, null, null, '0', '-1');
-INSERT INTO `tp5_xorder_details` VALUES ('7', '5', '3', '雀巢 Nestle 咖啡奶茶伴侣', 'cms/images/goods/2/2-2.jpg', '28.90', '2', '55.68', '1.25', '88', '香浓奶油,50粒装', null, '73141396805899', 'ZTO', '', null, null, '1605149346', '2');
-INSERT INTO `tp5_xorder_details` VALUES ('8', '5', '6', '小度智能音箱 旗舰版', 'cms/images/goods/5/5-1.jpg', '129.99', '2', '250.00', '6.50', '93', '【经典爆款】小度音箱旗舰版', null, 'JDX001665245202', 'JD', '', null, null, '1605152295', '2');
-INSERT INTO `tp5_xorder_details` VALUES ('9', '4', '2', '伊利 金典 纯牛奶250ml*16盒/箱', 'cms/images/goods/3/3-1.jpg', '79.90', '1', '79.90', '0.00', '100', '【健康有机】有机全脂纯牛奶16盒', null, '', '', null, null, null, '0', '0');
-INSERT INTO `tp5_xorder_details` VALUES ('10', '6', '7', '索尼（SONY）WF-1000XM3 真无线蓝牙降噪耳机', 'cms/images/goods/7/7-3.jpg', '1099.00', '2', '2000.00', '188.00', '2', null, null, '', '', null, null, null, '0', '4');
-INSERT INTO `tp5_xorder_details` VALUES ('11', '7', '7', '索尼（SONY）WF 重低音真无线耳机', 'cms/images/goods/7/7-2.jpg', '99.00', '1', '99.00', '0.00', '96', '黑色,WF-1000XM3随身降噪', null, '', '', null, null, null, '0', '5');
+INSERT INTO `tp5_xorder_details` VALUES ('1', '1', '2', '伊利 金典 纯牛奶250ml*16盒/箱', 'cms/images/goods/3/3-2.jpg', '79.90', '3', '220.00', '12.00', '101', '【不加糖高蛋白】植选植物奶10瓶', '', '', '', '', '2020-11-17 11:26:57', '2020-11-17 11:26:57', '0', '1');
+INSERT INTO `tp5_xorder_details` VALUES ('2', '2', '3', '雀巢 Nestle 咖啡奶茶伴侣', 'cms/images/goods/2/2-1.jpg', '28.90', '1', '28.90', '3.88', '87', '原味奶油,50粒装', '', 'SF1043866372860', 'SF', '8776', '2020-11-17 11:26:57', '2020-11-17 11:26:57', '1605152135', '2');
+INSERT INTO `tp5_xorder_details` VALUES ('3', '2', '4', '科沃斯（Ecovacs）地宝T5 Power扫地机器人', 'cms/images/goods/4/4-1.jpg', '3388.00', '2', '6689.00', '120.00', '91', 'T8 Power震动擦地抢购', '', '', '', '', '2020-11-17 11:26:57', '2020-11-17 11:26:57', '0', '6');
+INSERT INTO `tp5_xorder_details` VALUES ('4', '3', '7', '索尼（SONY）WF-1000XM3 真无线蓝牙降噪耳机', 'cms/images/goods/7/7-3.jpg', '1099.00', '3', '3281.00', '3.50', '3', '', '', '', '', '', '2020-11-17 11:26:57', '2020-11-17 11:26:57', '0', '3');
+INSERT INTO `tp5_xorder_details` VALUES ('5', '1', '1', '香飘飘奶茶 Meco蜜谷果汁茶', 'cms/images/goods/1/1-1.jpg', '49.90', '2', '99.80', '0.00', '84', '桃桃红柚口味400ml 8杯', '', '', '', '', '2020-11-17 11:26:57', '2020-11-17 11:26:57', '0', '0');
+INSERT INTO `tp5_xorder_details` VALUES ('6', '5', '1', '香飘飘奶茶 Meco蜜谷果汁茶', 'cms/images/goods/1/1-1.jpg', '49.90', '1', '49.90', '0.00', '84', '桃桃红柚口味400ml 8杯', '', '', '', '', '2020-11-17 11:26:57', '2020-11-17 11:26:57', '0', '-1');
+INSERT INTO `tp5_xorder_details` VALUES ('7', '5', '3', '雀巢 Nestle 咖啡奶茶伴侣', 'cms/images/goods/2/2-2.jpg', '28.90', '2', '55.68', '1.25', '88', '香浓奶油,50粒装', '', '73141396805899', 'ZTO', '', '2020-11-17 11:26:57', '2020-11-17 11:26:57', '1605149346', '2');
+INSERT INTO `tp5_xorder_details` VALUES ('8', '5', '6', '小度智能音箱 旗舰版', 'cms/images/goods/5/5-1.jpg', '129.99', '2', '250.00', '6.50', '93', '【经典爆款】小度音箱旗舰版', '', 'JDX001665245202', 'JD', '', '2020-11-17 11:26:57', '2020-11-17 11:26:57', '1605152295', '2');
+INSERT INTO `tp5_xorder_details` VALUES ('9', '4', '2', '伊利 金典 纯牛奶250ml*16盒/箱', 'cms/images/goods/3/3-1.jpg', '79.90', '1', '79.90', '0.00', '100', '【健康有机】有机全脂纯牛奶16盒', '', '', '', '', '2020-11-17 11:26:57', '2020-11-17 11:26:57', '0', '0');
+INSERT INTO `tp5_xorder_details` VALUES ('10', '6', '7', '索尼（SONY）WF-1000XM3 真无线蓝牙降噪耳机', 'cms/images/goods/7/7-3.jpg', '1099.00', '2', '2000.00', '188.00', '2', '', '', '', '', '', '2020-11-17 11:26:57', '2020-11-17 11:26:57', '0', '4');
+INSERT INTO `tp5_xorder_details` VALUES ('11', '7', '7', '索尼（SONY）WF 重低音真无线耳机', 'cms/images/goods/7/7-2.jpg', '99.00', '1', '99.00', '0.00', '96', '黑色,WF-1000XM3随身降噪', '', '', '', '', '2020-11-17 11:26:57', '2020-11-17 11:26:57', '0', '5');
 
 -- ----------------------------
 -- Table structure for tp5_xorder_infos
@@ -1152,34 +1156,34 @@ CREATE TABLE `tp5_xorder_infos` (
   `user_id` int(11) NOT NULL DEFAULT '0' COMMENT '客户编号',
   `pay_channel` tinyint(2) NOT NULL DEFAULT '0' COMMENT '支付渠道  0:微信; 1:支付宝; 2:余额',
   `pay_amount` decimal(10,2) NOT NULL DEFAULT '0.00' COMMENT '实际付款金额',
-  `reduce_amount` decimal(10,2) DEFAULT '0.00' COMMENT '减免金额 ，一般用于记录积分抵扣的额度',
-  `logistics_fee` decimal(10,2) DEFAULT '0.00' COMMENT '运费金额',
-  `consignee` varchar(50) DEFAULT NULL COMMENT '收货人的姓名',
-  `mobile` varchar(20) DEFAULT NULL COMMENT '收货人的手机',
-  `address` varchar(255) DEFAULT NULL COMMENT '收货人的详细地址',
+  `reduce_amount` decimal(10,2) NOT NULL DEFAULT '0.00' COMMENT '减免金额 ，一般用于记录积分抵扣的额度',
+  `logistics_fee` decimal(10,2) NOT NULL DEFAULT '0.00' COMMENT '运费金额',
+  `consignee` varchar(50) NOT NULL DEFAULT '' COMMENT '收货人的姓名',
+  `mobile` varchar(20) NOT NULL DEFAULT '' COMMENT '收货人的手机',
+  `address` varchar(255) NOT NULL DEFAULT '' COMMENT '收货人的详细地址',
   `pay_time` int(11) NOT NULL DEFAULT '0' COMMENT '付款时间',
-  `pay_result_json` text COMMENT '支付结果的json数据，比如微信小程序支付后的 返回信息 json形式,方便后期的退款操作',
-  `created_at` timestamp NULL DEFAULT NULL,
-  `updated_at` timestamp NULL DEFAULT NULL,
-  `deleted_at` timestamp NULL DEFAULT NULL,
+  `pay_result_json` text NOT NULL COMMENT '支付结果的json数据，比如微信小程序支付后的 返回信息 json形式,方便后期的退款操作',
+  `created_at` timestamp NOT NULL DEFAULT '0000-00-00 00:00:00',
+  `updated_at` timestamp NOT NULL DEFAULT '0000-00-00 00:00:00' ON UPDATE CURRENT_TIMESTAMP,
+  `deleted_at` timestamp NOT NULL DEFAULT '0000-00-00 00:00:00',
   `order_status` tinyint(2) NOT NULL DEFAULT '0' COMMENT '订单状态 0:未付款, 1:已付款，2：用户删除',
   PRIMARY KEY (`id`),
+  UNIQUE KEY `index_order_sn` (`order_sn`) USING BTREE,
   KEY `index_user_id` (`user_id`),
-  KEY `index_order_sn` (`order_sn`),
   KEY `index_address` (`consignee`,`mobile`),
   KEY `index_pay_time` (`pay_time`)
-) ENGINE=InnoDB AUTO_INCREMENT=9 DEFAULT CHARSET=utf8mb4 COMMENT='订单信息表';
+) ENGINE=InnoDB AUTO_INCREMENT=8 DEFAULT CHARSET=utf8mb4 COMMENT='订单信息表';
 
 -- ----------------------------
 -- Records of tp5_xorder_infos
 -- ----------------------------
-INSERT INTO `tp5_xorder_infos` VALUES ('1', 'MT202011110725678', '2', '0', '280.50', '0.00', '12.00', '鲁班大师', '18890459021', '鬼谷子山脉-稷下星之队-机关科学研究院303室', '1605067929', null, null, null, null, '1');
-INSERT INTO `tp5_xorder_infos` VALUES ('2', 'MT202011100715190', '1', '1', '500.00', '35.62', '10.00', '东皇太一', '181-2298-9098', '战国时期楚国-祭礼仪式和祭神场一号洞窟北30米', '1605077946', null, null, null, null, '1');
-INSERT INTO `tp5_xorder_infos` VALUES ('3', 'MT202011090223189', '2', '0', '300.50', '0.00', '6.00', '宫本武藏', '121-3345-9980', '日本-大和故乡 忍者部落夜行者7号院 0071', '1604980800', null, null, null, null, '-1');
-INSERT INTO `tp5_xorder_infos` VALUES ('4', 'MT202011098872345', '3', '1', '129.90', '0.00', null, '上官婉儿', '18988988836', '北海部落-掖庭一号图书馆北里303号', '0', null, null, null, null, '0');
-INSERT INTO `tp5_xorder_infos` VALUES ('5', 'MT202011083299813', '4', '0', '127.88', '2.80', '6.00', '太乙真人', '151-0909-2928', '九重天-吾乃太乙，胆小的太乙，懦弱的太乙，傻瓜的太乙', '1605009180', null, null, null, null, '1');
-INSERT INTO `tp5_xorder_infos` VALUES ('6', 'MT202011083325667', '6', '0', '38.99', '2.88', null, '不知火舞', '188-3398-3349', '日本-饿狼传说-不知火流忍术派-不老药修炼室', '1604891040', null, null, null, null, '1');
-INSERT INTO `tp5_xorder_infos` VALUES ('7', 'MT202011078878990', '3', '0', '289.88', '0.00', '6.00', '鲁班七号', '18756879879', '战国外邦-鲁班大师精修第一班级北门守卫室', '1605057721', null, null, null, null, '1');
+INSERT INTO `tp5_xorder_infos` VALUES ('1', 'MT202011110725678', '2', '0', '280.50', '0.00', '12.00', '鲁班大师', '18890459021', '鬼谷子山脉-稷下星之队-机关科学研究院303室', '1605067929', '', '2020-11-17 11:25:20', '2020-11-17 11:25:20', '2020-11-17 11:25:20', '1');
+INSERT INTO `tp5_xorder_infos` VALUES ('2', 'MT202011100715190', '1', '1', '500.00', '35.62', '10.00', '东皇太一', '181-2298-9098', '战国时期楚国-祭礼仪式和祭神场一号洞窟北30米', '1605077946', '', '2020-11-17 11:25:20', '2020-11-17 11:25:20', '2020-11-17 11:25:20', '1');
+INSERT INTO `tp5_xorder_infos` VALUES ('3', 'MT202011090223189', '2', '0', '300.50', '0.00', '6.00', '宫本武藏', '121-3345-9980', '日本-大和故乡 忍者部落夜行者7号院 0071', '1604980800', '', '2020-11-17 11:25:20', '2020-11-17 11:25:20', '2020-11-17 11:25:20', '-1');
+INSERT INTO `tp5_xorder_infos` VALUES ('4', 'MT202011098872345', '3', '1', '129.90', '0.00', '0.00', '上官婉儿', '18988988836', '北海部落-掖庭一号图书馆北里303号', '0', '', '2020-11-17 11:25:20', '2020-11-17 11:25:20', '2020-11-17 11:25:20', '0');
+INSERT INTO `tp5_xorder_infos` VALUES ('5', 'MT202011083299813', '4', '0', '127.88', '2.80', '6.00', '太乙真人', '151-0909-2928', '九重天-吾乃太乙，胆小的太乙，懦弱的太乙，傻瓜的太乙', '1605009180', '', '2020-11-17 11:25:20', '2020-11-17 11:25:20', '2020-11-17 11:25:20', '1');
+INSERT INTO `tp5_xorder_infos` VALUES ('6', 'MT202011083325667', '6', '0', '38.99', '2.88', '0.00', '不知火舞', '188-3398-3349', '日本-饿狼传说-不知火流忍术派-不老药修炼室', '1604891040', '', '2020-11-17 11:25:20', '2020-11-17 11:25:20', '2020-11-17 11:25:20', '1');
+INSERT INTO `tp5_xorder_infos` VALUES ('7', 'MT202011078878990', '3', '0', '289.88', '0.00', '6.00', '鲁班七号', '18756879879', '战国外邦-鲁班大师精修第一班级北门守卫室', '1605057721', '', '2020-11-17 11:25:20', '2020-11-17 11:25:20', '2020-11-17 11:25:20', '1');
 
 -- ----------------------------
 -- Table structure for tp5_xphotos
@@ -1258,8 +1262,9 @@ CREATE TABLE `tp5_xspec_infos` (
   `mark_msg` varchar(100) CHARACTER SET utf8 NOT NULL COMMENT '备注信息 主要为了区分识别，可不填',
   `status` tinyint(2) NOT NULL DEFAULT '1' COMMENT '状态，1：正常，-1：删除，发布后不要随意删除',
   PRIMARY KEY (`spec_id`),
-  KEY `index_cat` (`cat_id`),
-  KEY `index_sel` (`spec_name`,`list_order`) USING BTREE
+  KEY `cat_index` (`cat_id`) USING BTREE,
+  KEY `sel_index` (`spec_name`,`list_order`) USING BTREE,
+  KEY `pk_index` (`spec_id`)
 ) ENGINE=MyISAM AUTO_INCREMENT=50 DEFAULT CHARSET=utf8mb4 COMMENT='商品属性、规格细则表\r\n\r\n一般只存储两级属性，注意 parent_id = 0 表示为属性信息\r\n\r\nparent_id > 0 : 表示为规格信息';
 
 -- ----------------------------
@@ -1336,7 +1341,9 @@ CREATE TABLE `tp5_xusers` (
   `user_status` tinyint(4) NOT NULL DEFAULT '0' COMMENT '用户状态  0：正常  1：异常（可申诉） 2：黑名单',
   `union_id` varchar(255) COLLATE utf8_unicode_ci NOT NULL COMMENT '第三方授权认证',
   `open_id` varchar(255) COLLATE utf8_unicode_ci NOT NULL COMMENT '微信openid',
-  PRIMARY KEY (`id`)
+  PRIMARY KEY (`id`),
+  KEY `pk_index` (`id`),
+  KEY `sel_index` (`nick_name`,`auth_tel`)
 ) ENGINE=MyISAM AUTO_INCREMENT=28 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci COMMENT='注册用户表';
 
 -- ----------------------------
