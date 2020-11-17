@@ -32,9 +32,9 @@
                 <option value="" {$brand.cat_id==""?"selected":""}>搜索或选择分类</option>
                 {volist name="categoryList" id="vo"}
                     {volist name="vo.children" id="vo2"}
-                    <optgroup label="{$vo2['title']}">
+                    <optgroup label="{$vo2['cat_name']}">
                         {volist name="vo2.children" id="vo3"}
-                        <option value="{$vo3.id}" {$brand.cat_id==$vo3.id?"selected":""}>{$vo3.title}</option>
+                        <option value="{$vo3.cat_id}" {$brand.cat_id==$vo3.cat_id?"selected":""}>{$vo3.cat_name}</option>
                         {/volist}
                     </optgroup>
                     {/volist}

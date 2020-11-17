@@ -87,13 +87,13 @@
             <select id="toSelCatID" lay-filter="GoodsToSelCatID" name="cat_id" lay-search="">
                 <option value="">搜索或选择分类</option>
                 {volist name="categoryList" id="vo"}
-                {volist name="vo.children" id="vo2"}
-                <optgroup label="{$vo2['title']}">
-                    {volist name="vo2.children" id="vo3"}
-                    <option value="{$vo3.id}">{$vo3.title}</option>
+                    {volist name="vo.children" id="vo2"}
+                        <optgroup label="{$vo2['cat_name']}">
+                            {volist name="vo2.children" id="vo3"}
+                            <option value="{$vo3.cat_id}">{$vo3.cat_name}</option>
+                            {/volist}
+                        </optgroup>
                     {/volist}
-                </optgroup>
-                {/volist}
                 {/volist}
             </select>
         </div>

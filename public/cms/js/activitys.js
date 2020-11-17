@@ -1,4 +1,5 @@
-layui.use(['laydate'], function () {
+layui.use(['form','laydate'], function () {
+    var form = layui.form;
     var laydate = layui.laydate;
     laydate.render({
         elem: '#startTime',
@@ -10,10 +11,41 @@ layui.use(['laydate'], function () {
         type: 'datetime',
         trigger: 'click'
     });
-});
+    form.on('select(toSelCatID)', function (data) {
+        $("#toSelGoodsID").html("<option value=\"\">直接选择或搜索选择</option>");
+        var seledCatID = data.value;
+        //TODO 此时进行ajax的服务器访问，如果返回数据正常，则进行后面代码的调用
+        $.post(
+            toUrl,
+            {seledCatID: seledCatID},
+            function (result) {
+                if (result.status > 0) {
+                    var replaceHtml = "";
+                    $.each(result.data, function (i, e) {
+                        replaceHtml += " <option title=" + e.goods_name + " value=\"" + e.goods_id + "\">" + e.goods_name + "</option>"
+                    });
+                    $("#toSelGoodsID").append(replaceHtml);
+                    form.render();
+                } else {
+                    layer.msg(result.message);
+                    form.render();
+                }
+            }, "JSON");
+    });
 
-layui.use(['form'], function () {
-    var form = layui.form;
+    /**
+     * toSelGoodsID 下拉列表触发事件
+     */
+    form.on('select(toSelGoodsID)', function (data) {
+        var indexGID = data.elem.selectedIndex;
+        var goodsID = data.value;
+        var goodsName = data.elem[indexGID].title;
+        var appendStr = "<input type=\"checkbox\" name=\"aGoods[]\" value=\"" + goodsID + "\" lay-skin=\"primary\"\n" +
+            "                   title=\"" + goodsName + "\" checked=\"\">";
+        $(".div-actGoods").append(appendStr);
+        form.render();
+    });
+
     form.on('switch(switchActID)', function (data) {
         //开关是否开启，true或者false
         var checked = data.elem.checked;
@@ -41,6 +73,8 @@ layui.use(['form'], function () {
             }, "JSON");
     });
 });
+
+
 
 /**
  * ajax 获取并加载每页的数据

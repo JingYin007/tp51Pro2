@@ -81,10 +81,22 @@
         </div>
     </div>
 
+
     <div class="layui-form-item" pane="">
-        <label class="layui-form-label">搜索商品：</label>
+        <label class="layui-form-label">选择分类：</label>
         <div class="layui-input-inline">
-            <div id="tree-sel-category" class="demo-tree"></div>
+            <select name="selCatID"  lay-filter="toSelCatID" lay-search="">
+                <option value="">搜索或选择分类</option>
+                {volist name="categoryList" id="vo"}
+                {volist name="vo.children" id="vo2"}
+                <optgroup label="{$vo2['cat_name']}">
+                    {volist name="vo2.children" id="vo3"}
+                    <option value="{$vo3.cat_id}">{$vo3.cat_name}</option>
+                    {/volist}
+                </optgroup>
+                {/volist}
+                {/volist}
+            </select>
         </div>
 
         <div class="layui-input-inline">
@@ -108,11 +120,8 @@
 {/block}
 
 {block name='single-content'}
-<script src="__CMS__/js/activitys.js"></script>
-<script src="__CMS__/js/tree_categorys.js"></script>
 <script>
-    var toUrl = "{:url('cms/category/ajaxGetToSelCategoryList')}";
-    var toUrl2 = "{:url('cms/goods/ajaxGetCatGoodsForActivity')}";
-    initViewTreeCategorys(toUrl,toUrl2,"#toSelGoodsID");
+    var toUrl = "{:url('cms/activity/ajaxGetGoodsByCat')}";
 </script>
+<script src="__CMS__/js/activitys.js"></script>
 {/block}

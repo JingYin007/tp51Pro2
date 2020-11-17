@@ -5,6 +5,7 @@ namespace app\cms\Controller;
 use app\common\controller\CmsBase;
 use app\common\model\Xactivitys;
 use app\common\model\Xcategorys;
+use app\common\model\Xgoods;
 use think\Request;
 
 class Activity extends CmsBase
@@ -57,7 +58,8 @@ class Activity extends CmsBase
             $opRes = $this->actModel->addActivity($input);
             return showMsg($opRes['tag'],$opRes['message']);
         }else{
-            return view('add');
+            $categoryList = (new Xcategorys())->getCategorySelectListFromJsonFile();
+            return view('add',['categoryList' => $categoryList]);
         }
     }
 
@@ -76,13 +78,31 @@ class Activity extends CmsBase
             $opRes = $this->actModel->editActivity($id,$input);
             return showMsg($opRes['tag'],$opRes['message']);
         }else{
+            $categoryList = (new Xcategorys())->getCategorySelectListFromJsonFile();
             return view('edit',[
                 'actData'   => $actData,
-                'actGoods'  =>$actGoods
+                'actGoods'  =>$actGoods,
+                'categoryList' => $categoryList
             ]);
         }
     }
 
+    /**
+     * ajax 根据分类获取 商品
+     * @param Request $request
+     */
+    public function ajaxGetGoodsByCat(Request $request)
+    {
+        $seledCatID = $request->post("seledCatID");
+        $goodsList = (new Xgoods())->getCatGoodsForActivity($seledCatID);
+        $status = 1;
+        $message = "success";
+        if (!$goodsList) {
+            $status = 0;
+            $message = "未查到商品数据";
+        }
+        return showMsg($status, $message, $goodsList);
+    }
     /**
      * ajax 更改首页显示状态
      * @param Request $request

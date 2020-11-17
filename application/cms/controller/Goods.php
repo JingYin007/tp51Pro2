@@ -37,7 +37,7 @@ class Goods extends CmsBase
         $OrderType = $request->param("OrderType", "D");
         if ($request->isGet()){
             //获取所有的商品二级三級分类
-            $categoryList = $this->categoryModel->getCmsToSelCategoryList();
+            $categoryList = $this->categoryModel->getCategorySelectListFromJsonFile();
             $brandList = (new Xbrands())->getSelectableList();
             $goods = $this->model->getCmsGoodsForPage($curr_page, $this->page_limit, $search, $SelStatus, $CatType, $OrderType);
             $record_num = $this->model->getCmsGoodsCount($search, $SelStatus, $CatType);
@@ -73,7 +73,7 @@ class Goods extends CmsBase
             $opRes = $this->model->addGoods($input);
             return showMsg($opRes['tag'], $opRes['message']);
         } else {
-            $categoryList = $this->categoryModel->getCmsToSelCategoryList();
+            $categoryList = $this->categoryModel->getCategorySelectListFromJsonFile();
             return view('add', ['categoryList' => $categoryList,]);
         }
     }
@@ -91,7 +91,7 @@ class Goods extends CmsBase
             return showMsg($opRes['tag'], $opRes['message']);
         } else {
             $goodsMsg = $this->model->getCmsGoodsByID($id);
-            $categoryList = $this->categoryModel->getCmsToSelCategoryList();
+            $categoryList = $this->categoryModel->getCategorySelectListFromJsonFile();
             $data =
                 [
                     'good' => $goodsMsg,
@@ -110,23 +110,6 @@ class Goods extends CmsBase
         $opRes = $this->model
             ->updatePutaway($request->post('goods_id'), $request->post('okStatus'));
         return showMsg($opRes['tag'], $opRes['message']);
-    }
-
-    /**
-     * ajax 根据分类获取参加活动的商品
-     * @param Request $request
-     */
-    public function ajaxGetCatGoodsForActivity(Request $request)
-    {
-        $seledCatID = $request->post("seledCatID");
-        $goodsList = $this->model->getCatGoodsForActivity($seledCatID);
-        $status = 1;
-        $message = "success";
-        if (!$goodsList) {
-            $status = 0;
-            $message = "未查到商品数据";
-        }
-        return showMsg($status, $message, $goodsList);
     }
 
     /**

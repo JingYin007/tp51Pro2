@@ -56,9 +56,9 @@ class Category extends CmsBase
             $opRes = $this->model->addCategory($input);
             return showMsg($opRes['tag'], $opRes['message']);
         } else {
-            $res = $this->model->getNewCmsCategoryList(1);
+            $cat_list = $this->model->getCategorySelectListFromJsonFile();
             $data = [
-                'cat_list' => $res
+                'cat_list' => $cat_list
             ];
             return view('add', $data);
         }
@@ -77,11 +77,11 @@ class Category extends CmsBase
             return showMsg($opRes['tag'], $opRes['message']);
         } else {
             $cat = $this->model->getCmsCategoryByID($id);
-            $res = $this->model->getNewCmsCategoryList(1);
+            $cat_list = $this->model->getCategorySelectListFromJsonFile();
             $data =
                 [
                     'cat' => $cat,
-                    'cat_list' => $res
+                    'cat_list' => $cat_list
                 ];
             return view('edit', $data);
         }
@@ -95,19 +95,5 @@ class Category extends CmsBase
     {
         $opRes = $this->model->updateForShow($request->post('cat_id'), $request->post('okStatus'));
         return showMsg($opRes['tag'], $opRes['message']);
-    }
-
-    /**
-     * ajax 获取待选分类数据
-     * @param Request $request
-     */
-    public function ajaxGetToSelCategoryList(Request $request){
-//        $jsonData = [[
-//            "title" => "请点击选择",
-//            "id" => 0,
-//            "children" =>  $this->model->getCmsToSelCategoryList()
-//        ]];
-        $jsonData = json_decode(file_get_contents("./cms/file/categoryList.json"),true);
-        return showMsg(1, 'ok',$jsonData);
     }
 }

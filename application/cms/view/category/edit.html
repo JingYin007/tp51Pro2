@@ -54,7 +54,7 @@
                 <option value="" {$cat.parent_id==""?"selected":""}>搜索或直接选择</option>
                 {volist name="cat_list" id="vo"}
                 <optgroup label="{$vo['cat_name']}">
-                    {volist name="vo.child" id="vo2"}
+                    {volist name="vo.children" id="vo2"}
                     <option value="{$vo2.cat_id}" {$cat.parent_id==$vo2.cat_id?"selected":""}>{$vo2.cat_name}</option>
                     {/volist}
                 </optgroup>

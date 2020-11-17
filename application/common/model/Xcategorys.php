@@ -122,7 +122,7 @@ class Xcategorys extends BaseModel
             $validateRes['tag'] = $tag;
             $validateRes['message'] = $tag ? '添加成功' : '添加失败';
             if ($tag){
-                $this->goToUpdateCategoryJsonData();
+                $this->updateCategorySelectListForJsonFile();
             }
         }
         return $validateRes;
@@ -185,23 +185,11 @@ class Xcategorys extends BaseModel
                 $validateRes['tag'] = $saveTag;
                 $validateRes['message'] = $saveTag ? '数据更新成功' : '数据无变动';
                 if ($saveTag){
-                    $this->goToUpdateCategoryJsonData();
+                    $this->updateCategorySelectListForJsonFile();
                 }
             }
         }
         return $validateRes;
-    }
-
-    /**
-     *  //TODO 进行json 数据的保存
-     */
-    public function goToUpdateCategoryJsonData(){
-        $jsonData = [[
-            "title" => "请点击选择",
-            "id" => 0,
-            "children" => $this->getCmsToSelCategoryList()
-        ]];
-        file_put_contents("./cms/file/categoryList.json",json_encode($jsonData));
     }
 
     /**
@@ -224,91 +212,52 @@ class Xcategorys extends BaseModel
         }
         return $arr;
     }
-    /**
-     * 获取所有的产品分类（除顶级分类外）
-     * @param int $tag 1：顶级分类  2：二级分类
-     * @param int $parent_id
-     * @return array
-     */
-    public function getNewCmsCategoryList($tag = 1,$parent_id = 1)
-    {
-        $map[] = ['level', '=', $tag];
-        if ($tag == 1) {
-            $map[] = ['parent_id', '=', 0];
-        } else {
-            $map[] = ['parent_id', '=', $parent_id];
-        }
-        $map[] = ['status', '=', 1];
-        $res = $this
-            ->field('cat_id,cat_name,parent_id')
-            ->where($map)
-            ->order(["list_order"=>"asc","cat_id"=>'asc'])
-            ->select();
-        foreach ($res as $key => $value){
-            $first_id = $value['cat_id'];
-            $secThemes = $this->getNewCmsCategoryList(2,$first_id);
-            foreach ($secThemes as $key2 => $value2){
-                $thirdThemes = $this->getNewCmsCategoryList(3,$value2['cat_id']);
-                $secThemes[$key2]['child'] = $thirdThemes;
-            }
-            $res[$key]['child'] = $secThemes;
-        }
-        return isset($res) ? $res->toArray() : [];
-    }
 
     /**
-     * @param int $tag
-     * @param int $parent_id
-     * @return array
-     */
-    public function get2ndAnd3rdCategoryList($tag = 2,$parent_id = 1)
-    {
-        $map[] = ['level', '=', $tag];
-        if ($tag != 2) {
-            $map[] = ['parent_id', '=', $parent_id];
-        }
-        $map[] = ['status', '=', 0];
-        $res = $this
-            ->field('cat_id,cat_name,parent_id')
-            ->where($map)
-            ->order(["list_order"=>"asc","cat_id"=>'asc'])
-            ->select();
-        foreach ($res as $key => $value){
-            $thirdThemes = $this->get2ndAnd3rdCategoryList(3,$value['cat_id']);
-            $res[$key]['child'] = $thirdThemes;
-        }
-        return isset($res) ? $res->toArray() : [];
-    }
-    /**
-     * 集成待选商品分类数据
+     * 集成 待选商品分类数据
      * @param int $tag
      * @param int $parent_id
      * @return array
      */
     public function getCmsToSelCategoryList($tag = 1,$parent_id = 1)
     {
-        $map[] = ['level', '=', $tag];
+        $map = [['level', '=', $tag],['status', '=', 1]];
         if ($tag == 1) {
             $map[] = ['parent_id', '=', 0];
         } else {
             $map[] = ['parent_id', '=', $parent_id];
         }
-        $map[] = ['status', '=', 1];
+
         $res = $this
-            ->field('cat_id id,cat_name title,parent_id')
+            ->field('cat_id,cat_name,parent_id')
             ->where($map)
             ->order(["list_order"=>"asc","cat_id"=>'asc'])
             ->select();
         foreach ($res as $key => $value){
-            $first_id = $value['id'];
-            $secThemes = $this->getCmsToSelCategoryList(2,$first_id);
+            $secThemes = $this->getCmsToSelCategoryList(2,$value['cat_id']);
             foreach ($secThemes as $key2 => $value2){
-                $thirdThemes = $this->getCmsToSelCategoryList(3,$value2['id']);
+                $thirdThemes = $this->getCmsToSelCategoryList(3,$value2['cat_id']);
                 $secThemes[$key2]['children'] = $thirdThemes;
             }
             $res[$key]['children'] = $secThemes;
         }
         return isset($res) ? $res->toArray() : [];
+    }
+
+    /**
+     * 将更新后的 分类数据，保存到 json 文件中
+     */
+    public function updateCategorySelectListForJsonFile(){
+        $jsonData = $this->getCmsToSelCategoryList();
+        file_put_contents("./cms/file/categorySelectList.json",json_encode($jsonData,JSON_UNESCAPED_UNICODE));
+    }
+    /**
+     * 获取 可选分类的 json文件数据
+     * @return mixed
+     */
+    public function getCategorySelectListFromJsonFile(){
+        $jsonData = json_decode(file_get_contents("./cms/file/categorySelectList.json"),true);
+        return $jsonData;
     }
 
     /**

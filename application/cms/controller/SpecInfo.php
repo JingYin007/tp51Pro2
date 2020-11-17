@@ -31,7 +31,7 @@ class SpecInfo extends CmsBase
         $search = $request->param('str_search');
         $catID = $request->param("catID",null);
         if ($request->isGet()){
-            $categoryList = $this->categoryModel->getCmsToSelCategoryList();
+            $categoryList = $this->categoryModel->getCategorySelectListFromJsonFile();
             $list = $this->model->getCmsSpecInfoForPage($curr_page, $this->page_limit, $search, $catID);
             $record_num = $this->model->getCmsSpecInfoCount($search, $catID);
             $data = [
@@ -62,7 +62,7 @@ class SpecInfo extends CmsBase
             $opRes = $this->model->addSpecInfo($input);
             return showMsg($opRes['tag'], $opRes['message']);
         } else {
-            $categoryList = $this->categoryModel->getCmsToSelCategoryList();
+            $categoryList = $this->categoryModel->getCategorySelectListFromJsonFile();
             $data = [
                 'categoryList' => $categoryList,
                 'spec_id' => $spec_id
@@ -85,7 +85,7 @@ class SpecInfo extends CmsBase
             $opRes = $this->model->updateCmsSpecInfoData($id,$request->post(),$level);
             return showMsg($opRes['tag'], $opRes['message']);
         } else {
-            $categoryList = $this->categoryModel->getCmsToSelCategoryList();
+            $categoryList = $this->categoryModel->getCategorySelectListFromJsonFile();
             $specInfo = $this->model->getCmsSpecInfoByID($id);
             $data =
                 [

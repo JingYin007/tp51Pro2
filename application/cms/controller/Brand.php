@@ -29,7 +29,7 @@ class Brand extends CmsBase
         $search = $request->param('str_search');
         $catID = $request->param("catID",0);
         if ($request->isGet()) {
-            $categoryList = (new Xcategorys())->getCmsToSelCategoryList();
+            $categoryList = (new Xcategorys())->getCategorySelectListFromJsonFile();
             $list = $this->model->getCmsBrandForPage($curr_page, $this->page_limit, $search, $catID);
             $record_num = $this->model->getCmsBrandCount($search, $catID);
             $data = [
@@ -59,7 +59,7 @@ class Brand extends CmsBase
             $opRes = $this->model->addCmsBrand($input);
             return showMsg($opRes['tag'], $opRes['message']);
         } else {
-            $categoryList = (new Xcategorys())->getCmsToSelCategoryList();
+            $categoryList = (new Xcategorys())->getCategorySelectListFromJsonFile();
             $data = ['categoryList' => $categoryList];
             return view('add', $data);
         }
@@ -78,7 +78,7 @@ class Brand extends CmsBase
             return showMsg($opRes['tag'], $opRes['message']);
         } else {
             $brand = $this->model->getCmsBrandByID($id);
-            $categoryList = (new Xcategorys())->getCmsToSelCategoryList();
+            $categoryList = (new Xcategorys())->getCategorySelectListFromJsonFile();
             $data =
                 [
                     'brand' => $brand,

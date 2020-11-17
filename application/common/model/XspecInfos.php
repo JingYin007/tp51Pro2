@@ -191,7 +191,7 @@ class XspecInfos extends BaseModel
             ['parent_id', '=', $specFstID],
             ['parent_id', '>', 0]];
         $specList = $this
-            ->field('spec_id,mark_msg,list_order')
+            ->field('spec_id,spec_name,mark_msg,list_order')
             ->where($where)
             ->order(['list_order' => 'asc', 'spec_id' => 'desc'])
             ->select();

@@ -88,7 +88,6 @@ Route::any('cms/category/index','cms/category/index');
 Route::any('cms/category/add','cms/category/add');
 Route::any('cms/category/edit/:id','cms/category/edit');
 Route::post('cms/category/ajaxForShow','cms/category/ajaxForShow');
-Route::post('cms/category/ajaxGetToSelCategoryList','cms/category/ajaxGetToSelCategoryList');
 
 Route::any('cms/brand/index','cms/brand/index');
 Route::any('cms/brand/add','cms/brand/add');
@@ -99,7 +98,6 @@ Route::any('cms/goods/index','cms/goods/index');
 Route::any('cms/goods/add','cms/goods/add');
 Route::any('cms/goods/edit/:id','cms/goods/edit');
 Route::post('cms/goods/ajaxPutaway','cms/goods/ajaxPutaway');
-Route::post('cms/goods/ajaxGetCatGoodsForActivity','cms/goods/ajaxGetCatGoodsForActivity');
 Route::get('cms/goods/viewLogs/:id','cms/goods/viewLogs');
 Route::post('cms/goods/ajaxGetBrandAndSpecInfoFstByCat','cms/goods/ajaxGetBrandAndSpecInfoFstByCat');
 
@@ -115,7 +113,7 @@ Route::any('cms/activity/index','cms/activity/index');
 Route::any('cms/activity/add','cms/activity/add');
 Route::any('cms/activity/edit/:id','cms/activity/edit');
 Route::post('cms/activity/ajaxForShow','cms/activity/ajaxForShow');
-
+Route::post('cms/activity/ajaxGetGoodsByCat','cms/activity/ajaxGetGoodsByCat');
 //广告管理
 Route::any('cms/adList/index','cms/adList/index');
 Route::any('cms/adList/add','cms/adList/add');
