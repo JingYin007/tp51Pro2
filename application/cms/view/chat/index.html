@@ -34,63 +34,87 @@
     var online_status = 0;
     var interval_timer = null;//计时器
     var timer_count = 0;
-
-
     var API_CHAT_URL = "{:url('cms/chat/save_message')}";
-    var ws =  new WebSocket("{$web_socket_url}");
-    ws.onmessage = function (e) {
-        var message = eval('(' + e.data + ')');
-        console.log('message', message);
-        switch (message.type) {
-            case 'init':
-                changeNoReadLogs();
-                var bind = '{"type":"bind","from_id":"' + from_id + '","to_id":"' + to_id + '"}';
-                ws.send(bind);
-                message_load();
-                var online = '{"type":"online","from_id":"' + from_id + '","to_id":"' + to_id + '"}';
-                ws.send(online);
-                break;
-            case 'online':
-                if (message.status == 1) {
-                    set_online_status(true);
-                } else {
-                    set_online_status(false);
-                }
-                return;
-            case "say":
-                if (to_id == message.from_id) {
-                    var messagexx = '{"tag":"left","content":"' + message.content + '","type":"say","from_id":"' + from_id + '","to_id":"' + to_id + '"}';
-                    To_send_message(messagexx, 'left',message.content);
-                    if (message.is_read == 1) {
-                        set_online_status(true);
-                    } else {
-                        set_online_status(false);
-                    }
-                    changeNoReadLogs();
-                }
-                save_message(message);
-                return;
-            case "say_img":
-                if(from_id == message.to_id){
-                    $(".chat-content").append(' <div class="chat-text section-left flex"><span class="char-img" style="background-image: url('+to_head+')"></span> <span class="text"><i class="icon icon-sanjiao4 t-32"></i><img width="120em" height="auto" src="'+message.content+'"></span> </div>');
-                    $(".chat-content").scrollTop(3000);
-                    changeNoReadLogs();
-                }
-                if (to_id == message.to_id) {
-                    if (message.is_read == 1) {
-                        set_online_status(true);
-                    } else {
-                        set_online_status(false);
-                    }
-                }
-                save_message(message);
-                return;
+    var wsUrl = "{$web_socket_url}";
+    var ws;
+
+    createOrConnectWebSocket();	// 创建websocket
+    /**
+     * 创建websocket或掉线重连
+     */
+     function createOrConnectWebSocket(){
+        if(!ws){
+            //TODO ws 不存在
+            console.log('!ws');
+            ws = new WebSocket(wsUrl);
+            websocketInit();
+        }else {
+            if (!isOnlineCurrUser()){
+                ws = null;
+                createOrConnectWebSocket();
+            }
         }
-    };
-    ws.onclose = function (e) {
-        console.log('websocket 断开: ' + e.code + ' ' + e.reason + ' ' + e.wasClean);
-    };
-    init_start_timer();
+        init_start_timer();
+    }
+
+
+    /**
+     * websocket 的初始化
+     */
+    function websocketInit(){
+        ws.onmessage = function (e) {
+            var message = eval('(' + e.data + ')');
+            console.log('message', message);
+            switch (message.type) {
+                case 'init':
+                    changeNoReadLogs();
+                    var bind = '{"type":"bind","from_id":"' + from_id + '","to_id":"' + to_id + '"}';
+                    ws.send(bind);
+                    message_load();
+                    var online = '{"type":"online","from_id":"' + from_id + '","to_id":"' + to_id + '"}';
+                    ws.send(online);
+                    break;
+                case 'online':
+                    if (message.status == 1) {
+                        set_online_status(true);
+                    } else {
+                        set_online_status(false);
+                    }
+                    return;
+                case "say":
+                    if (to_id == message.from_id) {
+                        var messagexx = '{"tag":"left","content":"' + message.content + '","type":"say","from_id":"' + from_id + '","to_id":"' + to_id + '"}';
+                        To_send_message(messagexx, 'left',message.content);
+                        if (message.is_read == 1) {
+                            set_online_status(true);
+                        } else {
+                            set_online_status(false);
+                        }
+                        changeNoReadLogs();
+                    }
+                    save_message(message);
+                    return;
+                case "say_img":
+                    if(from_id == message.to_id){
+                        $(".chat-content").append(' <div class="chat-text section-left flex"><span class="char-img" style="background-image: url('+to_head+')"></span> <span class="text"><i class="icon icon-sanjiao4 t-32"></i><img width="120em" height="auto" src="'+message.content+'"></span> </div>');
+                        $(".chat-content").scrollTop(3000);
+                        changeNoReadLogs();
+                    }
+                    if (to_id == message.to_id) {
+                        if (message.is_read == 1) {
+                            set_online_status(true);
+                        } else {
+                            set_online_status(false);
+                        }
+                    }
+                    save_message(message);
+                    return;
+            }
+        };
+        ws.onclose = function (e) {
+            console.log('websocket 断开: ' + e.code + ' ' + e.reason + ' ' + e.wasClean);
+        };
+    }
     /**
      * 设置一个 30秒的轮询监听方法，避免页面关闭
      */
@@ -170,12 +194,16 @@
      * 判断当前用户是否 还在线
      */
     function isOnlineCurrUser() {
-        if(ws.readyState == WebSocket.OPEN){
-            console.log('open',ws.readyState);
-            init_start_timer();
-            return true;
+        if(ws){
+            if(ws.readyState == WebSocket.OPEN){
+                console.log('open',ws.readyState);
+                init_start_timer();
+                return true;
+            }else {
+                console.log('close',ws.readyState);
+                return false;
+            }
         }else {
-            console.log('close',ws.readyState);
             return false;
         }
     }
@@ -205,7 +233,8 @@
                 $(".send-input").val("");
                 $(".chat-content").scrollTop(3000);
             }else {
-                dialog.tip("Sorry,您已离线！");
+                createOrConnectWebSocket();
+                dialog.tip("您已离线,重新连接中...");
             }
         }else {
             var appendHtml =
