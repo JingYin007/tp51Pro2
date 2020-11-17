@@ -35,11 +35,13 @@ class Xorders extends BaseModel
      */
     public function getPayOrdersForPage($curr_page = 1, $page_limit = 1, $search  = null){
         $where = [['pay_time','>',0]];
+        if ($search){
+            $where[] = ['order_sn|nick_name|consignee', 'like', '%' . $search . '%'];
+        }
         $res = $this
             ->alias('oi')
             ->field("oi.*,user_avatar,nick_name")
             ->join('xusers u','u.id = oi.user_id')
-            ->where('order_sn|nick_name|consignee', 'like', '%' . $search . '%')
             ->where($where)
             ->order(['oi.pay_time' => 'desc'])
             ->limit($page_limit * ($curr_page - 1), $page_limit)
@@ -98,10 +100,12 @@ class Xorders extends BaseModel
      */
     public function getPayOrdersCount($search = null){
         $where = [['pay_time','>',0]];
+        if ($search){
+            $where[] = ['order_sn|nick_name|consignee', 'like', '%' . $search . '%'];
+        }
         $count = $this
             ->alias('oi')
             ->join('xusers u','u.id = oi.user_id')
-            ->where('order_sn|nick_name|consignee', 'like', '%' . $search . '%')
             ->where($where)
             ->count('oi.id');
         return $count;
@@ -121,11 +125,13 @@ class Xorders extends BaseModel
     public function getOrderDetailsForPage($curr_page = 1, $page_limit = 1, $search  = null, $orderStatus = null){
         $where = [['pay_time','>',0],['od.status','>',0]];
         if ($orderStatus){$where[] = ['od.status','=',$orderStatus];}
+        if ($search){
+            $where[] = ['order_sn|consignee|mobile|address|goods_name', 'like', '%' . $search . '%'];
+        }
         $res = $this
             ->alias('oi')
             ->field("oi.*,od.*")
             ->join('xorder_details od','od.order_id = oi.id')
-            ->where('order_sn|consignee|mobile|address|goods_name', 'like', '%' . $search . '%')
             ->where($where)
             ->order(['oi.pay_time' => 'desc'])
             ->limit($page_limit * ($curr_page - 1), $page_limit)
@@ -193,10 +199,12 @@ class Xorders extends BaseModel
     public function getOrderDetailsCount($search = null,$orderStatus = null){
         $where = [['pay_time','>',0],['od.status','>',0]];
         if ($orderStatus){$where[] = ['od.status','=',$orderStatus];}
+        if ($search){
+            $where[] = ['order_sn|consignee|mobile|address|goods_name', 'like', '%' . $search . '%'];
+        }
         $count = $this
             ->alias('oi')
             ->join('xorder_details od','od.order_id = oi.id')
-            ->where('order_sn|consignee|mobile|address|goods_name', 'like', '%' . $search . '%')
             ->where($where)
             ->count('od.id');
         return $count;

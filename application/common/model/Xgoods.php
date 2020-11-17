@@ -48,13 +48,15 @@ class Xgoods extends BaseModel
         }else{
             $order["g.recommend"] = "desc";
         }
+        if ($search){
+            $where[] = ['g.goods_name|b.brand_name', 'like', '%' . $search . '%'];
+        }
         $res = $this
             ->alias('g')
             ->field('g.*,cat_name,brand_name')
             ->join('xcategorys cat', 'cat.cat_id = g.cat_id')
             ->join('xbrands b', 'b.id = g.brand_id')
             ->where($where)
-            ->whereLike('g.goods_name|b.brand_name', '%' . $search . '%')
             ->order($order)
             ->limit($limit * ($curr_page - 1), $limit)
             ->select();
@@ -82,13 +84,15 @@ class Xgoods extends BaseModel
             ["g.status", '=', $status]
         ];
         if ($CatType != 0) {$where[] = ["g.cat_id", '=', $CatType];}
+        if ($search){
+            $where[] = ['g.goods_name|b.brand_name', 'like', '%' . $search . '%'];
+        }
         $count = $this
             ->alias('g')
             ->field('g.status')
             ->join('xcategorys cat', 'cat.cat_id = g.cat_id')
             ->join('xbrands b', 'b.id = g.brand_id')
             ->where($where)
-            ->whereLike('g.goods_name|b.brand_name', '%' . $search . '%')
             ->count();
         return $count;
     }

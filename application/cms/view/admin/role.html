@@ -37,7 +37,7 @@
     <tr class="tr-normal-{$vo['id']}">
         <td>{$vo['id']}</td>
         <td class="title">{php} echo $vo['role_tip']{/php}</td>
-        <td>{$vo['updated_at']}</td>
+        <td><span class="span-updated_at">{$vo['updated_at']}</span></td>
         <td>{php} echo $vo['status_tip']{/php}</td>
         <td>
             <div class="layui-btn-group">
@@ -62,6 +62,9 @@
     }
     .table-tbody-normal .title{
         color: #7274A7;
+    }
+    .span-updated_at{
+        color: #f8b9b7;
     }
 </style>
 {/block}

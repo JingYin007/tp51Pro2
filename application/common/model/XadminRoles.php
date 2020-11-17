@@ -24,8 +24,8 @@ class XadminRoles extends BaseModel
     {
         $res = $this
             ->where('status', 1)
-            ->select()->toArray();
-        return $res;
+            ->select();
+        return isset($res) ? $res->toArray():[];
     }
 
     /*

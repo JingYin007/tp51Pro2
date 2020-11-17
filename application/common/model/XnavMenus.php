@@ -178,10 +178,12 @@ class XnavMenus extends BaseModel
         }else{
             $where[] = ['parent_id','>',0];
         }
+        if ($search){
+            $where[] = ['name', 'like', '%' . $search . '%'];
+        }
         $res = $this
             ->field('*')
             ->where($where)
-            ->whereLike('name', '%' . $search . '%')
             ->count();
         return $res;
     }
@@ -202,10 +204,12 @@ class XnavMenus extends BaseModel
         }else{
             $where[] = ['parent_id','>',0];
         }
+        if ($search){
+            $where[] = ['name', 'like', '%' . $search . '%'];
+        }
         $res = $this
             ->field('*')
             ->where($where)
-            ->whereLike('name', '%' . $search . '%')
             ->order(['list_order' => 'asc', 'created_at' => 'desc'])
             ->limit($limit * ($curr_page - 1), $limit)
             ->select();

@@ -44,10 +44,13 @@ class XadLists extends BaseModel
      */
     public function getAdsCount($search = null)
     {
+        $where = [['status','=',0]];
+        if ($search){
+            $where[] = ['ad_name|ad_tag', 'like', '%' . $search . '%'];
+        }
         $res = $this
             ->field('id')
-            ->where("status",'=',0)
-            ->where('ad_name|ad_tag','like','%' . $search . '%')
+            ->where($where)
             ->count();
         return $res;
     }
@@ -61,10 +64,13 @@ class XadLists extends BaseModel
      */
     public function getAdsForPage($curr_page, $limit, $search = null)
     {
+        $where = [['status','=',0]];
+        if ($search){
+            $where[] = ['ad_name|ad_tag', 'like', '%' . $search . '%'];
+        }
         $res = $this
             ->field('*')
-            ->where("status",'=',0)
-            ->where('ad_name|ad_tag','like','%' . $search . '%')
+            ->where($where)
             ->order(['list_order' => 'asc', 'id' => 'desc'])
             ->limit($limit * ($curr_page - 1), $limit)
             ->select();
@@ -76,7 +82,7 @@ class XadLists extends BaseModel
             }
             $res[$key]['original_img'] = imgToServerView($v['original_img']);
         }
-        return $res;
+        return isset($res) ? $res->toArray():[];
     }
 
     /**

@@ -31,10 +31,10 @@ function ToAjaxOpForNavMenusPage(toUrl,postData) {
                         "                <td>"+e.id+"</td>\n" +
                         "                <td class='title'>"+e.name+"</td>\n" +
                         "                <td class=\"icon\"><img class='layui-circle' src='"+e.icon+"'></td>\n" +
-                        "                <td>"+e.action+"</td>\n" +
+                        "                <td><span class='span-action'>"+e.action+"</span></td>\n" +
                         "                <td class='parent'>"+e.parent_name+"</td>\n" +
                         "                <td>"+e.list_order+"</td>\n" +
-                        "                <td>"+e.created_at+"</td>\n" +
+                        "                <td><span class='span-created_at'>"+e.created_at+"</span></td>\n" +
                         "                <td>"+e.status_tip +"</td>\n" +
                         "                <td>\n" +
                         "                    <div class=\"layui-btn-group\">\n" +

@@ -29,7 +29,7 @@ class Xcategorys extends BaseModel
      */
     public function getCmsCategoryForPage($curr_page, $limit = 1, $search = null, $catType = "S")
     {
-        $where = [['status', '=', 1]];
+        $where[] = ['status', '=', 1];
         if ($catType == "F") {
             $where[] = ['parent_id', '=', 0];
             $where[] = ['level', '=', 1];
@@ -39,10 +39,13 @@ class Xcategorys extends BaseModel
         }else{
             $where[] = ['level', '=', 3];
         }
+
+        if ($search){
+            $where[] = ['cat_name', 'like', '%' . $search . '%'];
+        }
         $res = $this
             ->field('cat_id,cat_name,parent_id,is_show,status,icon,list_order')
             ->where($where)
-            ->whereLike('cat_name', '%' . $search . '%')
             ->order(['list_order' => 'asc', 'cat_id' => 'desc'])
             ->limit($limit * ($curr_page - 1), $limit)
             ->select();
@@ -74,7 +77,7 @@ class Xcategorys extends BaseModel
      */
     public function getCmsCategoryCount($search = null, $catType = "S")
     {
-        $where = [['status', '=', 1]];
+        $where[] = ['status', '=', 1];
         if ($catType == "F") {
             $where[] = ['parent_id', '=', 0];
             $where[] = ['level', '=', 1];
@@ -84,10 +87,12 @@ class Xcategorys extends BaseModel
         }else{
             $where[] = ['level', '=', 3];
         }
+        if ($search){
+            $where[] = ['cat_name', 'like', '%' . $search . '%'];
+        }
         $count = $this
             ->field('cat_id')
             ->where($where)
-            ->whereLike('cat_name', '%' . $search . '%')
             ->count();
         return $count;
     }
@@ -98,9 +103,9 @@ class Xcategorys extends BaseModel
      * @return array
      */
 
-    public function addCategory($data)
+    public function addCategory($data = [])
     {
-        $level = isset($data['level'])?$data['level']:1;
+        $level = isset($data['level'])? intval($data['level']):1;
         $str_parent_id = "parent_id_".$level;
         $addData = [
             'cat_name' => isset($data['cat_name'])?$data['cat_name']:'',
@@ -161,7 +166,7 @@ class Xcategorys extends BaseModel
                 ->update(['status' => -1]);
             $validateRes = ['tag' => 1, 'message' => '数据删除成功'];
         } else {
-            $level = isset($input['level'])? $input['level'] : 1;
+            $level = isset($input['level'])? intval($input['level']) : 1;
             $str_parent_id = "parent_id_".$level;
             $saveData = [
                 'cat_name' => isset($input['cat_name'])?$input['cat_name']:'',

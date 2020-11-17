@@ -29,12 +29,14 @@ class Xbrands extends BaseModel
     {
         $where = [['b.status', '>', -1]];
         if ($catID){$where[] = ['b.cat_id','=',$catID];}
+        if ($search){
+            $where[] = ['brand_name', 'like', '%' . $search . '%'];
+        }
         $res = $this
             ->field('b.*,c.cat_name')
             ->alias('b')
             ->join('xcategorys c','c.cat_id = b.cat_id')
             ->where($where)
-            ->whereLike('brand_name', '%' . $search . '%')
             ->order(['list_order' => 'asc', 'id' => 'desc'])
             ->limit($limit * ($curr_page - 1), $limit)
             ->select();
@@ -60,12 +62,14 @@ class Xbrands extends BaseModel
     {
         $where = [['b.status', '>', -1]];
         if ($catID){$where[] = ['b.cat_id','=',$catID];}
+        if ($search){
+            $where[] = ['brand_name', 'like', '%' . $search . '%'];
+        }
         $count = $this
             ->field('b.id')
             ->alias('b')
             ->join('xcategorys c','c.cat_id = b.cat_id')
             ->where($where)
-            ->whereLike('brand_name', '%' . $search . '%')
             ->count('id');
         return $count;
     }

@@ -124,8 +124,8 @@ class SpecInfo extends CmsBase
         $search = $request->param('str_search',null);
         $this->page_limit = 5;
         if ($request->isGet()){
-            $details = $this->model->getSpecDetailsBySepcIDForPage($curr_page,$this->page_limit,$search,$spec_id);
-            $record_num = $this->model->getSpecDetailsBySepcIDCount($search,$spec_id);
+            $details = $this->model->getSpecDetailsBySpecIDForPage($curr_page,$this->page_limit,$search,$spec_id);
+            $record_num = $this->model->getSpecDetailsBySpecIDCount($search,$spec_id);
             return view('details',[
                 'details' => $details,
                 'id' => $spec_id,
@@ -134,7 +134,7 @@ class SpecInfo extends CmsBase
                 'search' => $search
             ]);
         }else{
-            $details = $this->model->getSpecDetailsBySepcIDForPage($curr_page,$this->page_limit,$search,$spec_id);
+            $details = $this->model->getSpecDetailsBySpecIDForPage($curr_page,$this->page_limit,$search,$spec_id);
             return showMsg(1,'success',$details);
         }
     }

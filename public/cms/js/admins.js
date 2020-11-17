@@ -19,7 +19,7 @@ function ToAjaxOpForPageAdmins(toUrl,postData) {
                         "                <td class=\"td-item\"><img class='layui-circle' src='"+e.picture+"'></td>\n" +
 
                         "                <td>"+e.role_tip+"</td>\n"+
-                        "                <td>"+e.created_at +"</td>\n" +
+                        "                <td><span class='span-created_at'>"+e.created_at +"</span></td>\n" +
                         "                <td>" +e.status_tip +"</td>\n" +
                         "                <td>\n" +
                         "                    <div class=\"layui-btn-group\">\n" +

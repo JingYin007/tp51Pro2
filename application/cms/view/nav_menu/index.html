@@ -65,10 +65,10 @@
         <td>{$vo['id']}</td>
         <td class="title">{$vo['name']}</td>
         <td class="icon"><img class="layui-circle" src="{$vo['icon']}"></td>
-        <td>{$vo['action']}</td>
+        <td><span class="span-action">{$vo['action']}</span></td>
         <td class="parent">{$vo['parent_name']}</td>
         <td>{$vo['list_order']}</td>
-        <td>{$vo['created_at']}</td>
+        <td><span class="span-created_at">{$vo['created_at']}</span></td>
         <td>{php} echo $vo['status_tip']{/php}</td>
         <td>
             <div class="layui-btn-group">
@@ -97,7 +97,12 @@
     .table-tbody-normal .title {
         color: #7274A7;
     }
-
+    .span-created_at{
+        color: #9b95c9;
+    }
+    .span-action{
+        color: #f8b9b7;
+    }
     .icon img {
         width: 56px;
         height: 56px;

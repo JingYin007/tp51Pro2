@@ -69,7 +69,7 @@ class Xskus extends BaseModel
     public function getSKUDataByGoodsID($goodsID = 0)
     {
         $skuData = $this
-            ->field("*")
+            ->field("sku_id,goods_id,sku_img,sku_status,spec_name,spec_info,selling_price,stock,sold_num")
             ->where([["goods_id", '=', intval($goodsID)], ["sku_status", '>', -1]])
             ->order('sku_status','desc')
             ->select();

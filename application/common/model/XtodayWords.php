@@ -69,10 +69,13 @@ class XtodayWords extends BaseModel
      */
     public function getTodayWordsCount($search = null)
     {
+        $where[]  = ['status','=',1];
+        if ($search){
+            $where[] = ['from', 'like', '%' . $search . '%'];
+        }
         $res = $this
             ->field('id')
-            ->where("status", 1)
-            ->whereLike('from', '%' . $search . '%')
+            ->where($where)
             ->count();
         return $res;
     }
@@ -85,11 +88,14 @@ class XtodayWords extends BaseModel
      */
     public function getTodayWordsForPage($curr_page, $limit, $search = null)
     {
+        $where[]  = ['status','=',1];
+        if ($search){
+            $where[] = ['from', 'like', '%' . $search . '%'];
+        }
         $res = $this
             ->field('*')
             ->order('id desc')
-            ->where('status', 1)
-            ->whereLike('from', '%' . $search . '%')
+            ->where($where)
             ->limit($limit * ($curr_page - 1), $limit)
             ->select();
         foreach ($res as $key => $v) {

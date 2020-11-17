@@ -52,7 +52,7 @@
             <img src="{$vo['picture']}" class="layui-circle">
         </td>
         <td>{php} echo $vo['role_tip']{/php}</td>
-        <td>{$vo['created_at']}</td>
+        <td><span class="span-created_at">{$vo['created_at']}</span></td>
         <td>{php} echo $vo['status_tip']{/php}</td>
         <td>
             <div class="layui-btn-group">
@@ -78,6 +78,9 @@
     }
     .table-tbody-normal .title{
         color: #7274A7;
+    }
+    .span-created_at{
+        color: #f8b9b7;
     }
     .table-tbody-normal .td-item img:hover {
         transition: all 0.6s;

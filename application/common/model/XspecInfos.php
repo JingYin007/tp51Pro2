@@ -32,12 +32,14 @@ class XspecInfos extends BaseModel
         $where = [['s1.status', '=', 1], ['s1.parent_id', '=', 0]];
         if ($catID){$where[] =  ['s1.cat_id', '=', isset($catID)?$catID:null];}
         if ($specID){$where[] =  ['s1.spec_id', '=', isset($specID)?$specID:null];}
+        if ($search){
+            $where[] = ['s1.spec_name|s1.mark_msg', 'like', '%' . $search . '%'];
+        }
         $res = $this
             ->alias("s1")
-            ->field('s1.*,c.cat_name')
+            ->field('s1.spec_id,spec_name,mark_msg,s1.list_order,c.cat_name')
             ->join('xcategorys c','c.cat_id = s1.cat_id')
             ->where($where)
-            ->whereLike('s1.spec_name|s1.mark_msg', '%' . $search . '%')
             ->order(['s1.list_order' => 'asc', 's1.spec_id' => 'desc'])
             ->limit($limit * ($curr_page - 1), $limit)
             ->select();
@@ -59,12 +61,14 @@ class XspecInfos extends BaseModel
         $where = [['s1.status', '=', 1], ['s1.parent_id', '=', 0]];
         if ($catID){$where[] =  ['s1.cat_id', '=', isset($catID)?$catID:null];}
         if ($specID){$where[] =  ['s1.spec_id', '=', isset($specID)?$specID:null];}
+        if ($search){
+            $where[] = ['s1.spec_name|s1.mark_msg', 'like', '%' . $search . '%'];
+        }
         $count = $this
             ->alias("s1")
             ->field('s1.spec_id')
             ->join('xcategorys c','c.cat_id = s1.cat_id')
             ->where($where)
-            ->whereLike('s1.spec_name|s1.mark_msg', '%' . $search . '%')
             ->count();
         return $count;
     }
@@ -103,7 +107,7 @@ class XspecInfos extends BaseModel
     public function getCmsSpecInfoByID($id)
     {
         $res = $this
-            ->field('*')
+            ->field('spec_id,spec_name,cat_id,mark_msg,list_order')
             ->where('spec_id', $id)
             ->find();
         return isset($res)?$res->toArray():[];
@@ -183,14 +187,13 @@ class XspecInfos extends BaseModel
      */
     public function getSpecInfoBySpecFst($specFstID = 0)
     {
-        $where = [['s1.status', '=', 1],
-            ['s1.parent_id', '=', $specFstID],
-            ['s1.parent_id', '>', 0]];
+        $where = [['status', '=', 1],
+            ['parent_id', '=', $specFstID],
+            ['parent_id', '>', 0]];
         $specList = $this
-            ->alias("s1")
-            ->field('s1.*')
+            ->field('spec_id,mark_msg,list_order')
             ->where($where)
-            ->order(['s1.list_order' => 'asc', 's1.spec_id' => 'desc'])
+            ->order(['list_order' => 'asc', 'spec_id' => 'desc'])
             ->select();
         foreach ($specList as $key => $value) {
             if ($value && $value['mark_msg']) {
@@ -200,28 +203,29 @@ class XspecInfos extends BaseModel
         return isset($specList) ? $specList->toArray() : [];
     }
 
-    public function getSpecDetailsBySepcIDForPage($curr_page, $limit = 1,
+    public function getSpecDetailsBySpecIDForPage($curr_page, $limit = 1,
                                                   $search = null, $specID = null)
     {
-        $where = [['s1.status', '=', 1], ['s1.parent_id', '=', $specID]];
+        $where = [['status', '=', 1], ['parent_id', '=', $specID]];
+        if ($search){
+            $where[] = ['spec_name', 'like', '%' . $search . '%'];
+        }
         $res = $this
-            ->alias("s1")
-            ->field('s1.*')
+            ->field('spec_id,spec_name,mark_msg,list_order')
             ->where($where)
-            ->whereLike('s1.spec_name', '%' . $search . '%')
-            ->order(['s1.list_order' => 'asc', 's1.spec_id' => 'desc'])
+            ->order(['list_order' => 'asc', 'spec_id' => 'desc'])
             ->limit($limit * ($curr_page - 1), $limit)
             ->select();
         return isset($res)?$res->toArray():[];
     }
-    public function getSpecDetailsBySepcIDCount($search = null, $specID = null){
-        $where = [['s1.status', '=', 1], ['s1.parent_id', '=', $specID]];
+    public function getSpecDetailsBySpecIDCount($search = null, $specID = null){
+        $where = [['status', '=', 1], ['parent_id', '=', $specID]];
+        if ($search){
+            $where[] = ['spec_name', 'like', '%' . $search . '%'];
+        }
         $count = $this
-            ->alias("s1")
-            ->field('s1.*')
             ->where($where)
-            ->whereLike('s1.spec_name', '%' . $search . '%')
-            ->count();
+            ->count('spec_id');
         return $count;
     }
 

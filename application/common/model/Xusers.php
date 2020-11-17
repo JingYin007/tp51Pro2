@@ -20,10 +20,13 @@ class Xusers extends BaseModel
      * @return array
      */
     public function getCmsUsersForPage($curr_page = 1, $page_limit = 1, $search = null,$user_type = null){
+        $where[]  = ['user_type','=',$user_type];
+        if ($search){
+            $where[] = ['auth_tel|nick_name', 'like', '%' . $search . '%'];
+        }
         $res = $this
             ->field("*,from_unixtime(reg_time) reg_time2 ")
-            ->where('auth_tel|nick_name', 'like', '%' . $search . '%')
-            ->where("user_type",$user_type)
+            ->where($where)
             ->order(['reg_time' => 'desc'])
             ->limit($page_limit * ($curr_page - 1), $page_limit)
             ->select();
@@ -73,10 +76,13 @@ class Xusers extends BaseModel
      * @return float|string
      */
     public function getCmsUsersCount($search = null,$user_type = null){
+        $where[]  = ['user_type','=',$user_type];
+        if ($search){
+            $where[] = ['auth_tel|nick_name', 'like', '%' . $search . '%'];
+        }
         $count = $this
             ->field("*")
-            ->where('auth_tel|nick_name', 'like', '%' . $search . '%')
-            ->where("user_type",$user_type)
+            ->where($where)
             ->count();
         return $count;
     }

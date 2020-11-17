@@ -55,14 +55,16 @@
                        value="{$vo.list_order}" class="layui-input list_order"/>
             </td>
             <td>
-                <button class="layui-btn layui-btn-sm" type="button" title="删除"
-                        onclick="delPostRecord('{$vo.spec_id}')">
-                    <i class="layui-icon">&#xe640;</i>
-                </button>
-                <button class="layui-btn layui-btn-sm" type="button" title="更新"
-                        onclick="updateThemeGoods('{$vo.spec_id}')">
-                    <i class="layui-icon">&#xe669;</i>
-                </button>
+                <div class="layui-btn-group">
+                    <button class="layui-btn layui-btn-sm layui-btn-danger" type="button" title="删除"
+                            onclick="delPostRecord('{$vo.spec_id}')">
+                        <i class="layui-icon">&#xe640;</i>
+                    </button>
+                    <button class="layui-btn layui-btn-sm layui-btn-warm" type="button" title="更新"
+                            onclick="updateThemeGoods('{$vo.spec_id}')">
+                        <i class="layui-icon">&#xe669;</i>
+                    </button>
+                </div>
             </td>
     </tr>
     {/volist}

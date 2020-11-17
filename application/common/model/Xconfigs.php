@@ -46,10 +46,13 @@ class Xconfigs extends BaseModel
      */
     public function getConfigsCount($search = null, $input_type = 'text')
     {
+        $where = [["conf_type", '=', 0],["status", '=', 0], ['input_type', '=', $input_type]];
+        if ($search){
+            $where[] = ['title|tag', 'like', '%' . $search . '%'];
+        }
         $res = $this
             ->field('id')
-            ->where([["conf_type", '=', 0],["status", '=', 0], ['input_type', '=', $input_type]])
-            ->where('title|tag', 'like', '%' . $search . '%')
+            ->where($where)
             ->count();
         return $res;
     }
@@ -96,10 +99,13 @@ class Xconfigs extends BaseModel
      */
     public function getConfigsForPage($curr_page, $limit, $search = null, $input_type = 'text')
     {
+        $where = [["conf_type", '=', 0],["status", '=', 0], ['input_type', '=', $input_type]];
+        if ($search){
+            $where[] = ['title|tag', 'like', '%' . $search . '%'];
+        }
         $res = $this
             ->field('*')
-            ->where([["conf_type", '=', 0],["status", '=', 0], ['input_type', '=', $input_type]])
-            ->where('title|tag', 'like', '%' . $search . '%')
+            ->where($where)
             ->order(['list_order' => 'asc', 'id' => 'desc'])
             ->limit($limit * ($curr_page - 1), $limit)
             ->select();

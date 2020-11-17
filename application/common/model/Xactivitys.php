@@ -47,10 +47,12 @@ class Xactivitys extends BaseModel
     {
         $where = [['id', '>', '0'],['status','=',0]];
         if ($actType){$where[] = ['act_type','=',$actType];}
+        if ($search){
+            $where[] = ['title', 'like', '%' . $search . '%'];
+        }
         $res = $this
             ->field('id')
             ->where($where)
-            ->whereLike('title', '%' . $search . '%')
             ->count();
         return $res;
     }
@@ -72,10 +74,12 @@ class Xactivitys extends BaseModel
             $order["id"] = "desc";
         }
         if ($actType){$where[] = ['act_type','=',$actType];}
+        if ($search){
+            $where[] = ['title', 'like', '%' . $search . '%'];
+        }
         $res = $this
             ->field('*')
             ->where($where)
-            ->whereLike('title', '%' . $search . '%')
             ->order($order)
             ->limit($limit * ($curr_page - 1), $limit)
             ->select();

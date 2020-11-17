@@ -26,13 +26,15 @@ class Xadmins extends BaseModel
     public function getAdminsForPage($curr_page, $limit,$search = null)
     {
         $where[] = ["a.status",'<>',-1];
+        if ($search){
+            $where[] = ['a.user_name|a.content', 'like', '%' . $search . '%'];
+        }
         $res = $this
             ->alias('a')
             ->field('a.*,ar.user_name role_name')
             ->join('xadmin_roles ar', 'a.role_id = ar.id')
             ->order('a.id', 'desc')
             ->where($where)
-            ->whereLike('a.user_name|a.content', '%' . $search . '%')
             ->limit($limit * ($curr_page - 1), $limit)
             ->select();
         foreach ($res as $key => $v) {
@@ -63,7 +65,7 @@ class Xadmins extends BaseModel
             $res[$key]['status_tip'] = "<span class=\"layui-badge layui-bg-$statusColor\">$statusTip</span>";
             $res[$key]['picture'] = imgToServerView($res[$key]['picture']);
         }
-        return $res;
+        return isset($res)?$res->toArray():[];
     }
 
     /**
@@ -75,13 +77,15 @@ class Xadmins extends BaseModel
     {
 
         $where[] = ["a.status",'<>',-1];
+        if ($search){
+            $where[] = ['a.user_name|a.content', 'like', '%' . $search . '%'];
+        }
         $res = $this
             ->alias('a')
             ->field('a.*,ar.user_name role_name')
             ->join('xadmin_roles ar', 'a.role_id = ar.id')
             ->order('a.id', 'desc')
             ->where($where)
-            ->whereLike('a.user_name|a.content', '%' . $search . '%')
             ->count();
         return $res;
     }

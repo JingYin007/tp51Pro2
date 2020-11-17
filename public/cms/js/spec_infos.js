@@ -82,14 +82,16 @@ function ToAjaxOpForPageSpecDetails(toUrl,postData) {
                         "                       value=\""+e.list_order+"\" class=\"layui-input list_order\"/>\n" +
                         "            </td>\n" +
                         "            <td>\n" +
-                        "                <button class=\"layui-btn layui-btn-sm\" type=\"button\" title=\"删除\"\n" +
+                        "                <div class='layui-btn-group'>" +
+                        "                <button class=\"layui-btn layui-btn-sm layui-btn-danger\" type=\"button\" title=\"删除\"\n" +
                         "                        onclick=\"delSpecInfo('"+e.spec_id+"')\">\n" +
                         "                    <i class=\"layui-icon\">&#xe640;</i>\n" +
                         "                </button>\n" +
-                        "                <button class=\"layui-btn layui-btn-sm\" type=\"button\"  title=\"更新\"\n" +
+                        "                <button class=\"layui-btn layui-btn-sm layui-btn-warm\" type=\"button\"  title=\"更新\"\n" +
                         "                        onclick=\"updateThemeGoods('"+e.spec_id+"')\">\n" +
                         "                    <i class=\"layui-icon\">&#xe669;</i>\n" +
                         "                </button>\n" +
+                        "                </div>" +
                         "            </td>\n" +
                         "    </tr>";
                 });
