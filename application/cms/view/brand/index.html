@@ -35,6 +35,15 @@
         </button>
     </form>
 </div>
+<div id="example" class="example">
+        <i class="layui-icon">&#xe615;</i>
+</div>
+<div id="example2" class="example2"></div>
+
+<button class="layui-btn layui-btn-sm layui-btn-danger"
+        onclick="ahhaha()">react</button>
+
+
 
 <table class="layui-table table-body" lay-even="" lay-skin="row">
     <colgroup>
@@ -81,6 +90,7 @@
     </tbody>
 </table>
 <div id="demo2-1"></div>
+
 <style>
 
     .table-body, #demo2-1 {
@@ -110,4 +120,44 @@
 
 {block name='single-content'}
 <script src="__CMS__/js/categorys.js"></script>
+{include file="layouts/_reactJs" /}
+
+<script type="text/babel">
+
+    class Clock extends React.Component{
+        render(){
+            return(
+                <div>
+                    <h1>Hello, {this.props.word}</h1>
+                    <h2>现在是 {this.props.date.toLocaleTimeString()}.</h2>
+                </div>
+            );
+        }
+
+
+    }
+    function ahhaha(){
+        clearInterval(timerxxx);
+        ReactDOM.render(
+            <Clock date={new Date()} word={"你大爷!"} />,
+            document.getElementById('example2')
+        );
+    }
+    function refresh(){
+        ReactDOM.render(
+            <Clock date={new Date()} word="xxxNiMei!!!" />,
+            document.getElementById('example2')
+        );
+    }
+
+
+    const element = <h1>这是咋哩!</h1>;
+    ReactDOM.render(
+        element,
+        document.getElementById('example')
+    );
+
+    var timerxxx = setInterval(refresh, 1000);
+
+</script>
 {/block}
