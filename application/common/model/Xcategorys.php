@@ -200,14 +200,14 @@ class Xcategorys extends BaseModel
      * @param int $level
      * @return array
      */
-    public function digui($data, $parent_id = 0, $level = 0)
+    public function diGui($data, $parent_id = 0, $level = 0)
     {
         static $arr = array();
         foreach ($data as $k => $v) {
             if (($v['cat_id'] != 0) && ($v['parent_id'] == $parent_id)) {
                 $v['level'] = $level;
                 $arr[] = $v;
-                $this->digui($data, $v['cat_id'], $level + 1);
+                $this->diGui($data, $v['cat_id'], $level + 1);
             }
         }
         return $arr;

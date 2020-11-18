@@ -66,7 +66,7 @@ class Category extends CmsBase
     /**
      * 更新分类数据
      * @param Request $request
-     * @param $id 文章ID
+     * @param $id 分类ID
      * @return \think\response\View|void
      */
     public function edit(Request $request, $id)
