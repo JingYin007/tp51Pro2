@@ -215,18 +215,14 @@ class Xcategorys extends BaseModel
 
     /**
      * 集成 待选商品分类数据
-     * @param int $tag
+     * @param int $level
      * @param int $parent_id
      * @return array
      */
-    public function getCmsToSelCategoryList($tag = 1,$parent_id = 1)
+    public function getCmsToSelCategoryList($level = 1,$parent_id = 0)
     {
-        $map = [['level', '=', $tag],['status', '=', 1]];
-        if ($tag == 1) {
-            $map[] = ['parent_id', '=', 0];
-        } else {
-            $map[] = ['parent_id', '=', $parent_id];
-        }
+        $map = [['level', '=', $level],['status', '=', 1]];
+        $map[] = ['parent_id', '=', $parent_id];
 
         $res = $this
             ->field('cat_id,cat_name')
@@ -235,12 +231,8 @@ class Xcategorys extends BaseModel
             ->select();
 
         foreach ($res as $key => $value){
-            $secThemes = $this->getCmsToSelCategoryList(2,$value['cat_id']);
-            foreach ($secThemes as $key2 => $value2){
-                $thirdThemes = $this->getCmsToSelCategoryList(3,$value2['cat_id']);
-                $secThemes[$key2]['children'] = $thirdThemes ;
-            }
-            $res[$key]['children'] = $secThemes;
+            $childRes = $this->getCmsToSelCategoryList(intval($level+1),intval($value['cat_id']));
+            $res[$key]['children'] = $childRes;
         }
         return isset($res) ? $res->toArray() : [];
     }

@@ -1,7 +1,7 @@
 [
   {
     "cat_id": 3,
-    "cat_name": "穿搭服饰A",
+    "cat_name": "穿搭服饰",
     "children": [
       {
         "cat_id": 16,
@@ -42,7 +42,7 @@
         "children": [
           {
             "cat_id": 18,
-            "cat_name": "扫地机器人A",
+            "cat_name": "扫地机器人",
             "children": []
           },
           {
@@ -58,7 +58,7 @@
         "children": [
           {
             "cat_id": 20,
-            "cat_name": "音箱\/音响A",
+            "cat_name": "音箱\/音响",
             "children": []
           },
           {
