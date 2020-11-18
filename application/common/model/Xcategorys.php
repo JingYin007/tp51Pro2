@@ -229,15 +229,16 @@ class Xcategorys extends BaseModel
         }
 
         $res = $this
-            ->field('cat_id,cat_name,parent_id')
+            ->field('cat_id,cat_name')
             ->where($map)
             ->order(["list_order"=>"asc","cat_id"=>'asc'])
             ->select();
+
         foreach ($res as $key => $value){
             $secThemes = $this->getCmsToSelCategoryList(2,$value['cat_id']);
             foreach ($secThemes as $key2 => $value2){
                 $thirdThemes = $this->getCmsToSelCategoryList(3,$value2['cat_id']);
-                $secThemes[$key2]['children'] = $thirdThemes;
+                $secThemes[$key2]['children'] = $thirdThemes ;
             }
             $res[$key]['children'] = $secThemes;
         }

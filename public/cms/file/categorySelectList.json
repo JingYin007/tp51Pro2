@@ -1,1 +1,106 @@
-[{"cat_id":3,"cat_name":"穿搭服饰","parent_id":0,"children":[{"cat_id":16,"cat_name":"男装","parent_id":3,"children":[{"cat_id":13,"cat_name":"衬衫","parent_id":16,"children":[]}]},{"cat_id":5,"cat_name":"服饰配件","parent_id":3,"children":[{"cat_id":14,"cat_name":"领带\/领结","parent_id":5,"children":[]}]}]},{"cat_id":1,"cat_name":"图书\/文娱","parent_id":0,"children":[]},{"cat_id":2,"cat_name":"电器数码","parent_id":0,"children":[{"cat_id":12,"cat_name":"生活电器","parent_id":2,"children":[{"cat_id":18,"cat_name":"扫地机器人","parent_id":12,"children":[]},{"cat_id":19,"cat_name":"吸尘器","parent_id":12,"children":[]}]},{"cat_id":7,"cat_name":"影音娱乐","parent_id":2,"children":[{"cat_id":20,"cat_name":"音箱\/音响A","parent_id":7,"children":[]},{"cat_id":21,"cat_name":"耳机\/耳麦","parent_id":7,"children":[]}]}]},{"cat_id":4,"cat_name":"美食\/饮料","parent_id":0,"children":[{"cat_id":6,"cat_name":"饮料冲调","parent_id":4,"children":[{"cat_id":10,"cat_name":"牛奶酸奶","parent_id":6,"children":[]},{"cat_id":9,"cat_name":"咖啡奶茶","parent_id":6,"children":[]}]},{"cat_id":15,"cat_name":"粮油调味","parent_id":4,"children":[{"cat_id":17,"cat_name":"食用油","parent_id":15,"children":[]}]}]}]
+[
+  {
+    "cat_id": 3,
+    "cat_name": "穿搭服饰A",
+    "children": [
+      {
+        "cat_id": 16,
+        "cat_name": "男装",
+        "children": [
+          {
+            "cat_id": 13,
+            "cat_name": "衬衫",
+            "children": []
+          }
+        ]
+      },
+      {
+        "cat_id": 5,
+        "cat_name": "服饰配件",
+        "children": [
+          {
+            "cat_id": 14,
+            "cat_name": "领带\/领结",
+            "children": []
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "cat_id": 1,
+    "cat_name": "图书\/文娱",
+    "children": []
+  },
+  {
+    "cat_id": 2,
+    "cat_name": "电器数码",
+    "children": [
+      {
+        "cat_id": 12,
+        "cat_name": "生活电器",
+        "children": [
+          {
+            "cat_id": 18,
+            "cat_name": "扫地机器人A",
+            "children": []
+          },
+          {
+            "cat_id": 19,
+            "cat_name": "吸尘器",
+            "children": []
+          }
+        ]
+      },
+      {
+        "cat_id": 7,
+        "cat_name": "影音娱乐",
+        "children": [
+          {
+            "cat_id": 20,
+            "cat_name": "音箱\/音响A",
+            "children": []
+          },
+          {
+            "cat_id": 21,
+            "cat_name": "耳机\/耳麦",
+            "children": []
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "cat_id": 4,
+    "cat_name": "美食\/饮料",
+    "children": [
+      {
+        "cat_id": 6,
+        "cat_name": "饮料冲调",
+        "children": [
+          {
+            "cat_id": 10,
+            "cat_name": "牛奶酸奶",
+            "children": []
+          },
+          {
+            "cat_id": 9,
+            "cat_name": "咖啡奶茶",
+            "children": []
+          }
+        ]
+      },
+      {
+        "cat_id": 15,
+        "cat_name": "粮油调味",
+        "children": [
+          {
+            "cat_id": 17,
+            "cat_name": "食用油",
+            "children": []
+          }
+        ]
+      }
+    ]
+  }
+]
