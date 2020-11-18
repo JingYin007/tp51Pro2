@@ -5,7 +5,6 @@ namespace app\cms\Controller;
 use app\common\controller\CmsBase;
 use app\common\model\Xcategorys;
 use think\Request;
-use think\Db;
 
 class Category extends CmsBase
 {
