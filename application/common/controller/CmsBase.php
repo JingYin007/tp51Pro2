@@ -58,7 +58,6 @@ class CmsBase extends Base
         };
     }
 
-
     /**
      * 检查权限
      * @param int $adminID
