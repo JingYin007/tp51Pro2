@@ -104,6 +104,9 @@ class Xadmins extends BaseModel
             ->join('xadmin_roles ar', 'ar.id = a.role_id')
             ->where('a.id', $id)
             ->find();
+        if ($res){
+            $res['picture'] = imgToServerView($res['picture']);
+        }
         return isset($res)?$res->toArray():[];
     }
 
