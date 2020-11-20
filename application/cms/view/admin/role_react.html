@@ -1,0 +1,126 @@
+{extend name='layouts/cms'}
+
+{block name='body-content'}
+
+<button class="layui-btn layui-btn-normal" op_url="{:url('cms/admin/addRole')}"
+        onclick="addForOpenPopups(this,'✚ 添加新角色','67%','')">
+    <i class="layui-icon">&#xe608;</i> 添加角色
+</button>
+<div class="layui-inline">
+    <div class="layui-input-inline">
+        <form class="form-search">
+            <input type="hidden" name="curr_page" class="curr_page" value="1">
+        </form>
+    </div>
+</div>
+
+<table class="layui-table table-body" lay-even="" lay-skin="row">
+    <colgroup>
+        <col width="20%">
+        <col width="20%">
+        <col width="10%">
+        <col width="20%">
+        <col width="15%">
+    </colgroup>
+    <thead>
+    <tr>
+        <th>角色名称</th>
+        <th>更新时间</th>
+        <th>排序</th>
+        <th>状态</th>
+        <th>操作</th>
+    </tr>
+    </thead>
+
+    <input type="hidden" class="op_url" value="{:url('cms/admin/editRole',['id'=>'opid'])}">
+
+    <tbody id="table-tbody-normal" class="table-tbody-normal"> </tbody>
+</table>
+<style>
+    .table-body{
+        width: 66%;
+        margin: auto;
+    }
+    .table-tbody-normal .title{
+        color: #7274A7;
+    }
+    .span-updated_at{
+        color: #f8b9b7;
+    }
+    .span-list_order{
+        color: #9999CC;
+    }
+</style>
+{/block}
+
+{block name='single-content'}
+
+{include file="layouts/_reactJs" /}
+<script type="text/babel">
+    class TableNormal extends React.Component{
+        // 构造函数的初始化数据处理
+        constructor(props) {
+            super(props);
+            this.state = {roleList:[]};
+        }
+
+        //组件进入后，在第一次渲染后调用
+        componentDidMount(){
+            //ajax 数据获取
+            var toUrl = "{:url('cms/admin/role')}";
+            $.post(toUrl,function (result){
+                var data = result.data;
+                if(data.length > 0){
+                    this.setState({
+                        roleList : data
+                    })
+                }
+            }.bind(this),'JSON');
+        }
+        //修改按钮点击事件
+        editForOpenPopups(role_id){
+            editForOpenPopups('✎ 角色信息修改',role_id, '67%', '');
+
+        }
+        //删除按钮的点击事件
+        delPostRecord(role_id,event){
+            //return event.preventDefault(); //如果不想后面的操作了
+            delPostRecord(role_id);
+        }
+        //当前组件元素渲染操作
+        render(){
+            return(
+                    <React.Fragment>
+                        {this.state.roleList.map((role) =>
+                            <tr key={role.id} className={"tr-normal-"+role.id}>
+                                <td className="title">{role.user_name}</td>
+                                <td><span className="span-updated_at">{role.updated_at}</span></td>
+                                <td><span className="span-list_order">{role.list_order}</span></td>
+                                <td><div dangerouslySetInnerHTML = {{ __html: role.status_tip}} /></td>
+                                <td>
+                                    <div className="layui-btn-group">
+                                        <button className="layui-btn layui-btn-sm layui-btn-normal" title="编辑"
+                                                onClick={this.editForOpenPopups.bind(this,role.id)}>
+                                            <i className="layui-icon">&#xe642;</i>
+                                        </button>
+                                        <button className="layui-btn layui-btn-sm layui-btn-danger" title="删除"
+                                                onClick={this.delPostRecord.bind(this,role.id)}>
+                                            <i className="layui-icon">&#xe640;</i>
+                                        </button>
+                                    </div>
+                                </td>
+                            </tr>
+                        )}
+
+                    </React.Fragment>
+                )
+        }
+    }
+    //ReactDOM 的渲染操作
+    ReactDOM.render(
+        <TableNormal />,
+        document.getElementById("table-tbody-normal")
+    )
+
+</script>
+{/block}

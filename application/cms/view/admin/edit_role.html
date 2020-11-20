@@ -17,6 +17,15 @@
             <input type="radio" name="status" value="0" title="无效" {$role.status==0?"checked":""}>
         </div>
     </div>
+    <div class="layui-form-item">
+        <label class="layui-form-label">排序权重：</label>
+        <div class="layui-input-inline">
+            <input type="number" name="list_order"
+                   value="{$role['list_order']}"
+                   placeholder="9" autocomplete="off" class="layui-input">
+        </div>
+        <div class="layui-form-mid layui-word-aux">(数字越小，排序越靠前)</div>
+    </div>
 
     <div class="layui-form-item layui-form-text">
 

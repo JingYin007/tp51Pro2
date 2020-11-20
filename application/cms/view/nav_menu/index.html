@@ -32,22 +32,20 @@
 
 <table class="layui-table table-body" lay-even="" lay-skin="row">
     <colgroup>
-        <col width="5%">
-        <col width="10%">
-        <col width="8%">
-        <col width="12%">
-        <col width="10%">
-        <col width="5%">
         <col width="12%">
         <col width="8%">
+        <col width="15%">
+        <col width="10%">
+        <col width="5%">
+        <col width="12%">
+        <col width="10%">
         <col width="15%">
     </colgroup>
     <thead>
     <tr>
-        <th>ID</th>
         <th>导航标题</th>
         <th>图标</th>
-        <th>action</th>
+        <th>Action</th>
         <th>父级菜单</th>
         <th>排序</th>
         <th>创建时间</th>
@@ -62,12 +60,11 @@
            page_url="{:url('cms/navMenu/index')}">
     {volist name="menus" id="vo"}
     <tr class="tr-normal-{$vo['id']}">
-        <td>{$vo['id']}</td>
         <td class="title">{$vo['name']}</td>
         <td class="icon"><img class="layui-circle" src="{$vo['icon']}"></td>
         <td><span class="span-action">{$vo['action']}</span></td>
         <td class="parent">{$vo['parent_name']}</td>
-        <td>{$vo['list_order']}</td>
+        <td><span class="span-list_order">{$vo['list_order']}</span></td>
         <td><span class="span-created_at">{$vo['created_at']}</span></td>
         <td>{php} echo $vo['status_tip']{/php}</td>
         <td>
@@ -107,9 +104,18 @@
         width: 56px;
         height: 56px;
     }
-
     .table-tbody-normal .parent {
         color: #c17551;
+    }
+    .span-list_order{
+        color: #b4d7ff;
+    }
+    .table-body{
+        width: 86%;
+        margin: auto;
+    }
+    .table-body{
+        margin-top: 30px;
     }
 </style>
 {/block}

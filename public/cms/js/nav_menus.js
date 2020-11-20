@@ -28,12 +28,11 @@ function ToAjaxOpForNavMenusPage(toUrl,postData) {
                     var parentID = e.parent_id;
                     str_html +=
                         "<tr class=\"tr-normal-"+e.id+"\">\n" +
-                        "                <td>"+e.id+"</td>\n" +
                         "                <td class='title'>"+e.name+"</td>\n" +
                         "                <td class=\"icon\"><img class='layui-circle' src='"+e.icon+"'></td>\n" +
                         "                <td><span class='span-action'>"+e.action+"</span></td>\n" +
                         "                <td class='parent'>"+e.parent_name+"</td>\n" +
-                        "                <td>"+e.list_order+"</td>\n" +
+                        "                <td><span class='span-list_order'>"+e.list_order+"</span></td>\n" +
                         "                <td><span class='span-created_at'>"+e.created_at+"</span></td>\n" +
                         "                <td>"+e.status_tip +"</td>\n" +
                         "                <td>\n" +

@@ -99,12 +99,17 @@ class Admin extends CmsBase
      * 读取角色列表
      * @return \think\response\View
      */
-    public function role()
+    public function role(Request $request)
     {
-        $adminRoles = $this->ar_model->getAllRoles();
-        return view('role', [
-            'roles' => $adminRoles
-        ]);
+        if ($request->isGet()){
+            //$adminRoles = $this->ar_model->getAllRoleList();
+            $adminRoles = [];
+            return view('role_react', ['roles' => $adminRoles]);
+        }else{
+            $adminRoles = $this->ar_model->getAllRoleList();
+            return showMsg(1,'roleList',$adminRoles);
+        }
+
 
     }
 

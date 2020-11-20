@@ -31,19 +31,18 @@ class XadminRoles extends BaseModel
     /*
      * 获取所有的角色列表
      */
-    public function getAllRoles()
+    public function getAllRoleList()
     {
         $res = $this
+            ->field('id,user_name,updated_at,list_order,status')
             ->where([['status','>',-1]])
-            ->order(['updated_at'=>'desc'])
+            ->order(['list_order'=>'asc'])
             ->select();
         foreach ($res as $key => $v) {
-            $role_name = $v['user_name'];
-            $res[$key]['role_tip'] = "$role_name";
             if ($v['status'] == 1) {
                 $res[$key]['status_tip'] = "<span class=\"layui-badge layui-bg-blue\">正常</span>";
             } else {
-                $res[$key]['status_tip'] = "<span class=\"layui-badge layui-bg-cyan\">删除</span>";
+                $res[$key]['status_tip'] = "<span class=\"layui-badge layui-bg-cyan\">失效</span>";
             }
         }
         return isset($res) ? $res->toArray(): [];
@@ -66,6 +65,7 @@ class XadminRoles extends BaseModel
                 'user_name' => $user_name,
                 'nav_menu_ids' => $input['nav_menu_ids'] ? $input['nav_menu_ids'] : '',
                 'updated_at' => date("Y-m-d H:i:s", time()),
+                'list_order' => intval($input['list_order']),
                 'status' => intval($input['status']),
             ];
             $tokenData = ['__token__' => isset($input['__token__']) ? $input['__token__'] : '',];
@@ -104,6 +104,7 @@ class XadminRoles extends BaseModel
                     'user_name' => $input['user_name'],
                     'status' => $input['status'],
                     'nav_menu_ids' => $input['nav_menu_ids'],
+                    'list_order' => intval($input['list_order']),
                 ];
                 $tokenData = ['__token__' => isset($input['__token__']) ? $input['__token__'] : '',];
                 $validateRes = $this->validate($this->validate, $saveData, $tokenData);
