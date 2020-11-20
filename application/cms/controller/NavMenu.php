@@ -53,15 +53,19 @@ class NavMenu extends CmsBase
      * 增加新导航标题 功能
      * @param Request $request
      * @return \think\response\View|void
+     * @throws \think\db\exception\DataNotFoundException
+     * @throws \think\db\exception\ModelNotFoundException
+     * @throws \think\exception\DbException
      */
     public function add(Request $request)
     {
-        $rootMenus = $this->menuModel->getNavMenus();
+
         if ($request->isPost()) {
             $input = $request->param();
             $opRes = $this->menuModel->addNavMenu($input);
             return showMsg($opRes['tag'], $opRes['message']);
         } else {
+            $rootMenus = $this->menuModel->getAllVisibleMenus();
             return view('add', [
                 'rootMenus' => $rootMenus,
             ]);
@@ -104,7 +108,7 @@ class NavMenu extends CmsBase
             return showMsg($opRes['tag'], $opRes['message']);
         } else {
             $menuData = $this->menuModel->getNavMenuByID($id);
-            $rootMenus = $this->menuModel->getNavMenus();
+            $rootMenus = $this->menuModel->getAllVisibleMenus();
             return view('edit', [
                 'rootMenus' => $rootMenus,
                 'menuData' => $menuData

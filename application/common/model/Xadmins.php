@@ -253,15 +253,15 @@ class Xadmins extends BaseModel
 
     /**
      * 获取当前管理员权限下的 导航菜单
-     * @param int $id
+     * @param int $admin_id
      * @return mixed
      */
-    public function getAdminNavMenus($id = 1)
+    public function getAdminNavMenus($admin_id = 1)
     {
         $nav_menu_ids = $this
             ->alias('a')
             ->join('xadmin_roles ar', 'ar.id = a.role_id')
-            ->where([['a.id', '=', $id], ['a.status', '=', 1]])
+            ->where([['a.id', '=', $admin_id], ['a.status', '=', 1]])
             ->value('nav_menu_ids');
         return $nav_menu_ids;
     }
@@ -306,7 +306,7 @@ class Xadmins extends BaseModel
     }
 
     /**
-     * 检查 管理员是否对此URL有管理权限
+     * 检查 管理员是否对此 URL 有管理权限
      * @param int $adminID
      * @param string $authUrl
      * @return bool
@@ -326,7 +326,7 @@ class Xadmins extends BaseModel
                     if ($checkTag) {
                         break;
                     } else {
-                        //此时判断其的 下级权限中是否满足 当前访问的权限
+                        //此时判断 下级权限中是否满足 当前访问的权限
                         $childMenus = Db::name('xnav_menus')
                             ->field("n2.id")
                             ->alias('n1')

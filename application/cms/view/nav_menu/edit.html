@@ -42,7 +42,7 @@
         <div class="layui-input-inline sel-parent-msg sel-parent-msg-S">
             <select name="parent_id_S" lay-verify="required">
                 {volist name="rootMenus" id="vo"}
-                <option value="{$vo.id}" {if ($menuData.parent_id == $vo.id)}selected{/if}>{$vo.name}</option>
+                    <option value="{$vo.id}" {if ($menuData.parent_id == $vo.id)}selected{/if}>{$vo.name}</option>
                 {/volist}
             </select>
         </div>

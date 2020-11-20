@@ -40,12 +40,12 @@
                     <td class="td-menu-parent td-nav-menu">
                         <p>{$vo['name']}</p>
                         <input type="checkbox" class="cb-nav-menu" value="{$vo['id']}"
-                               lay-skin="switch" lay-text="ON|OFF" checked>
+                               lay-skin="switch" lay-text="ON|OFF">
                     </td>
                     <td class="td-menu-child td-nav-menu">
                         {volist name="vo.child" id="voi"}
                         <input type="checkbox" class="cb-nav-menu" value="{$voi['id']}"
-                               title="{$voi['name']}" checked>
+                               title="{$voi['name']}">
                         {/volist}
                     </td>
                 </tr>

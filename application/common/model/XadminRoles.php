@@ -65,7 +65,7 @@ class XadminRoles extends BaseModel
                 'user_name' => $user_name,
                 'nav_menu_ids' => $input['nav_menu_ids'] ? $input['nav_menu_ids'] : '',
                 'updated_at' => date("Y-m-d H:i:s", time()),
-                'list_order' => intval($input['list_order']),
+                'list_order' => intval($input['list_order'])?intval($input['list_order']):9,
                 'status' => intval($input['status']),
             ];
             $tokenData = ['__token__' => isset($input['__token__']) ? $input['__token__'] : '',];
@@ -140,10 +140,10 @@ class XadminRoles extends BaseModel
      * @param $id
      * @return array|null|\PDOStatement|string|Model
      */
-    public function getRoleData($id)
+    public function getRoleInfo($id)
     {
         $res = $this
-            ->field('*')
+            ->field('id,user_name,status,list_order,nav_menu_ids')
             ->where('id', $id)
             ->find();
         return $res;

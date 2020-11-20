@@ -23,25 +23,41 @@ class XnavMenus extends BaseModel
     }
 
     /**
+     * 获取所有可显示的 菜单
+     * @param int $parent_id 父级ID,如果是 0，则为主菜单（一级菜单）
+     * @param int $type 菜单类型  0：导航菜单；1：权限菜单
+     * @return array|array[]|\array[][]
+     * @throws \think\db\exception\DataNotFoundException
+     * @throws \think\db\exception\ModelNotFoundException
+     * @throws \think\exception\DbException
+     */
+    public function getAllVisibleMenus($parent_id = 0,$type = 0){
+        $where = [
+            ['parent_id', '=', $parent_id],['type','=',$type],['status', '=', 1]
+        ];
+        $menuRes = $this
+            ->field('id,parent_id,name,icon,action')
+            ->where($where)
+            ->order('list_order', 'asc')
+            ->select();
+        foreach ($menuRes as $key => $value){
+            $menuRes[$key]['icon'] = imgToServerView($value['icon']);
+        }
+        return isset($menuRes)? $menuRes->toArray() : [];
+    }
+
+    /**
      * 获取所有正常状态的菜单列表
      * @return mixed
      */
-    public function getNavMenus()
+    public function getAllNavMenus()
     {
-        $res = $this
-            ->field('*')
-            ->where([['id', '>', 0], ['parent_id', '=', 0], ['status', '=', 1]])
-            ->order('list_order', 'asc')
-            ->select();
+        $res = $this->getAllVisibleMenus();
         foreach ($res as $key => $value) {
             $parent_id = $value['id'];
-            $childRes = $this
-                ->where([['parent_id', '=', $parent_id], ["status", '=', 1], ["type", '=', 0]])
-                ->order('list_order', 'asc')
-                ->select();
-            $res[$key]['child'] = $childRes;
+            $res[$key]['child'] = $this->getAllVisibleMenus($parent_id);
         }
-        return isset($res)?$res->toArray():[];
+        return isset($res)? $res : [];
     }
 
     /**
@@ -70,7 +86,7 @@ class XnavMenus extends BaseModel
         } else {
             $str = $this->getAdminMenus($cmsAID);
             $arr = explode('|', $str);
-            $rootMenus = $this->getAllRootMenus();
+            $rootMenus = $this->getAllVisibleMenus();
             $res = $this->dealForAdminShowMenus($rootMenus, $arr);
             return is_array($res) ? $res: null;
         }
@@ -92,20 +108,6 @@ class XnavMenus extends BaseModel
     }
 
     /**
-     * 获取所有可显示的 根级菜单
-     * @return array|\PDOStatement|string|\think\Collection
-     */
-    public function getAllRootMenus()
-    {
-        $res = $this
-            ->field('*')
-            ->where([['id', '>', 0], ['parent_id', '=', 0], ['status', '=', 1], ['type', '=', 0]])
-            ->order('list_order', 'asc')
-            ->select();
-        return isset($res)?$res->toArray():[];
-    }
-
-    /**
      * 处理管理员 权限所要展示的菜单项
      * @param $rootMenus
      * @param $arr
@@ -114,39 +116,23 @@ class XnavMenus extends BaseModel
     public function dealForAdminShowMenus($rootMenus, $arr)
     {
         foreach ($rootMenus as $key => $value) {
-            $parent_id = $value['id'];
-            if (!in_array($parent_id, $arr)) {
+            $parent_menu_id = intval($value['parent_id']);
+            $menu_id = intval($value['id']);
+            if (!in_array($menu_id, $arr)) {
                 unset($rootMenus[$key]);
             } else {
-                $childRes = $this
-                    ->where('parent_id', $parent_id)
-                    ->where('status', 1)
-                    ->order('list_order', 'asc')
-                    ->select();
-                $childRes = $this->dealForAdminShowMenus2($childRes, $arr);
-                $rootMenus[$key]['child'] = $childRes;
+                //此为一级菜单，需继续读取其子集菜单
+                if ($parent_menu_id == 0){
+                    $childRes = $this->getAllVisibleMenus($menu_id);
+                    $childDealRes = $this->dealForAdminShowMenus($childRes, $arr);
+                    $rootMenus[$key]['child'] = $childDealRes;
+                }else{
+                    break;
+                }
             }
         }
         return $rootMenus;
     }
-
-    /**
-     * 嘚瑟 进一步处理
-     * @param $res
-     * @param $arr
-     * @return mixed
-     */
-    public function dealForAdminShowMenus2($res, $arr)
-    {
-        foreach ($res as $key => $value) {
-            $parent_id = $value['id'];
-            if (!in_array($parent_id, $arr)) {
-                unset($res[$key]);
-            }
-        }
-        return $res;
-    }
-
 
     /**
      * 获取全部可修改状态的 导航菜单数据
@@ -156,10 +142,8 @@ class XnavMenus extends BaseModel
     public function getNavMenuByID($id = 0)
     {
         $res = $this
-            ->alias('nm')
-            ->field('nm.*')
-            //->join('xnav_menus nm2', 'nm.parent_id = nm2.id')
-            ->where('nm.id', $id)
+            ->field('id,name,action,icon,status,parent_id,list_order,type')
+            ->where('id', $id)
             ->find();
         return isset($res)?$res->toArray():[];
     }
@@ -182,9 +166,8 @@ class XnavMenus extends BaseModel
             $where[] = ['name', 'like', '%' . $search . '%'];
         }
         $res = $this
-            ->field('*')
             ->where($where)
-            ->count();
+            ->count('id');
         return $res;
     }
 
@@ -208,7 +191,7 @@ class XnavMenus extends BaseModel
             $where[] = ['name', 'like', '%' . $search . '%'];
         }
         $res = $this
-            ->field('*')
+            ->field('id,parent_id,name,icon,action,status,list_order,created_at')
             ->where($where)
             ->order(['list_order' => 'asc', 'created_at' => 'desc'])
             ->limit($limit * ($curr_page - 1), $limit)

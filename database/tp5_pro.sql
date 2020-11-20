@@ -10,7 +10,7 @@ Target Server Type    : MYSQL
 Target Server Version : 50553
 File Encoding         : 65001
 
-Date: 2020-11-17 14:13:13
+Date: 2020-11-20 21:55:39
 */
 
 SET FOREIGN_KEY_CHECKS=0;
@@ -40,7 +40,7 @@ CREATE TABLE `tp5_xactivitys` (
 -- Records of tp5_xactivitys
 -- ----------------------------
 INSERT INTO `tp5_xactivitys` VALUES ('1', '特价商品推荐', 'cms/images/imgOne.jpg', 'TJSPTJ', '2', '1', '1', '0', '2020-06-02 19:50:15', '1574125637', '1575090450');
-INSERT INTO `tp5_xactivitys` VALUES ('2', '春季特惠商品', 'cms/images/imgTwo.jpg', 'CJTHSPA', '1', '2', '0', '0', '2020-06-02 19:50:19', '1574910600', '1575083403');
+INSERT INTO `tp5_xactivitys` VALUES ('2', '春季特惠商品', 'cms/images/imgTwo.jpg', 'CJTHSPA', '1', '2', '0', '0', '2020-11-17 21:05:40', '1574910600', '1575083403');
 INSERT INTO `tp5_xactivitys` VALUES ('3', '生活专区推荐', 'cms/images/imgThree.jpg', 'SHZQTJA', '1', '3', '1', '0', '2020-06-02 19:50:24', '1574910498', '1575083303');
 
 -- ----------------------------
@@ -53,15 +53,17 @@ CREATE TABLE `tp5_xact_goods` (
   `goods_id` int(11) DEFAULT '0' COMMENT '参加该活动的商品ID',
   `status` tinyint(2) DEFAULT '0' COMMENT '0 ：正常 -1：已删除',
   PRIMARY KEY (`id`)
-) ENGINE=MyISAM AUTO_INCREMENT=29 DEFAULT CHARSET=utf8 COMMENT='活动商品关联表\r\n\r\n';
+) ENGINE=MyISAM AUTO_INCREMENT=31 DEFAULT CHARSET=utf8 COMMENT='活动商品关联表\r\n\r\n';
 
 -- ----------------------------
 -- Records of tp5_xact_goods
 -- ----------------------------
 INSERT INTO `tp5_xact_goods` VALUES ('25', '3', '1', '0');
 INSERT INTO `tp5_xact_goods` VALUES ('26', '2', '4', '0');
-INSERT INTO `tp5_xact_goods` VALUES ('27', '1', '6', '0');
-INSERT INTO `tp5_xact_goods` VALUES ('28', '1', '3', '0');
+INSERT INTO `tp5_xact_goods` VALUES ('27', '1', '6', '-1');
+INSERT INTO `tp5_xact_goods` VALUES ('28', '1', '3', '-1');
+INSERT INTO `tp5_xact_goods` VALUES ('29', '1', '4', '0');
+INSERT INTO `tp5_xact_goods` VALUES ('30', '1', '5', '0');
 
 -- ----------------------------
 -- Table structure for tp5_xadmins
@@ -97,15 +99,19 @@ CREATE TABLE `tp5_xadmin_roles` (
   `user_name` varchar(50) NOT NULL DEFAULT '' COMMENT '角色称呼',
   `nav_menu_ids` text NOT NULL COMMENT '权限下的菜单ID',
   `updated_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
-  `status` tinyint(2) NOT NULL DEFAULT '1' COMMENT '状态标识 -1:删除；  0：失效；1：正常',
-  PRIMARY KEY (`id`)
-) ENGINE=MyISAM AUTO_INCREMENT=5 DEFAULT CHARSET=utf8mb4 COMMENT='管理员角色表';
+  `list_order` int(3) unsigned NOT NULL DEFAULT '9' COMMENT '排序 数字越小 越靠前',
+  `status` tinyint(2) NOT NULL DEFAULT '1' COMMENT '状态标识 -1:删除；  0：失效； 1：正常',
+  PRIMARY KEY (`id`),
+  KEY `idx` (`list_order`)
+) ENGINE=MyISAM AUTO_INCREMENT=7 DEFAULT CHARSET=utf8mb4 COMMENT='管理员角色表';
 
 -- ----------------------------
 -- Records of tp5_xadmin_roles
 -- ----------------------------
-INSERT INTO `tp5_xadmin_roles` VALUES ('1', '终级管理员', '138|139|140|141|1|2|7|6|3|4|5|93|61|76|73|49|50|48|142|67|145|146|147|133|134|151|', '2020-11-12 14:22:12', '1');
-INSERT INTO `tp5_xadmin_roles` VALUES ('2', '初级管理员', '1|2|6|3|4|5|', '2020-09-15 17:13:02', '1');
+INSERT INTO `tp5_xadmin_roles` VALUES ('1', '终级管理员', '138|139|140|141|1|2|7|6|3|4|5|93|61|76|73|49|50|48|142|67|145|146|147|133|134|151|', '2020-11-20 18:25:18', '1', '1');
+INSERT INTO `tp5_xadmin_roles` VALUES ('2', '初级管理员', '1|2|6|3|4|5|', '2020-11-20 18:25:19', '2', '1');
+INSERT INTO `tp5_xadmin_roles` VALUES ('5', '测试管理员', '1|2|3|76|', '2020-11-20 20:36:06', '7', '0');
+INSERT INTO `tp5_xadmin_roles` VALUES ('6', 'xxxx', '139|', '2020-11-20 21:55:19', '7', '-1');
 
 -- ----------------------------
 -- Table structure for tp5_xad_lists
@@ -153,7 +159,7 @@ CREATE TABLE `tp5_xarticles` (
 -- ----------------------------
 INSERT INTO `tp5_xarticles` VALUES ('1', '这是今年最好的演讲：生命来来往往，来日并不方长', '1', '2020-09-04 20:56:11', '2020-11-10 16:49:03', '0', '<p style=\"margin: 0px 16px; padding: 0px; max-width: 100%; clear: both; min-height: 1em; color: #333333; text-align: center;\"><span style=\"margin: 0px; padding: 0px; max-width: 100%; box-sizing: border-box !important; word-wrap: break-word !important; color: #990000;\"><span style=\"margin: 0px; padding: 0px; max-width: 100%; box-sizing: border-box !important; word-wrap: break-word !important; font-size: 15px;\"><strong>余生很贵，经不起浪费</strong></span></span></p>\r\n<p style=\"margin: 0px 16px; padding: 0px; max-width: 100%; clear: both; min-height: 1em; color: #333333; text-align: center;\">&nbsp;</p>\r\n<p style=\"margin: 0px 16px; padding: 0px; max-width: 100%; clear: both; min-height: 1em; color: #333333; text-align: center;\"><span style=\"margin: 0px; padding: 0px; max-width: 100%; box-sizing: border-box !important; word-wrap: break-word !important; font-size: 15px;\">&nbsp;</span></p>\r\n<p style=\"margin: 0px 16px; padding: 0px; max-width: 100%; clear: both; min-height: 1em; color: #333333; text-align: center;\"><span style=\"margin: 0px; padding: 0px; max-width: 100%; box-sizing: border-box !important; word-wrap: break-word !important; font-size: 15px;\"><span style=\"color: #843fa1;\">就像三毛所说</span>，</span><span style=\"margin: 0px; padding: 0px; max-width: 100%; box-sizing: border-box !important; word-wrap: break-word !important; font-size: 15px; color: #990000;\">我来不及认真地年轻，待明白过来时，只能选择认真地老去</span></p>\r\n<p style=\"margin: 0px 16px; padding: 0px; max-width: 100%; clear: both; min-height: 1em; color: #333333; font-family: -apple-system-font, BlinkMacSystemFont,;\">&nbsp;</p>\r\n<p style=\"margin: 0px 16px; padding: 0px; max-width: 100%; clear: both; min-height: 1em; color: #333333; text-align: center;\"><strong style=\"margin: 0px; padding: 0px; max-width: 100%; box-sizing: border-box !important; word-wrap: break-word !important;\"><span style=\"margin: 0px; padding: 0px; max-width: 100%; box-sizing: border-box !important; word-wrap: break-word !important; font-size: 15px;\">所以，</span></strong></p>\r\n<p style=\"margin: 0px 16px; padding: 0px; max-width: 100%; clear: both; min-height: 1em; color: #333333; text-align: center;\"><strong style=\"margin: 0px; padding: 0px; max-width: 100%; box-sizing: border-box !important; word-wrap: break-word !important;\"><span style=\"margin: 0px; padding: 0px; max-width: 100%; box-sizing: border-box !important; word-wrap: break-word !important; font-size: 15px;\">去爱吧，就像从来没有受过伤害一样</span></strong></p>\r\n<p style=\"margin: 0px 16px; padding: 0px; max-width: 100%; clear: both; min-height: 1em; color: #333333; text-align: center;\"><strong style=\"margin: 0px; padding: 0px; max-width: 100%; box-sizing: border-box !important; word-wrap: break-word !important;\"><span style=\"margin: 0px; padding: 0px; max-width: 100%; box-sizing: border-box !important; word-wrap: break-word !important; font-size: 15px;\">跳舞吧，如同没有任何人注视你一样</span></strong></p>\r\n<p style=\"margin: 0px 16px; padding: 0px; max-width: 100%; clear: both; min-height: 1em; color: #333333; text-align: center;\"><strong style=\"margin: 0px; padding: 0px; max-width: 100%; box-sizing: border-box !important; word-wrap: break-word !important;\"><span style=\"margin: 0px; padding: 0px; max-width: 100%; box-sizing: border-box !important; word-wrap: break-word !important; font-size: 15px;\">活着吧，如同今天就是末日一样</span></strong></p>\r\n<p style=\"margin: 0px 16px; padding: 0px; max-width: 100%; min-height: 1em; color: #333333; text-align: center;\">&nbsp;</p>\r\n<p style=\"margin: 0px 16px; padding: 0px; max-width: 100%; min-height: 1em; color: #333333; text-align: center;\"><span style=\"margin: 0px; padding: 0px; max-width: 100%; box-sizing: border-box !important; word-wrap: break-word !important; color: #990000; font-size: 15px;\"><img src=\"https://timgsa.baidu.com/timg?image&amp;quality=80&amp;size=b9999_10000&amp;sec=1599235079831&amp;di=4e7c08b476267106e7eeefb768964c89&amp;imgtype=0&amp;src=http%3A%2F%2Ft7.baidu.com%2Fit%2Fu%3D1179872664%2C290201490%26fm%3D79%26app%3D86%26f%3DJPEG%3Fw%3D1280%26h%3D854\" alt=\"\" width=\"117\" height=\"78\" /></span></p>');
 INSERT INTO `tp5_xarticles` VALUES ('2', '真正放下一个人，不是拉黑，也不是删除', '2', '2020-09-04 21:16:58', '2020-09-11 15:41:54', '1', '<p style=\"margin: 0px 16px; padding: 0px; max-width: 100%; clear: both; min-height: 1em; color: #333333; text-align: center;\"><span style=\"margin: 0px; padding: 0px; max-width: 100%; box-sizing: border-box !important; word-wrap: break-word !important; font-size: 15px; letter-spacing: 0.5px;\">有人说，越在乎，越假装不在乎；越放不下，越假装放得下</span></p>\r\n<p style=\"margin: 0px 16px; padding: 0px; max-width: 100%; clear: both; min-height: 1em; color: #333333; text-align: center;\"><span style=\"margin: 0px; padding: 0px; max-width: 100%; box-sizing: border-box !important; word-wrap: break-word !important; font-size: 15px; letter-spacing: 0.5px; color: #990000;\">没错。成年人的我们的确有着数不清的佯装，就连感情也难逃此劫</span></p>\r\n<p style=\"margin: 0px 16px; padding: 0px; max-width: 100%; clear: both; min-height: 1em; color: #333333; text-align: center;\">&nbsp;</p>\r\n<p style=\"margin: 0px 16px; padding: 0px; max-width: 100%; clear: both; min-height: 1em; color: #333333; text-align: center;\"><iframe style=\"width: 560px; height: 362px;\" src=\"http://tp51pro.com/tinymce-mz/js/tinymce/plugins/bdmap/bd.html?center=126.55219852159811%2C45.743085780862515&amp;zoom=14&amp;width=558&amp;height=360\" frameborder=\"0\"><span id=\"mce_marker\" data-mce-type=\"bookmark\">﻿​</span></iframe></p>');
-INSERT INTO `tp5_xarticles` VALUES ('4', '真正在乎你的人，绝不会说这句话', '3', '2020-09-04 21:12:22', '2020-10-29 11:17:02', '0', '<section>\r\n<p style=\"white-space: normal; margin-top: 0px; margin-bottom: 0px; padding: 0px; max-width: 100%; clear: both; min-height: 1em; caret-color: #333333; color: #333333; text-align: center;\"><strong style=\"font-size: 15px; margin: 0px; padding: 0px; max-width: 100%; box-sizing: border-box !important; overflow-wrap: break-word !important;\">在乎你的男人，绝不会说&ldquo;我很忙，没时间&rdquo;</strong></p>\r\n<p style=\"white-space: normal; margin-top: 0px; margin-bottom: 0px; padding: 0px; max-width: 100%; clear: both; min-height: 1em; color: #333333; font-family: -apple-system-font, BlinkMacSystemFont,;\">&nbsp;</p>\r\n<p style=\"white-space: normal; margin: 0px 16px; padding: 0px; max-width: 100%; clear: both; min-height: 1em; color: #333333; text-align: center;\"><span style=\"margin: 0px; padding: 0px; max-width: 100%; font-size: 15px; box-sizing: border-box !important; word-wrap: break-word !important;\">网上有一段话，<span style=\"color: #e67e23;\"><strong>想陪你吃饭的人酸甜苦辣都想吃</strong></span></span></p>\r\n<p style=\"white-space: normal; margin: 0px 16px; padding: 0px; max-width: 100%; clear: both; min-height: 1em; color: #333333; text-align: center;\"><span style=\"margin: 0px; padding: 0px; max-width: 100%; font-size: 15px; box-sizing: border-box !important; word-wrap: break-word !important;\">想送你回家的人东南西北都顺路，<span style=\"margin: 0px; padding: 0px; max-width: 100%; box-sizing: border-box !important; word-wrap: break-word !important;\">想见你的人 24小时都有空&nbsp;</span></span></p>\r\n<p style=\"white-space: normal; margin: 0px 16px; padding: 0px; max-width: 100%; clear: both; min-height: 1em; color: #333333; text-align: center;\"><span style=\"margin: 0px; padding: 0px; max-width: 100%; color: #990000; font-size: 15px; box-sizing: border-box !important; word-wrap: break-word !important;\">生活中没有谁是真的忙，只看他愿不愿你为你花时间</span></p>\r\n</section>');
+INSERT INTO `tp5_xarticles` VALUES ('4', '真正在乎你的人，绝不会说这句话', '3', '2020-09-04 21:12:22', '2020-11-18 18:45:04', '0', '<section>\r\n<p style=\"white-space: normal; margin-top: 0px; margin-bottom: 0px; padding: 0px; max-width: 100%; clear: both; min-height: 1em; caret-color: #333333; color: #333333; text-align: center;\"><strong style=\"font-size: 15px; margin: 0px; padding: 0px; max-width: 100%; box-sizing: border-box !important; overflow-wrap: break-word !important;\">在乎你的男人，绝不会说&ldquo;我很忙，没时间&rdquo;</strong></p>\r\n<hr />\r\n<p style=\"white-space: normal; margin: 0px 16px; padding: 0px; max-width: 100%; clear: both; min-height: 1em; color: #333333; text-align: center;\"><span style=\"margin: 0px; padding: 0px; max-width: 100%; font-size: 15px; box-sizing: border-box !important; word-wrap: break-word !important;\">网上有一段话，<span style=\"color: #e67e23;\"><strong>想陪你吃饭的人酸甜苦辣都想吃</strong></span></span></p>\r\n<p style=\"white-space: normal; margin: 0px 16px; padding: 0px; max-width: 100%; clear: both; min-height: 1em; color: #333333; text-align: center;\"><span style=\"margin: 0px; padding: 0px; max-width: 100%; font-size: 15px; box-sizing: border-box !important; word-wrap: break-word !important;\">想送你回家的人东南西北都顺路，<span style=\"margin: 0px; padding: 0px; max-width: 100%; box-sizing: border-box !important; word-wrap: break-word !important;\">想见你的人 24小时都有空&nbsp;</span></span></p>\r\n<p style=\"white-space: normal; margin: 0px 16px; padding: 0px; max-width: 100%; clear: both; min-height: 1em; color: #333333; text-align: center;\"><span style=\"margin: 0px; padding: 0px; max-width: 100%; color: #990000; font-size: 15px; box-sizing: border-box !important; word-wrap: break-word !important;\">生活中没有谁是真的忙，只看他愿不愿你为你花时间</span></p>\r\n<hr />\r\n<p style=\"white-space: normal; margin: 0px 16px; padding: 0px; max-width: 100%; clear: both; min-height: 1em; color: #333333; text-align: center;\">&nbsp;</p>\r\n</section>');
 INSERT INTO `tp5_xarticles` VALUES ('3', '年轻人，我劝你没事多存点钱', '1', '2020-09-04 21:09:10', '2020-09-11 15:46:44', '2', '<section>\r\n<section>\r\n<section>\r\n<section>\r\n<p style=\"margin: 0px 16px; padding: 0px; max-width: 100%; clear: both; min-height: 1em; line-height: 1.75em; text-align: center; box-sizing: border-box !important; word-wrap: break-word !important;\"><span style=\"margin: 0px; padding: 0px; max-width: 100%; color: #ffffff; background-color: #990000; font-size: 16px; box-sizing: border-box !important; word-wrap: break-word !important;\"><img src=\"https://search-operate.cdn.bcebos.com/bf38b0d32a3f51e8d06ad1d3c93201a5.jpg\" alt=\"教师节快乐\" width=\"500\" height=\"98\" /></span></p>\r\n<p style=\"margin: 0px 16px; padding: 0px; max-width: 100%; clear: both; min-height: 1em; line-height: 1.75em; text-align: center; box-sizing: border-box !important; word-wrap: break-word !important;\"><span style=\"margin: 0px; padding: 0px; max-width: 100%; color: #ffffff; background-color: #990000; font-size: 16px; box-sizing: border-box !important; word-wrap: break-word !important;\">你的存款，就是你选择权</span></p>\r\n</section>\r\n</section>\r\n</section>\r\n</section>\r\n<p style=\"white-space: normal; margin: 0px 16px; padding: 0px; max-width: 100%; clear: both; min-height: 1em; caret-color: #333333; color: #333333; font-family: -apple-system-font, BlinkMacSystemFont,;\"><span style=\"margin: 0px; padding: 0px; max-width: 100%; font-size: 15px; box-sizing: border-box !important; word-wrap: break-word !important;\">我曾经和闺蜜去过一次&ldquo;非同凡响&rdquo;的毕业旅游。</span></p>\r\n<p style=\"white-space: normal; margin: 0px 16px; padding: 0px; max-width: 100%; clear: both; min-height: 1em; caret-color: #333333; color: #333333; font-family: -apple-system-font, BlinkMacSystemFont,;\"><span style=\"margin: 0px; padding: 0px; max-width: 100%; font-size: 15px; box-sizing: border-box !important; word-wrap: break-word !important;\">当时的我们还是大学生，每个月的生活费只会有超支，不会有结余，整天理所当然地做着月光族。</span></p>\r\n<p style=\"white-space: normal; margin: 0px 16px; padding: 0px; max-width: 100%; clear: both; min-height: 1em; caret-color: #333333; color: #333333; font-family: -apple-system-font, BlinkMacSystemFont,;\"><span style=\"margin: 0px; padding: 0px; max-width: 100%; font-size: 15px; box-sizing: border-box !important; word-wrap: break-word !important;\">直到我们站在旅行社的门外盯着别人的海报，才猛然发现自己简直就是拿着买大宝的钱，跑去买人家的SK2。</span></p>\r\n<p style=\"white-space: normal; margin: 0px 16px; padding: 0px; max-width: 100%; min-height: 1em; caret-color: #333333; color: #333333;\"><span style=\"margin: 0px; padding: 0px; max-width: 100%; font-size: 15px; box-sizing: border-box !important; word-wrap: break-word !important;\">最后，不得不厚着脸皮问家里人拿了一笔小小的旅游基金，报了一个超级特惠团</span></p>');
 
 -- ----------------------------
@@ -678,10 +684,10 @@ CREATE TABLE `tp5_xcategorys` (
 -- ----------------------------
 -- Records of tp5_xcategorys
 -- ----------------------------
-INSERT INTO `tp5_xcategorys` VALUES ('1', '图书/文娱', '0', '0', 'cms/images/category/books.png', '1', '3', '1');
+INSERT INTO `tp5_xcategorys` VALUES ('1', '图书/文娱', '0', '1', 'cms/images/category/books.png', '1', '3', '1');
 INSERT INTO `tp5_xcategorys` VALUES ('2', '电器数码', '0', '1', 'cms/images/category/electric.png', '1', '4', '1');
 INSERT INTO `tp5_xcategorys` VALUES ('3', '穿搭服饰', '0', '1', 'cms/images/category/clothing.png', '1', '2', '1');
-INSERT INTO `tp5_xcategorys` VALUES ('4', '美食/饮料', '0', '1', 'cms/images/category/food.png', '1', '1', '1');
+INSERT INTO `tp5_xcategorys` VALUES ('4', '美食/饮料', '0', '0', 'cms/images/category/food.png', '1', '11', '1');
 INSERT INTO `tp5_xcategorys` VALUES ('5', '服饰配件', '3', '1', '', '2', '2', '1');
 INSERT INTO `tp5_xcategorys` VALUES ('6', '饮料冲调', '4', '1', 'cms/images/category/drink.png', '2', '1', '1');
 INSERT INTO `tp5_xcategorys` VALUES ('7', '影音娱乐', '2', '1', '', '2', '2', '1');
@@ -690,9 +696,9 @@ INSERT INTO `tp5_xcategorys` VALUES ('9', '咖啡奶茶', '6', '1', 'cms/images/
 INSERT INTO `tp5_xcategorys` VALUES ('10', '牛奶酸奶', '6', '1', 'cms/images/category/milk.png', '3', '1', '1');
 INSERT INTO `tp5_xcategorys` VALUES ('12', '生活电器', '2', '1', 'cms/images/category/washer.png', '2', '1', '1');
 INSERT INTO `tp5_xcategorys` VALUES ('13', '衬衫', '16', '0', '', '3', '1', '1');
-INSERT INTO `tp5_xcategorys` VALUES ('14', '领带/领结', '5', '1', 'upload/20201109/04317e17dd6745d9b12b27256402904f.png', '3', '1', '1');
+INSERT INTO `tp5_xcategorys` VALUES ('14', '领带/领结', '5', '1', 'cms/images/category/necktie.png', '3', '1', '1');
 INSERT INTO `tp5_xcategorys` VALUES ('15', '粮油调味', '4', '1', '', '2', '2', '1');
-INSERT INTO `tp5_xcategorys` VALUES ('16', '男装', '3', '1', '', '2', '1', '1');
+INSERT INTO `tp5_xcategorys` VALUES ('16', '男装', '3', '0', '', '2', '1', '1');
 INSERT INTO `tp5_xcategorys` VALUES ('17', '食用油', '15', '1', '', '3', '1', '1');
 INSERT INTO `tp5_xcategorys` VALUES ('18', '扫地机器人', '12', '1', '', '3', '1', '1');
 INSERT INTO `tp5_xcategorys` VALUES ('19', '吸尘器', '12', '1', '', '3', '2', '1');
@@ -714,7 +720,7 @@ CREATE TABLE `tp5_xchat_logs` (
   `type` tinyint(1) NOT NULL DEFAULT '1' COMMENT '1：文字；2：图片',
   PRIMARY KEY (`id`),
   KEY `INDEX` (`from_id`,`to_id`)
-) ENGINE=MyISAM AUTO_INCREMENT=577 DEFAULT CHARSET=utf8mb4 COMMENT='聊天记录表';
+) ENGINE=MyISAM AUTO_INCREMENT=587 DEFAULT CHARSET=utf8mb4 COMMENT='聊天记录表';
 
 -- ----------------------------
 -- Records of tp5_xchat_logs
@@ -729,13 +735,14 @@ INSERT INTO `tp5_xchat_logs` VALUES ('576', '1', '4', 'https://www.baidu.com/img
 INSERT INTO `tp5_xchat_logs` VALUES ('554', '1', '3', '你这臭家伙！', '1603797882', '0', '1');
 INSERT INTO `tp5_xchat_logs` VALUES ('555', '3', '1', '[em_19]', '1603797976', '1', '1');
 INSERT INTO `tp5_xchat_logs` VALUES ('559', '1', '3', '[em_20]', '1603801020', '0', '1');
-INSERT INTO `tp5_xchat_logs` VALUES ('564', '2', '1', '[em_21]', '1603801615', '0', '1');
+INSERT INTO `tp5_xchat_logs` VALUES ('564', '2', '1', '[em_21]', '1603801615', '1', '1');
 INSERT INTO `tp5_xchat_logs` VALUES ('566', '1', '3', 'HELLO', '1603802679', '1', '1');
 INSERT INTO `tp5_xchat_logs` VALUES ('575', '4', '1', '啊哈哈哈', '1605181760', '1', '1');
 INSERT INTO `tp5_xchat_logs` VALUES ('569', '2', '1', '99', '1603803810', '0', '1');
-INSERT INTO `tp5_xchat_logs` VALUES ('570', '2', '1', '[em_34]', '1603803846', '1', '1');
+INSERT INTO `tp5_xchat_logs` VALUES ('570', '2', '1', '[em_34]', '1603803846', '0', '1');
 INSERT INTO `tp5_xchat_logs` VALUES ('572', '2', '3', '[em_8]', '1603804393', '1', '1');
 INSERT INTO `tp5_xchat_logs` VALUES ('573', '2', '1', '三生三世', '1603805237', '1', '1');
+INSERT INTO `tp5_xchat_logs` VALUES ('584', '1', '3', '[em_35][em_50][em_48]', '1605605337', '0', '1');
 
 -- ----------------------------
 -- Table structure for tp5_xcms_logs
@@ -751,7 +758,7 @@ CREATE TABLE `tp5_xcms_logs` (
   PRIMARY KEY (`id`),
   KEY `index_op_admin_id` (`op_id`,`admin_id`),
   KEY `tag_index` (`tag`)
-) ENGINE=MyISAM AUTO_INCREMENT=172 DEFAULT CHARSET=utf8mb4;
+) ENGINE=MyISAM AUTO_INCREMENT=175 DEFAULT CHARSET=utf8mb4;
 
 -- ----------------------------
 -- Records of tp5_xcms_logs
@@ -915,6 +922,9 @@ INSERT INTO `tp5_xcms_logs` VALUES ('168', 'GOODS', '1', '商品修改成功', '
 INSERT INTO `tp5_xcms_logs` VALUES ('169', 'GOODS', '36', '商品修改成功', '1', '2020-11-10 19:41:04');
 INSERT INTO `tp5_xcms_logs` VALUES ('170', 'GOODS', '2', '商品修改成功', '1', '2020-11-10 19:43:49');
 INSERT INTO `tp5_xcms_logs` VALUES ('171', 'GOODS', '36', '商品修改成功', '1', '2020-11-10 19:44:23');
+INSERT INTO `tp5_xcms_logs` VALUES ('172', 'GOODS', '36', '商品修改成功', '1', '2020-11-17 15:06:08');
+INSERT INTO `tp5_xcms_logs` VALUES ('173', 'GOODS', '36', '商品修改成功', '1', '2020-11-17 15:06:18');
+INSERT INTO `tp5_xcms_logs` VALUES ('174', 'ARTICLE', '4', '文章更新', '1', '2020-11-18 18:45:04');
 
 -- ----------------------------
 -- Table structure for tp5_xconfigs
@@ -984,7 +994,7 @@ INSERT INTO `tp5_xgoods` VALUES ('4', '科沃斯（Ecovacs）地宝T5 Power扫�
 INSERT INTO `tp5_xgoods` VALUES ('5', '索尼（SONY）WF-1000XM3 真无线蓝牙降噪耳机 ', '21', '18', 'cms/images/goods/6/6-0.jpg', '', '真无线蓝牙降噪耳机 智能降噪 触控面板 苹果/安卓手机适用 ', '1', '                    <p>x</p>            ', '1299.00', '1099.00', '[{\"spec_id\":\"4\",\"spec_info\":[{\"spec_name\":\"500ml\",\"spec_id\":\"5\",\"specFstID\":\"4\"}],\"spec_name\":\"容量【小瓶】\"},{\"spec_id\":\"7\",\"spec_info\":[{\"spec_name\":\"40度\",\"spec_id\":\"8\",\"specFstID\":\"7\"},{\"spec_name\":\"38度\",\"spec_id\":\"9\",\"specFstID\":\"7\"}],\"spec_name\":\"酒精度数【白酒类型】\"}]', '4121', '2019-03-18 17:03:17', '2020-11-10 19:39:44', '', '0', '1');
 INSERT INTO `tp5_xgoods` VALUES ('6', '小度智能音箱 旗舰版 ', '20', '15', 'cms/images/goods/5/5-1.jpg', '', '家居中控台 闹钟 收音机 智能机器人 迷你音响 早教机 送礼 礼品', '2', '                                        <p>q</p>\r\n<p> </p>                        ', '158.99', '129.99', '[{\"spec_id\":\"40\",\"spec_info\":[{\"spec_name\":\"【经典爆款】小度音箱旗舰版\",\"spec_id\":\"41\",\"specFstID\":\"40\"},{\"spec_name\":\"【红外遥控】小度音箱升级版\",\"spec_id\":\"42\",\"specFstID\":\"40\"},{\"spec_name\":\"【随身音箱】小芦蓝牙音箱\",\"spec_id\":\"43\",\"specFstID\":\"40\"}],\"spec_name\":\"颜色【小度智能音箱 】\"}]', '237', '2019-03-11 18:03:26', '2020-11-10 19:40:00', '', '0', '1');
 INSERT INTO `tp5_xgoods` VALUES ('7', '索尼（SONY）WF 重低音真无线耳机 IPX4防水防汗 智能操控', '21', '18', 'cms/images/goods/7/7-1.jpg', '', ' 重低音真无线耳机 IPX4防水防汗 智能操控', '0', '                    <p>X</p>            ', '129.00', '99.00', '[{\"spec_id\":\"44\",\"spec_info\":[{\"spec_name\":\"黑色\",\"spec_id\":\"46\",\"specFstID\":\"44\"},{\"spec_name\":\"铂金银\",\"spec_id\":\"47\",\"specFstID\":\"44\"}],\"spec_name\":\"颜色【索尼（SONY）WF】\"},{\"spec_id\":\"45\",\"spec_info\":[{\"spec_name\":\"WF-1000XM3随身降噪\",\"spec_id\":\"48\",\"specFstID\":\"45\"},{\"spec_name\":\"WF-XB700防水运动\",\"spec_id\":\"49\",\"specFstID\":\"45\"}],\"spec_name\":\"版本【索尼（SONY）WF】\"}]', '633', '2019-03-19 10:03:48', '2020-11-10 19:39:15', '', '0', '1');
-INSERT INTO `tp5_xgoods` VALUES ('36', '商品测试数据', '14', '6', 'upload/20201110/3f2d55e101aa2a6a41e47408d128c21e.jpg', 'upload/20201110/32f23ff2b1b3846078e8a743cc869e61.jpg,upload/20201110/4e3518b39c465e2e7e9e5be7c14737e3.jpg', 'sd', '12', '                                                                                                                                                                                                                                                                                                                                                    <p>sd</p>                                                                                                                                                                                                            ', '4.00', '1.00', '[{\"spec_id\":\"34\",\"spec_info\":[{\"spec_name\":\"【健康有机】有机全脂纯牛奶16盒\",\"spec_id\":\"35\",\"specFstID\":\"34\"},{\"spec_name\":\"【不加糖高蛋白】植选植物奶10瓶\",\"spec_id\":\"36\",\"specFstID\":\"34\"}],\"spec_name\":\"规格【伊利金典纯牛奶】\"}]', '221', '2020-11-10 14:34:49', '2020-11-10 19:44:23', '', '0', '1');
+INSERT INTO `tp5_xgoods` VALUES ('36', '商品测试数据', '14', '6', 'upload/20201110/3f2d55e101aa2a6a41e47408d128c21e.jpg', 'upload/20201110/32f23ff2b1b3846078e8a743cc869e61.jpg,upload/20201110/4e3518b39c465e2e7e9e5be7c14737e3.jpg', 'sd', '12', '                                                                                                                                                                                                                                                                                                                                                                                            <p>sd</p>                                                                                                                                                                                                                                    ', '4.00', '1.00', '[{\"spec_id\":\"34\",\"spec_info\":[{\"spec_name\":\"【健康有机】有机全脂纯牛奶16盒\",\"spec_id\":\"35\",\"specFstID\":\"34\"},{\"spec_name\":\"【不加糖高蛋白】植选植物奶10瓶\",\"spec_id\":\"36\",\"specFstID\":\"34\"}],\"spec_name\":\"规格【伊利金典纯牛奶】\"}]', '221', '2020-11-10 14:34:49', '2020-11-17 15:06:18', '', '0', '1');
 
 -- ----------------------------
 -- Table structure for tp5_xip_whites
@@ -1023,8 +1033,8 @@ CREATE TABLE `tp5_xnav_menus` (
   `created_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
   `type` tinyint(2) NOT NULL DEFAULT '0' COMMENT '导航类型 0：菜单类  1：权限链接',
   PRIMARY KEY (`id`),
-  KEY `index_sel` (`name`,`list_order`) USING BTREE,
-  KEY `pk_index` (`id`)
+  KEY `pk_index` (`id`),
+  KEY `index_sel` (`list_order`,`name`) USING BTREE
 ) ENGINE=MyISAM AUTO_INCREMENT=152 DEFAULT CHARSET=utf8mb4 COMMENT='菜单导航表';
 
 -- ----------------------------
@@ -1057,11 +1067,10 @@ INSERT INTO `tp5_xnav_menus` VALUES ('52', '修改产品分类', '48', 'cms/cate
 INSERT INTO `tp5_xnav_menus` VALUES ('53', '删除产品分类', '48', 'cms/category/del', '/', '1', '0', '2019-03-11 15:16:11', '1');
 INSERT INTO `tp5_xnav_menus` VALUES ('54', '商品添加', '50', 'cms/goods/add', '/', '1', '0', '2019-03-11 16:53:21', '1');
 INSERT INTO `tp5_xnav_menus` VALUES ('55', '商品修改', '50', 'cms/goods/edit', '/', '1', '0', '2019-03-11 16:53:43', '1');
-INSERT INTO `tp5_xnav_menus` VALUES ('98', 'ajax获取商品分类数据', '48', 'cms/category/ajaxGetToSelCategoryList', '/', '1', '0', '2019-11-15 10:47:45', '1');
 INSERT INTO `tp5_xnav_menus` VALUES ('58', 'ajax 更改上下架状态', '50', 'cms/goods/ajaxPutaway', '/', '1', '0', '2019-03-19 16:40:41', '1');
 INSERT INTO `tp5_xnav_menus` VALUES ('59', 'ajax 首页显示状态修改', '48', 'cms/category/ajaxForShow', '/', '1', '0', '2019-03-21 11:52:13', '1');
 INSERT INTO `tp5_xnav_menus` VALUES ('60', 'ajax 删除上传的图片', '50', 'cms/goods/ajaxDelUploadImg', '/', '-1', '0', '2020-09-15 16:57:40', '1');
-INSERT INTO `tp5_xnav_menus` VALUES ('66', 'ajax 根据分类获取参加活动的商品', '50', 'cms/goods/ajaxGetCatGoodsForActivity', '/', '1', '0', '2019-03-30 12:00:17', '1');
+INSERT INTO `tp5_xnav_menus` VALUES ('66', 'ajax 根据分类获取的商品', '61', 'cms/activity/ajaxGetGoodsByCat', '/', '1', '0', '2020-11-17 21:13:02', '1');
 INSERT INTO `tp5_xnav_menus` VALUES ('67', '属性/规格', '49', 'cms/specInfo/index', 'cms/images/icon/cms_spec.png', '1', '3', '2020-11-09 21:17:08', '0');
 INSERT INTO `tp5_xnav_menus` VALUES ('68', '属性添加', '67', 'cms/specInfo/add', '/', '1', '0', '2019-03-31 17:07:51', '1');
 INSERT INTO `tp5_xnav_menus` VALUES ('69', '属性修改', '67', 'cms/specInfo/edit', '/', '1', '0', '2019-03-31 17:08:14', '1');
@@ -1081,7 +1090,6 @@ INSERT INTO `tp5_xnav_menus` VALUES ('92', 'ajax 文章推荐操作', '5', 'cms/
 INSERT INTO `tp5_xnav_menus` VALUES ('93', '业务配置', '3', 'cms/config/index', 'cms/images/icon/cms_config.png', '1', '3', '2020-11-09 14:53:56', '0');
 INSERT INTO `tp5_xnav_menus` VALUES ('94', '添加配置项', '93', 'cms/config/add', '/', '1', '0', '2019-07-26 15:08:38', '1');
 INSERT INTO `tp5_xnav_menus` VALUES ('95', '配置项修改', '93', 'cms/config/edit', '/', '1', '0', '2019-07-29 14:30:13', '1');
-INSERT INTO `tp5_xnav_menus` VALUES ('97', 'ajax 根据分类获取参加活动的商品', '61', 'cms/goods/ajaxGetCatGoodsForActivity', '/', '1', '0', '2019-08-16 09:31:52', '1');
 INSERT INTO `tp5_xnav_menus` VALUES ('99', '规格数据展示', '67', 'cms/specInfo/details', '/', '1', '0', '2019-11-14 16:08:47', '1');
 INSERT INTO `tp5_xnav_menus` VALUES ('133', '监控统计', '0', '/', 'cms/images/icon/cms_analyze.png', '1', '5', '2020-11-11 09:18:03', '0');
 INSERT INTO `tp5_xnav_menus` VALUES ('134', '热销商品', '133', 'cms/analyze/hotSale', 'cms/images/icon/cms_hot_sale_pie.png', '1', '0', '2020-11-12 14:28:00', '0');
@@ -1247,7 +1255,7 @@ INSERT INTO `tp5_xskus` VALUES ('97', '7', 'cms/images/goods/7/7-2.jpg', '46,49'
 INSERT INTO `tp5_xskus` VALUES ('98', '7', 'cms/images/goods/7/7-3.jpg', '47,48', '铂金银,WF-1000XM3随身降噪', '1099.00', '123', '2', '2020-11-10 19:39:15', '1');
 INSERT INTO `tp5_xskus` VALUES ('99', '7', 'cms/images/goods/7/7-2.jpg', '47,49', '铂金银,WF-XB700防水运动', '699.00', '111', '2', '2020-11-10 19:39:15', '0');
 INSERT INTO `tp5_xskus` VALUES ('100', '36', 'upload/20201110/a7d273db28b80edc9ed9540a71b2ef65.jpg', '35', '【健康有机】有机全脂纯牛奶16盒', '4.00', '110', '0', '2020-11-10 19:41:04', '-1');
-INSERT INTO `tp5_xskus` VALUES ('101', '36', 'upload/20201110/71009c79c4832491adeff3ee6b6253f5.jpg', '36', '【不加糖高蛋白】植选植物奶10瓶', '3.00', '111', '0', '2020-11-10 19:44:23', '1');
+INSERT INTO `tp5_xskus` VALUES ('101', '36', 'upload/20201110/71009c79c4832491adeff3ee6b6253f5.jpg', '36', '【不加糖高蛋白】植选植物奶10瓶', '3.00', '111', '0', '2020-11-17 15:06:18', '1');
 
 -- ----------------------------
 -- Table structure for tp5_xspec_infos
