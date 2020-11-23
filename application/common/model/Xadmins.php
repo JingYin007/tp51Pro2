@@ -105,7 +105,7 @@ class Xadmins extends BaseModel
             ->where('a.id', $id)
             ->find();
         if ($res){
-            $res['picture'] = imgToServerView($res['picture']);
+            $res['full_picture'] = imgToServerView($res['picture']);
         }
         return isset($res)?$res->toArray():[];
     }
