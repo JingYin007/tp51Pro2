@@ -10,7 +10,7 @@ Target Server Type    : MYSQL
 Target Server Version : 50553
 File Encoding         : 65001
 
-Date: 2020-11-20 21:55:39
+Date: 2020-11-23 21:52:43
 */
 
 SET FOREIGN_KEY_CHECKS=0;
@@ -108,7 +108,7 @@ CREATE TABLE `tp5_xadmin_roles` (
 -- ----------------------------
 -- Records of tp5_xadmin_roles
 -- ----------------------------
-INSERT INTO `tp5_xadmin_roles` VALUES ('1', '终级管理员', '138|139|140|141|1|2|7|6|3|4|5|93|61|76|73|49|50|48|142|67|145|146|147|133|134|151|', '2020-11-20 18:25:18', '1', '1');
+INSERT INTO `tp5_xadmin_roles` VALUES ('1', '终级管理员', '138|139|140|141|1|2|7|6|3|4|5|93|61|76|73|49|50|48|142|67|145|146|147|133|134|151|152|', '2020-11-23 20:02:48', '1', '1');
 INSERT INTO `tp5_xadmin_roles` VALUES ('2', '初级管理员', '1|2|6|3|4|5|', '2020-11-20 18:25:19', '2', '1');
 INSERT INTO `tp5_xadmin_roles` VALUES ('5', '测试管理员', '1|2|3|76|', '2020-11-20 20:36:06', '7', '0');
 INSERT INTO `tp5_xadmin_roles` VALUES ('6', 'xxxx', '139|', '2020-11-20 21:55:19', '7', '-1');
@@ -1035,7 +1035,7 @@ CREATE TABLE `tp5_xnav_menus` (
   PRIMARY KEY (`id`),
   KEY `pk_index` (`id`),
   KEY `index_sel` (`list_order`,`name`) USING BTREE
-) ENGINE=MyISAM AUTO_INCREMENT=152 DEFAULT CHARSET=utf8mb4 COMMENT='菜单导航表';
+) ENGINE=MyISAM AUTO_INCREMENT=153 DEFAULT CHARSET=utf8mb4 COMMENT='菜单导航表';
 
 -- ----------------------------
 -- Records of tp5_xnav_menus
@@ -1109,6 +1109,7 @@ INSERT INTO `tp5_xnav_menus` VALUES ('148', 'ajax 获取购物清单', '146', 'c
 INSERT INTO `tp5_xnav_menus` VALUES ('149', '添加物流单号', '147', 'cms/order/opCourierSn', '/', '1', '0', '2020-11-11 21:15:32', '1');
 INSERT INTO `tp5_xnav_menus` VALUES ('150', '查看物流信息', '147', 'cms/order/lookLogistics', '/', '1', '0', '2020-11-11 20:56:55', '1');
 INSERT INTO `tp5_xnav_menus` VALUES ('151', '24时销量图', '133', 'cms/analyze/timeSale', 'cms/images/icon/cms_time_sale.png', '1', '0', '2020-11-12 14:21:58', '0');
+INSERT INTO `tp5_xnav_menus` VALUES ('152', 'React 学习', '133', 'cms/react/index', 'cms/images/icon/cms_react.png', '1', '3', '2020-11-23 20:02:39', '0');
 
 -- ----------------------------
 -- Table structure for tp5_xorder_details
@@ -1360,7 +1361,7 @@ CREATE TABLE `tp5_xusers` (
 INSERT INTO `tp5_xusers` VALUES ('1', '龙猫', 'https://wx.qlogo.cn/mmopen/vi_32/DYAIOgq83erME8I67DDYDfduLmFr6dI6zySrUOPP16N4YP32t1QBiaqic7aXy6dA7TZPA9ibFxXQdILNbKLJrF1WA/132', '15118988888', '0', '1555735686', '0', '0', '700', '0', '', '');
 INSERT INTO `tp5_xusers` VALUES ('2', '大熊', 'https://wx.qlogo.cn/mmopen/vi_32/ph3pTayT2Y2DgMa2jiaicqv0ba9cMibhd44v1QY9IJiaVhTG5W3PQwibncRpoumZMZBJia3TRd4P3tSKWqaAcqJsDqOQ/132', '18898888877', '2', '1555738810', '0', '0', '0', '0', '', '');
 INSERT INTO `tp5_xusers` VALUES ('3', '红猪', 'https://wx.qlogo.cn/mmopen/vi_32/Q0j4TwGTfTKGCoCBnXlicTo9DHHJKNgKjiauCXUzVCGRFibIOnEJD4EFibsyLaGFZRKwN58tw5HlUQWTufRKOLjVzQ/132', '15577888878', '2', '1555738881', '0', '0', '0', '1', '', '');
-INSERT INTO `tp5_xusers` VALUES ('4', '卡卡西', 'https://wx.qlogo.cn/mmopen/vi_32/Q0j4TwGTfTLr5yvbicZQjpfvlicja0mBfaSRG4ibnRX3ibUq9Rak1QvzOV8YC6qKeyrapftlSulZdo7PKpGvzHibwag/132', '15112322322', '1', '1555739036', '1', '0', '0', '2', '', '');
+INSERT INTO `tp5_xusers` VALUES ('4', '卡卡西', 'https://wx.qlogo.cn/mmopen/vi_32/Q0j4TwGTfTLr5yvbicZQjpfvlicja0mBfaSRG4ibnRX3ibUq9Rak1QvzOV8YC6qKeyrapftlSulZdo7PKpGvzHibwag/132', '15112322322', '1', '1555739036', '1', '0', '50', '2', '', '');
 INSERT INTO `tp5_xusers` VALUES ('5', '佐罗', 'https://wx.qlogo.cn/mmopen/vi_32/Q0j4TwGTfTIxAIXQL4JxsoBWf0GP9HFu0RjIPoPymPjuK0qia7ibrI0x34gmvPuZwo6iaXbFkb875b76Kr1CDicZdQ/132', '18988777787', '1', '1555748309', '1', '0', '0', '0', '', '');
 INSERT INTO `tp5_xusers` VALUES ('6', '龙溪', 'https://wx.qlogo.cn/mmhead/dbmbvl7UYS8hcRelNJTkocl0MhM0LLmDlApB27KHLlw/132', '18788777788', '0', '1555748365', '0', '0', '0', '1', '', '');
 INSERT INTO `tp5_xusers` VALUES ('7', '安若', 'https://wx.qlogo.cn/mmopen/vi_32/Q0j4TwGTfTIE3lcO5EBP17qaibIT5wwuLxKk5Ccb4anTiaRSKgjqmyPchZ1MkxfkgtOM4V0u5yNytVorqhsKDn2Q/132', '16888777787', '1', '1555748448', '0', '0', '0', '0', '', '');
