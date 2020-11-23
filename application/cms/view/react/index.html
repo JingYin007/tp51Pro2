@@ -1,0 +1,86 @@
+{extend name='layouts/cms'}
+
+{block name='body-content'}
+<div class="layui-inline layui-form">
+    <div id="div-op-todolist"></div>
+</div>
+
+
+{/block}
+
+{block name='single-content'}
+{include file="layouts/_reactJs" /}
+
+<script type="text/babel">
+    class Todolist extends React.Component{
+        // 构造函数的初始化数据处理
+        constructor(props) {
+            super(props);
+            this.state = {
+                input_val:'',
+                list:['学习','跑步']
+            };
+        }
+
+        //组件进入后，在第一次渲染后调用
+        componentDidMount(){
+
+        }
+        handleInputChange(e){
+            //console.log(e.target.value);
+            this.setState({
+                input_val : e.target.value
+            })
+        }
+        handleSubmit(){
+            var val = this.state.input_val;
+            this.setState({
+                input_val:'',
+                list:[...this.state.list,val]
+            })
+        }
+
+        handleDeleteItem(item_index){
+            const list = [...this.state.list];
+            list.splice(item_index,1);
+            this.setState({
+                list:list
+            })
+        }
+        //当前组件元素渲染操作
+        render(){
+            return(
+                    <React.Fragment>
+                        {/* 这是注释信息 */}
+                        <div className="layui-input-inline">
+                            <label htmlFor="insertArea">输入内容：</label>
+                            <input className="layui-input"
+                                   id="insertArea"
+                                   onChange={this.handleInputChange.bind(this)}
+                                   value={this.state.input_val}/>
+                            <button className="layui-btn-warm"
+                                    onClick={this.handleSubmit.bind(this)}>提交</button>
+                        </div>
+                        <div>
+                            <ul>
+                                {this.state.list.map((item,index) =>
+                                     <li key={index}
+                                         onClick={this.handleDeleteItem.bind(this,index)}
+                                         dangerouslySetInnerHTML={{__html:item}}
+                                     >
+                                     </li>
+                                )}
+                            </ul>
+                        </div>
+                    </React.Fragment>
+            )
+        }
+    }
+    //ReactDOM 的渲染操作
+
+    ReactDOM.render(
+        <Todolist />,
+        document.getElementById("div-op-todolist")
+    )
+</script>
+{/block}

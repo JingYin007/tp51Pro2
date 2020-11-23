@@ -56,6 +56,7 @@
 {block name='single-content'}
 
 {include file="layouts/_reactJs" /}
+
 <script type="text/babel">
     class TableNormal extends React.Component{
         // 构造函数的初始化数据处理
@@ -90,30 +91,30 @@
         //当前组件元素渲染操作
         render(){
             return(
-                    <React.Fragment>
-                        {this.state.roleList.map((role) =>
-                            <tr key={role.id} className={"tr-normal-"+role.id}>
-                                <td className="title">{role.user_name}</td>
-                                <td><span className="span-updated_at">{role.updated_at}</span></td>
-                                <td><span className="span-list_order">{role.list_order}</span></td>
-                                <td><div dangerouslySetInnerHTML = {{ __html: role.status_tip}} /></td>
-                                <td>
-                                    <div className="layui-btn-group">
-                                        <button className="layui-btn layui-btn-sm layui-btn-normal" title="编辑"
-                                                onClick={this.editForOpenPopups.bind(this,role.id)}>
-                                            <i className="layui-icon">&#xe642;</i>
-                                        </button>
-                                        <button className="layui-btn layui-btn-sm layui-btn-danger" title="删除"
-                                                onClick={this.delPostRecord.bind(this,role.id)}>
-                                            <i className="layui-icon">&#xe640;</i>
-                                        </button>
-                                    </div>
-                                </td>
-                            </tr>
-                        )}
+                <React.Fragment>
+                    {this.state.roleList.map((role) =>
+                        <tr key={role.id} className={"tr-normal-"+role.id}>
+                            <td className="title">{role.user_name}</td>
+                            <td><span className="span-updated_at">{role.updated_at}</span></td>
+                            <td><span className="span-list_order">{role.list_order}</span></td>
+                            <td><div dangerouslySetInnerHTML = {{ __html: role.status_tip}} /></td>
+                            <td>
+                                <div className="layui-btn-group">
+                                    <button className="layui-btn layui-btn-sm layui-btn-normal" title="编辑"
+                                            onClick={this.editForOpenPopups.bind(this,role.id)}>
+                                        <i className="layui-icon">&#xe642;</i>
+                                    </button>
+                                    <button className="layui-btn layui-btn-sm layui-btn-danger" title="删除"
+                                            onClick={this.delPostRecord.bind(this,role.id)}>
+                                        <i className="layui-icon">&#xe640;</i>
+                                    </button>
+                                </div>
+                            </td>
+                        </tr>
+                    )}
 
-                    </React.Fragment>
-                )
+                </React.Fragment>
+            )
         }
     }
     //ReactDOM 的渲染操作

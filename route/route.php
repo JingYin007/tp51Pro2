@@ -79,7 +79,7 @@ Route::any('cms/login/logout','cms/login/logout');
 Route::post('cms/login/ajaxLogin','cms/login/ajaxLogin');
 Route::post('cms/login/ajaxCheckLoginStatus','cms/login/ajaxCheckLoginStatus');
 
-
+Route::any('cms/react/index','cms/react/index');
 /**
  * 网站业务
  */
