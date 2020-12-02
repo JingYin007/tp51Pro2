@@ -10,7 +10,7 @@ Target Server Type    : MYSQL
 Target Server Version : 50553
 File Encoding         : 65001
 
-Date: 2020-12-02 18:41:19
+Date: 2020-12-02 18:54:49
 */
 
 SET FOREIGN_KEY_CHECKS=0;
@@ -1104,8 +1104,8 @@ INSERT INTO `tp5_xnav_menus` VALUES ('66', 'ajax 根据分类获取的商品', '
 INSERT INTO `tp5_xnav_menus` VALUES ('67', '属性/规格', '49', 'cms/specInfo/index', 'cms/images/icon/cms_spec.png', '1', '3', '2020-11-09 21:17:08', '0');
 INSERT INTO `tp5_xnav_menus` VALUES ('68', '属性添加', '67', 'cms/specInfo/add', '/', '1', '0', '2019-03-31 17:07:51', '1');
 INSERT INTO `tp5_xnav_menus` VALUES ('69', '属性修改', '67', 'cms/specInfo/edit', '/', '1', '0', '2019-03-31 17:08:14', '1');
-INSERT INTO `tp5_xnav_menus` VALUES ('70', 'ajax 根据商品分类ID查询 品牌和父', '67', 'cms/goods/ajaxGetBrandAndSpecInfoFstByCat', '/', '1', '0', '2020-11-10 18:52:28', '1');
-INSERT INTO `tp5_xnav_menus` VALUES ('72', 'ajax 根据父级属性ID查询属性值', '67', 'cms/goods/ajaxGetSpecInfoBySpecFst', '/', '1', '0', '2020-12-02 18:16:33', '1');
+INSERT INTO `tp5_xnav_menus` VALUES ('70', 'ajax 根据商品分类ID查询 品牌和父', '50', 'cms/goods/ajaxGetBrandAndSpecInfoFstByCat', '/', '1', '0', '2020-12-02 18:52:05', '1');
+INSERT INTO `tp5_xnav_menus` VALUES ('72', 'ajax 根据父级属性ID查询属性值', '50', 'cms/goods/ajaxGetSpecInfoBySpecFst', '/', '1', '0', '2020-12-02 18:52:32', '1');
 INSERT INTO `tp5_xnav_menus` VALUES ('61', '活动列表', '3', 'cms/activity/index', 'cms/images/icon/cms_activity.png', '1', '4', '2020-11-09 14:59:40', '0');
 INSERT INTO `tp5_xnav_menus` VALUES ('62', '活动添加', '61', 'cms/activity/add', '/', '1', '0', '2019-03-29 11:35:17', '1');
 INSERT INTO `tp5_xnav_menus` VALUES ('63', '活动修改', '61', 'cms/activity/edit', '/', '1', '0', '2019-03-29 11:35:38', '1');
