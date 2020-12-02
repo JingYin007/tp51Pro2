@@ -10,7 +10,7 @@ Target Server Type    : MYSQL
 Target Server Version : 50553
 File Encoding         : 65001
 
-Date: 2020-12-02 18:54:49
+Date: 2020-12-02 20:47:42
 */
 
 SET FOREIGN_KEY_CHECKS=0;
@@ -1247,6 +1247,87 @@ INSERT INTO `tp5_xphotos` VALUES ('3', 'cms/images/headshot/user3.png');
 INSERT INTO `tp5_xphotos` VALUES ('1', 'cms/images/headshot/user1.png');
 INSERT INTO `tp5_xphotos` VALUES ('9', 'cms/images/headshot/user9.png');
 INSERT INTO `tp5_xphotos` VALUES ('5', 'cms/images/headshot/user5.png');
+
+-- ----------------------------
+-- Table structure for tp5_xpro_dev_logs
+-- ----------------------------
+DROP TABLE IF EXISTS `tp5_xpro_dev_logs`;
+CREATE TABLE `tp5_xpro_dev_logs` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `log_content` varchar(100) DEFAULT NULL COMMENT '日志内容',
+  `log_time` timestamp NULL DEFAULT NULL ON UPDATE CURRENT_TIMESTAMP COMMENT '记录时间',
+  PRIMARY KEY (`id`),
+  KEY `pk_index` (`id`) USING BTREE
+) ENGINE=MyISAM AUTO_INCREMENT=66 DEFAULT CHARSET=utf8mb4 COMMENT='管理平台 开发日志表';
+
+-- ----------------------------
+-- Records of tp5_xpro_dev_logs
+-- ----------------------------
+INSERT INTO `tp5_xpro_dev_logs` VALUES ('1', '公共文件优化、替换;', '2018-06-04 00:00:00');
+INSERT INTO `tp5_xpro_dev_logs` VALUES ('2', '管理系统测试已基本可以使用;', '2018-06-04 00:00:00');
+INSERT INTO `tp5_xpro_dev_logs` VALUES ('3', '补充 404,500异常效果，剔除不用的 public/upload 资源;', '2018-06-04 00:00:00');
+INSERT INTO `tp5_xpro_dev_logs` VALUES ('4', '第一版本框架源码完善，Github上传;', '2018-06-04 00:00:00');
+INSERT INTO `tp5_xpro_dev_logs` VALUES ('5', '补充对 model 类操作的规则验证(validate);', '2018-11-09 00:00:00');
+INSERT INTO `tp5_xpro_dev_logs` VALUES ('6', '优化菜单栏链接，排除跳转无效的Bug;', '2018-11-09 00:00:00');
+INSERT INTO `tp5_xpro_dev_logs` VALUES ('7', '优化管理员角色权限设置', '2018-11-09 00:00:00');
+INSERT INTO `tp5_xpro_dev_logs` VALUES ('8', '数据库表字段优化，文件 tp5_pro.sql上传;', '2018-11-21 00:00:00');
+INSERT INTO `tp5_xpro_dev_logs` VALUES ('9', '导航菜单的图标统一资源替换，展示效果人性化;', '2018-11-21 00:00:00');
+INSERT INTO `tp5_xpro_dev_logs` VALUES ('10', '对公共布局文件 css、js 的命名尽量统一规划，删减冗余代码;', '2018-11-21 00:00:00');
+INSERT INTO `tp5_xpro_dev_logs` VALUES ('11', '优化了页面的边框显示问题，主要是自己看着顺眼、中意;', '2018-11-22 00:00:00');
+INSERT INTO `tp5_xpro_dev_logs` VALUES ('12', '顺带变更了几个图片资源;', '2018-11-22 00:00:00');
+INSERT INTO `tp5_xpro_dev_logs` VALUES ('13', '首页补充了面板功能，可以清晰展示更新时间线;', '2018-11-22 00:00:00');
+INSERT INTO `tp5_xpro_dev_logs` VALUES ('14', '博客同步更新;', '2018-11-22 00:00:00');
+INSERT INTO `tp5_xpro_dev_logs` VALUES ('15', '优化后台管理员访问权限;', '2018-11-24 00:00:00');
+INSERT INTO `tp5_xpro_dev_logs` VALUES ('16', '优化排除 Linux对路径索引大小写敏感无法识别的 Bug', '2018-11-24 00:00:00');
+INSERT INTO `tp5_xpro_dev_logs` VALUES ('17', '对数据表 \"tp5_nav_menus\" 添加字段 \"type\";用以区别导航菜单与权限路径;', '2018-11-24 00:00:00');
+INSERT INTO `tp5_xpro_dev_logs` VALUES ('18', '补充了 \"文章管理\" 和 \"今日赠言\" 的分页获取功能;', '2018-11-24 00:00:00');
+INSERT INTO `tp5_xpro_dev_logs` VALUES ('19', '补充几天前错删的 role.js 文件;', '2018-11-28 00:00:00');
+INSERT INTO `tp5_xpro_dev_logs` VALUES ('20', '对公共类 BaseModel 中的 validate() 进行了优化;', '2018-11-28 00:00:00');
+INSERT INTO `tp5_xpro_dev_logs` VALUES ('21', '补充了 ThinkPHP5.1 下的表单令牌功能;', '2018-11-28 00:00:00');
+INSERT INTO `tp5_xpro_dev_logs` VALUES ('22', '更新了所有的 model类，降低 CSRF 恶意攻击', '2018-11-28 00:00:00');
+INSERT INTO `tp5_xpro_dev_logs` VALUES ('23', 'tp5.sql文件更新，增加表 \"nav_menus\"的 \"action\"字段长度;', '2018-11-29 00:00:00');
+INSERT INTO `tp5_xpro_dev_logs` VALUES ('24', '优化登录、登出判断逻辑;删减了之前没必要存在的页面重定向;', '2018-11-29 00:00:00');
+INSERT INTO `tp5_xpro_dev_logs` VALUES ('25', '加登录管理员的个人信息页;', '2018-11-30 00:00:00');
+INSERT INTO `tp5_xpro_dev_logs` VALUES ('26', '可进行账号密码等重要信息的修改;', '2018-11-30 00:00:00');
+INSERT INTO `tp5_xpro_dev_logs` VALUES ('27', '后台入口更改为 xxxxx.com/cmsx;', '2018-11-30 00:00:00');
+INSERT INTO `tp5_xpro_dev_logs` VALUES ('28', '添加登录页的验证码功能 (ThinkPHP5.1 内置功能)', '2018-11-30 00:00:00');
+INSERT INTO `tp5_xpro_dev_logs` VALUES ('29', '图片上传功能修改替换反斜线 “\\”为“/”', '2019-03-15 00:00:00');
+INSERT INTO `tp5_xpro_dev_logs` VALUES ('30', '列表页分页功能显示调整', '2019-03-15 00:00:00');
+INSERT INTO `tp5_xpro_dev_logs` VALUES ('31', '补充商品分类、商品管理功能', '2019-03-27 00:00:00');
+INSERT INTO `tp5_xpro_dev_logs` VALUES ('32', '添加多图上传功能', '2019-03-27 00:00:00');
+INSERT INTO `tp5_xpro_dev_logs` VALUES ('33', '整理分类及商品搜索功能', '2019-03-27 00:00:00');
+INSERT INTO `tp5_xpro_dev_logs` VALUES ('34', '调整 UEditor 编辑器遮挡下拉控件bug', '2019-03-27 00:00:00');
+INSERT INTO `tp5_xpro_dev_logs` VALUES ('35', '针对 PHP5.6 php.ini 修改：always_populate_raw_post_data = -1', '2019-05-05 20:39:52');
+INSERT INTO `tp5_xpro_dev_logs` VALUES ('36', '完善商品SKU(销售规格)功能', '2019-05-05 00:00:00');
+INSERT INTO `tp5_xpro_dev_logs` VALUES ('37', '添加规格管理功能', '2019-05-05 00:00:00');
+INSERT INTO `tp5_xpro_dev_logs` VALUES ('38', '添加了商品活动列表', '2019-07-30 00:00:00');
+INSERT INTO `tp5_xpro_dev_logs` VALUES ('39', '添加了用户展示列表', '2019-07-30 00:00:00');
+INSERT INTO `tp5_xpro_dev_logs` VALUES ('40', '设计补充配置项管理功能', '2019-07-30 00:00:00');
+INSERT INTO `tp5_xpro_dev_logs` VALUES ('41', '优化页面下拉列表的搜索功能', '2019-07-30 00:00:00');
+INSERT INTO `tp5_xpro_dev_logs` VALUES ('42', '设计商品管理功能、优化 SKU编辑', '2019-11-25 00:00:00');
+INSERT INTO `tp5_xpro_dev_logs` VALUES ('43', '完善代码注释，优化数据库,更新 .sql文件', '2019-11-25 00:00:00');
+INSERT INTO `tp5_xpro_dev_logs` VALUES ('44', '上传 ECHARTS 图表库', '2019-12-05 00:00:00');
+INSERT INTO `tp5_xpro_dev_logs` VALUES ('45', '设计商品价格区间统计饼状图', '2019-12-05 00:00:00');
+INSERT INTO `tp5_xpro_dev_logs` VALUES ('46', '梳理规范示例图片资源', '2019-12-05 00:00:00');
+INSERT INTO `tp5_xpro_dev_logs` VALUES ('47', '更新 SKU 数据，便于展示效果', '2019-12-05 20:39:45');
+INSERT INTO `tp5_xpro_dev_logs` VALUES ('48', '设计补充表 tp5_xcms_logs', '2020-03-09 00:00:00');
+INSERT INTO `tp5_xpro_dev_logs` VALUES ('49', '设计商品、文章操作日志记录功能', '2020-03-09 00:00:00');
+INSERT INTO `tp5_xpro_dev_logs` VALUES ('50', '公共方法文件: getCmsOpViewLogs()', '2020-03-09 00:00:00');
+INSERT INTO `tp5_xpro_dev_logs` VALUES ('51', '优化用户登录认证的加密保存,建议修改 /api/IAuth.php 的配置信息', '2020-06-01 00:00:00');
+INSERT INTO `tp5_xpro_dev_logs` VALUES ('52', '设计 \"系统配置-IP白名单\" 功能', '2020-06-01 20:39:35');
+INSERT INTO `tp5_xpro_dev_logs` VALUES ('53', '补充\"系统配置-FTP\"功能', '2020-06-01 00:00:00');
+INSERT INTO `tp5_xpro_dev_logs` VALUES ('54', '集成使用 TinyMCE,替换 UEditor 编辑器', '2020-09-04 00:00:00');
+INSERT INTO `tp5_xpro_dev_logs` VALUES ('55', '优化处理文件文件上传代码逻辑', '2020-09-04 00:00:00');
+INSERT INTO `tp5_xpro_dev_logs` VALUES ('56', '集成使用了框架 GatewayWorker', '2020-10-25 00:00:00');
+INSERT INTO `tp5_xpro_dev_logs` VALUES ('57', '设计了平台管理员的即时通讯窗口', '2020-10-25 00:00:00');
+INSERT INTO `tp5_xpro_dev_logs` VALUES ('58', '注意添加的顶部导航栏中的 \"消息\"！', '2020-10-25 00:00:00');
+INSERT INTO `tp5_xpro_dev_logs` VALUES ('59', '补充设计订单管理功能', '2020-11-11 00:00:00');
+INSERT INTO `tp5_xpro_dev_logs` VALUES ('60', '整体优化列表搜索效果', '2020-11-11 00:00:00');
+INSERT INTO `tp5_xpro_dev_logs` VALUES ('61', '集成使用 Echarts 图标框架，设计监控统计图', '2020-11-11 20:39:23');
+INSERT INTO `tp5_xpro_dev_logs` VALUES ('62', 'React-hooks 引入优化', '2020-12-02 00:00:00');
+INSERT INTO `tp5_xpro_dev_logs` VALUES ('63', '角色列表 ，React (类实现)替换', '2020-12-02 00:00:00');
+INSERT INTO `tp5_xpro_dev_logs` VALUES ('64', '商品添加、修改页，使用钩子(函数实现)优化 SKU 操作', '2020-12-02 20:39:12');
+INSERT INTO `tp5_xpro_dev_logs` VALUES ('65', '设计 “开发日志表”，并读取日志信息 ', '2020-12-02 20:47:17');
 
 -- ----------------------------
 -- Table structure for tp5_xskus

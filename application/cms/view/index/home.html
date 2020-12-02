@@ -50,277 +50,50 @@
         <legend>☂ 如果时间刚刚好</legend>
     </fieldset>
     <div class="layui-collapse" lay-accordion="">
+
         <div class="layui-colla-item">
-            <h2 class="layui-colla-title">最新更新➷ </h2>
+            <h2 class="layui-colla-title">最近更新➷ </h2>
             <div class="layui-colla-content layui-show">
                 <ul class="layui-timeline">
+                    {volist name="currLogList" id="vo"}
                     <li class="layui-timeline-item">
                         <i class="layui-icon layui-timeline-axis"></i>
                         <div class="layui-timeline-content layui-text">
-                            <h3 class="layui-timeline-title">2020-11-11</h3>
+                            <h3 class="layui-timeline-title">{$vo.date}</h3>
                             <p>
-                                > 补充设计订单管理功能
-                                <br>> 整体优化列表搜索效果
-                                <br>> 集成使用Echarts图标框架，设计监控统计图
+                                {volist name="vo.content" id="log"}
+                                > {$log.log_content} <br/>
+                                {/volist}
                             </p>
                         </div>
                     </li>
-                    <li class="layui-timeline-item">
-                        <i class="layui-icon layui-timeline-axis"></i>
-                        <div class="layui-timeline-content layui-text">
-                            <h3 class="layui-timeline-title">2020-10-25</h3>
-                            <p>
-                                > 集成使用了框架 GatewayWorker
-                                <br>> 并且设计了平台管理员的即时通讯窗口
-                                <br>> 注意添加的顶部导航栏中的 "消息"！
-                            </p>
-                        </div>
-                    </li>
-                    <li class="layui-timeline-item">
-                        <i class="layui-icon layui-timeline-axis"></i>
-                        <div class="layui-timeline-content layui-text">
-                            <h3 class="layui-timeline-title">2020-09-04</h3>
-                            <p>
-                                > 集成使用TinyMCE,替换UEditor编辑器
-                                <br>> 优化处理文件文件上传代码逻辑
-                            </p>
-                        </div>
-                    </li>
-                    <li class="layui-timeline-item">
-                        <i class="layui-icon layui-timeline-axis"></i>
-                        <div class="layui-timeline-content layui-text">
-                            <h3 class="layui-timeline-title">2020-06-01</h3>
-                            <p>
-                                > 公共js代码集成设计优化
-                                <br>> 优化用户登录认证的加密保存,建议修改 /api/IAuth.php 的配置信息
-                                <br>> 设计"系统配置-IP白名单"功能
-                                <br>> 补充"系统配置-FTP"功能
-                            </p>
-                        </div>
-                    </li>
-                    <li class="layui-timeline-item">
-                        <i class="layui-icon layui-timeline-axis"></i>
-                        <div class="layui-timeline-content layui-text">
-                            <h3 class="layui-timeline-title">2020-03-09</h3>
-                            <p>
-                                > 设计补充表 tp5_xcms_logs
-                                <br>> 设计商品、文章操作日志记录功能
-                                <br>> 公共方法文件: getCmsOpViewLogs()
-                            </p>
-                        </div>
-                    </li>
+                    {/volist}
                 </ul>
             </div>
         </div>
+
 
         <div class="layui-colla-item">
-            <h2 class="layui-colla-title">第二版(2019)日志➷ </h2>
+            <h2 class="layui-colla-title">开发日志➷ </h2>
             <div class="layui-colla-content">
                 <ul class="layui-timeline">
+                    {volist name="devLogList" id="vo"}
                     <li class="layui-timeline-item">
                         <i class="layui-icon layui-timeline-axis"></i>
                         <div class="layui-timeline-content layui-text">
-                            <h3 class="layui-timeline-title">2019-12-05</h3>
+                            <h3 class="layui-timeline-title">{$vo.date}</h3>
                             <p>
-                                > 上传 ECHARTS图表库
-                                <br>> 设计商品价格区间统计饼状图
-                                <br>> 梳理规范示例图片资源
-                                <br>> 更新SKU数据，便于展示效果
+                                {volist name="vo.content" id="log"}
+                                > {$log.log_content} <br/>
+                                {/volist}
                             </p>
                         </div>
                     </li>
-
-                    <li class="layui-timeline-item">
-                        <i class="layui-icon layui-timeline-axis"></i>
-                        <div class="layui-timeline-content layui-text">
-                            <h3 class="layui-timeline-title">2019-11-25</h3>
-                            <p>
-                                > 整体项目优化
-                                <br>> 集中处理了页面显示样式
-                                <br>> 整合公用 CSS、JS 代码
-                                <br>> 设计商品管理功能、优化 SKU编辑
-                                <br>> 完善代码注释，优化数据库,更新 .sql文件
-                            </p>
-                        </div>
-                    </li>
-                    <li class="layui-timeline-item">
-                        <i class="layui-icon layui-timeline-axis"></i>
-                        <div class="layui-timeline-content layui-text">
-                            <h3 class="layui-timeline-title">2019-07-30</h3>
-                            <p>
-                                > 添加了商品活动列表
-                                <br>> 添加了用户展示列表
-                                <br>> 设计补充配置项管理功能
-                                <br>> 优化页面下拉列表的搜索功能
-                            </p>
-                        </div>
-                    </li>
-                    <li class="layui-timeline-item">
-                        <i class="layui-icon layui-timeline-axis"></i>
-                        <div class="layui-timeline-content layui-text">
-                            <h3 class="layui-timeline-title">2019-05-05</h3>
-                            <p>
-                                > 完善商品SKU(销售规格)功能
-                                <br>> 添加规格管理功能
-                            </p>
-                        </div>
-                    </li>
-                    <li class="layui-timeline-item">
-                        <i class="layui-icon layui-timeline-axis"></i>
-                        <div class="layui-timeline-content layui-text">
-                            <h3 class="layui-timeline-title">2019-03-27</h3>
-                            <p>
-                                > 补充商品分类、商品管理功能
-                                <br>> 添加多图上传功能
-                                <br>> 整理分类及商品搜索功能
-                                <br>> 调整 UEditor 编辑器遮挡下拉控件bug
-                                <br>> 针对PHP5.6 php.ini 修改：always_populate_raw_post_data = -1
-                            </p>
-                        </div>
-                    </li>
-                    <li class="layui-timeline-item">
-                        <i class="layui-icon layui-timeline-axis"></i>
-                        <div class="layui-timeline-content layui-text">
-                            <h3 class="layui-timeline-title">2019-03-15</h3>
-                            <p>
-                                > 图片上传功能修改替换反斜线 “\”为“/”
-                                <br>> 列表页分页功能显示调整
-                            </p>
-                        </div>
-                    </li>
-
+                    {/volist}
                 </ul>
             </div>
         </div>
 
-        <div class="layui-colla-item">
-            <h2 class="layui-colla-title">第一版(2018)日志➷ </h2>
-            <div class="layui-colla-content">
-                <ul class="layui-timeline">
-
-                    <li class="layui-timeline-item">
-                        <i class="layui-icon layui-timeline-axis"></i>
-                        <div class="layui-timeline-content layui-text">
-                            <h3 class="layui-timeline-title">2018-12-03</h3>
-                            <p>
-                                > 添加登录页的验证码功能(ThinkPHP5.1 内置功能)
-                            </p>
-                        </div>
-                    </li>
-                    <li class="layui-timeline-item">
-                        <i class="layui-icon layui-timeline-axis"></i>
-                        <div class="layui-timeline-content layui-text">
-                            <h3 class="layui-timeline-title">2018-11-30</h3>
-                            <p>
-                                > 添加登录管理员的个人信息页;
-                                <br>> 可进行账号密码等重要信息的修改;
-                                <br>> 后台入口更改为 xxxxx.com/cmsx;
-                            </p>
-                        </div>
-                    </li>
-
-                    <li class="layui-timeline-item">
-                        <i class="layui-icon layui-timeline-axis"></i>
-                        <div class="layui-timeline-content layui-text">
-                            <h3 class="layui-timeline-title">2018-11-29</h3>
-                            <p>
-                                > tp5.sql文件更新，增加表 "nav_menus"的 "action"字段长度;
-                                <br>> 优化登录、登出判断逻辑;
-                                <br>> 删减了之前没必要存在的页面重定向;
-                            </p>
-                        </div>
-                    </li>
-
-                    <li class="layui-timeline-item">
-                        <i class="layui-icon layui-timeline-axis"></i>
-                        <div class="layui-timeline-content layui-text">
-                            <h3 class="layui-timeline-title">2018-11-28</h3>
-                            <p>
-                                > 补充几天前错删的 role.js 文件;
-                                <br>> 对公共类 BaseModel 中的 validate() 进行了优化;
-                                <br>> 补充了 ThinkPHP5.1 下的表单令牌功能;
-                                <br>> 更新了所有的 model类，降低 CSRF 恶意攻击
-                            </p>
-                        </div>
-                    </li>
-
-                    <li class="layui-timeline-item">
-                        <i class="layui-icon layui-timeline-axis"></i>
-                        <div class="layui-timeline-content layui-text">
-                            <h3 class="layui-timeline-title">2018-11-24</h3>
-                            <p>
-                                > 着重优化后台管理员访问权限;
-                                <br>> 优化排除 Linux对路径索引大小写敏感无法识别的 Bug
-                                <br>> 对数据表 "tp5_nav_menus" 添加字段 "type";
-                                <br>> 用以区别导航菜单与权限路径;
-                                <br>> 补充了 "文章管理" 和 "今日赠言" 的分页获取功能;
-                                <br>> 提交最新的 "tp5_pro.sql" 数据库文件
-                            </p>
-                        </div>
-                    </li>
-
-                    <li class="layui-timeline-item">
-                        <i class="layui-icon layui-timeline-axis"></i>
-                        <div class="layui-timeline-content layui-text">
-                            <div class="layui-timeline-title">第二版整理.</div>
-                        </div>
-                    </li>
-                    <li class="layui-timeline-item">
-                        <i class="layui-icon layui-timeline-axis"></i>
-                        <div class="layui-timeline-content layui-text">
-                            <h3 class="layui-timeline-title">2018-11-22</h3>
-                            <p>
-                                > 优化了页面的边框显示问题，主要是自己看着顺眼、中意;
-                                <br>> 顺带变更了几个图片资源;
-                                <br>> 首页补充了面板功能，可以清晰展示更新时间线;
-                                <br>> 博客同步更新;
-                            </p>
-                        </div>
-                    </li>
-                    <li class="layui-timeline-item">
-                        <i class="layui-icon layui-timeline-axis"></i>
-                        <div class="layui-timeline-content layui-text">
-                            <h3 class="layui-timeline-title">2018-11-21</h3>
-                            <p>
-                                > 数据库表字段优化，文件 tp5_pro.sql上传;
-                                <br>> 导航菜单的图标统一资源替换，展示效果人性化;
-                                <br>> 对公共布局文件 css、js 的命名尽量统一规划，删减冗余代码;
-                            </p>
-                        </div>
-                    </li>
-                    <li class="layui-timeline-item">
-                        <i class="layui-icon layui-timeline-axis"></i>
-                        <div class="layui-timeline-content layui-text">
-                            <h3 class="layui-timeline-title">2018-11-09</h3>
-                            <p>
-                                > 补充对 model 类操作的规则验证(validate);
-                                <br>> 优化菜单栏链接，排除跳转无效的Bug;
-                                <br>> 优化管理员角色权限设置
-                            </p>
-                        </div>
-                    </li>
-                    <li class="layui-timeline-item">
-                        <i class="layui-icon layui-timeline-axis"></i>
-                        <div class="layui-timeline-content layui-text">
-                            <h3 class="layui-timeline-title">2018-06-04</h3>
-                            <p>
-                                > 公共文件优化、替换;
-                                <br>> 管理系统测试已基本可以使用;
-                                <br>> 补充 404,500异常效果，剔除不用的 public/upload 资源;
-                                <br>> 第一版本框架源码完善，Github上传;
-                            </p>
-                        </div>
-                    </li>
-                    <li class="layui-timeline-item">
-                        <i class="layui-icon layui-timeline-axis"></i>
-                        <div class="layui-timeline-content layui-text">
-                            <div class="layui-timeline-title">2018 新年伊始</div>
-                        </div>
-                    </li>
-                </ul>
-
-            </div>
-        </div>
     </div>
 </div>
 <!--此处，温馨提示哦-->

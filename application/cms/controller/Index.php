@@ -3,6 +3,7 @@
 namespace app\cms\controller;
 
 use app\common\lib\IAuth;
+use app\common\model\Xmozxx;
 use app\common\model\XnavMenus;
 use app\common\model\Xadmins;
 use think\Controller;
@@ -70,7 +71,11 @@ class Index extends Controller
      */
     public function home()
     {
-        return view('home');
+        $xIndexModel = new Xmozxx();
+        $devLogList = $xIndexModel->getDevLogList(null);
+        $currLogList = $xIndexModel->getDevLogList(1);
+
+        return view('home',['devLogList' => $devLogList,'currLogList' => $currLogList]);
     }
 
     /**
