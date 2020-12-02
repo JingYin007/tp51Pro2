@@ -127,21 +127,21 @@
 
 {block name='single-content'}
 <link href="__CMS__/css/goods.css" rel="stylesheet">
-<script src="__CMS__/js/goods.js"></script>
+<script type="text/babel" src="__CMS__/js/goods_react.js"></script>
 <script>
     layui.use(['form'], function () {
-        var form = layui.form;
+        const form = layui.form;
         form.on('switch(switchGoodsID)', function (data) {
             //开关是否开启，true或者false
-            var checked = data.elem.checked;
-            var okStatus = 0;
+            let checked = data.elem.checked;
+            let okStatus = 0;
             if (checked) {
                 okStatus = 1
             }
             //获取所需属性值
-            var switch_goods_id = data.elem.attributes['switch_goods_id'].nodeValue;
+            let switch_goods_id = data.elem.attributes['switch_goods_id'].nodeValue;
             //TODO 此时进行ajax的服务器访问，如果返回数据正常，则进行后面代码的调用
-            var toUrl = "{:url('cms/goods/ajaxPutaway')}";
+            const toUrl = "{:url('cms/goods/ajaxPutaway')}";
             $.post(
                 toUrl,
                 {goods_id: switch_goods_id, okStatus: okStatus},
@@ -157,10 +157,74 @@
                     }
                 }, "JSON");
         });
-        form.on('select()', function(data){
+        form.on('select()', function(){
             $(".form-search").submit();
         });
-        form.render();//细节！这个好像要渲染一下！
+        form.render('select');//细节！这个好像要渲染一下！
     });
+
+    /**
+     * ajax 获取并加载每页的数据
+     * @param toUrl
+     * @param postData
+     * @constructor
+     */
+    function ToAjaxOpForPageGoods(toUrl,postData) {
+        $.post(
+            toUrl,
+            postData,
+            function (result) {
+                if(result.status == 1){
+                    let str_html = '';
+                    $.each(result.data,function (i,e) {
+                        let tip = "";
+                        if(e.recommend == 1){tip = "<span class=\"layui-badge\">荐</span>&nbsp;"};
+                        str_html +=
+                            "<tr class=\"tr-normal tr-normal-"+e.goods_id+"\">\n" +
+                            "                <td>"+e.goods_id+"</td>\n" +
+                            "                <td class=\"td-goods_name\">"+tip+e.goods_name+"</td>\n" +
+                            "                <td><img class=\"img-thumbnail\" src=\""+e.thumbnail+"\"></td>\n" +
+                            "        <td>\n" +
+                            "            <span class=\"span-cat_name\" title=\"分类\">【"+e.cat_name+"】</span>\n" +
+                            "        </td>\n" +
+                            "        <td>\n" +
+                            "            <span class=\"layui-badge-dot layui-bg-blue\"></span>\n" +
+                            "            <span class=\"span-brand_name\" title=\"品牌\">"+e.brand_name+"</span>\n" +
+                            "        </td>\n" +
+                            "        <td><span class=\"selling_price\">￥"+e.selling_price+"</span></td>\n" +
+                            "        <td><span class=\"span-stock\">"+e.stock+"</span></td>\n" +
+                            "        <td><span class=\"span-list_order\">"+e.list_order+"</span></td>\n" +
+                            "        <td>\n" +
+                            "            <input type=\"checkbox\" class=\"switch_checked\" lay-filter=\"switchGoodsID\"\n" +
+                            "                   switch_goods_id=\""+e.goods_id+"\"\n" +
+                            "                   lay-skin=\"switch\" "+e.status_checked+" lay-text=\"上架|下架\">\n" +
+                            "            <hr><span class=\"span-updated_at\">"+e.updated_at+"</span>\n" +
+                            "        </td>\n" +
+                            "        <td>\n" +
+                            "            <div class=\"layui-btn-group\">\n" +
+                            "                <button class=\"layui-btn layui-btn-sm layui-btn-normal\" title=\"编辑商品\"\n" +
+                            "                        onclick=\"editForOpenPopups('✎ 商品修改','"+e.goods_id+"','70%','86%')\">\n" +
+                            "                    <i class=\"layui-icon\">&#xe642;</i>\n" +
+                            "                </button>\n" +
+                            "                <button class=\"layui-btn layui-btn-sm layui-btn-danger\" title=\"删除商品\"\n" +
+                            "                        onclick=\"delPostRecord('"+e.goods_id+"')\">\n" +
+                            "                    <i class=\"layui-icon\">&#xe640;</i>\n" +
+                            "                </button>\n" +
+                            "                <button class=\"layui-btn layui-btn-sm layui-btn-warm\" title=\"操作记录\"\n" +
+                            "                        onclick=\"viewLogOpenPopups('☁ 操作日志','"+e.goods_id+"')\">\n" +
+                            "                    <i class=\"layui-icon\">&#xe60e;</i>\n" +
+                            "                </button>\n" +
+                            "            </div>\n" +
+                            "        </td>" +
+                            "            </tr>";
+                    });
+                    $(".table-tbody-normal").html(str_html);
+                    layui.form.render();//细节！这个好像要渲染一下！
+                }else{
+                    //失败
+                    layer.msg(result.message);
+                }
+            },"JSON");
+    }
 </script>
 {/block}

@@ -1,0 +1,75 @@
+{extend name='layouts/cms'}
+
+{block name='body-content'}
+<div class="layui-inline layui-form">
+    <div id="div-op-todolist"></div>
+</div>
+
+
+{/block}
+
+{block name='single-content'}
+{include file="layouts/_reactJs" /}
+
+<script type="text/babel">
+
+    function Button()  {
+        const  [buttonText, setButtonText] =  React.useState("Click me,   please");
+
+        function handleClick()  {
+            return setButtonText("Thanks, been clicked!");
+        }
+
+        return  <button  onClick={handleClick}>{buttonText}</button>;
+    }
+    //组件定义
+    function Example({initialCount}) {
+        // 声明一个叫 “count” 的 state 变量,和一个让你更新它的函数
+        const [count, setCount] = React.useState(initialCount);
+        const [query,setQuery] = React.useState('');
+
+        React.useEffect(
+            // 只是定义了一个名字而已 等同于 ()=>{}
+            function xxx(){
+                console.log('useEffect');
+                document.title = `You xxx clicked ${count} times`;
+                setCount(count + 10);
+            }
+            ,[initialCount]);
+
+        function handleClick(e){
+            console.log('className',e.target.className)
+            console.log('xx',e.target.value)
+            setCount(count + 1);
+        }
+
+        function handleInput(e){
+            setQuery(e.target.value);
+            console.log(e.target.value);
+        }
+
+
+        return (
+            <div>
+                <p>You clicked {count} times</p>
+                <button className="btn-click" onClick={handleClick} value="2" xx={123}>
+                    Click me
+                </button>
+                <br/>
+                Count: {count}
+                <button onClick={() => setCount(initialCount)}>Reset</button>
+                <button onClick={() => setCount(prevCount => prevCount - 1)}>-</button>
+                <button onClick={() => setCount(prevCount => prevCount + 1)}>+</button>
+                <br/>
+                <input value={query} onChange={handleInput}/>
+            </div>
+        );
+    }
+
+    //ReactDOM 的渲染操作
+    ReactDOM.render(
+        <Example initialCount={10} />,
+        document.getElementById("div-op-todolist")
+    )
+</script>
+{/block}

@@ -7,14 +7,12 @@ use app\common\model\Xbrands;
 use app\common\model\Xcategorys;
 use app\common\model\Xgoods;
 use app\common\model\XspecInfos;
-use app\common\model\Xsuppliers;
 use think\Request;
 
 class Goods extends CmsBase
 {
     protected $model;
     protected $categoryModel;
-    protected $brandModel;
     public function __construct()
     {
         parent::__construct();
@@ -74,7 +72,7 @@ class Goods extends CmsBase
             return showMsg($opRes['tag'], $opRes['message']);
         } else {
             $categoryList = $this->categoryModel->getCategorySelectListFromJsonFile();
-            return view('add', ['categoryList' => $categoryList,]);
+            return view('add_react', ['categoryList' => $categoryList,]);
         }
     }
 
@@ -97,7 +95,7 @@ class Goods extends CmsBase
                     'good' => $goodsMsg,
                     'categoryList' => $categoryList,
                 ];
-            return view('edit', $data);
+            return view('edit_react', $data);
         }
     }
 
@@ -119,7 +117,16 @@ class Goods extends CmsBase
      */
     public function viewLogs($id){
         $logs = getCmsOpViewLogs($id,'GOODS');
-        return view('view_logs',['logs' => $logs]);
+        return view('index/view_logs',['logs' => $logs]);
+    }
+
+    public function ajaxGetNormalCatList(Request $request){
+        if ($request->isPost()){
+            $categoryList = $this->categoryModel->getCategorySelectListFromJsonFile();
+            return showMsg(1,'GetNormalCatList',$categoryList);
+        }else{
+            return showMsg(0,'Sorry,请求不合法！');
+        }
     }
 
     /**
@@ -128,15 +135,36 @@ class Goods extends CmsBase
      */
     public function ajaxGetBrandAndSpecInfoFstByCat(Request $request)
     {
-        $seledCatID = $request->post("seledCatID");
-        $specList = (new XspecInfos())->getSpecInfoFstByCat($seledCatID);
-        $brandList = (new Xbrands())->getSelectableList($seledCatID);
-        $status = 1;
-        $message = "success";
-        if (!$specList && !$brandList) {
-            $status = 0;
-            $message = "未查到品牌和父级属性数据";
+        if ($request->isPost()){
+            $catSelID = $request->post("catSelID",0);
+            $specList = (new XspecInfos())->getSpecInfoFstByCat($catSelID);
+            $brandList = (new Xbrands())->getSelectableList($catSelID);
+            $status = 1;
+            $message = "success";
+            if (!$specList && !$brandList) {
+                $status = 0;
+                $message = "未查到品牌和父级属性数据";
+            }
+            return showMsg($status, $message, ['specList'=>$specList,'brandList'=>$brandList]);
+        }else{
+            return  showMsg(0,'Sorry，請求不合法！');
         }
-        return showMsg($status, $message, ['specList'=>$specList,'brandList'=>$brandList]);
+    }
+    /**
+     * ajax 根据父级属性 ID 获取属性值
+     * 使用 React-Hooks 优化后的请求地址
+     * @param Request $request
+     */
+    public function ajaxGetSpecInfoBySpecFst(Request $request)
+    {
+        if ($request->isPost()){
+            $selSpecFstID = $request->post("selSpecFstID",0);
+            $specInfoList = (new XspecInfos())->getSpecInfoBySpecFst($selSpecFstID);
+            $status = (!$specInfoList) ? 0 : 1;
+            $message = (!$specInfoList) ? "未查到子级属性数据" : "SUCCESS";
+            return showMsg($status, $message, $specInfoList);
+        }else{
+            return  showMsg(0,'Sorry,请求不合法！');
+        }
     }
 }

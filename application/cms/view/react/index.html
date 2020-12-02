@@ -12,6 +12,48 @@
 {include file="layouts/_reactJs" /}
 
 <script type="text/babel">
+    class TodoItem extends React.Component{
+        // 构造函数的初始化数据处理
+        constructor(props) {
+            super(props);
+            this.handleClick = this.handleClick.bind(this);
+        }
+        handleClick(){
+            //const index_li = this.props.index_li;
+            const { fatherDeleteItem,index_li} = this.props;
+            fatherDeleteItem(index_li)
+        }
+        shouldComponentUpdate(nextProps){
+            if (nextProps.content !== this.props.content){
+                return true;
+            }
+            return false;
+
+        }
+        render(){
+            console.log('item-render');
+            const {content} = this.props;
+            return(
+                <li onClick={this.handleClick}>
+                    {content}
+                </li>
+            )
+        }
+    }
+
+    //使用 PropTypes 进行类型检查
+    TodoItem.propTypes = {
+        test: PropTypes.string.isRequired,
+        content : PropTypes.string,
+        fatherDeleteItem : PropTypes.func,
+        index_li : PropTypes.number
+    }
+    //使用 defaultProps 进行默认赋值
+    TodoItem.defaultProps = {
+        test : 'Hello'
+    }
+
+
     class Todolist extends React.Component{
         // 构造函数的初始化数据处理
         constructor(props) {
@@ -20,6 +62,9 @@
                 input_val:'',
                 list:['学习','跑步']
             };
+            this.handleOnKeyUp = this.handleOnKeyUp.bind(this);
+            this.handleSubmit = this.handleSubmit.bind(this)
+            this.handleDeleteItem = this.handleDeleteItem.bind(this);
         }
 
         //组件进入后，在第一次渲染后调用
@@ -27,24 +72,28 @@
 
         }
         handleInputChange(e){
-            //console.log(e.target.value);
-            this.setState({
-                input_val : e.target.value
-            })
+            const inputVal = e.target.value;
+            this.setState(()=>({
+                input_val:inputVal
+            }))
         }
         handleSubmit(){
-            var val = this.state.input_val;
-            this.setState({
+            this.setState((prevState)=>({
                 input_val:'',
-                list:[...this.state.list,val]
-            })
+                list:[...prevState.list,prevState.input_val]
+            }))
+        }
+        handleOnKeyUp(e){
+            if(e.keyCode === 13) {
+                this.handleSubmit();
+            }
         }
 
         handleDeleteItem(item_index){
-            const list = [...this.state.list];
-            list.splice(item_index,1);
-            this.setState({
-                list:list
+            this.setState((prevState)=>{
+                const list = [...prevState.list];
+                list.splice(item_index,1);
+                return { list : list}
             })
         }
         //当前组件元素渲染操作
@@ -53,31 +102,38 @@
                     <React.Fragment>
                         {/* 这是注释信息 */}
                         <div className="layui-input-inline">
-                            <label htmlFor="insertArea">输入内容：</label>
-                            <input className="layui-input"
-                                   id="insertArea"
-                                   onChange={this.handleInputChange.bind(this)}
-                                   value={this.state.input_val}/>
-                            <button className="layui-btn-warm"
-                                    onClick={this.handleSubmit.bind(this)}>提交</button>
+                            <label className="layui-form-label" htmlFor="insertArea">输入内容：</label>
+                            <div className="layui-input-inline">
+                                <input className="layui-input"
+                                       id="insertArea"
+                                       autoComplete="off"
+                                       onChange={this.handleInputChange.bind(this)}
+                                       onKeyUp={this.handleOnKeyUp}
+                                       value={this.state.input_val}/>
+                            </div>
+                            <button className="layui-btn layui-btn-warm"
+                                    onClick={this.handleSubmit}>提交</button>
                         </div>
-                        <div>
+                        <hr/>
+                        <div className="layui-input-inline">
                             <ul>
-                                {this.state.list.map((item,index) =>
-                                     <li key={index}
-                                         onClick={this.handleDeleteItem.bind(this,index)}
-                                         dangerouslySetInnerHTML={{__html:item}}
-                                     >
-                                     </li>
-                                )}
+                                {this.getTodoItem()}
                             </ul>
                         </div>
                     </React.Fragment>
             )
         }
-    }
-    //ReactDOM 的渲染操作
 
+        getTodoItem(){
+            return this.state.list.map((item,index) =>{
+                return <TodoItem key={index}
+                                 index_li={index} content={item}
+                                 fatherDeleteItem = {this.handleDeleteItem} />
+            })
+        }
+    }
+
+    //ReactDOM 的渲染操作
     ReactDOM.render(
         <Todolist />,
         document.getElementById("div-op-todolist")

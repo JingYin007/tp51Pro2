@@ -1,4 +1,10 @@
 
+.block-goods-sku{
+    margin-top: 10px;
+}
+.tbody-specInfo-value .label-specInfo{
+    width: 100%;
+}
 .table-specInfo th,.table-specInfo td,
 .table-specInfo td input{
     text-align: center;
@@ -24,7 +30,23 @@
 .tbody-specInfo-msg .option-sku_status--1{
     background-color: #9F9F9F;
 }
-
+.tbody-specInfo-msg .div-sku_upload{
+    height: 43px;
+    line-height: 43px;
+    float: left;
+}
+.tbody-specInfo-msg .btn_sku_upload_img{
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    line-height: 40px;
+}
+.tbody-specInfo-msg .layui-upload-img{
+    max-width: 150px;
+}
+.tbody-specInfo-msg .icon-sku_upload{
+    margin: 0 0;
+}
 
 
 

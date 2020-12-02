@@ -35,7 +35,7 @@ class React extends CmsBase
             return showMsg(1, 'success', []);
         } else {
              $data = [];
-            return view('index', $data);
+            return view('index_hook', $data);
         }
     }
 

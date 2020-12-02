@@ -58,6 +58,40 @@
 {include file="layouts/_reactJs" /}
 
 <script type="text/babel">
+    class ButtonItem extends React.Component{
+        constructor(props) {
+            super(props);
+            this.editForOpenPopups = this.editForOpenPopups.bind(this);
+            this.delPostRecord = this.delPostRecord.bind(this);
+        }
+        //修改按钮点击事件
+        editForOpenPopups(){
+            const role_id = this.props.role_id;
+            editForOpenPopups('✎ 角色信息修改',role_id, '67%', '');
+
+        }
+        //删除按钮的点击事件
+        delPostRecord(event){
+            //return event.preventDefault(); //如果不想后面的操作了
+            const role_id = this.props.role_id;
+            delPostRecord(role_id);
+        }
+        render(){
+            return(
+                <div className="layui-btn-group">
+                    <button className="layui-btn layui-btn-sm layui-btn-normal" title="编辑"
+                            onClick={this.editForOpenPopups}>
+                        <i className="layui-icon">&#xe642;</i>
+                    </button>
+                    <button className="layui-btn layui-btn-sm layui-btn-danger" title="删除"
+                            onClick={this.delPostRecord}>
+                        <i className="layui-icon">&#xe640;</i>
+                    </button>
+                </div>
+            )
+        }
+    }
+
     class TableNormal extends React.Component{
         // 构造函数的初始化数据处理
         constructor(props) {
@@ -68,26 +102,17 @@
         //组件进入后，在第一次渲染后调用
         componentDidMount(){
             //ajax 数据获取
-            var toUrl = "{:url('cms/admin/role')}";
+            const toUrl = "{:url('cms/admin/role')}";
             $.post(toUrl,function (result){
-                var data = result.data;
+                const data = result.data;
                 if(data.length > 0){
-                    this.setState({
-                        roleList : data
-                    })
+                    this.setState(()=>({
+                        roleList:data
+                    }))
                 }
             }.bind(this),'JSON');
         }
-        //修改按钮点击事件
-        editForOpenPopups(role_id){
-            editForOpenPopups('✎ 角色信息修改',role_id, '67%', '');
 
-        }
-        //删除按钮的点击事件
-        delPostRecord(role_id,event){
-            //return event.preventDefault(); //如果不想后面的操作了
-            delPostRecord(role_id);
-        }
         //当前组件元素渲染操作
         render(){
             return(
@@ -99,16 +124,7 @@
                             <td><span className="span-list_order">{role.list_order}</span></td>
                             <td><div dangerouslySetInnerHTML = {{ __html: role.status_tip}} /></td>
                             <td>
-                                <div className="layui-btn-group">
-                                    <button className="layui-btn layui-btn-sm layui-btn-normal" title="编辑"
-                                            onClick={this.editForOpenPopups.bind(this,role.id)}>
-                                        <i className="layui-icon">&#xe642;</i>
-                                    </button>
-                                    <button className="layui-btn layui-btn-sm layui-btn-danger" title="删除"
-                                            onClick={this.delPostRecord.bind(this,role.id)}>
-                                        <i className="layui-icon">&#xe640;</i>
-                                    </button>
-                                </div>
+                                <ButtonItem role_id={role.id} />
                             </td>
                         </tr>
                     )}
@@ -122,6 +138,5 @@
         <TableNormal />,
         document.getElementById("table-tbody-normal")
     )
-
 </script>
 {/block}

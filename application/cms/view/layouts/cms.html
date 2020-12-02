@@ -9,7 +9,8 @@
     {include file="layouts/_layui" /}
     <!-- 加载公共文件  -->
     <link href="__CMS__/css/zhang.css" rel="stylesheet">
-    <script src="__CMS__/js/moZhang.js"></script>
+    <script type="text/javascript" src="__CMS__/js/moZhang.js"></script>
+    <script type="text/javascript" src="__CMS__/js/common.js"></script>
 </head>
 <body>
 <div class="div-body-show">
@@ -18,7 +19,7 @@
 
 <script>
     //此为图片上传路径
-    var image_upload_url = "{:url('/api/upload/img_file')}";
+    const image_upload_url = "{:url('/api/upload/img_file')}";
     $(".btn-search-mz").on('click', function () {
         //var str_search = $(".search_input").val();
         $(".form-search").submit();
@@ -27,5 +28,4 @@
 </script>
 </body>
 {block name="single-content"}{/block}
-<script type="text/javascript" src="__CMS__/js/common.js"></script>
 </html>

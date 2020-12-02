@@ -126,7 +126,7 @@ class Xbrands extends BaseModel
      * @param int $id
      * @return array
      */
-    public function updateCmsBrandData($input,$id=0)
+    public function updateCmsBrandData($input,$id = 0)
     {
         $opTag = isset($input['tag']) ? $input['tag'] : 'edit';
         if ($opTag == 'del') {
@@ -149,7 +149,6 @@ class Xbrands extends BaseModel
                     ->update($saveData);
                 $validateRes['tag'] = $saveTag;
                 $validateRes['message'] = $saveTag ? '数据更新成功' : '数据无变动';
-
             }
         }
         return $validateRes;
@@ -157,14 +156,15 @@ class Xbrands extends BaseModel
 
     /**
      * 获取可供选择的品牌列表数据
+     * @param int $catSelID
      * @return array|array[]|\array[][]
      * @throws \think\db\exception\DataNotFoundException
      * @throws \think\db\exception\ModelNotFoundException
      * @throws \think\exception\DbException
      */
-    public function getSelectableList($seledCatID = null){
+    public function getSelectableList($catSelID = 0){
         $where = [['status','=',1]];
-        if ($seledCatID){$where[] = ['cat_id','=',$seledCatID];}
+        if ($catSelID){$where[] = ['cat_id','=',intval($catSelID)];}
         $list = $this
             ->field('id,brand_name')
             ->where($where)

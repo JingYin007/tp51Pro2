@@ -131,95 +131,80 @@
         </div>
     </div>
 
-    <blockquote class="layui-elem-quote layui-quote-nm block-goods-sku" style="margin-top: 10px;">
-        <button type="button" class="layui-btn layui-btn-normal">销售信息：</button>
-        <table class="layui-table" lay-size="sm">
-            <colgroup>
-                <col width="150">
-                <col>
-            </colgroup>
-            <thead>
-            <tr class="tr-specInfo-key">
-                <th>属性名称</th>
-                <th>属性赋值</th>
-            </tr>
-            </thead>
-            <tbody class="tbody-specInfo-value">
-
-            </tbody>
-        </table>
-
-        <button type="button" class="layui-btn layui-btn-danger">销售规格：</button>
-        
-        <table class="layui-table table-specInfo" lay-size="sm">
-            <colgroup>
-                <col width="25%">
-                <col width="30%">
-                <col width="10%">
-                <col width="10%">
-                <col width="10%">
-                <col width="10%">
-            </colgroup>
-            <thead>
-            <tr class="tr-specInfo-key tr-specInfo-msg">
-                <th>规格信息</th>
-                <th>规格配图</th>
-                <th>售价</th>
-                <th>库存量</th>
-                <th>已售量</th>
-                <th>状态</th>
-            </tr>
-            </thead>
-            <tbody class="tbody-specInfo-msg">
-            {volist name="good.sku_arr" id="sku"}
-            <tr>
-                <td>
-                    <span class="span-spec_name">{$sku.spec_name}</span>
-                    <input type="hidden" name="sku_arr[{$sku.spec_info}][spec_id]"
-                           value="{$sku.spec_info}">
-                    <input type="hidden" name="sku_arr[{$sku.spec_info}][spec_name]"
-                           value="{$sku.spec_name}">
-                </td>
-                <td>
-                    <div class="layui-upload layui-input-inline">
-                        <button type="button" class="layui-btn btn_sku_upload_img"
-                         lay-data="{sku_index:{$i}}">
-                            <i class="layui-icon">&#xe67c;</i>
-                        </button>
-                        <img class="layui-upload-img sku-img-upload-preview-{$i}
+    <div id="div-specInfo-show">
+        {gt name="good.sku_arr|count" value="0"}
+            <blockquote class="layui-elem-quote layui-quote-nm block-goods-sku">
+                <button type="button" class="layui-btn layui-btn-danger">规格详情：</button>
+                <table class="layui-table table-specInfo" lay-size="sm">
+                    <colgroup>
+                        <col width="25%"><col width="30%">
+                        <col width="10%"><col width="10%">
+                        <col width="10%"><col width="10%">
+                    </colgroup>
+                    <thead>
+                    <tr class="tr-specInfo-key tr-specInfo-msg">
+                        <th>规格信息</th>
+                        <th>规格配图</th>
+                        <th>售价</th>
+                        <th>库存量</th>
+                        <th>已售量</th>
+                        <th>状态</th>
+                    </tr>
+                    </thead>
+                    <tbody class="tbody-specInfo-msg">
+                    {volist name="good.sku_arr" id="sku"}
+                    <tr>
+                        <td>
+                            <span class="span-spec_name">{$sku.spec_name}</span>
+                            <input type="hidden" name="sku_arr[{$sku.spec_info}][spec_id]"
+                                   value="{$sku.spec_info}">
+                            <input type="hidden" name="sku_arr[{$sku.spec_info}][spec_name]"
+                                   value="{$sku.spec_name}">
+                        </td>
+                        <td>
+                            <div class="layui-upload layui-input-inline div-sku_upload">
+                                <button type="button" class="layui-btn layui-btn-danger layui-btn-sm btn_sku_upload_img"
+                                        lay-data="{sku_index:{$i}}">
+                                    <i class="icon-sku_upload layui-icon">&#xe67c;</i>
+                                </button>
+                            </div>
+                            <div class="layui-upload-list">
+                                <img class="layui-upload-img sku-img-upload-preview-{$i}
                              img-upload-preview-medium img-upload-view"
-                             src="{$sku.full_sku_img}">
-                        <input type="hidden" class="input-sku-img-{$i}"
-                               name="sku_arr[{$sku.spec_info}][sku_img]"
-                               value="{$sku.sku_img}" required="" class="layui-input">
-                    </div>
-                </td>
-                <td>
-                    <input type="number" name="sku_arr[{$sku.spec_info}][selling_price]"
-                           value="{$sku.selling_price}" required="" class="layui-input input-selling_price">
-                </td>
-                <td>
-                    <input type="number" name="sku_arr[{$sku.spec_info}][stock]"
-                           onblur="onblur_sku_stock()"
-                           value="{$sku.stock}" required="" class="layui-input input-sku-stock">
-                </td>
-                <td>
-                    <input type="number" name="sku_arr[{$sku.spec_info}][sold_num]"
-                           value="{$sku.sold_num}" required="" class="layui-input input-sold_num">
-                </td>
-                <td class="option-sku_status-{$sku.sku_status}">
-                    <select name="sku_arr[{$sku.spec_info}][sku_status]">
-                        <option value="1" {$sku.sku_status=="1"?"selected":""}>上架</option>
-                        <option value="0" {$sku.sku_status=="0"?"selected":""}>下架</option>
-                        <option value="-1" {$sku.sku_status=="-1"?"selected":""}>删除</option>
-                    </select>
-                </td>
-            </tr>
-            {/volist}
-            </tbody>
-        </table>
-        <input type="hidden" class="attr_info" name="attr_info" value="{$good['attr_info']}">
-    </blockquote>
+                                     src="{$sku.full_sku_img}">
+                                <input type="hidden" class="input-sku-img-{$i}"
+                                       name="sku_arr[{$sku.spec_info}][sku_img]"
+                                       value="{$sku.sku_img}" readOnly>
+                            </div>
+                        </td>
+                        <td>
+                            <input type="number" name="sku_arr[{$sku.spec_info}][selling_price]"
+                                   value="{$sku.selling_price}" required="" class="layui-input input-selling_price">
+                        </td>
+                        <td>
+                            <input type="number" name="sku_arr[{$sku.spec_info}][stock]"
+                                   onchange="onblur_sku_stock()"
+                                   value="{$sku.stock}" required="" class="layui-input input-sku-stock">
+                        </td>
+                        <td>
+                            <input type="number" name="sku_arr[{$sku.spec_info}][sold_num]"
+                                   value="{$sku.sold_num}" required="" class="layui-input input-sold_num">
+                        </td>
+                        <td class="option-sku_status-{$sku.sku_status}">
+                            <select name="sku_arr[{$sku.spec_info}][sku_status]">
+                                <option value="1" {$sku.sku_status=="1"?"selected":""}>上架</option>
+                                <option value="0" {$sku.sku_status=="0"?"selected":""}>下架</option>
+                                <option value="-1" {$sku.sku_status=="-1"?"selected":""}>删除</option>
+                            </select>
+                        </td>
+                    </tr>
+                    {/volist}
+                    </tbody>
+                </table>
+            </blockquote>
+        {/gt}
+    </div>
+    <input type="hidden" class="attr_info" name="attr_info" value="{$good['attr_info']}">
 
     <div class="layui-form-item">
         <label class="layui-form-label">库存总量：</label>
@@ -250,36 +235,13 @@
 
 {block name='single-content'}
 <link href="__CMS__/css/goods.css" rel="stylesheet">
-<script src="__CMS__/js/goods.js"></script>
+<script type="text/babel" src="__CMS__/js/goods_react.js"></script>
 {include file='layouts/_tinymceJs'}
-<script>
-    var arrSpecFull = [];
-    function makeSaleGoodsMsg() {
-        goToMakeSaleGoodsMsg(arrSpecFull);
-    }
+{include file="layouts/_reactJs" /}
 
-    layui.use(['form'], function () {
-        var form = layui.form;
-        var toUrl = "{:url('cms/goods/ajaxGetBrandAndSpecInfoFstByCat')}";
-        goToToSelCatID(toUrl,'{$good.cat_id}',form,'init');
-
-        form.on('select(GoodsToSelCatID)', function (data) {
-            //TODO 此时进行ajax的服务器访问，如果返回数据正常，则进行后面代码的调用
-            goToToSelCatID(toUrl, data.value, form,'click');
-        });
-        //点击获取子级属性信息
-        form.on('select(toSelSpecFst)', function (data) {
-            //初始化 商品选择下拉列表
-            //TODO 此时进行ajax的服务器访问，如果返回数据正常，则进行后面代码的调用
-            var toUrl = "{:url('cms/specInfo/ajaxGetSpecInfoBySpecFst')}";
-            goToToSelSpecFst(toUrl, data, form);
-        });
-
-        form.on('checkbox(cbSpecInfo)', function (data) {
-            goToCbSpecInfo(data);
-        });
-    });
-
+<script type="text/babel">
+    const url_ajaxGetBrandAndSpecInfoFstByCat = "{:url('cms/goods/ajaxGetBrandAndSpecInfoFstByCat')}";
+    const url_ajaxGetSpecInfoBySpecFst = "{:url('cms/goods/ajaxGetSpecInfoBySpecFst')}";
 </script>
 {/block}
 

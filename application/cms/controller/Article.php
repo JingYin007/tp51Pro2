@@ -102,6 +102,6 @@ class Article extends CmsBase
      */
     public function viewLogs($id){
         $logs = getCmsOpViewLogs($id,'ARTICLE');
-        return view('view_logs',['logs' => $logs]);
+        return view('index/view_logs',['logs' => $logs]);
     }
 }

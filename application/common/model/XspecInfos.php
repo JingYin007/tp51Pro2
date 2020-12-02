@@ -160,16 +160,16 @@ class XspecInfos extends BaseModel
 
     /**
      * 根据商品分类ID 获取父级属性
-     * @param int $seledCatID
+     * @param int $catSelID
      * @return array
      */
-    public function getSpecInfoFstByCat($seledCatID = 0)
+    public function getSpecInfoFstByCat($catSelID = 0)
     {
         $specList = $this
             ->field("spec_id,spec_name,mark_msg")
             ->where([
                 ['parent_id', '=', 0],
-                ['cat_id', '=', intval($seledCatID)],
+                ['cat_id', '=', intval($catSelID)],
                 ['status','>',-1]])
             ->select();
         foreach ($specList as $key => $value) {
@@ -183,23 +183,22 @@ class XspecInfos extends BaseModel
     /**
      * 根据父级属性值获取次级信息
      * @param int $specFstID
-     * @return array
+     * @return array|array[]|\array[][]
+     * @throws \think\db\exception\DataNotFoundException
+     * @throws \think\db\exception\ModelNotFoundException
+     * @throws \think\exception\DbException
      */
     public function getSpecInfoBySpecFst($specFstID = 0)
     {
         $where = [['status', '=', 1],
-            ['parent_id', '=', $specFstID],
+            ['parent_id', '=', intval($specFstID)],
             ['parent_id', '>', 0]];
         $specList = $this
-            ->field('spec_id,spec_name,mark_msg,list_order')
+            ->field('spec_id,spec_name,0 as use_tag')
             ->where($where)
             ->order(['list_order' => 'asc', 'spec_id' => 'desc'])
             ->select();
-        foreach ($specList as $key => $value) {
-            if ($value && $value['mark_msg']) {
-                $specList[$key]['mark_msg'] = "【" . $value['mark_msg'] . "】";
-            }
-        }
+
         return isset($specList) ? $specList->toArray() : [];
     }
 

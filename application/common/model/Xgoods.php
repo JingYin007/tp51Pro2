@@ -114,12 +114,9 @@ class Xgoods extends BaseModel
             $images_str = $res['slide_imgs'];
             if ($images_str){$img_list = explode(',',$images_str);}
             $res['img_list'] = isset($img_list)?$img_list:[];
-
             //初始化 SKU 数组
-            $sku_arr = (new Xskus())->getSKUDataByGoodsID($id);
-            $res['sku_arr'] = $sku_arr;
-            $brandList = (new Xbrands())->getSelectableList(intval($res['cat_id']));
-            $res['brandList'] = $brandList;
+            $res['sku_arr'] = (new Xskus())->getSKUDataByGoodsID($id);
+            $res['brandList'] = (new Xbrands())->getSelectableList($res['cat_id']);
         }
 
         return isset($res) ? $res->toArray() : [];
@@ -167,9 +164,8 @@ class Xgoods extends BaseModel
                 $validateRes['message'] = $saveTag ? '数据修改成功' : '数据无变动';
                 if ($saveTag) {
                     //TODO 此时进行 sku库存信息的上传
-                    $skuModle = new Xskus();
                     $sku_arr = isset($input['sku_arr']) ? $input['sku_arr'] : [];
-                    $skuModle->opSKUforGoodsByID($id, $sku_arr);
+                    (new Xskus())->opSKUforGoodsByID($id, $sku_arr);
                 }
                 insertCmsOpLogs($saveTag,'GOODS',$id,'商品修改成功');
             }
@@ -234,9 +230,8 @@ class Xgoods extends BaseModel
             if ($tag) {
                 $goodsId = $this->getLastInsID();
                 //TODO 此时进行 sku库存信息的上传
-                $skuModel = new Xskus();
                 $sku_arr = isset($data['sku_arr']) ? $data['sku_arr'] : [];
-                $skuModel->opSKUforGoodsByID($goodsId, $sku_arr);
+                (new Xskus())->opSKUforGoodsByID($goodsId, $sku_arr);
                 insertCmsOpLogs($tag,'GOODS',$goodsId,'添加商品');
             }
         }

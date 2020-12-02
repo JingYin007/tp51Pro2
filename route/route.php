@@ -99,14 +99,19 @@ Route::any('cms/goods/add','cms/goods/add');
 Route::any('cms/goods/edit/:id','cms/goods/edit');
 Route::post('cms/goods/ajaxPutaway','cms/goods/ajaxPutaway');
 Route::get('cms/goods/viewLogs/:id','cms/goods/viewLogs');
+
+Route::post('cms/goods/ajaxGetNormalCatList','cms/goods/ajaxGetNormalCatList');
 Route::post('cms/goods/ajaxGetBrandAndSpecInfoFstByCat','cms/goods/ajaxGetBrandAndSpecInfoFstByCat');
+Route::post('cms/goods/ajaxGetSpecInfoBySpecFst','cms/goods/ajaxGetSpecInfoBySpecFst');
+
 
 //属性管理
 Route::any('cms/specInfo/index','cms/specInfo/index');
 Route::any('cms/specInfo/add','cms/specInfo/add');
 Route::any('cms/specInfo/edit/:id','cms/specInfo/edit');
 Route::any('cms/specInfo/details','cms/specInfo/details');
-Route::post('cms/specInfo/ajaxGetSpecInfoBySpecFst','cms/specInfo/ajaxGetSpecInfoBySpecFst');
+
+
 
 //活动管理
 Route::any('cms/activity/index','cms/activity/index');
