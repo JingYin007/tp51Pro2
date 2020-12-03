@@ -171,14 +171,14 @@ function SpecInfoDivShow({toUrl,initSpecFstID,initSpecFstName}){
         // TODO async/await让异步代码看起来,表现更象同步代码;
         async function queryData(){
             let result = await axios.post(toUrl,{selSpecFstID: initSpecFstID});
-            opSpecInoArr(result.data.data)
+            return result.data.data;
         }
         const pastSpecInfoArr = [...specInfoArr];
         //TODO 判断是否已经在内了
         if (isExitSpecID(initSpecFstID,pastSpecInfoArr)){
             dialog.tip('您已选择该属性!')
         }else {
-            queryData();
+            queryData().then(data => {opSpecInoArr(data);});
         }
     },[initSpecFstID])
 

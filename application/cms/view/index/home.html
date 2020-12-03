@@ -24,6 +24,18 @@
 
     .div-warmTip-left .layui-timeline-title {
         color: #b94a48;
+        font-family: '楷体';
+        font-weight: bolder;
+    }
+    .div-warmTip-left .log_content{
+        color: #8be9fd;
+        font-size: medium;
+        font-family: '楷体';
+    }
+    .div-warmTip-left .log_content_past{
+        color: #afd9ee;
+        font-size: medium;
+        font-family: '楷体';
     }
 
     .div-warmTip-right {
@@ -57,12 +69,12 @@
                 <ul class="layui-timeline">
                     {volist name="currLogList" id="vo"}
                     <li class="layui-timeline-item">
-                        <i class="layui-icon layui-timeline-axis"></i>
+                        <i class="layui-icon layui-timeline-axis">&#xe63d;</i>
                         <div class="layui-timeline-content layui-text">
                             <h3 class="layui-timeline-title">{$vo.date}</h3>
-                            <p>
+                            <p class="log_content">
                                 {volist name="vo.content" id="log"}
-                                > {$log.log_content} <br/>
+                                  {$log.log_content} <br/>
                                 {/volist}
                             </p>
                         </div>
@@ -79,12 +91,12 @@
                 <ul class="layui-timeline">
                     {volist name="devLogList" id="vo"}
                     <li class="layui-timeline-item">
-                        <i class="layui-icon layui-timeline-axis"></i>
+                        <i class="layui-icon layui-timeline-axis">&#xe60e;</i>
                         <div class="layui-timeline-content layui-text">
                             <h3 class="layui-timeline-title">{$vo.date}</h3>
-                            <p>
+                            <p class="log_content_past">
                                 {volist name="vo.content" id="log"}
-                                > {$log.log_content} <br/>
+                                  {$log.log_content} <br/>
                                 {/volist}
                             </p>
                         </div>
@@ -105,7 +117,7 @@
     <div class="layui-card-body">
         ♩. 开源框架支持：<b>ThinkPHP5.1.2</b>，
         <b><a href="https://www.layui.com/">LayUI 经典前端</a></b>，
-        <b>TinyMCE 富文本编辑器</b><br>
+        <b><a href="http://tinymce.ax-z.cn/">TinyMCE 富文本编辑器</a></b><br>
         ♪. 图片资源来自：
         <b><a href="https://weibo.com/p/1035051252103722/home?is_hot=1">吾皇的白茶</a></b>，
         <b><a href="http://www.iconfont.cn/plus">阿里巴巴矢量图标库</a></b><br>
