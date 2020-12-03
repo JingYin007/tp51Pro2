@@ -178,7 +178,7 @@ function SpecInfoDivShow({toUrl,initSpecFstID,initSpecFstName}){
         if (isExitSpecID(initSpecFstID,pastSpecInfoArr)){
             dialog.tip('您已选择该属性!')
         }else {
-            queryData().then(data => {opSpecInoArr(data);});
+            queryData().then(data => {opSpecInoArr(data)});
         }
     },[initSpecFstID])
 
@@ -212,7 +212,6 @@ function SpecInfoDivShow({toUrl,initSpecFstID,initSpecFstName}){
             }
             if (spliceFlag){specInfoArrCopy.splice(i,1);i=i-1}
         }
-
         const newStrAttrInfo = JSON.stringify(specInfoArrCopy);
         setStrAttrInfo(newStrAttrInfo);
         //console.log('str_attr_info',newStrAttrInfo)
@@ -255,7 +254,7 @@ function SpecInfoDivShow({toUrl,initSpecFstID,initSpecFstName}){
         for (let i = 0; i < pastSpecInfoArr.length; i++) {
             if (pastSpecInfoArr[i]["spec_id"] == spec_id) {
                 pastSpecInfoArr.splice(i, 1);
-                i=i-1;
+                i = i-1;
             }
         }
         setSpecInfoArr(pastSpecInfoArr);
