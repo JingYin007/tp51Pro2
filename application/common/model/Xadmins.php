@@ -95,7 +95,7 @@ class Xadmins extends BaseModel
      * @param $id
      * @return array
      */
-    public function getAdminData($id)
+    public function getAdminData($id = 0)
     {
         $res = $this
             ->alias('a')

@@ -87,8 +87,12 @@ class Index extends Controller
     public function admin(Request $request, $id)
     {
         if ($request->isGet()) {
-            $adminData = $this->adminModel->getAdminData($id);
-            return view('admin', ['admin' => $adminData,]);
+            if (intval($this->cmsAID) === intval($id)){
+                $adminData = $this->adminModel->getAdminData($id);
+                return view('admin', ['admin' => $adminData,]);
+            }else{
+                return showMsg(0,'Sorry, 您无权修改其他用户信息！');
+            }
         } else {
             //当前用户对个人账号的修改
             $input = $request->post();

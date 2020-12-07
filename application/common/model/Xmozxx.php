@@ -23,6 +23,7 @@ class Xmozxx
             ->count();
 
         $limit = $currTag ? "0,2" : "2,$count_date";
+
         $res = Db::name('xproDevLogs')
             ->field("date_format(log_time,'%Y-%m-%d') date")
             ->group('date')
