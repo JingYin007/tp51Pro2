@@ -61,11 +61,15 @@ class Index
     public function article($id)
     {
         $articleInfo = $this->articleModel->getInfoByID(intval($id));
-        $data = [
-            'name'=>'MoTzxx',
-            'article'=>$articleInfo,
-        ];
-        return view('article',$data);
+        if ($articleInfo){
+            $data = [
+                'name'=>'MoTzxx',
+                'article'=>$articleInfo,
+            ];
+            return view('article',$data);
+        }else{
+            return showMsg(1,'当前文章不存在！');
+        }
     }
 
 

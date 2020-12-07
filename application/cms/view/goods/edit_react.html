@@ -218,7 +218,7 @@
         <label class="layui-form-label">商品详情：</label>
         <div class="layui-input-block div-article-content">
             <textarea id="mz-tinymce" name="details" type="text/plain">
-                    {php}echo htmlspecialchars_decode($good['details']);{/php}
+                {$good.details|htmlspecialchars_decode}
             </textarea>
         </div>
     </div>

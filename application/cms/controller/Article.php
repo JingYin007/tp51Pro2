@@ -71,6 +71,7 @@ class Article extends CmsBase
     public function edit(Request $request, $id)
     {
         if ($request->isPost()) {
+
             $opRes = $this->model->updateCmsArticleData($request->post(),$id);
             return showMsg($opRes['tag'], $opRes['message']);
         } else {

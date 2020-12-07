@@ -51,7 +51,7 @@
         <label class="layui-form-label">文章内容：</label>
         <div class="layui-input-block">
             <textarea  id="mz-tinymce" name="content">
-                    {php}echo htmlspecialchars_decode($article['content']);{/php}
+                    {$article.content|htmlspecialchars_decode}
             </textarea >
         </div>
     </div>

@@ -19,6 +19,7 @@
             </div>
         </div>
         <div class="blog-content">
+<!--            {$article.content|htmlspecialchars_decode}-->
             {php} echo htmlspecialchars_decode($article['content']);{/php}
         </div>
         <!---->
