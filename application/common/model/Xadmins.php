@@ -277,7 +277,7 @@ class Xadmins extends BaseModel
     public function checkAdminLogin($input)
     {
         $flag = false;
-        $message = "登录成功";
+        $message = null;
         $userName = isset($input['user_name']) ? $input['user_name'] : '';
         $pwd = isset($input['password']) ? $input['password'] : '';
         $verifyCode = isset($input['login_verifyCode']) ? $input['login_verifyCode'] : '';
@@ -301,10 +301,9 @@ class Xadmins extends BaseModel
                 $message = "该用户名失效或不存在";
             }
         }
-
         return [
             'tag' => $flag,
-            'message' => $message
+            'message' => $message ? $message : '登录成功'
         ];
     }
 

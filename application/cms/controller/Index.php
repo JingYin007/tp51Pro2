@@ -3,6 +3,7 @@
 namespace app\cms\controller;
 
 use app\common\lib\IAuth;
+use app\common\lib\Upload;
 use app\common\model\Xmozxx;
 use app\common\model\XnavMenus;
 use app\common\model\Xadmins;
@@ -100,4 +101,25 @@ class Index extends Controller
             return showMsg($opRes['tag'], $opRes['message']);
         }
     }
+
+    /**
+     * 后台 图片上传 接口
+     * @param Request $request
+     * @throws \Exception
+     */
+    public function upload_img_file(Request $request){
+        if ($request->isPost()) {
+            //判断是哪种上传方式 七牛云
+            if (config('qiniu.QN_USE') == 'OPEN'){
+                $opRes = Upload::qiNiuSingleFile();
+            }else{
+                $opRes = Upload::singleFile($request);
+            }
+            return showMsg($opRes['status'], $opRes['message'],$opRes['data']);
+        }else{
+            return showMsg(0, "Sorry,请求不合法！");
+        }
+    }
+
+
 }

@@ -144,7 +144,7 @@ Route::any('cms/analyze/timeSale','cms/analyze/timeSale');
 /**
  * 工具类
  */
-Route::post('api/upload/img_file','api/upload/img_file');
+Route::post('cms/upload_img_file','cms/index/upload_img_file');
 Route::any('api/upload/test','api/upload/test');
 
 

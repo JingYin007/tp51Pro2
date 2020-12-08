@@ -34,10 +34,12 @@ class Upload
             $local_file_path = 'upload/' . $getSaveName;
             $server_file_path = config('ftp.IMG_SAVE_PATH'). $getSaveName;
             $ftpTag = self::ftpImageToServer($local_file_path,$server_file_path);
-            $data['url'] = $local_file_path;
-            $data['full_url'] = config('ftp.IMG_SERVER_PATH').$local_file_path;
+
             if ($ftpTag) {
                 $status = 1;
+                $data['url'] = $local_file_path;
+                $data['full_url'] = config('ftp.IMG_SERVER_PATH').$local_file_path;
+
                 $message = '文件上传成功';
             } else {
                 $message = "FTP 上传失败，请稍后再试";
@@ -95,7 +97,8 @@ class Upload
 
     /**
      * 七牛云 上传单一文件
-     * @return bool|string
+     * @return array
+     * @throws \Exception
      */
     public static function qiNiuSingleFile(){
         $data = [];
