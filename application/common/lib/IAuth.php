@@ -20,7 +20,7 @@ class IAuth
     /**
      * 获取系统配置项
      * @param string $confTag
-     * @return mixed
+     * @return string
      */
     public static function AUTH_CONF($confTag = ''){
         $res = config("sys_auth.".$confTag);
@@ -37,8 +37,8 @@ class IAuth
         if (!$pws_pre_halt){
             $pws_pre_halt = self::AUTH_CONF('PWD_PRE_HALT');
         }
-        $res = strrev(md5(base64_encode($password).$pws_pre_halt));
-        return $res;
+        $op_res = strrev(md5(base64_encode($password).$pws_pre_halt));
+        return $op_res;
     }
 
     /**
@@ -100,7 +100,7 @@ class IAuth
      * 加密
      * @param String input 加密的字符串
      * @param String key   解密的key
-     * @return HexString
+     * @return string
      */
     public static  function encrypt($input = '') {
         $data = openssl_encrypt($input, 'AES-256-CBC', self::AUTH_CONF('AES_KEY'), OPENSSL_RAW_DATA,self::AUTH_CONF('AES_IV'));

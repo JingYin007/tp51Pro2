@@ -149,11 +149,13 @@ Route::any('api/upload/test','api/upload/test');
 
 
 /**
- * Uni API 接口类，用于 uniApp 开发学习
+ * 微信小程序 登录及验证设计接口
  */
-Route::any('uniapi/getArticleList','uniapi/index/getArticleList');
-Route::post('uniapi/article','uniapi/index/getArticleInfo');
-
+Route::post('wxapi/WxBase/getAuthToken','wxapi/WxBase/getAuthToken');
+Route::post('wxapi/WxBase/verifyToken','wxapi/WxBase/verifyToken');
+// 小程序测试接口
+Route::any('wxapi/WxBase/getArticleInfo','wxapi/WxBase/getArticleInfo');
+Route::any('wxapi/WxBase/address','wxapi/WxBase/address');
 
 
 
