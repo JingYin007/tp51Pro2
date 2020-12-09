@@ -151,7 +151,7 @@ Route::any('api/upload/test','api/upload/test');
 /**
  * 微信小程序 登录及验证设计接口
  */
-Route::post('wxapi/WxBase/getAuthToken','wxapi/WxBase/getAuthToken');
+Route::any('wxapi/WxBase/getAuthToken','wxapi/WxBase/getAuthToken');
 Route::post('wxapi/WxBase/verifyToken','wxapi/WxBase/verifyToken');
 // 小程序测试接口
 Route::any('wxapi/WxBase/getArticleInfo','wxapi/WxBase/getArticleInfo');
