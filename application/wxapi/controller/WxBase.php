@@ -62,6 +62,7 @@ class WxBase
      * 简单的一个，获取当前用户的地址信息的接口
      */
     public function address(){
+        $accessToken = (new Token())->getAccessToken();
         $userID = Token::getCurrentUserID();
         return showMsg(1,'address',['user_id'=> $userID]);
     }

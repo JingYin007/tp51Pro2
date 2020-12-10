@@ -1,6 +1,7 @@
 <?php
 namespace app\index\controller;
 
+use app\common\lib\IAuth;
 use app\common\model\Xarticles;
 use app\common\model\XtodayWords;
 

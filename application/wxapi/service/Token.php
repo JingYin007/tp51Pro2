@@ -9,6 +9,9 @@ class Token
 {
     protected $wxAppID;
     protected $wxAppSecret;
+    const ACCESS_TOKEN_CACHED_KEY = 'wx_access_token';
+    const ACCESS_TOKEN_EXPIRE_IN = 7000;
+
     public function __construct()
     {
         $this->wxAppID = config('wx_mini.APP_ID');
@@ -16,7 +19,7 @@ class Token
     }
 
     /**
-     * 获取服务器生成的 Token 令牌
+     * 获取服务器(本地项目)生成的 Token 令牌
      * @param string $js_code
      * @return array 得到的 Token,形如：341c1c447cbf26f9f74c67f115a186a6
      */
@@ -47,7 +50,7 @@ class Token
     }
 
     /**
-     * 验证服务端 Token 的存在与否
+     * 验证服务端(本地项目) Token 的存在与否
      * 存储的 Token对应的值，形如： {"session_key":"DY0KejcMrnSx7mBr9Uq8DA==","openid":"osFYM9KiXxgFnPV547MrWYO_i7sI","user_id":1225}
      * @param $token
      * @return array
@@ -85,6 +88,42 @@ class Token
     public static function getCurrentOpenID(){
         $open_ID = self::getCurrentTokenVar('openid');
         return $open_ID ? $open_ID:'';
+    }
+
+    /**
+     * 从微信服务器中获取 AccessToken
+     * 调用绝大多数后台接口时都需使用 access_token；一般用于支付、信息发送；有效时长 7200秒
+     * @return array
+     */
+    public function getAccessToken(){
+        //首先从缓存中获取是否存在 AccessToken
+        $access_token = cache(self::ACCESS_TOKEN_CACHED_KEY);
+        if ($access_token){
+            $opStatus = 0;
+            $message = $access_token;
+        }else{
+            //如果不存在，就要进行重新获取
+            $accessTokenUrl = sprintf(config('wx_mini.ACCESS_TOKEN_URL'), $this->wxAppID,$this->wxAppSecret);
+            $result = curl_get($accessTokenUrl);
+
+            $wxResult = json_decode($result,true);
+            $opStatus = 0;
+            if (empty($wxResult)){
+                $message = "获取 AccessToken异常";
+            }else{
+                $loginFail = array_key_exists('errcode',$wxResult);
+                if ($loginFail){
+                    $message = $wxResult['errmsg'];
+                }else{
+                    $opStatus = 1;
+                    $message = $wxResult['access_token'];
+                    //存储 微信服务返回的 AccessToken
+                    cache(self::ACCESS_TOKEN_CACHED_KEY,$message,self::ACCESS_TOKEN_EXPIRE_IN);
+                }
+            }
+        }
+
+        return ['status' => $opStatus,'message' => $message];
     }
 
     /*---------------------- 以上为：常用的封装方法，下面的基本是处理方法--------------------------*/

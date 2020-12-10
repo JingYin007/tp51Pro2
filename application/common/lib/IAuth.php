@@ -29,16 +29,25 @@ class IAuth
 
     /**
      * 设置后台管理员登录密码加密
-     * @param string $password
-     * @param null $pws_pre_halt
+     * @param string $password 明文
      * @return string
      */
-    public static function setAdminUsrPassword($password = '',$pws_pre_halt = null){
-        if (!$pws_pre_halt){
-            $pws_pre_halt = self::AUTH_CONF('PWD_PRE_HALT');
-        }
-        $op_res = strrev(md5(base64_encode($password).$pws_pre_halt));
-        return $op_res;
+    public static function setAdminUsrPassword($password = ''){
+        $pws_pre_halt = self::AUTH_CONF('PWD_PRE_HALT');
+        $md5_hash = strrev(md5($password.$pws_pre_halt));
+        return password_hash($md5_hash,PASSWORD_DEFAULT );
+    }
+
+    /**
+     * 检查后台管理员的登录密码是否合法
+     * @param $password
+     * @param string $password_hash
+     * @return bool
+     */
+    public static function checkAdminUsrPassword($password,$password_hash = ''){
+        $pws_pre_halt = self::AUTH_CONF('PWD_PRE_HALT');
+        $md5_hash = strrev(md5($password.$pws_pre_halt));
+        return password_verify ($md5_hash, $password_hash);
     }
 
     /**
@@ -54,7 +63,7 @@ class IAuth
                 'op_ip' => (new Request())->ip()];
             $jsonRes = json_encode($cmsRes);
             //进行加密 并保存到Session中
-            $cms_encrypt = self::encrypt($jsonRes);
+            $cms_encrypt = self::encrypt($jsonRes,self::AUTH_CONF('AES_KEY'));
             Session::set(self::AUTH_CONF('SESSION_CMS_TAG'), $cms_encrypt,self::AUTH_CONF('SESSION_CMS_SCOPE'));
         }
     }
@@ -66,9 +75,9 @@ class IAuth
         $cmsRes = self::getDecryCmsRes();
 
         $time_stamp = isset($cmsRes['time_stamp'])?$cmsRes['time_stamp']:0;
-        //检查 登录Session 的有效时间
+        //检查 登录 Session 的有效时间
         if ($time_stamp + config('session.expire') > time()){
-            $cmsAID = isset($cmsRes['op_id'])?$cmsRes['op_id']:0;
+            $cmsAID = isset($cmsRes['op_id'])? $cmsRes['op_id'] : 0;
         }
         return isset($cmsAID)?intval($cmsAID):0;
     }
@@ -81,7 +90,8 @@ class IAuth
         if (Session::has(self::AUTH_CONF('SESSION_CMS_TAG'),self::AUTH_CONF('SESSION_CMS_SCOPE'))
             && Session::get(self::AUTH_CONF('SESSION_CMS_TAG'),self::AUTH_CONF('SESSION_CMS_SCOPE'))){
             $cms_encrypt = Session::get(self::AUTH_CONF('SESSION_CMS_TAG'),self::AUTH_CONF('SESSION_CMS_SCOPE'));
-            $cms_decrypt = self::decrypt($cms_encrypt);
+            $cms_decrypt = self::decrypt($cms_encrypt,self::AUTH_CONF('AES_KEY'));
+
             $cmsRes = json_decode($cms_decrypt,1);
         }
         return isset($cmsRes)?$cmsRes:[];
@@ -98,24 +108,24 @@ class IAuth
     /*-------------------------分界线------------------下面是核心处理方法-------------------*/
     /**
      * 加密
-     * @param String input 加密的字符串
-     * @param String key   解密的key
+     * @param String $input 加密的字符串
+     * @param String $aes_key   解密的key
      * @return string
      */
-    public static  function encrypt($input = '') {
-        $data = openssl_encrypt($input, 'AES-256-CBC', self::AUTH_CONF('AES_KEY'), OPENSSL_RAW_DATA,self::AUTH_CONF('AES_IV'));
-        $data = base64_encode($data);
-        return $data;
+    public static  function encrypt($input = '',$aes_key = '') {
+        $data = openssl_encrypt($input, 'AES-256-CBC', $aes_key, OPENSSL_RAW_DATA,self::AUTH_CONF('AES_IV'));
+        $encryptStr = base64_encode($data);
+        return $encryptStr;
     }
 
     /**
      * 解密
-     * @param String input 解密的字符串
-     * @param String key   解密的key
+     * @param String $sStr 解密的字符串
+     * @param String $aes_key   解密的key
      * @return String
      */
-    public static function decrypt($sStr) {
-        $decrypted = openssl_decrypt(base64_decode($sStr), 'AES-256-CBC', self::AUTH_CONF('AES_KEY'), OPENSSL_RAW_DATA,self::AUTH_CONF('AES_IV'));
+    public static function decrypt($sStr,$aes_key) {
+        $decrypted = openssl_decrypt(base64_decode($sStr), 'AES-256-CBC', $aes_key, OPENSSL_RAW_DATA,self::AUTH_CONF('AES_IV'));
         return $decrypted;
     }
 

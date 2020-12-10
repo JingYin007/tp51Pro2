@@ -126,8 +126,8 @@ class Xadmins extends BaseModel
             $addData = [
                 'user_name' => $user_name,
                 'picture' => isset($input['picture']) ? $input['picture'] : '',
-                'password' => IAuth::setAdminUsrPassword($input['password']),
-                're_password' => IAuth::setAdminUsrPassword($input['re_password']),
+                'password' => isset($input['password']) ? $input['password'] : '',
+                're_password' => isset($input['re_password']) ? $input['re_password'] : '',
                 'created_at' => date("Y-m-d H:i:s", time()),
                 'role_id' => isset($input['role_id'])?intval($input['role_id']):0,
                 'status' => isset($input['status'])?intval($input['status']):0,
@@ -136,6 +136,7 @@ class Xadmins extends BaseModel
             $tokenData = ['__token__' => isset($input['__token__']) ? $input['__token__'] : '',];
             $validateRes = $this->validate($this->validate, $addData, $tokenData);
             if ($validateRes['tag']) {
+                $addData['password'] = IAuth::setAdminUsrPassword($input['password']);
                 $tag = $this->allowField(true)->save($addData);
                 $validateRes['tag'] = $tag;
                 $validateRes['message'] = $tag ? '管理员添加成功' : '添加失败';
@@ -221,14 +222,16 @@ class Xadmins extends BaseModel
                 $tokenData = ['__token__' => isset($input['__token__']) ? $input['__token__'] : '',];
                 if ($input['password']) {
                     //TODO 如果输入了新密码
-                    $saveData['password'] = IAuth::setAdminUsrPassword($input['password']);
-                    $saveData['re_password'] = IAuth::setAdminUsrPassword($input['re_password']);
+                    $saveData['password'] = $input['password'];
+                    $saveData['re_password'] = $input['re_password'];
                     $validateRes = $this->validate($this->validate, $saveData, $tokenData);
                 } else {
                     $validateRes = $this->validate($this->validate, $saveData, $tokenData, 'edit_admin_no_pwd');
                 }
 
                 if ($validateRes['tag']) {
+                    $password_hash = IAuth::setAdminUsrPassword($input['password']);
+                    $saveData['password'] = $password_hash;
                     $tag = $this->allowField(true)->save($saveData, ['id' => $id]);
                     $validateRes['tag'] = $tag;
                     $validateRes['message'] = $tag ? '管理员修改成功' : '数据无变动或修改失败';
@@ -291,7 +294,7 @@ class Xadmins extends BaseModel
                 ->where('status', 1)
                 ->find();
             if ($res) {
-                if ($res->password == IAuth::setAdminUsrPassword($pwd)) {
+                if (IAuth::checkAdminUsrPassword($pwd,$res->password)) {
                     $flag = $res->op_id;
                     IAuth::setSessionAdminCurrLogged($res->op_id);
                 } else {

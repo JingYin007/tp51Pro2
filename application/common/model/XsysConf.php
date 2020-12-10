@@ -52,6 +52,7 @@ class XsysConf extends Model
         if(!$result) {
             $opMessage = $validate->getError();
         }else{
+            $arrAuthTag = $arrAuthVal = null;
             foreach ($postData as $key => $value) {
                 $arrAuthTag[] = $key;
                 $arrAuthVal[] = $value;
@@ -62,7 +63,7 @@ class XsysConf extends Model
                 Db::name('xadmins')->where('id',1)
                     ->update([
                         'user_name' => 'moTzxx@admin',
-                        'password'  =>  IAuth::setAdminUsrPassword('admin',$postData['PWD_PRE_HALT']),
+                        'password'  =>  IAuth::setAdminUsrPassword('admin'),
                         'status'    => 1,
                         'role_id' => 1,
                     ]);
