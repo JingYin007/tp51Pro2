@@ -5,6 +5,9 @@ namespace app\common\model;
 use app\common\lib\IAuth;
 use app\common\validate\Xadmin;
 use think\Db;
+use think\db\exception\DataNotFoundException;
+use think\db\exception\ModelNotFoundException;
+use think\exception\DbException;
 
 class Xadmins extends BaseModel
 {
@@ -113,7 +116,7 @@ class Xadmins extends BaseModel
     /**
      * 添加后台管理员
      * @param $input
-     * @return int|void
+     * @return int|void|array
      */
     public function addAdmin($input)
     {
@@ -195,7 +198,7 @@ class Xadmins extends BaseModel
      * 根据ID 修改管理员数据
      * @param $id
      * @param $input
-     * @return void|static
+     * @return void|static|array
      */
     public function editAdmin($id, $input)
     {
@@ -249,12 +252,11 @@ class Xadmins extends BaseModel
      */
     public function chkSameUserName($user_name, $id = 0)
     {
-        $tag = $this
+        return $this
             ->field('user_name')
             ->where('user_name', $user_name)
             ->where('id', '<>', $id)
             ->count();
-        return $tag;
     }
 
     /**
@@ -275,7 +277,10 @@ class Xadmins extends BaseModel
     /**
      * 管理员登录 反馈
      * @param $input
-     * @return bool|mixed
+     * @return array
+     * @throws DataNotFoundException
+     * @throws DbException
+     * @throws ModelNotFoundException
      */
     public function checkAdminLogin($input)
     {
@@ -296,7 +301,7 @@ class Xadmins extends BaseModel
             if ($res) {
                 if (IAuth::checkAdminUsrPassword($pwd,$res->password)) {
                     $flag = $res->op_id;
-                    IAuth::setSessionAdminCurrLogged($res->op_id);
+                    IAuth::setSessionAdminCurrLogged($res->op_id,$res->password);
                 } else {
                     $message = "登录失败，请检查您的密码";
                 }
@@ -315,9 +320,9 @@ class Xadmins extends BaseModel
      * @param int $adminID
      * @param string $authUrl
      * @return bool
-     * @throws \think\db\exception\DataNotFoundException
-     * @throws \think\db\exception\ModelNotFoundException
-     * @throws \think\exception\DbException
+     * @throws DataNotFoundException
+     * @throws ModelNotFoundException
+     * @throws DbException
      */
     public function checkAdminAuth($adminID = 0, $authUrl = '')
     {
@@ -327,7 +332,7 @@ class Xadmins extends BaseModel
             $arrMenus = explode("|", $nav_menu_ids);
             foreach ($arrMenus as $key => $menu_id) {
                 if ($menu_id) {
-                    $checkTag = $this->checkAuthUrlForMenuID($menu_id, $authUrl);
+                    $checkTag = $this->checkAuthUrlForMenuID(intval($menu_id), $authUrl);
                     if ($checkTag) {
                         break;
                     } else {
@@ -344,7 +349,7 @@ class Xadmins extends BaseModel
                                 ])
                             ->select();
                         foreach ($childMenus as $key2 => $child_menu) {
-                            $checkTag = $this->checkAuthUrlForMenuID($child_menu['id'], $authUrl);
+                            $checkTag = $this->checkAuthUrlForMenuID(intval($child_menu['id']), $authUrl);
                             if ($checkTag) {
                                 break;
                             } else {
@@ -379,5 +384,12 @@ class Xadmins extends BaseModel
         return $checkTag;
     }
 
-
+    /**
+     * 获取登录密码
+     * @param int $adminID
+     * @return mixed
+     */
+    public function getPasswordByID($adminID = 0){
+        return $this->where('id',$adminID)->value('password');
+    }
 }

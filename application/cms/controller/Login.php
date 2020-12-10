@@ -8,7 +8,12 @@ use app\common\model\Xadmins;
 use app\common\model\XnavMenus;
 use app\common\model\XsysConf;
 use think\Controller;
+use think\db\exception\DataNotFoundException;
+use think\db\exception\ModelNotFoundException;
+use think\exception\DbException;
 use think\Request;
+use think\response\Redirect;
+use think\response\View;
 
 /**
  * 登录管理类
@@ -29,11 +34,13 @@ class Login extends Controller
 
     /**
      * 登录页
-     * @return \think\response\View
+     * @return View
      */
     public function index()
     {
-        if (IAuth::getAdminIDCurrLogged()) {
+        $cmsAID = IAuth::getAdminIDCurrLogged();
+
+        if ($cmsAID && IAuth::ckPasswordNoChangedCurrLogged($cmsAID)) {
             $this->redirect('cms/index/index');
         } else {
             return view('index');
@@ -42,7 +49,6 @@ class Login extends Controller
 
     /**
      * 登出账号
-     * @return \think\response\Redirect
      */
     public function logout()
     {
@@ -53,6 +59,9 @@ class Login extends Controller
     /**
      * ajax 进行管理员的登录操作
      * @param Request $request
+     * @throws DataNotFoundException
+     * @throws ModelNotFoundException
+     * @throws DbException
      */
     public function ajaxLogin(Request $request)
     {
@@ -81,8 +90,7 @@ class Login extends Controller
             $cmsAID = IAuth::getAdminIDCurrLogged();
             $nav_menu_id = $request->param('nav_menu_id');
             //TODO 判断当前菜单是否属于他的权限内
-            $checkTag = $this->navMenuModel->checkNavMenuMan($nav_menu_id, $cmsAID);
-            if ($cmsAID && $checkTag) {
+            if ($cmsAID && IAuth::ckPasswordNoChangedCurrLogged($cmsAID) && $this->navMenuModel->checkNavMenuMan($nav_menu_id, $cmsAID)) {
                 return showMsg(1, '正在登录状态');
             } else {
                 return showMsg(0, '未在登录状态');

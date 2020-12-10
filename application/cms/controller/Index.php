@@ -7,8 +7,13 @@ use app\common\lib\Upload;
 use app\common\model\Xmozxx;
 use app\common\model\XnavMenus;
 use app\common\model\Xadmins;
+use Exception;
 use think\Controller;
+use think\db\exception\DataNotFoundException;
+use think\db\exception\ModelNotFoundException;
+use think\exception\DbException;
 use think\Request;
+use think\response\View;
 
 /**
  * Created by PhpStorm.
@@ -30,7 +35,7 @@ class Index extends Controller
     {
         parent::__construct();
         $this->cmsAID = IAuth::getAdminIDCurrLogged();
-        if (!$this->cmsAID) {
+        if (!$this->cmsAID || !IAuth::ckPasswordNoChangedCurrLogged($this->cmsAID)) {
             $action = trim(strtolower(request()->action()));
             if ($action == 'index'){
                 //TODO 后台入口路径 处理方法！
@@ -47,7 +52,7 @@ class Index extends Controller
     /**
      * 后台首页
      * @param Request $request
-     * @return \think\response\View|void
+     * @return View|void
      */
     public function index(Request $request)
     {
@@ -68,7 +73,10 @@ class Index extends Controller
 
     /**
      * 首页显示 可自定义呗
-     * @return \think\response\View
+     * @return View
+     * @throws DataNotFoundException
+     * @throws ModelNotFoundException
+     * @throws DbException
      */
     public function home()
     {
@@ -83,7 +91,7 @@ class Index extends Controller
      * 展示管理员个人信息 可自行修改
      * @param Request $request
      * @param $id
-     * @return \think\response\View|void
+     * @return View|void
      */
     public function admin(Request $request, $id)
     {
@@ -105,7 +113,7 @@ class Index extends Controller
     /**
      * 后台 图片上传 接口
      * @param Request $request
-     * @throws \Exception
+     * @throws Exception
      */
     public function upload_img_file(Request $request){
         if ($request->isPost()) {

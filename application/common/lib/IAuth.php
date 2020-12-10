@@ -7,6 +7,8 @@
  */
 
 namespace app\common\lib;
+use app\common\model\Xadmins;
+use think\Db;
 use think\facade\Session;
 use think\Request;
 
@@ -23,8 +25,7 @@ class IAuth
      * @return string
      */
     public static function AUTH_CONF($confTag = ''){
-        $res = config("sys_auth.".$confTag);
-        return $res;
+        return config("sys_auth.".$confTag);
     }
 
     /**
@@ -52,13 +53,15 @@ class IAuth
 
     /**
      * 管理员登录成功后的信息 加密保存
-     * @param int $op_id
+     * @param int $op_id 管理员 ID
+     * @param string $op_password 管理员密码
      */
-    public static function setSessionAdminCurrLogged($op_id = 0)
+    public static function setSessionAdminCurrLogged($op_id = 0,$op_password = '')
     {
         if ($op_id){
             $cmsRes = [
                 'op_id' => $op_id,
+                'op_password' => $op_password,
                 'time_stamp' => time(),
                 'op_ip' => (new Request())->ip()];
             $jsonRes = json_encode($cmsRes);
@@ -83,12 +86,25 @@ class IAuth
     }
 
     /**
+     * 检查密码是否变化
+     * @param int $cmsAID 用户 ID
+     * @return bool true:无变化；false: 有变化
+     */
+    public static function ckPasswordNoChangedCurrLogged($cmsAID = 0){
+        $cmsRes = self::getDecryCmsRes();
+        $op_password = isset($cmsRes['op_password']) ? $cmsRes['op_password']: '';
+        $curr_password = (new Xadmins())->getPasswordByID($cmsAID);
+        return $op_password === $curr_password;
+    }
+
+    /**
      * 获取 加密数据的 原始数组形式
      * @return array|mixed
      */
     public static function getDecryCmsRes(){
         if (Session::has(self::AUTH_CONF('SESSION_CMS_TAG'),self::AUTH_CONF('SESSION_CMS_SCOPE'))
             && Session::get(self::AUTH_CONF('SESSION_CMS_TAG'),self::AUTH_CONF('SESSION_CMS_SCOPE'))){
+
             $cms_encrypt = Session::get(self::AUTH_CONF('SESSION_CMS_TAG'),self::AUTH_CONF('SESSION_CMS_SCOPE'));
             $cms_decrypt = self::decrypt($cms_encrypt,self::AUTH_CONF('AES_KEY'));
 
@@ -113,9 +129,13 @@ class IAuth
      * @return string
      */
     public static  function encrypt($input = '',$aes_key = '') {
-        $data = openssl_encrypt($input, 'AES-256-CBC', $aes_key, OPENSSL_RAW_DATA,self::AUTH_CONF('AES_IV'));
-        $encryptStr = base64_encode($data);
-        return $encryptStr;
+        $data = openssl_encrypt(
+                            $input,
+                            'AES-256-CBC',
+                            $aes_key,
+                            OPENSSL_RAW_DATA,
+                            self::AUTH_CONF('AES_IV'));
+        return base64_encode($data);
     }
 
     /**
@@ -125,8 +145,12 @@ class IAuth
      * @return String
      */
     public static function decrypt($sStr,$aes_key) {
-        $decrypted = openssl_decrypt(base64_decode($sStr), 'AES-256-CBC', $aes_key, OPENSSL_RAW_DATA,self::AUTH_CONF('AES_IV'));
-        return $decrypted;
+        return openssl_decrypt(
+                        base64_decode($sStr),
+                        'AES-256-CBC',
+                        $aes_key,
+                        OPENSSL_RAW_DATA,
+                        self::AUTH_CONF('AES_IV'));
     }
 
 

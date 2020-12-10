@@ -235,7 +235,7 @@ class XsysConf extends Model
      */
     public function checkIpAuth($ipVal = ''){
         $ipStatus =  Db::name('xipWhites')->where('ip',$ipVal)->value('status');
-        return $ipStatus==1?true:false;
+        return $ipStatus == 1;
     }
     /**
      * 检查IP白名单开启状态下是否有权限

@@ -11,7 +11,9 @@ namespace app\common\controller;
 use app\common\lib\IAuth;
 use app\common\model\Xadmins;
 use app\common\model\XsysConf;
-use think\facade\Request;
+use think\db\exception\DataNotFoundException;
+use think\db\exception\ModelNotFoundException;
+use think\exception\DbException;
 
 /**
  * 此类主要用于后台控制类的初始化操作
@@ -41,30 +43,41 @@ class CmsBase extends Base
         $authFlag = false;
         $cmsAID = IAuth::getAdminIDCurrLogged();
         if (!$cmsAID) {
-            $message = "You are offline,please logon again!";
+            $message = "You are offline,please logon again！";
         } else {
-            $sysConf = new XsysConf();
-            if ($sysConf->checkCmsIpAuth()){
-                //TODO 判断当前用户是否具有此操作权限
-                $checkAuth = $this->checkCmsAdminAuth($cmsAID);
-                $authFlag = $checkAuth;
-                $message = $checkAuth ? "权限正常" : "Sorry,You don't have permission!";
+            //TODO 检查密码是否更改
+
+            if (!IAuth::ckPasswordNoChangedCurrLogged($cmsAID)){
+                $message = "Your password has changed,please logon again！";
             }else{
-                $message = "Sorry,Your IP is abnormal, please contact the administrator!";
+                $sysConf = new XsysConf();
+                if ($sysConf->checkCmsIpAuth()){
+                    //TODO 判断当前用户是否具有此操作权限
+                    try {
+                        $authFlag = $this->checkCmsAdminAuth($cmsAID);
+                        $message = $authFlag ? "权限正常" : "Sorry,You don't have permission!";
+                    } catch (DataNotFoundException $e) {
+                        $message = $e->getMessage();
+                    } catch (ModelNotFoundException $e) {
+                        $message = $e->getMessage();
+                    } catch (DbException $e) {
+                        $message = $e->getMessage();
+                    }
+                }else{
+                    $message = "Sorry,Your IP is abnormal, please contact the administrator!";
+                }
             }
         }
-        if (!$authFlag) {
-            return showMsg($authFlag, $message);
-        };
+        if (!$authFlag) {return showMsg(intval($authFlag), $message);}
     }
 
     /**
      * 检查权限
      * @param int $adminID
      * @return bool
-     * @throws \think\db\exception\DataNotFoundException
-     * @throws \think\db\exception\ModelNotFoundException
-     * @throws \think\exception\DbException
+     * @throws DataNotFoundException
+     * @throws ModelNotFoundException
+     * @throws DbException
      */
     public function checkCmsAdminAuth($adminID = 0)
     {
@@ -72,9 +85,7 @@ class CmsBase extends Base
         $request_url = trim(strtolower($_SERVER["REQUEST_URI"]));
         $authUrl = explode($action, $request_url)[0] . $action;
         //对待检测的URL 忽略大小写
-        $adminModel = new Xadmins();
-        $checkTag = $adminModel->checkAdminAuth($adminID, $authUrl);
-        return $checkTag;
+        return (new Xadmins())->checkAdminAuth($adminID, $authUrl);
     }
 
 }
