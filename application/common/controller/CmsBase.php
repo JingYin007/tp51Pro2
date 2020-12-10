@@ -31,7 +31,7 @@ class CmsBase extends Base
     public function __construct()
     {
         parent::__construct();
-        $this->page_limit = 3;//config('app.CMS_PAGE_SIZE');
+        $this->page_limit = config('app.CMS_PAGE_SIZE');
         $this->initAuth();
     }
 
