@@ -10,7 +10,7 @@ Target Server Type    : MYSQL
 Target Server Version : 50553
 File Encoding         : 65001
 
-Date: 2020-12-10 20:22:05
+Date: 2020-12-10 20:57:26
 */
 
 SET FOREIGN_KEY_CHECKS=0;
@@ -34,7 +34,7 @@ CREATE TABLE `tp5_xactivitys` (
   PRIMARY KEY (`id`,`act_tag`),
   UNIQUE KEY `act_tag` (`act_tag`) USING BTREE COMMENT '唯一标识索引',
   KEY `select` (`id`,`title`) USING BTREE COMMENT '便于查询'
-) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8 COMMENT='活动表\r\n\r\n一般用于显示app首页上的活动专栏，注意status的规定';
+) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8mb4 COMMENT='活动表\r\n\r\n一般用于显示app首页上的活动专栏，注意status的规定';
 
 -- ----------------------------
 -- Records of tp5_xactivitys
@@ -53,7 +53,7 @@ CREATE TABLE `tp5_xact_goods` (
   `goods_id` int(11) DEFAULT '0' COMMENT '参加该活动的商品ID',
   `status` tinyint(2) DEFAULT '0' COMMENT '0 ：正常 -1：已删除',
   PRIMARY KEY (`id`)
-) ENGINE=MyISAM AUTO_INCREMENT=31 DEFAULT CHARSET=utf8 COMMENT='活动商品关联表\r\n\r\n';
+) ENGINE=MyISAM AUTO_INCREMENT=31 DEFAULT CHARSET=utf8mb4 COMMENT='活动商品关联表\r\n\r\n';
 
 -- ----------------------------
 -- Records of tp5_xact_goods
@@ -128,7 +128,7 @@ CREATE TABLE `tp5_xad_lists` (
   `is_show` tinyint(1) NOT NULL DEFAULT '1' COMMENT '是否在 app 首页显示  0：不显示  1：显示',
   `ad_tag` varchar(100) NOT NULL DEFAULT '' COMMENT '唯一标识字符串 建议大写',
   PRIMARY KEY (`id`)
-) ENGINE=MyISAM AUTO_INCREMENT=9 DEFAULT CHARSET=utf8 COMMENT='广告';
+) ENGINE=MyISAM AUTO_INCREMENT=9 DEFAULT CHARSET=utf8mb4 COMMENT='广告';
 
 -- ----------------------------
 -- Records of tp5_xad_lists
@@ -144,15 +144,15 @@ INSERT INTO `tp5_xad_lists` VALUES ('4', '首屏广告', '2019-07-02 00:00:00', 
 DROP TABLE IF EXISTS `tp5_xarticles`;
 CREATE TABLE `tp5_xarticles` (
   `id` int(10) unsigned NOT NULL AUTO_INCREMENT COMMENT 'Article 主键',
-  `title` varchar(50) NOT NULL DEFAULT '' COMMENT '标题',
+  `title` varchar(50) CHARACTER SET utf8mb4 NOT NULL DEFAULT '' COMMENT '标题',
   `user_id` int(11) NOT NULL DEFAULT '0' COMMENT '作者ID',
   `created_at` timestamp NOT NULL DEFAULT '0000-00-00 00:00:00',
   `updated_at` timestamp NOT NULL DEFAULT '0000-00-00 00:00:00',
   `list_order` int(11) NOT NULL DEFAULT '0' COMMENT '排序标识 越大越靠前',
-  `content` text NOT NULL COMMENT '文章内容',
+  `content` text CHARACTER SET utf8mb4 NOT NULL COMMENT '文章内容',
   PRIMARY KEY (`id`),
   KEY `index_title` (`title`)
-) ENGINE=MyISAM AUTO_INCREMENT=5 DEFAULT CHARSET=utf8mb4 COMMENT='文章表';
+) ENGINE=MyISAM AUTO_INCREMENT=5 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci COMMENT='文章表';
 
 -- ----------------------------
 -- Records of tp5_xarticles
@@ -714,13 +714,13 @@ CREATE TABLE `tp5_xchat_logs` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `from_id` int(11) NOT NULL DEFAULT '0' COMMENT '发送方 admin ID',
   `to_id` int(11) NOT NULL DEFAULT '0' COMMENT '接收方 Admin ID',
-  `content` varchar(255) NOT NULL COMMENT '聊天内容',
+  `content` varchar(255) CHARACTER SET utf8mb4 NOT NULL COMMENT '聊天内容',
   `log_time` int(11) NOT NULL DEFAULT '0' COMMENT '记录时间',
   `is_read` tinyint(1) NOT NULL DEFAULT '0' COMMENT '0：未读；1：已读',
   `type` tinyint(1) NOT NULL DEFAULT '1' COMMENT '1：文字；2：图片',
   PRIMARY KEY (`id`),
   KEY `INDEX` (`from_id`,`to_id`)
-) ENGINE=MyISAM AUTO_INCREMENT=587 DEFAULT CHARSET=utf8mb4 COMMENT='聊天记录表';
+) ENGINE=MyISAM AUTO_INCREMENT=587 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci COMMENT='聊天记录表';
 
 -- ----------------------------
 -- Records of tp5_xchat_logs
@@ -986,7 +986,7 @@ CREATE TABLE `tp5_xconfigs` (
   UNIQUE KEY `tag_index` (`tag`) USING BTREE,
   KEY `sel_index` (`title`,`tag`) USING BTREE COMMENT '便于查询',
   KEY `pk_index` (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=utf8 COMMENT='配置表';
+) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=utf8mb4 COMMENT='配置表';
 
 -- ----------------------------
 -- Records of tp5_xconfigs
@@ -1002,28 +1002,28 @@ INSERT INTO `tp5_xconfigs` VALUES ('4', 'VIP会员费用', 'VIP_MONEY', '0', 'te
 DROP TABLE IF EXISTS `tp5_xgoods`;
 CREATE TABLE `tp5_xgoods` (
   `goods_id` int(11) NOT NULL AUTO_INCREMENT COMMENT '商品ID',
-  `goods_name` varchar(50) NOT NULL COMMENT '商品名称',
+  `goods_name` varchar(50) CHARACTER SET utf8mb4 NOT NULL COMMENT '商品名称',
   `cat_id` int(11) NOT NULL DEFAULT '0' COMMENT '商品分类id',
   `brand_id` int(11) NOT NULL DEFAULT '0' COMMENT '品牌编号',
-  `thumbnail` varchar(200) NOT NULL COMMENT '缩略图，一般用于订单页的商品展示',
-  `slide_imgs` varchar(600) NOT NULL COMMENT '轮播图片，以逗号隔开',
+  `thumbnail` varchar(200) CHARACTER SET utf8mb4 NOT NULL COMMENT '缩略图，一般用于订单页的商品展示',
+  `slide_imgs` varchar(600) CHARACTER SET utf8mb4 NOT NULL COMMENT '轮播图片，以逗号隔开',
   `sketch` varchar(200) CHARACTER SET utf8 NOT NULL COMMENT '简述，字数不要太多，一般一句话',
   `list_order` int(11) NOT NULL DEFAULT '999' COMMENT '排序，越小越靠前',
-  `details` text NOT NULL COMMENT '商品描述详情',
+  `details` text CHARACTER SET utf8mb4 NOT NULL COMMENT '商品描述详情',
   `market_price` decimal(11,2) NOT NULL DEFAULT '0.00' COMMENT '市场价格',
   `selling_price` decimal(11,2) NOT NULL DEFAULT '0.00' COMMENT '商品售价',
-  `attr_info` text NOT NULL COMMENT 'json形式保存的属性数据',
+  `attr_info` text CHARACTER SET utf8mb4 NOT NULL COMMENT 'json形式保存的属性数据',
   `stock` int(11) NOT NULL DEFAULT '0' COMMENT '库存，注意退货未支付订单时的数目变化',
   `created_at` timestamp NOT NULL DEFAULT '0000-00-00 00:00:00' COMMENT '商品创建时间',
   `updated_at` timestamp NOT NULL DEFAULT '0000-00-00 00:00:00' COMMENT '商品更新时间',
-  `str_tags` varchar(300) NOT NULL DEFAULT '' COMMENT '标签，可用于搜索，以逗号隔开',
-  `recommend` char(1) NOT NULL DEFAULT '0' COMMENT '推荐标志位',
+  `str_tags` varchar(300) CHARACTER SET utf8mb4 NOT NULL DEFAULT '' COMMENT '标签，可用于搜索，以逗号隔开',
+  `recommend` char(1) CHARACTER SET utf8mb4 NOT NULL DEFAULT '0' COMMENT '推荐标志位',
   `status` tinyint(2) NOT NULL DEFAULT '0' COMMENT '状态 -1：删除 0：未上架 1：已上架 2：预售 ',
   PRIMARY KEY (`goods_id`),
   KEY `idx_index` (`cat_id`,`brand_id`) USING BTREE,
   KEY `sel_index` (`goods_name`,`list_order`) USING BTREE,
   KEY `pk_index` (`goods_id`)
-) ENGINE=InnoDB AUTO_INCREMENT=9 DEFAULT CHARSET=utf8mb4 COMMENT='商品表\r\n\r\n注意：status 的规定，app 上只显示上架的产品哦';
+) ENGINE=InnoDB AUTO_INCREMENT=9 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci COMMENT='商品表\r\n\r\n注意：status 的规定，app 上只显示上架的产品哦';
 
 -- ----------------------------
 -- Records of tp5_xgoods
@@ -1462,21 +1462,21 @@ INSERT INTO `tp5_xtoday_words` VALUES ('8', '不管前方的路有多苦，只�
 DROP TABLE IF EXISTS `tp5_xusers`;
 CREATE TABLE `tp5_xusers` (
   `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
-  `nick_name` varchar(50) COLLATE utf8_unicode_ci NOT NULL COMMENT '昵称  默认来自微信、QQ的昵称，可后期编辑',
-  `user_avatar` varchar(500) COLLATE utf8_unicode_ci NOT NULL COMMENT '用户头像',
-  `auth_tel` varchar(11) COLLATE utf8_unicode_ci NOT NULL DEFAULT '15118988888' COMMENT '手机认证',
+  `nick_name` varchar(50) CHARACTER SET utf8 COLLATE utf8_unicode_ci NOT NULL COMMENT '昵称  默认来自微信、QQ的昵称，可后期编辑',
+  `user_avatar` varchar(500) CHARACTER SET utf8 COLLATE utf8_unicode_ci NOT NULL COMMENT '用户头像',
+  `auth_tel` varchar(11) CHARACTER SET utf8 COLLATE utf8_unicode_ci NOT NULL DEFAULT '15118988888' COMMENT '手机认证',
   `sex` tinyint(4) NOT NULL DEFAULT '0' COMMENT '性别  0：未设定   1：男   2：女',
   `reg_time` int(10) unsigned NOT NULL DEFAULT '0' COMMENT '注册时间',
   `user_type` tinyint(4) NOT NULL DEFAULT '0' COMMENT '  0:普通用户  1：内部员工',
-  `reg_type` varchar(255) COLLATE utf8_unicode_ci NOT NULL DEFAULT '0' COMMENT '注册类型，0：安卓用户(QQ)，1：安卓用户(微信)',
+  `reg_type` varchar(255) CHARACTER SET utf8 COLLATE utf8_unicode_ci NOT NULL DEFAULT '0' COMMENT '注册类型，0：安卓用户(QQ)，1：安卓用户(微信)',
   `integral` int(11) NOT NULL DEFAULT '0' COMMENT '积分',
   `user_status` tinyint(4) NOT NULL DEFAULT '0' COMMENT '用户状态  0：正常  1：异常（可申诉） 2：黑名单',
-  `union_id` varchar(255) COLLATE utf8_unicode_ci NOT NULL COMMENT '第三方授权认证',
-  `open_id` varchar(255) COLLATE utf8_unicode_ci NOT NULL COMMENT '微信openid',
+  `union_id` varchar(255) CHARACTER SET utf8 COLLATE utf8_unicode_ci NOT NULL COMMENT '第三方授权认证',
+  `open_id` varchar(255) CHARACTER SET utf8 COLLATE utf8_unicode_ci NOT NULL COMMENT '微信openid',
   PRIMARY KEY (`id`),
   KEY `pk_index` (`id`),
   KEY `sel_index` (`nick_name`,`auth_tel`)
-) ENGINE=MyISAM AUTO_INCREMENT=28 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci COMMENT='注册用户表';
+) ENGINE=MyISAM AUTO_INCREMENT=28 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci COMMENT='注册用户表';
 
 -- ----------------------------
 -- Records of tp5_xusers

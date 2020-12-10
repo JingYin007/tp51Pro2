@@ -12,6 +12,7 @@ namespace app\cms\controller;
 use app\common\controller\CmsBase;
 use app\common\model\Xusers;
 use think\Request;
+use think\response\View;
 
 /**
  * 用户管理类
@@ -31,7 +32,7 @@ class Users extends CmsBase
     /**
      * 用户列表数据
      * @param Request $request
-     * @return \think\response\View
+     * @return View|void
      */
     public function index(Request $request){
         $curr_page = $request->param('curr_page', 1);

@@ -8,7 +8,6 @@
 
 namespace app\common\model;
 
-
 class Xusers extends BaseModel
 {
     /**
@@ -17,7 +16,7 @@ class Xusers extends BaseModel
      * @param int $page_limit
      * @param null $search
      * @param null $user_type
-     * @return array
+     * @return array|array[]|\array[][]
      */
     public function getCmsUsersForPage($curr_page = 1, $page_limit = 1, $search = null,$user_type = null){
         $where[]  = ['user_type','=',$user_type];
@@ -80,11 +79,7 @@ class Xusers extends BaseModel
         if ($search){
             $where[] = ['auth_tel|nick_name', 'like', '%' . $search . '%'];
         }
-        $count = $this
-            ->field("*")
-            ->where($where)
-            ->count();
-        return $count;
+        return $this->where($where)->count('id');
     }
 
     /**
