@@ -5,6 +5,7 @@ namespace app\cms\controller;
 use app\common\controller\CmsBase;
 use app\common\model\Xarticles;
 use think\Request;
+use think\response\View;
 
 /**
  * 文章管理类
@@ -24,7 +25,7 @@ class Article extends CmsBase
     /**
      * 获取文章列表数据
      * @param Request $request
-     * @return \think\response\View
+     * @return View|void
      */
     public function index(Request $request)
     {
@@ -49,7 +50,7 @@ class Article extends CmsBase
     /**
      * 添加文章
      * @param Request $request
-     * @return \think\response\View|void
+     * @return View|void
      */
     public function add(Request $request)
     {
@@ -66,7 +67,7 @@ class Article extends CmsBase
      * 更新文章数据
      * @param Request $request
      * @param $id 文章ID
-     * @return \think\response\View|void
+     * @return View|void
      */
     public function edit(Request $request, $id)
     {
@@ -99,7 +100,7 @@ class Article extends CmsBase
     /**
      * 文章操作日志列表
      * @param $id
-     * @return \think\response\View
+     * @return View
      */
     public function viewLogs($id){
         $logs = getCmsOpViewLogs($id,'ARTICLE');

@@ -11,6 +11,7 @@ namespace app\cms\controller;
 use app\common\controller\CmsBase;
 use app\common\model\Xconfigs;
 use think\Request;
+use think\response\View;
 
 /**
  * 配置项管理类
@@ -29,7 +30,7 @@ class Config extends CmsBase
     /**
      * 数据列表页
      * @param Request $request
-     * @return \think\response\View
+     * @return View|void
      */
     public function index(Request $request){
         $search = $request->param('str_search');
@@ -57,7 +58,7 @@ class Config extends CmsBase
     /**
      * 进行配置项的添加
      * @param Request $request
-     * @return \think\response\View|void
+     * @return View|void
      */
     public function add(Request $request){
         if ($request->isPost()) {
@@ -73,7 +74,7 @@ class Config extends CmsBase
      * 编辑配置项数据
      * @param Request $request
      * @param $id ID
-     * @return \think\response\View|void
+     * @return View|void
      */
     public function edit(Request $request,$id){
         if($id == 0) $id = $request->param('id');

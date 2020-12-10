@@ -7,7 +7,11 @@ use app\common\model\Xbrands;
 use app\common\model\Xcategorys;
 use app\common\model\Xgoods;
 use app\common\model\XspecInfos;
+use think\db\exception\DataNotFoundException;
+use think\db\exception\ModelNotFoundException;
+use think\exception\DbException;
 use think\Request;
+use think\response\View;
 
 class Goods extends CmsBase
 {
@@ -23,7 +27,10 @@ class Goods extends CmsBase
     /**
      * 获取商品列表数据
      * @param Request $request
-     * @return \think\response\View
+     * @return View|void
+     * @throws DataNotFoundException
+     * @throws ModelNotFoundException
+     * @throws DbException
      */
     public function index(Request $request)
     {
@@ -62,7 +69,7 @@ class Goods extends CmsBase
     /**
      * 添加商品
      * @param Request $request
-     * @return \think\response\View|void
+     * @return View|void
      */
     public function add(Request $request)
     {
@@ -80,7 +87,7 @@ class Goods extends CmsBase
      * 更新商品数据
      * @param Request $request
      * @param $id 商品ID
-     * @return \think\response\View|void
+     * @return View|void
      */
     public function edit(Request $request, $id)
     {
@@ -113,7 +120,7 @@ class Goods extends CmsBase
     /**
      * 操作日志列表
      * @param $id
-     * @return \think\response\View
+     * @return View
      */
     public function viewLogs($id){
         $logs = getCmsOpViewLogs($id,'GOODS');

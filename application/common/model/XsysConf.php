@@ -11,6 +11,8 @@ namespace app\common\model;
 
 use app\common\lib\IAuth;
 use think\Db;
+use think\Exception;
+use think\exception\PDOException;
 use think\facade\Request;
 use think\facade\Validate;
 use think\Model;
@@ -26,8 +28,8 @@ class XsysConf extends Model
      * 更新登录认证配置数据
      * @param array $postData
      * @return array
-     * @throws \think\Exception
-     * @throws \think\exception\PDOException
+     * @throws Exception
+     * @throws PDOException
      */
     public function updateAuthConf($postData = []){
         $opTag = false;

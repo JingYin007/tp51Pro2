@@ -64,13 +64,11 @@ class XspecInfos extends BaseModel
         if ($search){
             $where[] = ['s1.spec_name|s1.mark_msg', 'like', '%' . $search . '%'];
         }
-        $count = $this
+        return $this
             ->alias("s1")
-            ->field('s1.spec_id')
             ->join('xcategorys c','c.cat_id = s1.cat_id')
             ->where($where)
-            ->count();
-        return $count;
+            ->count('s1.spec_id');
     }
 
     /**

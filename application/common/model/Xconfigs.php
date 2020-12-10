@@ -50,11 +50,7 @@ class Xconfigs extends BaseModel
         if ($search){
             $where[] = ['title|tag', 'like', '%' . $search . '%'];
         }
-        $res = $this
-            ->field('id')
-            ->where($where)
-            ->count();
-        return $res;
+        return $this->where($where)->count('id');
     }
 
     /**

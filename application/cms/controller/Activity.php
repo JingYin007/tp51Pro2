@@ -7,6 +7,7 @@ use app\common\model\Xactivitys;
 use app\common\model\Xcategorys;
 use app\common\model\Xgoods;
 use think\Request;
+use think\response\View;
 
 class Activity extends CmsBase
 {
@@ -23,7 +24,7 @@ class Activity extends CmsBase
     /**
      * 活动数据列表页
      * @param Request $request
-     * @return \think\response\View
+     * @return View|void
      */
     public function index(Request $request){
         $search = $request->param('str_search');
@@ -50,7 +51,7 @@ class Activity extends CmsBase
     /**
      * 增加标题 功能
      * @param Request $request
-     * @return \think\response\View|void
+     * @return View|void
      */
     public function add(Request $request){
         if ($request->isPost()){
@@ -67,7 +68,7 @@ class Activity extends CmsBase
      * 编辑数据
      * @param Request $request
      * @param $id 活动 ID
-     * @return \think\response\View|void
+     * @return View|void
      */
     public function edit(Request $request,$id){
         $actData = $this->actModel->getActByID($id);

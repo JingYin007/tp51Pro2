@@ -5,6 +5,7 @@ namespace app\cms\Controller;
 use app\common\controller\CmsBase;
 use app\common\model\Xcategorys;
 use think\Request;
+use think\response\View;
 
 class Category extends CmsBase
 {
@@ -19,7 +20,7 @@ class Category extends CmsBase
     /**
      * 获取分类列表数据
      * @param Request $request
-     * @return \think\response\View
+     * @return View|void
      */
     public function index(Request $request)
     {
@@ -46,7 +47,7 @@ class Category extends CmsBase
     /**
      * 添加产品分类
      * @param Request $request
-     * @return \think\response\View|void
+     * @return View|void
      */
     public function add(Request $request)
     {
@@ -67,7 +68,7 @@ class Category extends CmsBase
      * 更新分类数据
      * @param Request $request
      * @param $id 分类ID
-     * @return \think\response\View|void
+     * @return View|void
      */
     public function edit(Request $request, $id)
     {

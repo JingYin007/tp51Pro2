@@ -5,6 +5,7 @@ namespace app\cms\controller;
 use app\common\controller\CmsBase;
 use app\common\model\XadLists;
 use think\Request;
+use think\response\View;
 
 /**
  * 广告管理处理类
@@ -23,7 +24,7 @@ class AdList extends CmsBase
     /**
      * 广告列表页
      * @param Request $request
-     * @return \think\response\View
+     * @return View|void
      */
     public function index(Request $request){
         $search = $request->param('str_search');
@@ -47,7 +48,7 @@ class AdList extends CmsBase
     /**
      * 增加广告功能
      * @param Request $request
-     * @return \think\response\View|void
+     * @return View|void
      */
     public function add(Request $request){
         if ($request->isPost()){
@@ -63,7 +64,7 @@ class AdList extends CmsBase
      * 编辑数据
      * @param Request $request
      * @param $id 广告ID
-     * @return \think\response\View|void
+     * @return View|void
      */
     public function edit(Request $request,$id){
         $actData = $this->adModel->getAdByID($id);

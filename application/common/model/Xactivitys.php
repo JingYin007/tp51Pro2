@@ -50,11 +50,7 @@ class Xactivitys extends BaseModel
         if ($search){
             $where[] = ['title', 'like', '%' . $search . '%'];
         }
-        $res = $this
-            ->field('id')
-            ->where($where)
-            ->count();
-        return $res;
+        return $this->where($where)->count('id');
     }
 
     /**

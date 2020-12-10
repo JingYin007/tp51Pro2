@@ -6,6 +6,7 @@ use app\common\controller\CmsBase;
 use app\common\model\XnavMenus;
 use think\facade\Session;
 use think\Request;
+use think\response\View;
 
 /**
  * 菜单导航类
@@ -25,7 +26,7 @@ class NavMenu extends CmsBase
     /**
      * 菜单导航列表页
      * @param Request $request
-     * @return \think\response\View
+     * @return View|void
      */
     public function index(Request $request)
     {
@@ -52,7 +53,7 @@ class NavMenu extends CmsBase
     /**
      * 增加新导航标题 功能
      * @param Request $request
-     * @return \think\response\View|void
+     * @return View|void
      * @throws \think\db\exception\DataNotFoundException
      * @throws \think\db\exception\ModelNotFoundException
      * @throws \think\exception\DbException
@@ -76,7 +77,7 @@ class NavMenu extends CmsBase
      * 赋予权限
      * @param Request $request
      * @param $id 菜单ID
-     * @return \think\response\View|void
+     * @return View|void
      */
     public function auth(Request $request, $id)
     {
@@ -97,7 +98,7 @@ class NavMenu extends CmsBase
      * 编辑导航菜单数据
      * @param Request $request
      * @param $id 菜单ID
-     * @return \think\response\View|void
+     * @return View|void
      */
     public function edit(Request $request, $id)
     {

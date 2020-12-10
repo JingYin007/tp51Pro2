@@ -103,12 +103,11 @@ class Xorders extends BaseModel
         if ($search){
             $where[] = ['order_sn|nick_name|consignee', 'like', '%' . $search . '%'];
         }
-        $count = $this
+        return $this
             ->alias('oi')
             ->join('xusers u','u.id = oi.user_id')
             ->where($where)
             ->count('oi.id');
-        return $count;
     }
 
     /**

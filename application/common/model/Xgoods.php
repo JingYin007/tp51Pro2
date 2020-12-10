@@ -87,14 +87,12 @@ class Xgoods extends BaseModel
         if ($search){
             $where[] = ['g.goods_name|b.brand_name', 'like', '%' . $search . '%'];
         }
-        $count = $this
+        return $this
             ->alias('g')
-            ->field('g.status')
             ->join('xcategorys cat', 'cat.cat_id = g.cat_id')
             ->join('xbrands b', 'b.id = g.brand_id')
             ->where($where)
-            ->count();
-        return $count;
+            ->count('g.goods_id');
     }
 
     /**

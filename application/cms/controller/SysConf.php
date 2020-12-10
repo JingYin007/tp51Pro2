@@ -12,6 +12,7 @@ namespace app\cms\controller;
 use app\common\controller\CmsBase;
 use app\common\model\XsysConf;
 use think\Request;
+use think\response\View;
 
 class SysConf extends CmsBase
 {
@@ -25,7 +26,7 @@ class SysConf extends CmsBase
     /**
      * 登录认证
      * @param Request $request
-     * @return \think\response\View|void
+     * @return View|void
      */
     public function auth(Request $request){
         if ($request->isPost()){
@@ -40,7 +41,7 @@ class SysConf extends CmsBase
     /**
      * 文件上传 操作指示
      * @param Request $request
-     * @return \think\response\View|void
+     * @return View|void
      */
     public function opfile(Request $request){
         if ($request->isPost()){
@@ -60,7 +61,7 @@ class SysConf extends CmsBase
     /**
      * IP白名单
      * @param Request $request
-     * @return \think\response\View|void
+     * @return View|void
      */
     public function ipWhite(Request $request){
         if ($request->isPost()){

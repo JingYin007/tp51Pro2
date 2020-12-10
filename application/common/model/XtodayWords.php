@@ -65,7 +65,8 @@ class XtodayWords extends BaseModel
 
     /**
      * 获取 今日赠言 正常数据的数量
-     * @return mixed
+     * @param null $search
+     * @return float|int|string
      */
     public function getTodayWordsCount($search = null)
     {
@@ -73,11 +74,7 @@ class XtodayWords extends BaseModel
         if ($search){
             $where[] = ['from', 'like', '%' . $search . '%'];
         }
-        $res = $this
-            ->field('id')
-            ->where($where)
-            ->count();
-        return $res;
+        return $this->where($where)->count('id');
     }
 
     /**根据页码 获取赠言数据
@@ -93,7 +90,7 @@ class XtodayWords extends BaseModel
             $where[] = ['from', 'like', '%' . $search . '%'];
         }
         $res = $this
-            ->field('*')
+            ->field('id,word,from,picture,status,updated_at,images_str')
             ->order('id desc')
             ->where($where)
             ->limit($limit * ($curr_page - 1), $limit)

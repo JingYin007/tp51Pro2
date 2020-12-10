@@ -165,10 +165,7 @@ class XnavMenus extends BaseModel
         if ($search){
             $where[] = ['name', 'like', '%' . $search . '%'];
         }
-        $res = $this
-            ->where($where)
-            ->count('id');
-        return $res;
+        return $this->where($where)->count('id');
     }
 
     /**

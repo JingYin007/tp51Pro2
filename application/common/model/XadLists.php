@@ -48,11 +48,7 @@ class XadLists extends BaseModel
         if ($search){
             $where[] = ['ad_name|ad_tag', 'like', '%' . $search . '%'];
         }
-        $res = $this
-            ->field('id')
-            ->where($where)
-            ->count();
-        return $res;
+        return $this->where($where)->count('id');
     }
 
     /**

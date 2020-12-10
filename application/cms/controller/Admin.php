@@ -7,6 +7,7 @@ use app\common\model\XadminRoles;
 use app\common\model\Xadmins;
 use app\common\model\XnavMenus;
 use think\Request;
+use think\response\View;
 
 /**
  * 后台管理员
@@ -30,7 +31,7 @@ class Admin extends CmsBase
     /**
      * 管理员数据列表
      * @param Request $request
-     * @return \think\response\View
+     * @return View|void
      */
     public function index(Request $request)
     {
@@ -55,7 +56,7 @@ class Admin extends CmsBase
     /**
      * 添加新用户
      * @param Request $request
-     * @return \think\response\View|void
+     * @return View|void
      */
     public function addAdmin(Request $request)
     {
@@ -74,7 +75,7 @@ class Admin extends CmsBase
     /**
      * @param Request $request
      * @param $id 标识 ID
-     * @return \think\response\View|void
+     * @return View|void
      */
     public function editAdmin(Request $request, $id)
     {
@@ -97,7 +98,7 @@ class Admin extends CmsBase
 
     /**
      * 读取角色列表
-     * @return \think\response\View
+     * @return View
      */
     public function role(Request $request)
     {
@@ -116,7 +117,7 @@ class Admin extends CmsBase
     /**
      * 角色添加功能
      * @param Request $request
-     * @return \think\response\View|void
+     * @return View|void
      */
     public function addRole(Request $request)
     {
@@ -137,7 +138,7 @@ class Admin extends CmsBase
      * 更新 角色数据
      * @param Request $request
      * @param $id
-     * @return \think\response\View|void
+     * @return View|void
      */
     public function editRole(Request $request, $id)
     {

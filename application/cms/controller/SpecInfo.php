@@ -7,6 +7,7 @@ use app\common\model\Xcategorys;
 use app\common\model\XspecInfos;
 use think\Request;
 use think\Db;
+use think\response\View;
 
 class SpecInfo extends CmsBase
 {
@@ -23,7 +24,7 @@ class SpecInfo extends CmsBase
     /**
      * 获取属性列表数据
      * @param Request $request
-     * @return \think\response\View
+     * @return View|void
      */
     public function index(Request $request)
     {
@@ -52,7 +53,7 @@ class SpecInfo extends CmsBase
     /**
      * 添加属性分类
      * @param Request $request
-     * @return \think\response\View|void
+     * @return View|void
      */
     public function add(Request $request)
     {
@@ -76,7 +77,7 @@ class SpecInfo extends CmsBase
      * 更新属性数据
      * @param Request $request
      * @param $id 属性 ID
-     * @return \think\response\View|void
+     * @return View|void
      */
     public function edit(Request $request, $id)
     {
@@ -99,7 +100,7 @@ class SpecInfo extends CmsBase
     /**
      * 获取详情
      * @param Request $request
-     * @return \think\response\View|void
+     * @return View|void
      */
     public function details(Request $request){
         $spec_id = $request->param('id',0);

@@ -83,20 +83,20 @@ class Xadmins extends BaseModel
         if ($search){
             $where[] = ['a.user_name|a.content', 'like', '%' . $search . '%'];
         }
-        $res = $this
+        return $this
             ->alias('a')
-            ->field('a.*,ar.user_name role_name')
             ->join('xadmin_roles ar', 'a.role_id = ar.id')
-            ->order('a.id', 'desc')
             ->where($where)
-            ->count();
-        return $res;
+            ->count('a.id');
     }
 
     /**
      * 根据ID 获取管理员数据
-     * @param $id
+     * @param int $id
      * @return array
+     * @throws DataNotFoundException
+     * @throws DbException
+     * @throws ModelNotFoundException
      */
     public function getAdminData($id = 0)
     {

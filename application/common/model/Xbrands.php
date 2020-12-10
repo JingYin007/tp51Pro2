@@ -65,13 +65,11 @@ class Xbrands extends BaseModel
         if ($search){
             $where[] = ['brand_name', 'like', '%' . $search . '%'];
         }
-        $count = $this
-            ->field('b.id')
+        return $this
             ->alias('b')
             ->join('xcategorys c','c.cat_id = b.cat_id')
             ->where($where)
-            ->count('id');
-        return $count;
+            ->count('b.id');
     }
 
     /**

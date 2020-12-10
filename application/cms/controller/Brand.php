@@ -6,6 +6,7 @@ use app\common\controller\CmsBase;
 use app\common\model\Xbrands;
 use app\common\model\Xcategorys;
 use think\Request;
+use think\response\View;
 
 class Brand extends CmsBase
 {
@@ -21,7 +22,7 @@ class Brand extends CmsBase
     /**
      * 获取品牌列表数据
      * @param Request $request
-     * @return \think\response\View|void
+     * @return View|void
      */
     public function index(Request $request)
     {
@@ -50,7 +51,7 @@ class Brand extends CmsBase
     /**
      * 添加品牌
      * @param Request $request
-     * @return \think\response\View|void
+     * @return View|void
      */
     public function add(Request $request)
     {
@@ -69,7 +70,7 @@ class Brand extends CmsBase
      * 更新品牌数据
      * @param Request $request
      * @param $id 品牌ID
-     * @return \think\response\View|void
+     * @return View|void
      */
     public function edit(Request $request, $id)
     {

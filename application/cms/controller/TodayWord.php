@@ -5,6 +5,7 @@ namespace app\cms\controller;
 use app\common\controller\CmsBase;
 use app\common\model\XtodayWords;
 use think\Request;
+use think\response\View;
 
 /**
  * 今日赠言类
@@ -24,7 +25,7 @@ class TodayWord extends CmsBase
     /**
      * 今日赠言 列表首页
      * @param Request $request
-     * @return \think\response\View
+     * @return View|void
      */
     public function index(Request $request)
     {
@@ -50,7 +51,7 @@ class TodayWord extends CmsBase
     /**
      * 增加新赠言
      * @param Request $request
-     * @return \think\response\View|void
+     * @return View|void
      */
     public function add(Request $request)
     {
@@ -67,7 +68,7 @@ class TodayWord extends CmsBase
      * 编辑新赠言
      * @param Request $request
      * @param $id 赠言ID
-     * @return \think\response\View|void
+     * @return View|void
      */
     public function edit(Request $request, $id)
     {
