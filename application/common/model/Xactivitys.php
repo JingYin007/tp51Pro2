@@ -115,8 +115,7 @@ class Xactivitys extends BaseModel
             'start_time' => isset($data['start_time'])?strtotime($data['start_time']):'',
             'end_time' => isset($data['end_time'])?strtotime($data['end_time']):'',
         ];
-        $tokenData = ['__token__' => isset($data['__token__']) ? $data['__token__'] : '',];
-        $validateRes = $this->validate($this->validate, $addData, $tokenData);
+        $validateRes = $this->validate($this->validate, $addData);
         if ($validateRes['tag']) {
             $insertGetId = $this->insertGetId($addData);
             $aGoods = isset($data['aGoods'])?$data['aGoods']:[];
@@ -136,12 +135,10 @@ class Xactivitys extends BaseModel
     public function editActivity($id, $data)
     {
         $opTag = isset($data['tag']) ? $data['tag'] : 'edit';
-        $tag = 0;
+        $saveTag = 0;
         if ($opTag == 'del') {
-            $tag = $this
-                ->where('id', $id)
-                ->update(['status' => -1]);
-            $validateRes['message'] = $tag ? '数据删除成功' : '已删除';
+            $saveTag = $this->where('id', $id)->update(['status' => -1]);
+            $validateRes['message'] = $saveTag ? '数据删除成功' : 'Sorry，数据已删除';
         } else {
             $saveData = [
                 'id' => $id,
@@ -154,20 +151,18 @@ class Xactivitys extends BaseModel
                 'start_time' => isset($data['start_time'])?strtotime($data['start_time']):'',
                 'end_time' => isset($data['end_time'])?strtotime($data['end_time']):'',
             ];
-            $tokenData = ['__token__' => isset($data['__token__']) ? $data['__token__'] : '',];
-            $validateRes = $this->validate($this->validate, $saveData, $tokenData,'update');
+            $validateRes = $this->validate($this->validate, $saveData,'update');
             if ($validateRes['tag']) {
-                $this
-                    ->where('id', $id)
-                    ->update($saveData);
-                $aGoods = isset($data['aGoods'])?$data['aGoods']:[];
-                $this->updateGoodsForActivity($id,$aGoods);
-                $tag = 1;
-                $validateRes['message'] = $tag ? '活动修改成功' : '数据无变动';
+                $saveTag = $this->where('id', $id)->update($saveData);
+                if ($saveTag){
+                    $aGoods = isset($data['aGoods'])?$data['aGoods']:[];
+                    $this->updateGoodsForActivity($id,$aGoods);
+                }
+                $validateRes['message'] = $saveTag ? '活动修改成功' : 'Sorry，数据无变动';
             }
 
         }
-        $validateRes['tag'] = $tag;
+        $validateRes['tag'] = $saveTag;
         return $validateRes;
     }
 

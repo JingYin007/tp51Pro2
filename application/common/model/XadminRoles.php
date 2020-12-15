@@ -68,8 +68,7 @@ class XadminRoles extends BaseModel
                 'list_order' => intval($input['list_order'])?intval($input['list_order']):9,
                 'status' => intval($input['status']),
             ];
-            $tokenData = ['__token__' => isset($input['__token__']) ? $input['__token__'] : '',];
-            $validateRes = $this->validate($this->validate, $addData, $tokenData);
+            $validateRes = $this->validate($this->validate, $addData);
             if ($validateRes['tag']) {
                 $tag = $this->insert($addData);
                 $validateRes['tag'] = $tag;
@@ -89,9 +88,7 @@ class XadminRoles extends BaseModel
     {
         $opTag = isset($input['tag']) ? $input['tag'] : 'edit';
         if ($opTag == 'del') {
-            $tag = $this
-                ->where('id', $id)
-                ->update(['status' => -1]);
+            $tag = $this->where('id', $id)->update(['status' => -1]);
             $validateRes['tag'] = $tag;
             $validateRes['message'] = $tag ? '角色删除成功' : 'Sorry,角色删除失败！';
         } else {
@@ -106,12 +103,10 @@ class XadminRoles extends BaseModel
                     'nav_menu_ids' => $input['nav_menu_ids'],
                     'list_order' => intval($input['list_order']),
                 ];
-                $tokenData = ['__token__' => isset($input['__token__']) ? $input['__token__'] : '',];
-                $validateRes = $this->validate($this->validate, $saveData, $tokenData);
+                $validateRes = $this->validate($this->validate, $saveData);
                 if ($validateRes['tag']) {
-                    $tag = $this
-                        ->where('id', $id)
-                        ->update($saveData);
+                    $tag = $this->where('id', $id)->update($saveData);
+                    $validateRes['tag'] = 1;
                     $validateRes['message'] = $tag ? '角色修改成功' : '数据无变动，数据更新失败';
                 }
             }

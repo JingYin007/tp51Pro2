@@ -111,12 +111,11 @@ class Xcategorys extends BaseModel
             'level' => isset($data['level'])?$data['level']:1,
             'list_order' => isset($data['list_order'])?$data['list_order']:0,
         ];
-        $tokenData = ['__token__' => isset($data['__token__']) ? $data['__token__'] : '',];
-        $validateRes = $this->validate($this->validate, $addData, $tokenData);
+       $validateRes = $this->validate($this->validate, $addData);
         if ($validateRes['tag']) {
             $tag = $this->insert($addData);
             $validateRes['tag'] = $tag;
-            $validateRes['message'] = $tag ? '添加成功' : '添加失败';
+            $validateRes['message'] = $tag ? '分类添加成功' : 'Sorry，分类添加失败';
             if ($tag){
                 $this->updateCategorySelectListForJsonFile();
             }
@@ -157,10 +156,8 @@ class Xcategorys extends BaseModel
     {
         $opTag = isset($input['tag']) ? $input['tag'] : 'edit';
         if ($opTag == 'del') {
-            Db::name('xcategorys')
-                ->where('cat_id', $id)
-                ->update(['status' => -1]);
-            $validateRes = ['tag' => 1, 'message' => '数据删除成功'];
+            $delTag = Db::name('xcategorys')->where('cat_id', $id)->update(['status' => -1]);
+            $validateRes = ['tag' => $delTag, 'message' => $delTag?'数据删除成功':'Sorry，数据删除失败！'];
         } else {
             $level = isset($input['level'])? intval($input['level']) : 1;
             $str_parent_id = "parent_id_".$level;
@@ -172,14 +169,13 @@ class Xcategorys extends BaseModel
                 'level' => isset($input['level'])?$input['level']:1,
                 'list_order' => isset($input['list_order'])?$input['list_order']:0,
             ];
-            $tokenData = ['__token__' => isset($input['__token__']) ? $input['__token__'] : '',];
-            $validateRes = $this->validate($this->validate, $saveData, $tokenData);
+            $validateRes = $this->validate($this->validate, $saveData);
             if ($validateRes['tag']) {
                 $saveTag = $this
                     ->where('cat_id', $id)
                     ->update($saveData);
                 $validateRes['tag'] = $saveTag;
-                $validateRes['message'] = $saveTag ? '数据更新成功' : '数据无变动';
+                $validateRes['message'] = $saveTag ? '数据更新成功' : 'Sorry，数据无变动';
                 if ($saveTag){
                     $this->updateCategorySelectListForJsonFile();
                 }
@@ -257,14 +253,9 @@ class Xcategorys extends BaseModel
      */
     public function updateForShow($cat_id = 0, $okStatus = 0)
     {
-        $message = "Success";
         $cat_id = isset($cat_id) ? intval($cat_id) : 0;
-        $saveTag = $this
-            ->where('cat_id', $cat_id)
-            ->update(['is_show' => $okStatus]);
-        if (!$saveTag) {
-            $message = "状态更改失败";
-        }
+        $saveTag = $this->where('cat_id', $cat_id)->update(['is_show' => $okStatus]);
+        $message = $saveTag? "开关操作成功":"Sorry，开关更新失败！";
         return ['tag' => $saveTag, 'message' => $message];
     }
 }

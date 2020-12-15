@@ -230,8 +230,7 @@ class XnavMenus extends BaseModel
             'status' => isset($data['status']) ? $data['status'] : 1,
             'type' => $authTag
         ];
-        $tokenData = ['__token__' => isset($data['__token__']) ? $data['__token__'] : '',];
-        $validateRes = $this->validate($this->validate, $addData, $tokenData);
+        $validateRes = $this->validate($this->validate, $addData);
         if ($validateRes['tag']) {
             $tag = $this->insert($addData);
             $validateRes['tag'] = $tag;
@@ -268,8 +267,7 @@ class XnavMenus extends BaseModel
                 'action' => empty($data['action']) ?'/': $data['action'],
                 'status' => intval($data['status']),
             ];
-            $tokenData = ['__token__' => isset($data['__token__']) ? $data['__token__'] : '',];
-            $validateRes = $this->validate($this->validate, $saveData, $tokenData);
+            $validateRes = $this->validate($this->validate, $saveData);
             if ($validateRes['tag']) {
                 $tag = $this
                     ->where('id', $id)

@@ -50,9 +50,7 @@
     <div class="layui-form-item layui-form-text ">
         <label class="layui-form-label">文章内容：</label>
         <div class="layui-input-block">
-            <textarea  id="mz-tinymce" name="content">
-                    {$article.content|htmlspecialchars_decode}
-            </textarea >
+            <textarea  id="mz-tinymce" name="content">{$article.content|htmlspecialchars_decode}</textarea >
         </div>
     </div>
     {:token()}

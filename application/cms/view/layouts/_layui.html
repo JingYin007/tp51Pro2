@@ -11,7 +11,7 @@
 <script>
 
     /*自定义弹出框格式 (常用的弹出框形式)*/
-    var dialog = {
+    const dialog = {
         error: function (message, url) {
             layer.open({
                 content: message,
@@ -24,10 +24,16 @@
         },
         /*用于弹出框提示*/
         tip: function (message, timer) {
-            if (!timer) {
-                timer = 2;
-            }
+            if (!timer) {timer = 2;}
             layer.msg(message, {time: timer * 1000});
+        },
+        tip_success : function (message, timer){
+            if (!timer) {timer = 2;}
+            layer.msg(message,{icon: 6,time: timer * 1000});
+        },
+        tip_error : function (message, timer){
+            if (!timer) {timer = 2;}
+            layer.msg(message,{icon: 5,anim: 6,time: timer * 1000});
         },
         /*显示加载的效果 type:样式 [null,1,2] */
         loading: function (type) {

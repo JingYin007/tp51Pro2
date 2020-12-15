@@ -2,15 +2,15 @@
 Navicat MySQL Data Transfer
 
 Source Server         : 127.0.0.1
-Source Server Version : 50553
+Source Server Version : 50726
 Source Host           : localhost:3306
 Source Database       : tp5_pro
 
 Target Server Type    : MYSQL
-Target Server Version : 50553
+Target Server Version : 50726
 File Encoding         : 65001
 
-Date: 2020-12-10 20:57:26
+Date: 2020-12-15 09:32:44
 */
 
 SET FOREIGN_KEY_CHECKS=0;
@@ -28,7 +28,7 @@ CREATE TABLE `tp5_xactivitys` (
   `list_order` int(11) NOT NULL DEFAULT '0' COMMENT '排序，数字越小 越靠前',
   `is_show` tinyint(1) NOT NULL DEFAULT '1' COMMENT '是否在 app 首页显示  0：不显示  1：显示',
   `status` tinyint(2) NOT NULL DEFAULT '0' COMMENT 'app前端显示状态 0：正常，-1已删除',
-  `updated_at` timestamp NOT NULL DEFAULT '0000-00-00 00:00:00' ON UPDATE CURRENT_TIMESTAMP COMMENT '文章更新时间',
+  `updated_at` timestamp NOT NULL DEFAULT '1970-01-01 10:00:00' ON UPDATE CURRENT_TIMESTAMP COMMENT '文章更新时间',
   `start_time` varchar(20) NOT NULL COMMENT '广告开始投放时间',
   `end_time` varchar(20) NOT NULL COMMENT '广告结束时间',
   PRIMARY KEY (`id`,`act_tag`),
@@ -39,8 +39,8 @@ CREATE TABLE `tp5_xactivitys` (
 -- ----------------------------
 -- Records of tp5_xactivitys
 -- ----------------------------
-INSERT INTO `tp5_xactivitys` VALUES ('1', '特价商品推荐', 'cms/images/imgOne.jpg', 'TJSPTJ', '2', '1', '1', '0', '2020-06-02 19:50:15', '1574125637', '1575090450');
-INSERT INTO `tp5_xactivitys` VALUES ('2', '春季特惠商品', 'cms/images/imgTwo.jpg', 'CJTHSPA', '1', '2', '0', '0', '2020-11-17 21:05:40', '1574910600', '1575083403');
+INSERT INTO `tp5_xactivitys` VALUES ('1', '特价商品推荐', 'cms/images/imgOne.jpg', 'TJSPTJ', '2', '1', '1', '0', '2020-12-12 12:47:57', '1574125637', '1575090450');
+INSERT INTO `tp5_xactivitys` VALUES ('2', '春季特惠商品', 'cms/images/imgTwo.jpg', 'CJTHSPA', '1', '2', '0', '0', '2020-12-12 12:47:58', '1574910600', '1575083403');
 INSERT INTO `tp5_xactivitys` VALUES ('3', '生活专区推荐', 'cms/images/imgThree.jpg', 'SHZQTJA', '1', '3', '1', '0', '2020-06-02 19:50:24', '1574910498', '1575083303');
 
 -- ----------------------------
@@ -75,7 +75,7 @@ CREATE TABLE `tp5_xadmins` (
   `user_name` varchar(50) NOT NULL DEFAULT '' COMMENT '管理员昵称',
   `picture` varchar(255) NOT NULL DEFAULT '' COMMENT '管理员头像',
   `password` varchar(255) NOT NULL DEFAULT '' COMMENT '管理员登录密码',
-  `created_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  `created_at` timestamp NOT NULL DEFAULT '1970-01-01 10:00:00',
   `status` tinyint(4) NOT NULL DEFAULT '1' COMMENT '状态标识 0：无效；1：正常；-1：删除',
   `content` varchar(500) NOT NULL DEFAULT '世界上没有两片完全相同的叶子！' COMMENT '备注信息',
   PRIMARY KEY (`id`),
@@ -108,7 +108,7 @@ CREATE TABLE `tp5_xadmin_roles` (
 -- ----------------------------
 -- Records of tp5_xadmin_roles
 -- ----------------------------
-INSERT INTO `tp5_xadmin_roles` VALUES ('1', '终级管理员', '138|139|140|141|1|2|7|6|3|4|5|93|61|76|73|49|50|48|142|67|145|146|147|133|134|151|152|', '2020-11-23 20:02:48', '1', '1');
+INSERT INTO `tp5_xadmin_roles` VALUES ('1', '终级管理员', '138|139|140|141|1|2|7|6|3|4|5|93|61|76|73|49|50|48|142|67|145|146|147|133|134|151|155|157|156|158|', '2020-12-14 14:50:20', '1', '1');
 INSERT INTO `tp5_xadmin_roles` VALUES ('2', '初级管理员', '1|2|6|3|4|5|', '2020-11-20 18:25:19', '2', '1');
 INSERT INTO `tp5_xadmin_roles` VALUES ('5', '测试管理员', '1|2|3|76|', '2020-11-20 20:36:06', '7', '0');
 INSERT INTO `tp5_xadmin_roles` VALUES ('6', 'xxxx', '139|', '2020-11-20 21:55:19', '7', '-1');
@@ -146,21 +146,22 @@ CREATE TABLE `tp5_xarticles` (
   `id` int(10) unsigned NOT NULL AUTO_INCREMENT COMMENT 'Article 主键',
   `title` varchar(50) CHARACTER SET utf8mb4 NOT NULL DEFAULT '' COMMENT '标题',
   `user_id` int(11) NOT NULL DEFAULT '0' COMMENT '作者ID',
-  `created_at` timestamp NOT NULL DEFAULT '0000-00-00 00:00:00',
-  `updated_at` timestamp NOT NULL DEFAULT '0000-00-00 00:00:00',
+  `created_at` timestamp NOT NULL DEFAULT '1970-01-01 10:00:00',
+  `updated_at` timestamp NOT NULL DEFAULT '1970-01-01 10:00:00' ON UPDATE CURRENT_TIMESTAMP,
   `list_order` int(11) NOT NULL DEFAULT '0' COMMENT '排序标识 越大越靠前',
   `content` text CHARACTER SET utf8mb4 NOT NULL COMMENT '文章内容',
   PRIMARY KEY (`id`),
   KEY `index_title` (`title`)
-) ENGINE=MyISAM AUTO_INCREMENT=5 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci COMMENT='文章表';
+) ENGINE=MyISAM AUTO_INCREMENT=12 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci COMMENT='文章表';
 
 -- ----------------------------
 -- Records of tp5_xarticles
 -- ----------------------------
-INSERT INTO `tp5_xarticles` VALUES ('1', '这是今年最好的演讲：生命来来往往，来日并不方长', '1', '2020-09-04 20:56:11', '2020-11-10 16:49:03', '0', '<p style=\"margin: 0px 16px; padding: 0px; max-width: 100%; clear: both; min-height: 1em; color: #333333; text-align: center;\"><span style=\"margin: 0px; padding: 0px; max-width: 100%; box-sizing: border-box !important; word-wrap: break-word !important; color: #990000;\"><span style=\"margin: 0px; padding: 0px; max-width: 100%; box-sizing: border-box !important; word-wrap: break-word !important; font-size: 15px;\"><strong>余生很贵，经不起浪费</strong></span></span></p>\r\n<p style=\"margin: 0px 16px; padding: 0px; max-width: 100%; clear: both; min-height: 1em; color: #333333; text-align: center;\">&nbsp;</p>\r\n<p style=\"margin: 0px 16px; padding: 0px; max-width: 100%; clear: both; min-height: 1em; color: #333333; text-align: center;\"><span style=\"margin: 0px; padding: 0px; max-width: 100%; box-sizing: border-box !important; word-wrap: break-word !important; font-size: 15px;\">&nbsp;</span></p>\r\n<p style=\"margin: 0px 16px; padding: 0px; max-width: 100%; clear: both; min-height: 1em; color: #333333; text-align: center;\"><span style=\"margin: 0px; padding: 0px; max-width: 100%; box-sizing: border-box !important; word-wrap: break-word !important; font-size: 15px;\"><span style=\"color: #843fa1;\">就像三毛所说</span>，</span><span style=\"margin: 0px; padding: 0px; max-width: 100%; box-sizing: border-box !important; word-wrap: break-word !important; font-size: 15px; color: #990000;\">我来不及认真地年轻，待明白过来时，只能选择认真地老去</span></p>\r\n<p style=\"margin: 0px 16px; padding: 0px; max-width: 100%; clear: both; min-height: 1em; color: #333333; font-family: -apple-system-font, BlinkMacSystemFont,;\">&nbsp;</p>\r\n<p style=\"margin: 0px 16px; padding: 0px; max-width: 100%; clear: both; min-height: 1em; color: #333333; text-align: center;\"><strong style=\"margin: 0px; padding: 0px; max-width: 100%; box-sizing: border-box !important; word-wrap: break-word !important;\"><span style=\"margin: 0px; padding: 0px; max-width: 100%; box-sizing: border-box !important; word-wrap: break-word !important; font-size: 15px;\">所以，</span></strong></p>\r\n<p style=\"margin: 0px 16px; padding: 0px; max-width: 100%; clear: both; min-height: 1em; color: #333333; text-align: center;\"><strong style=\"margin: 0px; padding: 0px; max-width: 100%; box-sizing: border-box !important; word-wrap: break-word !important;\"><span style=\"margin: 0px; padding: 0px; max-width: 100%; box-sizing: border-box !important; word-wrap: break-word !important; font-size: 15px;\">去爱吧，就像从来没有受过伤害一样</span></strong></p>\r\n<p style=\"margin: 0px 16px; padding: 0px; max-width: 100%; clear: both; min-height: 1em; color: #333333; text-align: center;\"><strong style=\"margin: 0px; padding: 0px; max-width: 100%; box-sizing: border-box !important; word-wrap: break-word !important;\"><span style=\"margin: 0px; padding: 0px; max-width: 100%; box-sizing: border-box !important; word-wrap: break-word !important; font-size: 15px;\">跳舞吧，如同没有任何人注视你一样</span></strong></p>\r\n<p style=\"margin: 0px 16px; padding: 0px; max-width: 100%; clear: both; min-height: 1em; color: #333333; text-align: center;\"><strong style=\"margin: 0px; padding: 0px; max-width: 100%; box-sizing: border-box !important; word-wrap: break-word !important;\"><span style=\"margin: 0px; padding: 0px; max-width: 100%; box-sizing: border-box !important; word-wrap: break-word !important; font-size: 15px;\">活着吧，如同今天就是末日一样</span></strong></p>\r\n<p style=\"margin: 0px 16px; padding: 0px; max-width: 100%; min-height: 1em; color: #333333; text-align: center;\">&nbsp;</p>\r\n<p style=\"margin: 0px 16px; padding: 0px; max-width: 100%; min-height: 1em; color: #333333; text-align: center;\"><span style=\"margin: 0px; padding: 0px; max-width: 100%; box-sizing: border-box !important; word-wrap: break-word !important; color: #990000; font-size: 15px;\"><img src=\"https://timgsa.baidu.com/timg?image&amp;quality=80&amp;size=b9999_10000&amp;sec=1599235079831&amp;di=4e7c08b476267106e7eeefb768964c89&amp;imgtype=0&amp;src=http%3A%2F%2Ft7.baidu.com%2Fit%2Fu%3D1179872664%2C290201490%26fm%3D79%26app%3D86%26f%3DJPEG%3Fw%3D1280%26h%3D854\" alt=\"\" width=\"117\" height=\"78\" /></span></p>');
+INSERT INTO `tp5_xarticles` VALUES ('1', '这是今年最好的演讲：生命来来往往，来日并不方长', '1', '2020-09-04 20:56:11', '2020-12-13 08:45:03', '0', '<p style=\"margin: 0px 16px; padding: 0px; max-width: 100%; clear: both; min-height: 1em; color: #333333; text-align: center;\"><span style=\"margin: 0px; padding: 0px; max-width: 100%; box-sizing: border-box !important; word-wrap: break-word !important; color: #990000;\"><span style=\"margin: 0px; padding: 0px; max-width: 100%; box-sizing: border-box !important; word-wrap: break-word !important; font-size: 15px;\"><strong>余生很贵，经不起浪费</strong></span></span></p>\r\n<p style=\"margin: 0px 16px; padding: 0px; max-width: 100%; clear: both; min-height: 1em; color: #333333; text-align: center;\"><span style=\"margin: 0px; padding: 0px; max-width: 100%; box-sizing: border-box !important; word-wrap: break-word !important; font-size: 15px;\"><span style=\"color: #843fa1;\">就像三毛所说</span>，</span><span style=\"margin: 0px; padding: 0px; max-width: 100%; box-sizing: border-box !important; word-wrap: break-word !important; font-size: 15px; color: #990000;\">我来不及认真地年轻，待明白过来时，只能选择认真地老去</span></p>\r\n<p style=\"margin: 0px 16px; padding: 0px; max-width: 100%; clear: both; min-height: 1em; color: #333333; text-align: center;\"><strong style=\"margin: 0px; padding: 0px; max-width: 100%; box-sizing: border-box !important; word-wrap: break-word !important;\"><span style=\"margin: 0px; padding: 0px; max-width: 100%; box-sizing: border-box !important; word-wrap: break-word !important; font-size: 15px;\">所以，</span></strong></p>\r\n<p style=\"margin: 0px 16px; padding: 0px; max-width: 100%; clear: both; min-height: 1em; color: #333333; text-align: center;\"><strong style=\"margin: 0px; padding: 0px; max-width: 100%; box-sizing: border-box !important; word-wrap: break-word !important;\"><span style=\"margin: 0px; padding: 0px; max-width: 100%; box-sizing: border-box !important; word-wrap: break-word !important; font-size: 15px;\">去爱吧，就像从来没有受过伤害一样</span></strong></p>\r\n<p style=\"margin: 0px 16px; padding: 0px; max-width: 100%; clear: both; min-height: 1em; color: #333333; text-align: center;\"><strong style=\"margin: 0px; padding: 0px; max-width: 100%; box-sizing: border-box !important; word-wrap: break-word !important;\"><span style=\"margin: 0px; padding: 0px; max-width: 100%; box-sizing: border-box !important; word-wrap: break-word !important; font-size: 15px;\">跳舞吧，如同没有任何人注视你一样</span></strong></p>\r\n<p style=\"margin: 0px 16px; padding: 0px; max-width: 100%; clear: both; min-height: 1em; color: #333333; text-align: center;\"><strong style=\"margin: 0px; padding: 0px; max-width: 100%; box-sizing: border-box !important; word-wrap: break-word !important;\"><span style=\"margin: 0px; padding: 0px; max-width: 100%; box-sizing: border-box !important; word-wrap: break-word !important; font-size: 15px;\">活着吧，如同今天就是末日一样</span></strong></p>\r\n<p style=\"margin: 0px 16px; padding: 0px; max-width: 100%; clear: both; min-height: 1em; color: #333333; text-align: center;\">&nbsp;</p>\r\n<p style=\"margin: 0px 16px; padding: 0px; max-width: 100%; min-height: 1em; color: #333333; text-align: center;\"><span style=\"margin: 0px; padding: 0px; max-width: 100%; box-sizing: border-box !important; word-wrap: break-word !important; color: #990000; font-size: 15px;\"><img src=\"https://timgsa.baidu.com/timg?image&amp;quality=80&amp;size=b9999_10000&amp;sec=1599235079831&amp;di=4e7c08b476267106e7eeefb768964c89&amp;imgtype=0&amp;src=http%3A%2F%2Ft7.baidu.com%2Fit%2Fu%3D1179872664%2C290201490%26fm%3D79%26app%3D86%26f%3DJPEG%3Fw%3D1280%26h%3D854\" alt=\"\" width=\"117\" height=\"78\" /></span></p>');
 INSERT INTO `tp5_xarticles` VALUES ('2', '真正放下一个人，不是拉黑，也不是删除', '2', '2020-09-04 21:16:58', '2020-09-11 15:41:54', '1', '<p style=\"margin: 0px 16px; padding: 0px; max-width: 100%; clear: both; min-height: 1em; color: #333333; text-align: center;\"><span style=\"margin: 0px; padding: 0px; max-width: 100%; box-sizing: border-box !important; word-wrap: break-word !important; font-size: 15px; letter-spacing: 0.5px;\">有人说，越在乎，越假装不在乎；越放不下，越假装放得下</span></p>\r\n<p style=\"margin: 0px 16px; padding: 0px; max-width: 100%; clear: both; min-height: 1em; color: #333333; text-align: center;\"><span style=\"margin: 0px; padding: 0px; max-width: 100%; box-sizing: border-box !important; word-wrap: break-word !important; font-size: 15px; letter-spacing: 0.5px; color: #990000;\">没错。成年人的我们的确有着数不清的佯装，就连感情也难逃此劫</span></p>\r\n<p style=\"margin: 0px 16px; padding: 0px; max-width: 100%; clear: both; min-height: 1em; color: #333333; text-align: center;\">&nbsp;</p>\r\n<p style=\"margin: 0px 16px; padding: 0px; max-width: 100%; clear: both; min-height: 1em; color: #333333; text-align: center;\"><iframe style=\"width: 560px; height: 362px;\" src=\"http://tp51pro.com/tinymce-mz/js/tinymce/plugins/bdmap/bd.html?center=126.55219852159811%2C45.743085780862515&amp;zoom=14&amp;width=558&amp;height=360\" frameborder=\"0\"><span id=\"mce_marker\" data-mce-type=\"bookmark\">﻿​</span></iframe></p>');
-INSERT INTO `tp5_xarticles` VALUES ('4', '真正在乎你的人，绝不会说这句话', '3', '2020-09-04 21:12:22', '2020-12-07 21:42:11', '0', '<section>\r\n<p style=\"white-space: normal; margin-top: 0px; margin-bottom: 0px; padding: 0px; max-width: 100%; clear: both; min-height: 1em; caret-color: #333333; color: #333333; text-align: center;\"><strong style=\"font-size: 15px; margin: 0px; padding: 0px; max-width: 100%; box-sizing: border-box !important; overflow-wrap: break-word !important;\">在乎你的男人，绝不会说&ldquo;我很忙，没时间&rdquo;</strong></p>\r\n<hr />\r\n<p style=\"white-space: normal; margin: 0px 16px; padding: 0px; max-width: 100%; clear: both; min-height: 1em; color: #333333; text-align: center;\"><span style=\"margin: 0px; padding: 0px; max-width: 100%; font-size: 15px; box-sizing: border-box !important; word-wrap: break-word !important;\">网上有一段话，<span style=\"color: #e67e23;\"><strong>想陪你吃饭的人酸甜苦辣都想吃</strong></span></span></p>\r\n<p style=\"white-space: normal; margin: 0px 16px; padding: 0px; max-width: 100%; clear: both; min-height: 1em; color: #333333; text-align: center;\"><span style=\"margin: 0px; padding: 0px; max-width: 100%; font-size: 15px; box-sizing: border-box !important; word-wrap: break-word !important;\">想送你回家的人东南西北都顺路，<span style=\"margin: 0px; padding: 0px; max-width: 100%; box-sizing: border-box !important; word-wrap: break-word !important;\">想见你的人 24小时都有空&nbsp;</span></span></p>\r\n<p style=\"white-space: normal; margin: 0px 16px; padding: 0px; max-width: 100%; clear: both; min-height: 1em; color: #333333; text-align: center;\"><span style=\"margin: 0px; padding: 0px; max-width: 100%; color: #990000; font-size: 15px; box-sizing: border-box !important; word-wrap: break-word !important;\">生活中没有谁是真的忙，只看他愿不愿你为你花时间</span></p>\r\n<p style=\"white-space: normal; margin: 0px 16px; padding: 0px; max-width: 100%; clear: both; min-height: 1em; color: #333333; text-align: center;\"><span style=\"margin: 0px; padding: 0px; max-width: 100%; color: #990000; font-size: 15px; box-sizing: border-box !important; word-wrap: break-word !important;\">XXXX</span></p>\r\n</section>');
+INSERT INTO `tp5_xarticles` VALUES ('4', '真正在乎你的人，绝不会说这句话', '3', '2020-09-04 21:12:22', '2020-12-12 09:51:29', '0', '                                                                                                                                            <section>\r\n<p style=\"white-space: normal; margin-top: 0px; margin-bottom: 0px; padding: 0px; max-width: 100%; clear: both; min-height: 1em; caret-color: #333333; color: #333333; text-align: center;\"><strong style=\"font-size: 15px; margin: 0px; padding: 0px; max-width: 100%; box-sizing: border-box !important; overflow-wrap: break-word !important;\">在乎你的男人，绝不会说&ldquo;我很忙，没时间&rdquo;</strong></p>\r\n<hr />\r\n<p style=\"white-space: normal; margin: 0px 16px; padding: 0px; max-width: 100%; clear: both; min-height: 1em; color: #333333; text-align: center;\"><span style=\"margin: 0px; padding: 0px; max-width: 100%; font-size: 15px; box-sizing: border-box !important; word-wrap: break-word !important;\">网上有一段话，<span style=\"color: #e67e23;\"><strong>想陪你吃饭的人酸甜苦辣都想吃</strong></span></span></p>\r\n<p style=\"white-space: normal; margin: 0px 16px; padding: 0px; max-width: 100%; clear: both; min-height: 1em; color: #333333; text-align: center;\"><span style=\"margin: 0px; padding: 0px; max-width: 100%; font-size: 15px; box-sizing: border-box !important; word-wrap: break-word !important;\">想送你回家的人东南西北都顺路，<span style=\"margin: 0px; padding: 0px; max-width: 100%; box-sizing: border-box !important; word-wrap: break-word !important;\">想见你的人 24小时都有空&nbsp;</span></span></p>\r\n<p style=\"white-space: normal; margin: 0px 16px; padding: 0px; max-width: 100%; clear: both; min-height: 1em; color: #333333; text-align: center;\"><span style=\"margin: 0px; padding: 0px; max-width: 100%; color: #990000; font-size: 15px; box-sizing: border-box !important; word-wrap: break-word !important;\">生活中没有谁是真的忙，只看他愿不愿你为你花时间</span></p>\r\n<p style=\"white-space: normal; margin: 0px 16px; padding: 0px; max-width: 100%; clear: both; min-height: 1em; color: #333333; text-align: center;\"><span style=\"margin: 0px; padding: 0px; max-width: 100%; color: #990000; font-size: 15px; box-sizing: border-box !important; word-wrap: break-word !important;\">XXXX</span></p>\r\n</section>                                                                                    ');
 INSERT INTO `tp5_xarticles` VALUES ('3', '年轻人，我劝你没事多存点钱', '1', '2020-09-04 21:09:10', '2020-09-11 15:46:44', '2', '<section>\r\n<section>\r\n<section>\r\n<section>\r\n<p style=\"margin: 0px 16px; padding: 0px; max-width: 100%; clear: both; min-height: 1em; line-height: 1.75em; text-align: center; box-sizing: border-box !important; word-wrap: break-word !important;\"><span style=\"margin: 0px; padding: 0px; max-width: 100%; color: #ffffff; background-color: #990000; font-size: 16px; box-sizing: border-box !important; word-wrap: break-word !important;\"><img src=\"https://search-operate.cdn.bcebos.com/bf38b0d32a3f51e8d06ad1d3c93201a5.jpg\" alt=\"教师节快乐\" width=\"500\" height=\"98\" /></span></p>\r\n<p style=\"margin: 0px 16px; padding: 0px; max-width: 100%; clear: both; min-height: 1em; line-height: 1.75em; text-align: center; box-sizing: border-box !important; word-wrap: break-word !important;\"><span style=\"margin: 0px; padding: 0px; max-width: 100%; color: #ffffff; background-color: #990000; font-size: 16px; box-sizing: border-box !important; word-wrap: break-word !important;\">你的存款，就是你选择权</span></p>\r\n</section>\r\n</section>\r\n</section>\r\n</section>\r\n<p style=\"white-space: normal; margin: 0px 16px; padding: 0px; max-width: 100%; clear: both; min-height: 1em; caret-color: #333333; color: #333333; font-family: -apple-system-font, BlinkMacSystemFont,;\"><span style=\"margin: 0px; padding: 0px; max-width: 100%; font-size: 15px; box-sizing: border-box !important; word-wrap: break-word !important;\">我曾经和闺蜜去过一次&ldquo;非同凡响&rdquo;的毕业旅游。</span></p>\r\n<p style=\"white-space: normal; margin: 0px 16px; padding: 0px; max-width: 100%; clear: both; min-height: 1em; caret-color: #333333; color: #333333; font-family: -apple-system-font, BlinkMacSystemFont,;\"><span style=\"margin: 0px; padding: 0px; max-width: 100%; font-size: 15px; box-sizing: border-box !important; word-wrap: break-word !important;\">当时的我们还是大学生，每个月的生活费只会有超支，不会有结余，整天理所当然地做着月光族。</span></p>\r\n<p style=\"white-space: normal; margin: 0px 16px; padding: 0px; max-width: 100%; clear: both; min-height: 1em; caret-color: #333333; color: #333333; font-family: -apple-system-font, BlinkMacSystemFont,;\"><span style=\"margin: 0px; padding: 0px; max-width: 100%; font-size: 15px; box-sizing: border-box !important; word-wrap: break-word !important;\">直到我们站在旅行社的门外盯着别人的海报，才猛然发现自己简直就是拿着买大宝的钱，跑去买人家的SK2。</span></p>\r\n<p style=\"white-space: normal; margin: 0px 16px; padding: 0px; max-width: 100%; min-height: 1em; caret-color: #333333; color: #333333;\"><span style=\"margin: 0px; padding: 0px; max-width: 100%; font-size: 15px; box-sizing: border-box !important; word-wrap: break-word !important;\">最后，不得不厚着脸皮问家里人拿了一笔小小的旅游基金，报了一个超级特惠团</span></p>');
+INSERT INTO `tp5_xarticles` VALUES ('11', 'TESTC', '0', '2020-12-12 11:58:55', '2020-12-12 12:43:37', '0', '                                                                                                            <p>QX</p>                                                                        ');
 
 -- ----------------------------
 -- Table structure for tp5_xarticle_points
@@ -178,15 +179,17 @@ CREATE TABLE `tp5_xarticle_points` (
   PRIMARY KEY (`id`),
   KEY `index_article` (`article_id`),
   KEY `index_key_words` (`keywords`)
-) ENGINE=MyISAM AUTO_INCREMENT=5 DEFAULT CHARSET=utf8mb4 COMMENT='文章 要点表';
+) ENGINE=MyISAM AUTO_INCREMENT=12 DEFAULT CHARSET=utf8mb4 COMMENT='文章 要点表';
 
 -- ----------------------------
 -- Records of tp5_xarticle_points
 -- ----------------------------
 INSERT INTO `tp5_xarticle_points` VALUES ('1', '1', '2', '', 'home/images/article1.png', '如今科技进步，时代向前，人的平均寿命越来越长了。但长长的一生中，究竟有多少时间真正属于我们自己呢？', '1', '1');
 INSERT INTO `tp5_xarticle_points` VALUES ('2', '2', '12', '', 'home/images/article2.png', '我的小天地，我闯荡的大江湖，我的浩瀚星辰和璀璨日月，再与你无关；而你的天地，你行走的江湖，你的日月和星辰，我也再不惦念。从此，一别两宽，各生欢喜。', '1', '1');
-INSERT INTO `tp5_xarticle_points` VALUES ('4', '4', '0', '', 'home/images/article4.png', '人都是对喜欢的东西最上心。他若真的在乎你，一分一秒都不想失去你的消息，更不会不时玩消失，不会对你忽冷忽热，因为他比你还害怕失去。所有的不主动都是由于不喜欢，喜欢你的人永远不忙。', '0', '0');
+INSERT INTO `tp5_xarticle_points` VALUES ('4', '4', '0', '', 'home/images/article4.png', '人都是对喜欢的东西最上心。他若真的在乎你，一分一秒都不想失去你的消息，更不会不时玩消失，不会对你忽冷忽热，因为他比你还害怕失去。所有的不主动都是由于不喜欢，喜欢你的人永远不忙。', '0', '1');
 INSERT INTO `tp5_xarticle_points` VALUES ('3', '3', '0', '', 'home/images/article3.png', '因为穷，所以要努力赚钱；努力赚钱，就会没时间找对象；找不到对象就算了，钱也没赚多少，难免开始焦虑；一旦焦虑，每天洗头的时候，掉出来的头发会告诉你什么才是真正的“绝望”。', '1', '1');
+INSERT INTO `tp5_xarticle_points` VALUES ('5', '5', '0', '', 'upload/20201212/af37b747c21ab61d3bba57e32cbe738c.jpg', 'X', '0', '-1');
+INSERT INTO `tp5_xarticle_points` VALUES ('11', '11', '0', '', 'upload/20201212/52642c147048a4cd5d547d10c3addac0.jpg', 'saX', '0', '-1');
 
 -- ----------------------------
 -- Table structure for tp5_xbird_express
@@ -633,7 +636,7 @@ CREATE TABLE `tp5_xbrands` (
   `brand_icon` varchar(150) DEFAULT NULL COMMENT '品牌图标',
   `cat_id` int(11) NOT NULL DEFAULT '0' COMMENT '所属分类编码',
   `list_order` int(10) unsigned NOT NULL DEFAULT '999' COMMENT '排序',
-  `updated_at` timestamp NULL DEFAULT NULL ON UPDATE CURRENT_TIMESTAMP COMMENT '更新时间',
+  `updated_at` timestamp NULL DEFAULT '1970-01-01 10:00:00' ON UPDATE CURRENT_TIMESTAMP COMMENT '更新时间',
   `status` tinyint(2) NOT NULL DEFAULT '1' COMMENT '-1:删除; 1：正常',
   PRIMARY KEY (`id`),
   KEY `index_sel` (`brand_name`,`list_order`) USING BTREE,
@@ -645,9 +648,6 @@ CREATE TABLE `tp5_xbrands` (
 -- ----------------------------
 INSERT INTO `tp5_xbrands` VALUES ('1', '戴森(DYSON)', '', '19', '1', '2020-11-09 20:14:16', '1');
 INSERT INTO `tp5_xbrands` VALUES ('2', '科沃斯（Ecovacs）', 'cms/images/brand/Ecovacs.jpg', '18', '1', '2020-11-09 20:36:09', '1');
-INSERT INTO `tp5_xbrands` VALUES ('3', 'dsds', 'upload/20201109/a5faa79f28ca328ce640e571ebf31448.png', '10', '999', '2020-11-09 18:32:09', '-1');
-INSERT INTO `tp5_xbrands` VALUES ('4', 'ddd', 'upload/20201109/0cf78945e58fe35494f74df95c9fa08e.png', '10', '999', '2020-11-09 18:39:03', '-1');
-INSERT INTO `tp5_xbrands` VALUES ('5', 'ss', 'upload/20201109/489ae9371ebc197fdf8d26bb725569b9.png', '10', '1', '2020-11-09 18:31:37', '-1');
 INSERT INTO `tp5_xbrands` VALUES ('6', '花花公子', 'cms/images/brand/PLAYBOY.jpg', '14', '1', '2020-11-09 20:36:10', '1');
 INSERT INTO `tp5_xbrands` VALUES ('7', '香飘飘', 'cms/images/brand/Xiangpiaopiao.png', '9', '1', '2020-11-09 20:36:11', '1');
 INSERT INTO `tp5_xbrands` VALUES ('8', '雀巢', 'cms/images/brand/Nestle.png', '9', '2', '2020-11-10 10:28:22', '1');
@@ -656,10 +656,10 @@ INSERT INTO `tp5_xbrands` VALUES ('10', '伊利', 'cms/images/brand/Yili.jpg', '
 INSERT INTO `tp5_xbrands` VALUES ('11', '雅戈尔', '', '14', '2', '2020-11-09 20:36:12', '1');
 INSERT INTO `tp5_xbrands` VALUES ('12', '小米', 'cms/images/brand/xiaomi.gif', '18', '3', '2020-11-09 20:36:12', '1');
 INSERT INTO `tp5_xbrands` VALUES ('13', '华为', 'cms/images/brand/HUAWEI.jpg', '18', '3', '2020-11-09 20:36:17', '1');
-INSERT INTO `tp5_xbrands` VALUES ('14', '小米', 'cms/images/brand/xiaomi.gif', '20', '1', '2020-11-09 20:36:12', '1');
+INSERT INTO `tp5_xbrands` VALUES ('14', '小米', 'cms/images/brand/xiaomi.gif', '20', '1', '2020-12-12 13:14:52', '1');
 INSERT INTO `tp5_xbrands` VALUES ('15', '小度', 'cms/images/brand/xiaodu.png', '20', '2', '2020-11-09 20:36:12', '1');
 INSERT INTO `tp5_xbrands` VALUES ('16', '索尼', 'cms/images/brand/SONY.jpg', '20', '3', '2020-11-09 20:36:13', '1');
-INSERT INTO `tp5_xbrands` VALUES ('17', '漫步者', 'cms/images/brand/EDIFIER.png', '21', '1', '2020-12-07 17:09:30', '1');
+INSERT INTO `tp5_xbrands` VALUES ('17', '漫步者', 'cms/images/brand/EDIFIER.png', '21', '1', '2020-12-12 13:17:39', '1');
 INSERT INTO `tp5_xbrands` VALUES ('18', '索尼', 'cms/images/brand/SONY.jpg', '21', '2', '2020-12-07 17:10:39', '1');
 INSERT INTO `tp5_xbrands` VALUES ('19', '蒙牛', '', '10', '3', '2020-11-09 20:36:15', '1');
 
@@ -695,10 +695,10 @@ INSERT INTO `tp5_xcategorys` VALUES ('8', '红酒', '4', '1', 'cms/images/catego
 INSERT INTO `tp5_xcategorys` VALUES ('9', '咖啡奶茶', '6', '1', 'cms/images/category/coffee.png', '3', '2', '1');
 INSERT INTO `tp5_xcategorys` VALUES ('10', '牛奶酸奶', '6', '1', 'cms/images/category/milk.png', '3', '1', '1');
 INSERT INTO `tp5_xcategorys` VALUES ('12', '生活电器', '2', '1', 'cms/images/category/washer.png', '2', '1', '1');
-INSERT INTO `tp5_xcategorys` VALUES ('13', '衬衫', '16', '0', '', '3', '1', '1');
+INSERT INTO `tp5_xcategorys` VALUES ('13', '衬衫', '16', '1', '', '3', '1', '1');
 INSERT INTO `tp5_xcategorys` VALUES ('14', '领带/领结', '5', '1', 'cms/images/category/necktie.png', '3', '1', '1');
 INSERT INTO `tp5_xcategorys` VALUES ('15', '粮油调味', '4', '1', '', '2', '2', '1');
-INSERT INTO `tp5_xcategorys` VALUES ('16', '男装', '3', '0', '', '2', '1', '1');
+INSERT INTO `tp5_xcategorys` VALUES ('16', '男装', '3', '1', '', '2', '1', '1');
 INSERT INTO `tp5_xcategorys` VALUES ('17', '食用油', '15', '1', '', '3', '1', '1');
 INSERT INTO `tp5_xcategorys` VALUES ('18', '扫地机器人', '12', '1', '', '3', '1', '1');
 INSERT INTO `tp5_xcategorys` VALUES ('19', '吸尘器', '12', '1', '', '3', '2', '1');
@@ -758,7 +758,7 @@ CREATE TABLE `tp5_xcms_logs` (
   PRIMARY KEY (`id`),
   KEY `index_op_admin_id` (`op_id`,`admin_id`),
   KEY `tag_index` (`tag`)
-) ENGINE=MyISAM AUTO_INCREMENT=216 DEFAULT CHARSET=utf8mb4;
+) ENGINE=MyISAM AUTO_INCREMENT=273 DEFAULT CHARSET=utf8mb4;
 
 -- ----------------------------
 -- Records of tp5_xcms_logs
@@ -966,6 +966,63 @@ INSERT INTO `tp5_xcms_logs` VALUES ('212', 'ARTICLE', '4', '文章更新', '1', 
 INSERT INTO `tp5_xcms_logs` VALUES ('213', 'ARTICLE', '4', '文章更新', '1', '2020-12-07 21:37:36');
 INSERT INTO `tp5_xcms_logs` VALUES ('214', 'GOODS', '2', '商品修改成功', '1', '2020-12-07 21:39:14');
 INSERT INTO `tp5_xcms_logs` VALUES ('215', 'ARTICLE', '4', '文章更新', '1', '2020-12-07 21:42:11');
+INSERT INTO `tp5_xcms_logs` VALUES ('216', 'ARTICLE', '4', '文章删除操作', '1', '2020-12-12 09:24:26');
+INSERT INTO `tp5_xcms_logs` VALUES ('217', 'ARTICLE', '4', '文章删除操作', '1', '2020-12-12 09:25:29');
+INSERT INTO `tp5_xcms_logs` VALUES ('218', 'ARTICLE', '4', '文章删除操作', '1', '2020-12-12 09:25:58');
+INSERT INTO `tp5_xcms_logs` VALUES ('219', 'ARTICLE', '1', '文章删除操作', '1', '2020-12-12 09:39:49');
+INSERT INTO `tp5_xcms_logs` VALUES ('220', 'ARTICLE', '2', '文章删除操作', '1', '2020-12-12 09:40:02');
+INSERT INTO `tp5_xcms_logs` VALUES ('221', 'ARTICLE', '1', '文章删除操作', '1', '2020-12-12 09:45:16');
+INSERT INTO `tp5_xcms_logs` VALUES ('222', 'ARTICLE', '4', '文章更新', '1', '2020-12-12 09:46:11');
+INSERT INTO `tp5_xcms_logs` VALUES ('223', 'ARTICLE', '4', '文章更新', '1', '2020-12-12 09:48:54');
+INSERT INTO `tp5_xcms_logs` VALUES ('224', 'ARTICLE', '4', '文章更新', '1', '2020-12-12 09:51:29');
+INSERT INTO `tp5_xcms_logs` VALUES ('225', 'ARTICLE', '4', '文章更新', '1', '2020-12-12 09:52:50');
+INSERT INTO `tp5_xcms_logs` VALUES ('226', 'ARTICLE', '4', '文章更新', '1', '2020-12-12 09:53:05');
+INSERT INTO `tp5_xcms_logs` VALUES ('227', 'ARTICLE', '4', '文章更新', '1', '2020-12-12 09:53:50');
+INSERT INTO `tp5_xcms_logs` VALUES ('228', 'ARTICLE', '4', '文章更新', '1', '2020-12-12 09:56:57');
+INSERT INTO `tp5_xcms_logs` VALUES ('229', 'ARTICLE', '5', '添加文章数据', '1', '2020-12-12 09:58:08');
+INSERT INTO `tp5_xcms_logs` VALUES ('230', 'ARTICLE', '5', '文章更新', '1', '2020-12-12 09:58:24');
+INSERT INTO `tp5_xcms_logs` VALUES ('231', 'ARTICLE', '5', '文章更新', '1', '2020-12-12 09:58:44');
+INSERT INTO `tp5_xcms_logs` VALUES ('232', 'ARTICLE', '5', '文章更新', '1', '2020-12-12 09:59:25');
+INSERT INTO `tp5_xcms_logs` VALUES ('233', 'ARTICLE', '5', '文章更新', '1', '2020-12-12 10:00:57');
+INSERT INTO `tp5_xcms_logs` VALUES ('234', 'GOODS', '1', '商品修改成功', '1', '2020-12-12 10:07:25');
+INSERT INTO `tp5_xcms_logs` VALUES ('235', 'GOODS', '1', '商品修改成功', '1', '2020-12-12 10:07:39');
+INSERT INTO `tp5_xcms_logs` VALUES ('236', 'ARTICLE', '5', '文章更新', '1', '2020-12-12 10:08:17');
+INSERT INTO `tp5_xcms_logs` VALUES ('237', 'ARTICLE', '5', '文章删除操作', '1', '2020-12-12 10:08:41');
+INSERT INTO `tp5_xcms_logs` VALUES ('238', 'ARTICLE', '6', '添加文章数据', '1', '2020-12-12 11:36:34');
+INSERT INTO `tp5_xcms_logs` VALUES ('239', 'ARTICLE', '6', '文章更新', '1', '2020-12-12 11:38:02');
+INSERT INTO `tp5_xcms_logs` VALUES ('240', 'ARTICLE', '7', '添加文章数据', '1', '2020-12-12 11:50:27');
+INSERT INTO `tp5_xcms_logs` VALUES ('241', 'ARTICLE', '8', '添加文章数据', '1', '2020-12-12 11:52:32');
+INSERT INTO `tp5_xcms_logs` VALUES ('242', 'ARTICLE', '9', '添加文章数据', '1', '2020-12-12 11:53:17');
+INSERT INTO `tp5_xcms_logs` VALUES ('243', 'ARTICLE', '10', '添加文章数据', '1', '2020-12-12 11:56:18');
+INSERT INTO `tp5_xcms_logs` VALUES ('244', 'ARTICLE', '10', '文章删除操作', '1', '2020-12-12 11:56:25');
+INSERT INTO `tp5_xcms_logs` VALUES ('245', 'ARTICLE', '6', '文章删除操作', '1', '2020-12-12 11:56:28');
+INSERT INTO `tp5_xcms_logs` VALUES ('246', 'ARTICLE', '11', '添加文章数据', '1', '2020-12-12 11:58:55');
+INSERT INTO `tp5_xcms_logs` VALUES ('247', 'ARTICLE', '11', '文章更新', '1', '2020-12-12 12:05:49');
+INSERT INTO `tp5_xcms_logs` VALUES ('248', 'ARTICLE', '11', '文章更新', '1', '2020-12-12 12:14:49');
+INSERT INTO `tp5_xcms_logs` VALUES ('249', 'ARTICLE', '11', '文章更新', '1', '2020-12-12 12:15:29');
+INSERT INTO `tp5_xcms_logs` VALUES ('250', 'ARTICLE', '11', '文章更新', '1', '2020-12-12 12:15:57');
+INSERT INTO `tp5_xcms_logs` VALUES ('251', 'ARTICLE', '11', '文章更新', '1', '2020-12-12 12:16:52');
+INSERT INTO `tp5_xcms_logs` VALUES ('252', 'ARTICLE', '11', '文章更新', '1', '2020-12-12 12:17:49');
+INSERT INTO `tp5_xcms_logs` VALUES ('253', 'ARTICLE', '11', '文章更新', '1', '2020-12-12 12:23:36');
+INSERT INTO `tp5_xcms_logs` VALUES ('254', 'ARTICLE', '11', '文章更新', '1', '2020-12-12 12:26:02');
+INSERT INTO `tp5_xcms_logs` VALUES ('255', 'ARTICLE', '11', '文章更新', '1', '2020-12-12 12:32:14');
+INSERT INTO `tp5_xcms_logs` VALUES ('256', 'ARTICLE', '11', '文章更新', '1', '2020-12-12 12:33:43');
+INSERT INTO `tp5_xcms_logs` VALUES ('257', 'ARTICLE', '11', '文章更新', '1', '2020-12-12 12:34:39');
+INSERT INTO `tp5_xcms_logs` VALUES ('258', 'ARTICLE', '11', '文章更新', '1', '2020-12-12 12:35:45');
+INSERT INTO `tp5_xcms_logs` VALUES ('259', 'ARTICLE', '11', '文章更新', '1', '2020-12-12 12:35:52');
+INSERT INTO `tp5_xcms_logs` VALUES ('260', 'ARTICLE', '11', '文章更新', '1', '2020-12-12 12:36:14');
+INSERT INTO `tp5_xcms_logs` VALUES ('261', 'ARTICLE', '11', '文章更新', '1', '2020-12-12 12:37:53');
+INSERT INTO `tp5_xcms_logs` VALUES ('262', 'ARTICLE', '11', '文章更新', '1', '2020-12-12 12:37:59');
+INSERT INTO `tp5_xcms_logs` VALUES ('263', 'ARTICLE', '11', '文章更新', '1', '2020-12-12 12:43:29');
+INSERT INTO `tp5_xcms_logs` VALUES ('264', 'ARTICLE', '11', '文章更新', '1', '2020-12-12 12:43:37');
+INSERT INTO `tp5_xcms_logs` VALUES ('265', 'ARTICLE', '11', '文章删除操作', '1', '2020-12-12 12:44:31');
+INSERT INTO `tp5_xcms_logs` VALUES ('266', 'GOODS', '1', '商品修改成功', '1', '2020-12-12 12:59:34');
+INSERT INTO `tp5_xcms_logs` VALUES ('267', 'GOODS', '1', '商品修改成功', '1', '2020-12-12 13:01:25');
+INSERT INTO `tp5_xcms_logs` VALUES ('268', 'GOODS', '1', '商品修改成功', '1', '2020-12-12 13:02:22');
+INSERT INTO `tp5_xcms_logs` VALUES ('269', 'ARTICLE', '1', '文章更新', '1', '2020-12-13 08:45:03');
+INSERT INTO `tp5_xcms_logs` VALUES ('270', 'GOODS', '1', '商品修改成功', '1', '2020-12-13 08:54:19');
+INSERT INTO `tp5_xcms_logs` VALUES ('271', 'GOODS', '1', '商品修改成功', '1', '2020-12-13 08:58:53');
+INSERT INTO `tp5_xcms_logs` VALUES ('272', 'GOODS', '2', '商品修改成功', '1', '2020-12-15 09:32:13');
 
 -- ----------------------------
 -- Table structure for tp5_xconfigs
@@ -976,12 +1033,12 @@ CREATE TABLE `tp5_xconfigs` (
   `title` varchar(50) NOT NULL COMMENT '配置项标题',
   `tag` varchar(50) NOT NULL COMMENT '缩写标签 建议使用大写字母',
   `conf_type` tinyint(2) NOT NULL DEFAULT '0' COMMENT '配置类型 0：业务配置；1：系统配置',
-  `input_type` varchar(20) NOT NULL COMMENT '配置项 输入类型，分为 text、number、file、checkbox',
-  `value` varchar(100) NOT NULL COMMENT '配置项的 取值',
+  `input_type` varchar(20) NOT NULL COMMENT '配置项 输入类型，分为 text、number、file、checkbox、image',
+  `value` varchar(100) NOT NULL DEFAULT '' COMMENT '配置项的 取值',
   `tip` varchar(100) NOT NULL COMMENT '配置项提示信息',
   `list_order` int(11) NOT NULL DEFAULT '0' COMMENT '排序，越大越靠前',
   `status` tinyint(2) NOT NULL DEFAULT '0' COMMENT '状态  -1：删除  0：正常',
-  `add_time` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT '添加时间',
+  `add_time` timestamp NOT NULL DEFAULT '1970-01-01 10:00:00' COMMENT '添加时间',
   PRIMARY KEY (`id`,`tag`),
   UNIQUE KEY `tag_index` (`tag`) USING BTREE,
   KEY `sel_index` (`title`,`tag`) USING BTREE COMMENT '便于查询',
@@ -991,10 +1048,448 @@ CREATE TABLE `tp5_xconfigs` (
 -- ----------------------------
 -- Records of tp5_xconfigs
 -- ----------------------------
-INSERT INTO `tp5_xconfigs` VALUES ('1', '我是一个文本1', 'WSWENBEN1', '0', 'text', '1', 'HELLO,不要乱改！', '2', '0', '2019-07-30 18:09:23');
-INSERT INTO `tp5_xconfigs` VALUES ('2', '我是一个开关', 'SWITCHTOYOU', '0', 'checkbox', '1', 'HAHAHA', '0', '0', '2019-07-30 18:13:34');
-INSERT INTO `tp5_xconfigs` VALUES ('3', '我是一个图片', 'TUPIAN1', '0', 'button', 'cms/images/icon/goods_manager.png', '注意图片不要太大', '3', '0', '2019-07-30 18:21:18');
-INSERT INTO `tp5_xconfigs` VALUES ('4', 'VIP会员费用', 'VIP_MONEY', '0', 'text', '199', 'VIP 就是牛!', '1', '0', '2019-07-30 18:59:31');
+INSERT INTO `tp5_xconfigs` VALUES ('1', '我是一个文本1', 'WSWENBEN1', '0', 'text', '1', 'HELLO,不要乱改！', '2', '0', '2019-06-20 10:59:30');
+INSERT INTO `tp5_xconfigs` VALUES ('2', '我是一个开关', 'SWITCHTOYOU', '0', 'checkbox', '1', 'HAHAHA', '0', '0', '2020-12-12 10:59:34');
+INSERT INTO `tp5_xconfigs` VALUES ('3', '我是一个图片', 'TUPIAN1', '0', 'image', 'cms/images/headshot/wuHuang.png', '注意图片不要太大', '3', '0', '2020-12-12 10:59:38');
+INSERT INTO `tp5_xconfigs` VALUES ('4', 'VIP会员费用', 'VIP_MONEY', '0', 'text', '10', 'VIP 就是牛!', '1', '0', '2020-12-01 08:32:09');
+
+-- ----------------------------
+-- Table structure for tp5_xexcel_log
+-- ----------------------------
+DROP TABLE IF EXISTS `tp5_xexcel_log`;
+CREATE TABLE `tp5_xexcel_log` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `uid` int(11) DEFAULT NULL COMMENT '管理员ID',
+  `client` tinyint(4) unsigned DEFAULT '0' COMMENT '0-PC 1-ios 2-android',
+  `add_time` int(11) DEFAULT '0' COMMENT '创建时间',
+  `ip` bigint(20) unsigned NOT NULL DEFAULT '0' COMMENT '登录IP',
+  PRIMARY KEY (`id`) USING BTREE
+) ENGINE=MyISAM AUTO_INCREMENT=1122 DEFAULT CHARSET=utf8mb4 COMMENT='登录日志';
+
+-- ----------------------------
+-- Records of tp5_xexcel_log
+-- ----------------------------
+INSERT INTO `tp5_xexcel_log` VALUES ('2', '34', '0', '1493111611', '607755826');
+INSERT INTO `tp5_xexcel_log` VALUES ('3', '34', '0', '1493111948', '607755826');
+INSERT INTO `tp5_xexcel_log` VALUES ('4', '34', '2', '1493112929', '607755826');
+INSERT INTO `tp5_xexcel_log` VALUES ('5', '33', '1', '1493112943', '607755826');
+INSERT INTO `tp5_xexcel_log` VALUES ('6', '34', '2', '1493113145', '607755826');
+INSERT INTO `tp5_xexcel_log` VALUES ('7', '30', '0', '1493113151', '607755826');
+INSERT INTO `tp5_xexcel_log` VALUES ('8', '30', '2', '1493113272', '607755826');
+INSERT INTO `tp5_xexcel_log` VALUES ('9', '18', '0', '1493114670', '2130706433');
+INSERT INTO `tp5_xexcel_log` VALUES ('10', '18', '1', '1493114710', '2130706433');
+INSERT INTO `tp5_xexcel_log` VALUES ('11', '18', '1', '1493114738', '2130706433');
+INSERT INTO `tp5_xexcel_log` VALUES ('14', '33', '1', '1493115220', '604467071');
+INSERT INTO `tp5_xexcel_log` VALUES ('15', '33', '1', '1493115646', '604467071');
+INSERT INTO `tp5_xexcel_log` VALUES ('16', '33', '1', '1493115779', '604467071');
+INSERT INTO `tp5_xexcel_log` VALUES ('17', '33', '1', '1493176671', '604467071');
+INSERT INTO `tp5_xexcel_log` VALUES ('18', '33', '1', '1493195861', '604467071');
+INSERT INTO `tp5_xexcel_log` VALUES ('19', '33', '1', '1493196004', '604467071');
+INSERT INTO `tp5_xexcel_log` VALUES ('20', '33', '1', '1493196216', '604467071');
+INSERT INTO `tp5_xexcel_log` VALUES ('21', '33', '1', '1493196567', '604467071');
+INSERT INTO `tp5_xexcel_log` VALUES ('22', '33', '1', '1493198294', '604467071');
+INSERT INTO `tp5_xexcel_log` VALUES ('23', '33', '1', '1493199215', '604467071');
+INSERT INTO `tp5_xexcel_log` VALUES ('24', '33', '1', '1493199759', '604467071');
+INSERT INTO `tp5_xexcel_log` VALUES ('25', '33', '1', '1493199885', '604467071');
+INSERT INTO `tp5_xexcel_log` VALUES ('26', '33', '1', '1493199889', '604467071');
+INSERT INTO `tp5_xexcel_log` VALUES ('27', '33', '1', '1493200220', '604467071');
+INSERT INTO `tp5_xexcel_log` VALUES ('28', '33', '1', '1493200714', '604467071');
+INSERT INTO `tp5_xexcel_log` VALUES ('29', '33', '1', '1493201317', '604467071');
+INSERT INTO `tp5_xexcel_log` VALUES ('30', '33', '1', '1493202156', '604467071');
+INSERT INTO `tp5_xexcel_log` VALUES ('31', '33', '1', '1493202229', '604467071');
+INSERT INTO `tp5_xexcel_log` VALUES ('32', '33', '1', '1493202489', '604467071');
+INSERT INTO `tp5_xexcel_log` VALUES ('33', '33', '1', '1493202561', '604467071');
+INSERT INTO `tp5_xexcel_log` VALUES ('34', '33', '1', '1493202770', '604467071');
+INSERT INTO `tp5_xexcel_log` VALUES ('35', '33', '0', '1493210525', '2130706433');
+INSERT INTO `tp5_xexcel_log` VALUES ('36', '33', '0', '1493225069', '2130706433');
+INSERT INTO `tp5_xexcel_log` VALUES ('37', '1', '0', '1493256291', '2130706433');
+INSERT INTO `tp5_xexcel_log` VALUES ('39', '33', '1', '1493256625', '607755425');
+INSERT INTO `tp5_xexcel_log` VALUES ('40', '33', '1', '1493261494', '604467071');
+INSERT INTO `tp5_xexcel_log` VALUES ('41', '33', '1', '1493263740', '604467071');
+INSERT INTO `tp5_xexcel_log` VALUES ('42', '33', '1', '1493264477', '604467071');
+INSERT INTO `tp5_xexcel_log` VALUES ('43', '33', '1', '1493264691', '604467071');
+INSERT INTO `tp5_xexcel_log` VALUES ('44', '33', '1', '1493264778', '604467071');
+INSERT INTO `tp5_xexcel_log` VALUES ('45', '33', '1', '1493272105', '604467071');
+INSERT INTO `tp5_xexcel_log` VALUES ('46', '33', '1', '1493272432', '604467071');
+INSERT INTO `tp5_xexcel_log` VALUES ('47', '33', '1', '1493273447', '604467071');
+INSERT INTO `tp5_xexcel_log` VALUES ('48', '33', '1', '1493273781', '604467071');
+INSERT INTO `tp5_xexcel_log` VALUES ('49', '33', '1', '1493274489', '604467071');
+INSERT INTO `tp5_xexcel_log` VALUES ('50', '33', '1', '1493274720', '604467071');
+INSERT INTO `tp5_xexcel_log` VALUES ('51', '33', '1', '1493274938', '604467071');
+INSERT INTO `tp5_xexcel_log` VALUES ('52', '33', '1', '1493275068', '604467071');
+INSERT INTO `tp5_xexcel_log` VALUES ('53', '33', '1', '1493275246', '604467071');
+INSERT INTO `tp5_xexcel_log` VALUES ('54', '33', '1', '1493275441', '604467071');
+INSERT INTO `tp5_xexcel_log` VALUES ('55', '33', '1', '1493275507', '604467071');
+INSERT INTO `tp5_xexcel_log` VALUES ('56', '33', '1', '1493275682', '604467071');
+INSERT INTO `tp5_xexcel_log` VALUES ('57', '33', '1', '1493275868', '604467071');
+INSERT INTO `tp5_xexcel_log` VALUES ('58', '33', '1', '1493275941', '604467071');
+INSERT INTO `tp5_xexcel_log` VALUES ('59', '33', '1', '1493278296', '604467071');
+INSERT INTO `tp5_xexcel_log` VALUES ('60', '33', '1', '1493278486', '604467071');
+INSERT INTO `tp5_xexcel_log` VALUES ('61', '33', '1', '1493278531', '604467071');
+INSERT INTO `tp5_xexcel_log` VALUES ('62', '33', '1', '1493278693', '604467071');
+INSERT INTO `tp5_xexcel_log` VALUES ('63', '33', '1', '1493278789', '604467071');
+INSERT INTO `tp5_xexcel_log` VALUES ('64', '33', '1', '1493278866', '604467071');
+INSERT INTO `tp5_xexcel_log` VALUES ('65', '33', '1', '1493279001', '604467071');
+INSERT INTO `tp5_xexcel_log` VALUES ('66', '33', '1', '1493279159', '604467071');
+INSERT INTO `tp5_xexcel_log` VALUES ('67', '33', '1', '1493279757', '604467071');
+INSERT INTO `tp5_xexcel_log` VALUES ('68', '33', '1', '1493279931', '604467071');
+INSERT INTO `tp5_xexcel_log` VALUES ('69', '33', '1', '1493280161', '604467071');
+INSERT INTO `tp5_xexcel_log` VALUES ('70', '33', '1', '1493281954', '604467071');
+INSERT INTO `tp5_xexcel_log` VALUES ('71', '33', '1', '1493281989', '604467071');
+INSERT INTO `tp5_xexcel_log` VALUES ('72', '33', '1', '1493283362', '604467071');
+INSERT INTO `tp5_xexcel_log` VALUES ('73', '33', '1', '1493283429', '604467071');
+INSERT INTO `tp5_xexcel_log` VALUES ('74', '33', '1', '1493283487', '604467071');
+INSERT INTO `tp5_xexcel_log` VALUES ('75', '33', '1', '1493284203', '604467071');
+INSERT INTO `tp5_xexcel_log` VALUES ('76', '33', '1', '1493288916', '604467071');
+INSERT INTO `tp5_xexcel_log` VALUES ('77', '33', '1', '1493289024', '604467071');
+INSERT INTO `tp5_xexcel_log` VALUES ('78', '33', '1', '1493289164', '604467071');
+INSERT INTO `tp5_xexcel_log` VALUES ('79', '33', '1', '1493290091', '604467071');
+INSERT INTO `tp5_xexcel_log` VALUES ('80', '33', '1', '1493290234', '604467071');
+INSERT INTO `tp5_xexcel_log` VALUES ('81', '33', '1', '1493290678', '604467071');
+INSERT INTO `tp5_xexcel_log` VALUES ('82', '33', '1', '1493293332', '1971873073');
+INSERT INTO `tp5_xexcel_log` VALUES ('83', '33', '1', '1493341588', '607762229');
+INSERT INTO `tp5_xexcel_log` VALUES ('84', '33', '1', '1493341730', '607762229');
+INSERT INTO `tp5_xexcel_log` VALUES ('85', '33', '1', '1493341798', '607762229');
+INSERT INTO `tp5_xexcel_log` VALUES ('86', '33', '1', '1493342588', '607762229');
+INSERT INTO `tp5_xexcel_log` VALUES ('87', '33', '1', '1493342649', '607762229');
+INSERT INTO `tp5_xexcel_log` VALUES ('88', '33', '1', '1493342697', '607762229');
+INSERT INTO `tp5_xexcel_log` VALUES ('89', '33', '1', '1493342931', '607762229');
+INSERT INTO `tp5_xexcel_log` VALUES ('90', '33', '1', '1493343374', '607762229');
+INSERT INTO `tp5_xexcel_log` VALUES ('91', '33', '1', '1493343500', '607762229');
+INSERT INTO `tp5_xexcel_log` VALUES ('92', '33', '1', '1493343688', '607762229');
+INSERT INTO `tp5_xexcel_log` VALUES ('93', '33', '1', '1493343885', '607762229');
+INSERT INTO `tp5_xexcel_log` VALUES ('94', '33', '1', '1493344043', '1971873073');
+INSERT INTO `tp5_xexcel_log` VALUES ('95', '33', '1', '1493344131', '607762229');
+INSERT INTO `tp5_xexcel_log` VALUES ('96', '33', '1', '1493344395', '607762229');
+INSERT INTO `tp5_xexcel_log` VALUES ('97', '33', '1', '1493344464', '607762229');
+INSERT INTO `tp5_xexcel_log` VALUES ('98', '33', '1', '1493344615', '607762229');
+INSERT INTO `tp5_xexcel_log` VALUES ('99', '33', '1', '1493344783', '607762229');
+INSERT INTO `tp5_xexcel_log` VALUES ('100', '33', '1', '1493344868', '607762229');
+INSERT INTO `tp5_xexcel_log` VALUES ('101', '33', '1', '1493344889', '607762229');
+INSERT INTO `tp5_xexcel_log` VALUES ('102', '33', '1', '1493345126', '607762229');
+INSERT INTO `tp5_xexcel_log` VALUES ('103', '33', '1', '1493345619', '607762229');
+INSERT INTO `tp5_xexcel_log` VALUES ('104', '33', '1', '1493345764', '607762229');
+INSERT INTO `tp5_xexcel_log` VALUES ('105', '33', '1', '1493345944', '607762229');
+INSERT INTO `tp5_xexcel_log` VALUES ('106', '33', '1', '1493346353', '607762229');
+INSERT INTO `tp5_xexcel_log` VALUES ('107', '33', '1', '1493346408', '607762229');
+INSERT INTO `tp5_xexcel_log` VALUES ('108', '33', '1', '1493346675', '607762229');
+INSERT INTO `tp5_xexcel_log` VALUES ('109', '33', '1', '1493346794', '607762229');
+INSERT INTO `tp5_xexcel_log` VALUES ('110', '33', '1', '1493347141', '607762229');
+INSERT INTO `tp5_xexcel_log` VALUES ('111', '33', '1', '1493347324', '607762229');
+INSERT INTO `tp5_xexcel_log` VALUES ('112', '33', '1', '1493347609', '607762229');
+INSERT INTO `tp5_xexcel_log` VALUES ('113', '33', '1', '1493347733', '607762229');
+INSERT INTO `tp5_xexcel_log` VALUES ('114', '33', '1', '1493347808', '607762229');
+INSERT INTO `tp5_xexcel_log` VALUES ('115', '33', '1', '1493347939', '607762229');
+INSERT INTO `tp5_xexcel_log` VALUES ('116', '33', '1', '1493348084', '607762229');
+INSERT INTO `tp5_xexcel_log` VALUES ('117', '33', '1', '1493348144', '607762229');
+INSERT INTO `tp5_xexcel_log` VALUES ('118', '33', '1', '1493348180', '607762229');
+INSERT INTO `tp5_xexcel_log` VALUES ('119', '33', '1', '1493348232', '607762229');
+INSERT INTO `tp5_xexcel_log` VALUES ('120', '33', '1', '1493348607', '607762229');
+INSERT INTO `tp5_xexcel_log` VALUES ('121', '33', '1', '1493348674', '607762229');
+INSERT INTO `tp5_xexcel_log` VALUES ('122', '30', '0', '1493366210', '604467071');
+INSERT INTO `tp5_xexcel_log` VALUES ('123', '1', '0', '1493366220', '604467071');
+INSERT INTO `tp5_xexcel_log` VALUES ('124', '30', '2', '1493366957', '604467071');
+INSERT INTO `tp5_xexcel_log` VALUES ('125', '30', '2', '1493367977', '604467071');
+INSERT INTO `tp5_xexcel_log` VALUES ('126', '30', '2', '1493368011', '604467071');
+INSERT INTO `tp5_xexcel_log` VALUES ('127', '30', '2', '1493368082', '604467071');
+INSERT INTO `tp5_xexcel_log` VALUES ('128', '1', '0', '1493368457', '2130706433');
+INSERT INTO `tp5_xexcel_log` VALUES ('129', '30', '2', '1493368410', '604467071');
+INSERT INTO `tp5_xexcel_log` VALUES ('131', '30', '2', '1493368457', '604467071');
+INSERT INTO `tp5_xexcel_log` VALUES ('132', '30', '2', '1493369484', '604467071');
+INSERT INTO `tp5_xexcel_log` VALUES ('133', '30', '2', '1493369641', '604467071');
+INSERT INTO `tp5_xexcel_log` VALUES ('134', '30', '2', '1493370196', '604467071');
+INSERT INTO `tp5_xexcel_log` VALUES ('135', '30', '2', '1493370259', '607762229');
+INSERT INTO `tp5_xexcel_log` VALUES ('136', '33', '1', '1493370433', '604467071');
+INSERT INTO `tp5_xexcel_log` VALUES ('137', '30', '2', '1493370448', '604467071');
+INSERT INTO `tp5_xexcel_log` VALUES ('138', '33', '0', '1493370444', '2130706433');
+INSERT INTO `tp5_xexcel_log` VALUES ('139', '30', '2', '1493370527', '604467071');
+INSERT INTO `tp5_xexcel_log` VALUES ('140', '30', '2', '1493370571', '604467071');
+INSERT INTO `tp5_xexcel_log` VALUES ('141', '33', '1', '1493370578', '604467071');
+INSERT INTO `tp5_xexcel_log` VALUES ('142', '30', '2', '1493370579', '604467071');
+INSERT INTO `tp5_xexcel_log` VALUES ('143', '30', '2', '1493370589', '604467071');
+INSERT INTO `tp5_xexcel_log` VALUES ('144', '33', '1', '1493370625', '604467071');
+INSERT INTO `tp5_xexcel_log` VALUES ('145', '30', '2', '1493370639', '604467071');
+INSERT INTO `tp5_xexcel_log` VALUES ('146', '30', '2', '1493370646', '604467071');
+INSERT INTO `tp5_xexcel_log` VALUES ('147', '30', '2', '1493370666', '604467071');
+INSERT INTO `tp5_xexcel_log` VALUES ('148', '30', '2', '1493370673', '604467071');
+INSERT INTO `tp5_xexcel_log` VALUES ('149', '30', '2', '1493370680', '604467071');
+INSERT INTO `tp5_xexcel_log` VALUES ('150', '30', '2', '1493370763', '604467071');
+INSERT INTO `tp5_xexcel_log` VALUES ('151', '30', '2', '1493370770', '604467071');
+INSERT INTO `tp5_xexcel_log` VALUES ('152', '33', '1', '1493370791', '604467071');
+INSERT INTO `tp5_xexcel_log` VALUES ('153', '33', '1', '1493370849', '604467071');
+INSERT INTO `tp5_xexcel_log` VALUES ('154', '33', '1', '1493370892', '604467071');
+INSERT INTO `tp5_xexcel_log` VALUES ('155', '33', '1', '1493371659', '604467071');
+INSERT INTO `tp5_xexcel_log` VALUES ('156', '33', '1', '1493371710', '604467071');
+INSERT INTO `tp5_xexcel_log` VALUES ('157', '33', '1', '1493371744', '604467071');
+INSERT INTO `tp5_xexcel_log` VALUES ('158', '30', '2', '1493455701', '3080858358');
+INSERT INTO `tp5_xexcel_log` VALUES ('160', '30', '2', '1493644614', '1017541124');
+INSERT INTO `tp5_xexcel_log` VALUES ('161', '30', '2', '1493644674', '1017541124');
+INSERT INTO `tp5_xexcel_log` VALUES ('162', '30', '2', '1493645113', '1017541124');
+INSERT INTO `tp5_xexcel_log` VALUES ('163', '30', '2', '1493645186', '1017541124');
+INSERT INTO `tp5_xexcel_log` VALUES ('164', '30', '2', '1493645200', '1017541124');
+INSERT INTO `tp5_xexcel_log` VALUES ('165', '30', '2', '1493645233', '3704265075');
+INSERT INTO `tp5_xexcel_log` VALUES ('166', '30', '2', '1493645234', '1017541124');
+INSERT INTO `tp5_xexcel_log` VALUES ('167', '30', '2', '1493645249', '1017541124');
+INSERT INTO `tp5_xexcel_log` VALUES ('168', '30', '2', '1493645289', '1017541124');
+INSERT INTO `tp5_xexcel_log` VALUES ('169', '30', '2', '1493646493', '3704265075');
+INSERT INTO `tp5_xexcel_log` VALUES ('170', '30', '2', '1493646658', '1017541124');
+INSERT INTO `tp5_xexcel_log` VALUES ('171', '30', '2', '1493646887', '1911987528');
+INSERT INTO `tp5_xexcel_log` VALUES ('172', '30', '2', '1493646921', '1911987528');
+INSERT INTO `tp5_xexcel_log` VALUES ('173', '30', '2', '1493647086', '3704265075');
+INSERT INTO `tp5_xexcel_log` VALUES ('174', '30', '2', '1493647237', '1911987528');
+INSERT INTO `tp5_xexcel_log` VALUES ('175', '30', '2', '1493647449', '1017541124');
+INSERT INTO `tp5_xexcel_log` VALUES ('176', '30', '2', '1493647634', '1911987528');
+INSERT INTO `tp5_xexcel_log` VALUES ('177', '30', '2', '1493649884', '3704265075');
+INSERT INTO `tp5_xexcel_log` VALUES ('178', '30', '2', '1493649926', '1911987528');
+INSERT INTO `tp5_xexcel_log` VALUES ('180', '33', '0', '1493655188', '2130706433');
+INSERT INTO `tp5_xexcel_log` VALUES ('181', '30', '2', '1493684514', '737855574');
+INSERT INTO `tp5_xexcel_log` VALUES ('182', '33', '1', '1493686893', '604467071');
+INSERT INTO `tp5_xexcel_log` VALUES ('183', '33', '1', '1493687268', '604467071');
+INSERT INTO `tp5_xexcel_log` VALUES ('184', '30', '2', '1493688654', '607755083');
+INSERT INTO `tp5_xexcel_log` VALUES ('185', '30', '2', '1493688662', '607755083');
+INSERT INTO `tp5_xexcel_log` VALUES ('186', '30', '2', '1493688773', '607755083');
+INSERT INTO `tp5_xexcel_log` VALUES ('187', '30', '2', '1493688790', '607755083');
+INSERT INTO `tp5_xexcel_log` VALUES ('188', '30', '2', '1493688826', '607755083');
+INSERT INTO `tp5_xexcel_log` VALUES ('189', '30', '2', '1493688962', '607755083');
+INSERT INTO `tp5_xexcel_log` VALUES ('190', '30', '2', '1493688973', '607755083');
+INSERT INTO `tp5_xexcel_log` VALUES ('191', '30', '2', '1493688998', '607755083');
+INSERT INTO `tp5_xexcel_log` VALUES ('192', '30', '2', '1493690092', '607755083');
+INSERT INTO `tp5_xexcel_log` VALUES ('193', '30', '2', '1493690167', '607755083');
+INSERT INTO `tp5_xexcel_log` VALUES ('194', '30', '2', '1493690176', '607755083');
+INSERT INTO `tp5_xexcel_log` VALUES ('195', '30', '2', '1493690258', '607755083');
+INSERT INTO `tp5_xexcel_log` VALUES ('196', '30', '2', '1493690584', '607755083');
+INSERT INTO `tp5_xexcel_log` VALUES ('197', '30', '2', '1493690614', '607755083');
+INSERT INTO `tp5_xexcel_log` VALUES ('198', '30', '2', '1493690750', '607755083');
+INSERT INTO `tp5_xexcel_log` VALUES ('199', '30', '2', '1493690758', '607755083');
+INSERT INTO `tp5_xexcel_log` VALUES ('200', '30', '2', '1493690960', '607755083');
+INSERT INTO `tp5_xexcel_log` VALUES ('201', '30', '2', '1493691020', '607755083');
+INSERT INTO `tp5_xexcel_log` VALUES ('202', '30', '0', '1493691023', '604467071');
+INSERT INTO `tp5_xexcel_log` VALUES ('203', '30', '2', '1493691028', '607755083');
+INSERT INTO `tp5_xexcel_log` VALUES ('204', '1', '0', '1493691052', '604467071');
+INSERT INTO `tp5_xexcel_log` VALUES ('205', '30', '2', '1493691131', '607755083');
+INSERT INTO `tp5_xexcel_log` VALUES ('206', '30', '2', '1493691142', '607755083');
+INSERT INTO `tp5_xexcel_log` VALUES ('207', '30', '2', '1493691168', '607755083');
+INSERT INTO `tp5_xexcel_log` VALUES ('208', '30', '2', '1493691209', '607755083');
+INSERT INTO `tp5_xexcel_log` VALUES ('209', '30', '2', '1493691220', '607755083');
+INSERT INTO `tp5_xexcel_log` VALUES ('210', '30', '2', '1493691327', '607755083');
+INSERT INTO `tp5_xexcel_log` VALUES ('211', '30', '2', '1493691373', '607755083');
+INSERT INTO `tp5_xexcel_log` VALUES ('212', '30', '2', '1493691450', '607755083');
+INSERT INTO `tp5_xexcel_log` VALUES ('214', '30', '2', '1493691508', '607755083');
+INSERT INTO `tp5_xexcel_log` VALUES ('215', '30', '2', '1493691595', '607755083');
+INSERT INTO `tp5_xexcel_log` VALUES ('219', '30', '2', '1493691733', '607755083');
+INSERT INTO `tp5_xexcel_log` VALUES ('220', '30', '2', '1493691788', '607755083');
+INSERT INTO `tp5_xexcel_log` VALUES ('222', '30', '2', '1493691810', '607755083');
+INSERT INTO `tp5_xexcel_log` VALUES ('224', '30', '2', '1493691816', '607755083');
+INSERT INTO `tp5_xexcel_log` VALUES ('228', '30', '0', '1493692933', '604467071');
+INSERT INTO `tp5_xexcel_log` VALUES ('231', '33', '1', '1493693128', '607755083');
+INSERT INTO `tp5_xexcel_log` VALUES ('232', '33', '1', '1493693211', '607755083');
+INSERT INTO `tp5_xexcel_log` VALUES ('234', '33', '1', '1493693416', '607755083');
+INSERT INTO `tp5_xexcel_log` VALUES ('237', '30', '2', '1493693708', '737855574');
+INSERT INTO `tp5_xexcel_log` VALUES ('240', '33', '1', '1493694656', '607755083');
+INSERT INTO `tp5_xexcel_log` VALUES ('241', '33', '1', '1493694983', '607755083');
+INSERT INTO `tp5_xexcel_log` VALUES ('242', '33', '1', '1493695093', '607755083');
+INSERT INTO `tp5_xexcel_log` VALUES ('243', '33', '1', '1493695225', '607755083');
+INSERT INTO `tp5_xexcel_log` VALUES ('244', '33', '1', '1493695424', '607755083');
+INSERT INTO `tp5_xexcel_log` VALUES ('245', '33', '1', '1493695460', '607755083');
+INSERT INTO `tp5_xexcel_log` VALUES ('247', '33', '1', '1493695620', '607755083');
+INSERT INTO `tp5_xexcel_log` VALUES ('250', '33', '1', '1493695776', '607755083');
+INSERT INTO `tp5_xexcel_log` VALUES ('252', '30', '2', '1493695962', '607755083');
+INSERT INTO `tp5_xexcel_log` VALUES ('253', '30', '2', '1493696416', '607755083');
+INSERT INTO `tp5_xexcel_log` VALUES ('254', '30', '2', '1493696489', '607755083');
+INSERT INTO `tp5_xexcel_log` VALUES ('255', '33', '1', '1493696505', '607755083');
+INSERT INTO `tp5_xexcel_log` VALUES ('256', '33', '1', '1493696540', '607755083');
+INSERT INTO `tp5_xexcel_log` VALUES ('257', '33', '1', '1493696574', '607755083');
+INSERT INTO `tp5_xexcel_log` VALUES ('258', '30', '2', '1493696579', '607755083');
+INSERT INTO `tp5_xexcel_log` VALUES ('259', '33', '1', '1493696748', '607755083');
+INSERT INTO `tp5_xexcel_log` VALUES ('260', '30', '2', '1493696771', '607755083');
+INSERT INTO `tp5_xexcel_log` VALUES ('262', '33', '1', '1493696853', '607755083');
+INSERT INTO `tp5_xexcel_log` VALUES ('263', '33', '1', '1493696893', '607755083');
+INSERT INTO `tp5_xexcel_log` VALUES ('266', '33', '1', '1493697205', '607755083');
+INSERT INTO `tp5_xexcel_log` VALUES ('267', '33', '1', '1493701429', '607755083');
+INSERT INTO `tp5_xexcel_log` VALUES ('269', '33', '1', '1493701693', '607755083');
+INSERT INTO `tp5_xexcel_log` VALUES ('270', '33', '1', '1493701909', '607755083');
+INSERT INTO `tp5_xexcel_log` VALUES ('271', '33', '1', '1493702034', '607755083');
+INSERT INTO `tp5_xexcel_log` VALUES ('272', '33', '1', '1493702115', '607755083');
+INSERT INTO `tp5_xexcel_log` VALUES ('273', '33', '1', '1493702236', '607755083');
+INSERT INTO `tp5_xexcel_log` VALUES ('274', '33', '1', '1493702482', '607755083');
+INSERT INTO `tp5_xexcel_log` VALUES ('277', '30', '2', '1493705434', '604467071');
+INSERT INTO `tp5_xexcel_log` VALUES ('278', '30', '2', '1493705477', '604467071');
+INSERT INTO `tp5_xexcel_log` VALUES ('279', '30', '2', '1493705491', '604467071');
+INSERT INTO `tp5_xexcel_log` VALUES ('280', '30', '2', '1493705499', '604467071');
+INSERT INTO `tp5_xexcel_log` VALUES ('293', '33', '1', '1493708516', '604467071');
+INSERT INTO `tp5_xexcel_log` VALUES ('294', '33', '1', '1493708588', '604467071');
+INSERT INTO `tp5_xexcel_log` VALUES ('295', '33', '1', '1493709682', '604467071');
+INSERT INTO `tp5_xexcel_log` VALUES ('298', '30', '2', '1493710322', '604467071');
+INSERT INTO `tp5_xexcel_log` VALUES ('301', '30', '0', '1493711222', '604467071');
+INSERT INTO `tp5_xexcel_log` VALUES ('303', '33', '1', '1493711973', '604467071');
+INSERT INTO `tp5_xexcel_log` VALUES ('306', '33', '1', '1493712701', '1971849285');
+INSERT INTO `tp5_xexcel_log` VALUES ('309', '33', '1', '1493712848', '1971849285');
+INSERT INTO `tp5_xexcel_log` VALUES ('311', '30', '2', '1493712869', '607924339');
+INSERT INTO `tp5_xexcel_log` VALUES ('312', '30', '2', '1493713166', '607924339');
+INSERT INTO `tp5_xexcel_log` VALUES ('313', '33', '1', '1493713622', '604467071');
+INSERT INTO `tp5_xexcel_log` VALUES ('314', '33', '1', '1493713994', '604467071');
+INSERT INTO `tp5_xexcel_log` VALUES ('316', '33', '1', '1493794339', '604467071');
+INSERT INTO `tp5_xexcel_log` VALUES ('319', '33', '1', '1493794654', '604467071');
+INSERT INTO `tp5_xexcel_log` VALUES ('321', '33', '1', '1493794998', '604467071');
+INSERT INTO `tp5_xexcel_log` VALUES ('324', '30', '2', '1493815146', '2936756211');
+INSERT INTO `tp5_xexcel_log` VALUES ('325', '1', '0', '1493819655', '2936756211');
+INSERT INTO `tp5_xexcel_log` VALUES ('326', '1', '0', '1493819744', '2936756211');
+INSERT INTO `tp5_xexcel_log` VALUES ('327', '30', '2', '1493819851', '2936756211');
+INSERT INTO `tp5_xexcel_log` VALUES ('328', '30', '2', '1493819862', '2936756211');
+INSERT INTO `tp5_xexcel_log` VALUES ('329', '30', '2', '1493820027', '1999108160');
+INSERT INTO `tp5_xexcel_log` VALUES ('330', '30', '2', '1493820044', '607925342');
+INSERT INTO `tp5_xexcel_log` VALUES ('331', '30', '2', '1493820051', '607925342');
+INSERT INTO `tp5_xexcel_log` VALUES ('332', '30', '2', '1493820057', '1999108160');
+INSERT INTO `tp5_xexcel_log` VALUES ('333', '30', '2', '1493820933', '2936756211');
+INSERT INTO `tp5_xexcel_log` VALUES ('334', '30', '0', '1493859627', '604467071');
+INSERT INTO `tp5_xexcel_log` VALUES ('335', '1', '0', '1493860264', '604467071');
+INSERT INTO `tp5_xexcel_log` VALUES ('336', '30', '0', '1493860450', '604467071');
+INSERT INTO `tp5_xexcel_log` VALUES ('337', '1', '0', '1493860504', '604467071');
+INSERT INTO `tp5_xexcel_log` VALUES ('338', '30', '2', '1493860555', '604467071');
+INSERT INTO `tp5_xexcel_log` VALUES ('339', '30', '2', '1493860726', '604467071');
+INSERT INTO `tp5_xexcel_log` VALUES ('340', '30', '2', '1493862126', '604467071');
+INSERT INTO `tp5_xexcel_log` VALUES ('341', '30', '2', '1493862647', '604467071');
+INSERT INTO `tp5_xexcel_log` VALUES ('342', '30', '2', '1493863776', '604467071');
+INSERT INTO `tp5_xexcel_log` VALUES ('343', '30', '2', '1493863896', '604467071');
+INSERT INTO `tp5_xexcel_log` VALUES ('344', '30', '2', '1493863997', '604467071');
+INSERT INTO `tp5_xexcel_log` VALUES ('345', '30', '0', '1493864027', '604467071');
+INSERT INTO `tp5_xexcel_log` VALUES ('346', '30', '2', '1493864051', '604467071');
+INSERT INTO `tp5_xexcel_log` VALUES ('347', '30', '2', '1493864125', '604467071');
+INSERT INTO `tp5_xexcel_log` VALUES ('348', '30', '2', '1493864239', '604467071');
+INSERT INTO `tp5_xexcel_log` VALUES ('349', '30', '2', '1493864286', '604467071');
+INSERT INTO `tp5_xexcel_log` VALUES ('350', '30', '2', '1493864373', '604467071');
+INSERT INTO `tp5_xexcel_log` VALUES ('351', '30', '2', '1493864423', '604467071');
+INSERT INTO `tp5_xexcel_log` VALUES ('352', '30', '2', '1493864736', '604467071');
+INSERT INTO `tp5_xexcel_log` VALUES ('353', '30', '2', '1493864781', '604467071');
+INSERT INTO `tp5_xexcel_log` VALUES ('354', '30', '2', '1493864935', '604467071');
+INSERT INTO `tp5_xexcel_log` VALUES ('355', '30', '2', '1493864962', '604467071');
+INSERT INTO `tp5_xexcel_log` VALUES ('356', '33', '1', '1493865063', '604467071');
+INSERT INTO `tp5_xexcel_log` VALUES ('357', '33', '1', '1493865479', '604467071');
+INSERT INTO `tp5_xexcel_log` VALUES ('358', '33', '1', '1493865953', '604467071');
+INSERT INTO `tp5_xexcel_log` VALUES ('359', '30', '2', '1493866699', '604467071');
+INSERT INTO `tp5_xexcel_log` VALUES ('360', '30', '2', '1493867112', '604467071');
+INSERT INTO `tp5_xexcel_log` VALUES ('361', '1', '0', '1493867124', '2130706433');
+INSERT INTO `tp5_xexcel_log` VALUES ('362', '33', '1', '1493867367', '604467071');
+INSERT INTO `tp5_xexcel_log` VALUES ('363', '30', '2', '1493867438', '604467071');
+INSERT INTO `tp5_xexcel_log` VALUES ('364', '33', '1', '1493867680', '604467071');
+INSERT INTO `tp5_xexcel_log` VALUES ('365', '33', '1', '1493867713', '604467071');
+INSERT INTO `tp5_xexcel_log` VALUES ('366', '33', '1', '1493867806', '604467071');
+INSERT INTO `tp5_xexcel_log` VALUES ('367', '30', '2', '1493867892', '604467071');
+INSERT INTO `tp5_xexcel_log` VALUES ('368', '30', '2', '1493867915', '604467071');
+INSERT INTO `tp5_xexcel_log` VALUES ('369', '33', '1', '1493868064', '604467071');
+INSERT INTO `tp5_xexcel_log` VALUES ('370', '33', '1', '1493868171', '604467071');
+INSERT INTO `tp5_xexcel_log` VALUES ('371', '33', '1', '1493868335', '604467071');
+INSERT INTO `tp5_xexcel_log` VALUES ('372', '33', '1', '1493868347', '604467071');
+INSERT INTO `tp5_xexcel_log` VALUES ('373', '33', '1', '1493868369', '604467071');
+INSERT INTO `tp5_xexcel_log` VALUES ('374', '30', '2', '1493868373', '604467071');
+INSERT INTO `tp5_xexcel_log` VALUES ('375', '30', '2', '1493868493', '604467071');
+INSERT INTO `tp5_xexcel_log` VALUES ('376', '30', '2', '1493868893', '604467071');
+INSERT INTO `tp5_xexcel_log` VALUES ('377', '30', '2', '1493868988', '604467071');
+INSERT INTO `tp5_xexcel_log` VALUES ('378', '33', '1', '1493869082', '604467071');
+INSERT INTO `tp5_xexcel_log` VALUES ('379', '33', '1', '1493869175', '604467071');
+INSERT INTO `tp5_xexcel_log` VALUES ('380', '30', '2', '1493869183', '604467071');
+INSERT INTO `tp5_xexcel_log` VALUES ('381', '30', '2', '1493869526', '604467071');
+INSERT INTO `tp5_xexcel_log` VALUES ('382', '30', '2', '1493869751', '604467071');
+INSERT INTO `tp5_xexcel_log` VALUES ('383', '30', '2', '1493869830', '604467071');
+INSERT INTO `tp5_xexcel_log` VALUES ('384', '30', '2', '1493869894', '604467071');
+INSERT INTO `tp5_xexcel_log` VALUES ('385', '33', '1', '1493869899', '604467071');
+INSERT INTO `tp5_xexcel_log` VALUES ('386', '30', '2', '1493870011', '604467071');
+INSERT INTO `tp5_xexcel_log` VALUES ('387', '30', '2', '1493871556', '604467071');
+INSERT INTO `tp5_xexcel_log` VALUES ('388', '30', '2', '1493871724', '604467071');
+INSERT INTO `tp5_xexcel_log` VALUES ('389', '30', '2', '1493872203', '1779614957');
+INSERT INTO `tp5_xexcel_log` VALUES ('390', '30', '2', '1493874041', '604467071');
+INSERT INTO `tp5_xexcel_log` VALUES ('391', '33', '1', '1493874342', '604467071');
+INSERT INTO `tp5_xexcel_log` VALUES ('392', '30', '2', '1493875009', '604467071');
+INSERT INTO `tp5_xexcel_log` VALUES ('393', '33', '1', '1493875141', '604467071');
+INSERT INTO `tp5_xexcel_log` VALUES ('394', '30', '2', '1493875498', '604467071');
+INSERT INTO `tp5_xexcel_log` VALUES ('395', '33', '1', '1493875703', '607762217');
+INSERT INTO `tp5_xexcel_log` VALUES ('396', '33', '1', '1493875961', '607762217');
+INSERT INTO `tp5_xexcel_log` VALUES ('397', '30', '2', '1493876044', '604467071');
+INSERT INTO `tp5_xexcel_log` VALUES ('398', '33', '1', '1493876136', '607762217');
+INSERT INTO `tp5_xexcel_log` VALUES ('399', '30', '2', '1493876219', '604467071');
+INSERT INTO `tp5_xexcel_log` VALUES ('400', '33', '1', '1493876258', '607762217');
+INSERT INTO `tp5_xexcel_log` VALUES ('401', '30', '2', '1493876318', '604467071');
+INSERT INTO `tp5_xexcel_log` VALUES ('402', '33', '1', '1493876410', '607762217');
+INSERT INTO `tp5_xexcel_log` VALUES ('403', '33', '1', '1493876485', '607762217');
+INSERT INTO `tp5_xexcel_log` VALUES ('404', '30', '2', '1493876549', '604467071');
+INSERT INTO `tp5_xexcel_log` VALUES ('405', '33', '1', '1493876571', '607762217');
+INSERT INTO `tp5_xexcel_log` VALUES ('406', '30', '2', '1493876814', '604467071');
+INSERT INTO `tp5_xexcel_log` VALUES ('407', '33', '1', '1493876911', '607762217');
+INSERT INTO `tp5_xexcel_log` VALUES ('408', '33', '1', '1493876984', '607762217');
+INSERT INTO `tp5_xexcel_log` VALUES ('410', '1', '0', '1493877063', '2130706433');
+INSERT INTO `tp5_xexcel_log` VALUES ('411', '33', '1', '1493877103', '607762217');
+INSERT INTO `tp5_xexcel_log` VALUES ('412', '33', '1', '1493877197', '607762217');
+INSERT INTO `tp5_xexcel_log` VALUES ('413', '33', '1', '1493877410', '607762217');
+INSERT INTO `tp5_xexcel_log` VALUES ('414', '30', '2', '1493877433', '604467071');
+INSERT INTO `tp5_xexcel_log` VALUES ('415', '30', '2', '1493877496', '604467071');
+INSERT INTO `tp5_xexcel_log` VALUES ('416', '33', '1', '1493877533', '607762217');
+INSERT INTO `tp5_xexcel_log` VALUES ('417', '33', '1', '1493877608', '607762217');
+INSERT INTO `tp5_xexcel_log` VALUES ('418', '33', '1', '1493877754', '607762217');
+INSERT INTO `tp5_xexcel_log` VALUES ('419', '30', '2', '1493877781', '604467071');
+INSERT INTO `tp5_xexcel_log` VALUES ('420', '33', '1', '1493877860', '607762217');
+INSERT INTO `tp5_xexcel_log` VALUES ('421', '33', '1', '1493877926', '607762217');
+INSERT INTO `tp5_xexcel_log` VALUES ('422', '30', '2', '1493878185', '604467071');
+INSERT INTO `tp5_xexcel_log` VALUES ('423', '30', '2', '1493878627', '604467071');
+INSERT INTO `tp5_xexcel_log` VALUES ('424', '33', '1', '1493878704', '607762217');
+INSERT INTO `tp5_xexcel_log` VALUES ('425', '33', '1', '1493879549', '607762217');
+INSERT INTO `tp5_xexcel_log` VALUES ('426', '33', '1', '1493879619', '607762217');
+INSERT INTO `tp5_xexcel_log` VALUES ('427', '33', '1', '1493879813', '607762217');
+INSERT INTO `tp5_xexcel_log` VALUES ('428', '33', '1', '1493880041', '607762217');
+INSERT INTO `tp5_xexcel_log` VALUES ('429', '33', '1', '1493880173', '607762217');
+INSERT INTO `tp5_xexcel_log` VALUES ('430', '33', '1', '1493880402', '607762217');
+INSERT INTO `tp5_xexcel_log` VALUES ('431', '33', '1', '1493880877', '607762217');
+INSERT INTO `tp5_xexcel_log` VALUES ('432', '33', '1', '1493880951', '607762217');
+INSERT INTO `tp5_xexcel_log` VALUES ('433', '33', '1', '1493881214', '607762217');
+INSERT INTO `tp5_xexcel_log` VALUES ('434', '33', '1', '1493881578', '607762217');
+INSERT INTO `tp5_xexcel_log` VALUES ('435', '33', '1', '1493881692', '607762217');
+INSERT INTO `tp5_xexcel_log` VALUES ('436', '33', '1', '1493881807', '607762217');
+INSERT INTO `tp5_xexcel_log` VALUES ('437', '33', '1', '1493881864', '607762217');
+INSERT INTO `tp5_xexcel_log` VALUES ('438', '30', '2', '1493882007', '604467071');
+INSERT INTO `tp5_xexcel_log` VALUES ('439', '30', '2', '1493882128', '604467071');
+INSERT INTO `tp5_xexcel_log` VALUES ('440', '30', '2', '1493882362', '604467071');
+INSERT INTO `tp5_xexcel_log` VALUES ('441', '30', '2', '1493882374', '604467071');
+INSERT INTO `tp5_xexcel_log` VALUES ('442', '30', '2', '1493882413', '604467071');
+INSERT INTO `tp5_xexcel_log` VALUES ('448', '30', '2', '1493882902', '604467071');
+INSERT INTO `tp5_xexcel_log` VALUES ('449', '30', '2', '1493882934', '604467071');
+INSERT INTO `tp5_xexcel_log` VALUES ('455', '33', '1', '1493883064', '607762217');
+INSERT INTO `tp5_xexcel_log` VALUES ('457', '33', '1', '1493883135', '607762217');
+INSERT INTO `tp5_xexcel_log` VALUES ('458', '33', '1', '1493883267', '607762217');
+INSERT INTO `tp5_xexcel_log` VALUES ('461', '33', '1', '1493883492', '607762217');
+INSERT INTO `tp5_xexcel_log` VALUES ('462', '33', '1', '1493883520', '607762217');
+INSERT INTO `tp5_xexcel_log` VALUES ('467', '1', '0', '1493883898', '604467071');
+INSERT INTO `tp5_xexcel_log` VALUES ('476', '33', '1', '1493884253', '1971849285');
+INSERT INTO `tp5_xexcel_log` VALUES ('477', '18', '1', '1493884270', '987409906');
+INSERT INTO `tp5_xexcel_log` VALUES ('483', '30', '2', '1493884976', '607762217');
+INSERT INTO `tp5_xexcel_log` VALUES ('484', '30', '1', '1493884983', '987409906');
+INSERT INTO `tp5_xexcel_log` VALUES ('486', '30', '2', '1493885062', '604467071');
+INSERT INTO `tp5_xexcel_log` VALUES ('487', '33', '1', '1493885161', '607762217');
+INSERT INTO `tp5_xexcel_log` VALUES ('488', '33', '1', '1493885255', '607762217');
+INSERT INTO `tp5_xexcel_log` VALUES ('490', '33', '1', '1493885272', '607762217');
+INSERT INTO `tp5_xexcel_log` VALUES ('492', '33', '1', '1493885279', '607762217');
+INSERT INTO `tp5_xexcel_log` VALUES ('494', '30', '2', '1493885303', '604467071');
+INSERT INTO `tp5_xexcel_log` VALUES ('495', '30', '1', '1493885327', '607762217');
+INSERT INTO `tp5_xexcel_log` VALUES ('496', '33', '1', '1493885344', '607762217');
+INSERT INTO `tp5_xexcel_log` VALUES ('497', '30', '2', '1493885421', '604467071');
+INSERT INTO `tp5_xexcel_log` VALUES ('498', '33', '1', '1493885475', '607762217');
+INSERT INTO `tp5_xexcel_log` VALUES ('499', '33', '1', '1493885672', '607762217');
+INSERT INTO `tp5_xexcel_log` VALUES ('500', '30', '2', '1493885739', '604467071');
+
+-- ----------------------------
+-- Table structure for tp5_xexcel_log2
+-- ----------------------------
+DROP TABLE IF EXISTS `tp5_xexcel_log2`;
+CREATE TABLE `tp5_xexcel_log2` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `uid` int(11) DEFAULT NULL COMMENT '管理员ID',
+  `client` tinyint(4) unsigned DEFAULT '0' COMMENT '0-PC 1-ios 2-android',
+  `add_time` int(11) DEFAULT '0' COMMENT '创建时间',
+  `ip` bigint(20) unsigned NOT NULL DEFAULT '0' COMMENT '登录IP',
+  PRIMARY KEY (`id`) USING BTREE
+) ENGINE=MyISAM AUTO_INCREMENT=1122 DEFAULT CHARSET=utf8mb4 COMMENT='登录日志';
+
+-- ----------------------------
+-- Records of tp5_xexcel_log2
+-- ----------------------------
 
 -- ----------------------------
 -- Table structure for tp5_xgoods
@@ -1014,8 +1509,8 @@ CREATE TABLE `tp5_xgoods` (
   `selling_price` decimal(11,2) NOT NULL DEFAULT '0.00' COMMENT '商品售价',
   `attr_info` text CHARACTER SET utf8mb4 NOT NULL COMMENT 'json形式保存的属性数据',
   `stock` int(11) NOT NULL DEFAULT '0' COMMENT '库存，注意退货未支付订单时的数目变化',
-  `created_at` timestamp NOT NULL DEFAULT '0000-00-00 00:00:00' COMMENT '商品创建时间',
-  `updated_at` timestamp NOT NULL DEFAULT '0000-00-00 00:00:00' COMMENT '商品更新时间',
+  `created_at` timestamp NOT NULL DEFAULT '1970-01-01 10:00:00' COMMENT '商品创建时间',
+  `updated_at` timestamp NOT NULL DEFAULT '1970-01-01 10:00:00' ON UPDATE CURRENT_TIMESTAMP COMMENT '商品更新时间',
   `str_tags` varchar(300) CHARACTER SET utf8mb4 NOT NULL DEFAULT '' COMMENT '标签，可用于搜索，以逗号隔开',
   `recommend` char(1) CHARACTER SET utf8mb4 NOT NULL DEFAULT '0' COMMENT '推荐标志位',
   `status` tinyint(2) NOT NULL DEFAULT '0' COMMENT '状态 -1：删除 0：未上架 1：已上架 2：预售 ',
@@ -1028,8 +1523,8 @@ CREATE TABLE `tp5_xgoods` (
 -- ----------------------------
 -- Records of tp5_xgoods
 -- ----------------------------
-INSERT INTO `tp5_xgoods` VALUES ('1', '香飘飘奶茶 Meco蜜谷果汁茶', '9', '7', 'cms/images/goods/1/1-1.jpg', '', '香飘飘奶茶 Meco蜜谷果汁茶 400ml 15杯 即饮饮料 整箱', '1', '                    <p>·</p>            ', '50.55', '49.90', '[{\"spec_id\":\"25\",\"spec_info\":[{\"spec_name\":\"桃桃红柚口味400ml 8杯\",\"spec_id\":\"26\"},{\"spec_name\":\"樱桃莓莓口味400ml 8杯\",\"spec_id\":\"27\"},{\"spec_name\":\"金桔柠檬口味400ml 8杯\",\"spec_id\":\"28\"}],\"spec_name\":\"类别【香飘飘奶茶】\"}]', '500', '2019-11-28 10:51:31', '2020-11-10 19:40:38', '', '0', '1');
-INSERT INTO `tp5_xgoods` VALUES ('2', '伊利 金典 纯牛奶250ml*16盒/箱（礼盒装）3.6g乳蛋白 120mg原生高钙', '10', '10', 'cms/images/goods/3/3-1.jpg', '', '光棍节 送男女朋友礼物糖果年货糖果礼物', '2', '<p><span style=\"color: #e03e2d;\">x<strong> dd</strong></span></p>', '120.00', '79.90', '[{\"spec_id\":\"34\",\"spec_info\":[{\"spec_name\":\"【健康有机】有机全脂纯牛奶16盒\",\"spec_id\":\"35\"},{\"spec_name\":\"【不加糖高蛋白】植选植物奶10瓶\",\"spec_id\":\"36\"}],\"spec_name\":\"规格【伊利金典纯牛奶】\"}]', '1499', '2019-03-11 18:03:26', '2020-12-07 21:39:14', '', '0', '1');
+INSERT INTO `tp5_xgoods` VALUES ('1', '香飘飘奶茶 Meco蜜谷果汁茶', '9', '7', 'cms/images/goods/1/1-1.jpg', '', '香飘飘奶茶 Meco蜜谷果汁茶 400ml 15杯 即饮饮料 整箱', '1', '<p>&middot;</p>', '50.55', '49.90', '[{\"spec_id\":\"25\",\"spec_info\":[{\"spec_name\":\"桃桃红柚口味400ml 8杯\",\"spec_id\":\"26\"},{\"spec_name\":\"樱桃莓莓口味400ml 8杯\",\"spec_id\":\"27\"},{\"spec_name\":\"金桔柠檬口味400ml 8杯\",\"spec_id\":\"28\"}],\"spec_name\":\"类别【香飘飘奶茶】\"}]', '501', '2019-11-28 10:51:31', '2020-12-13 08:58:53', '', '0', '1');
+INSERT INTO `tp5_xgoods` VALUES ('2', '伊利 金典 纯牛奶250ml*16盒/箱（礼盒装）3.6g乳蛋白 120mg原生高钙', '10', '10', 'cms/images/goods/3/3-1.jpg', '', '光棍节 送男女朋友礼物糖果年货糖果礼物', '2', '<p><span style=\"color: #e03e2d;\">x<strong> dd</strong></span></p>', '120.00', '79.90', '[{\"spec_id\":\"34\",\"spec_info\":[{\"spec_name\":\"【健康有机】有机全脂纯牛奶16盒\",\"spec_id\":\"35\"},{\"spec_name\":\"【不加糖高蛋白】植选植物奶10瓶\",\"spec_id\":\"36\"}],\"spec_name\":\"规格【伊利金典纯牛奶】\"}]', '1499', '2019-03-11 18:03:26', '2020-12-15 09:32:13', '', '0', '1');
 INSERT INTO `tp5_xgoods` VALUES ('3', '雀巢 Nestle 咖啡奶茶伴侣 风味饮料 无反式脂肪酸 奶油球 奶精球', '9', '8', 'cms/images/goods/2/2-1.jpg', '', '8月产蒙牛纯甄小蛮腰酸牛奶', '2', '                                                            <p style=\"text-align: center;\"><span style=\"font-size: 24px;\"><strong><span style=\"color: #843fa1;\">好营养，喝蒙牛！</span></strong></span></p>                                    ', '32.00', '28.90', '[{\"spec_id\":\"29\",\"spec_name\":\"口味\",\"spec_info\":[{\"spec_id\":31,\"spec_name\":\"原味奶油\"},{\"spec_id\":32,\"spec_name\":\"香浓奶油\"}]},{\"spec_id\":\"30\",\"spec_name\":\"数量\",\"spec_info\":[{\"spec_id\":33,\"spec_name\":\"50粒装\"}]}]', '300', '2019-11-29 09:42:38', '2020-11-10 19:40:24', '', '1', '1');
 INSERT INTO `tp5_xgoods` VALUES ('4', '科沃斯（Ecovacs）地宝T5 Power扫地机器人扫拖一体机智能家用吸尘器激光导航规划全自动洗擦', '18', '2', 'cms/images/goods/4/4-1.jpg', '', '扫拖一体机智能家用吸尘器激光导航规划全自动洗擦拖地机DX93', '2', '                                                            <p><span style=\"color: #843fa1; font-family: Arial, \'microsoft yahei\'; font-size: 16px; font-weight: bold; background-color: #c2e0f4;\">科沃斯（Ecovacs）地宝T5 Power扫地机器人扫拖一体机智能家用吸尘器激光导航规划全自动洗擦拖地机DX93</span></p>                                    ', '3980.00', '3388.00', '[{\"spec_id\":\"37\",\"spec_info\":[{\"spec_name\":\"T8 Power震动擦地抢购\",\"spec_id\":\"38\"},{\"spec_name\":\"沁宝AVA（蓝色）空气净化机器人\",\"spec_id\":\"39\"}],\"spec_name\":\"颜色【科沃斯 Ecovacs 扫地机器人】\"}]', '1180', '2019-03-14 11:03:58', '2020-11-10 19:40:11', '', '0', '1');
 INSERT INTO `tp5_xgoods` VALUES ('5', '索尼（SONY）WF-1000XM3 真无线蓝牙降噪耳机 ', '21', '18', 'cms/images/goods/6/6-0.jpg', '', '真无线蓝牙降噪耳机 智能降噪 触控面板 苹果/安卓手机适用 ', '1', '                    <p>x</p>            ', '1299.00', '1099.00', '[{\"spec_id\":\"4\",\"spec_info\":[{\"spec_name\":\"500ml\",\"spec_id\":\"5\"}],\"spec_name\":\"容量【小瓶】\"},{\"spec_id\":\"7\",\"spec_info\":[{\"spec_name\":\"40度\",\"spec_id\":\"8\"},{\"spec_name\":\"38度\",\"spec_id\":\"9\"}],\"spec_name\":\"酒精度数【白酒类型】\"}]', '4121', '2019-03-18 17:03:17', '2020-11-10 19:39:44', '', '0', '1');
@@ -1076,7 +1571,7 @@ CREATE TABLE `tp5_xnav_menus` (
   PRIMARY KEY (`id`),
   KEY `pk_index` (`id`),
   KEY `index_sel` (`list_order`,`name`) USING BTREE
-) ENGINE=MyISAM AUTO_INCREMENT=155 DEFAULT CHARSET=utf8mb4 COMMENT='菜单导航表';
+) ENGINE=MyISAM AUTO_INCREMENT=159 DEFAULT CHARSET=utf8mb4 COMMENT='菜单导航表';
 
 -- ----------------------------
 -- Records of tp5_xnav_menus
@@ -1150,8 +1645,11 @@ INSERT INTO `tp5_xnav_menus` VALUES ('148', 'ajax 获取购物清单', '146', 'c
 INSERT INTO `tp5_xnav_menus` VALUES ('149', '添加物流单号', '147', 'cms/order/opCourierSn', '/', '1', '0', '2020-11-11 21:15:32', '1');
 INSERT INTO `tp5_xnav_menus` VALUES ('150', '查看物流信息', '147', 'cms/order/lookLogistics', '/', '1', '0', '2020-11-11 20:56:55', '1');
 INSERT INTO `tp5_xnav_menus` VALUES ('151', '24时销量图', '133', 'cms/analyze/timeSale', 'cms/images/icon/cms_time_sale.png', '1', '0', '2020-11-12 14:21:58', '0');
-INSERT INTO `tp5_xnav_menus` VALUES ('152', 'React 学习', '133', 'cms/react/index', 'cms/images/icon/cms_react.png', '1', '3', '2020-11-23 20:02:39', '0');
+INSERT INTO `tp5_xnav_menus` VALUES ('156', 'React 学习', '155', 'cms/expand/react', 'cms/images/icon/cms_react.png', '1', '3', '2020-12-13 10:02:51', '0');
 INSERT INTO `tp5_xnav_menus` VALUES ('153', 'ajax 获取正常状态的分类数据', '50', 'cms/goods/ajaxGetNormalCatList', '/', '1', '0', '2020-11-26 18:34:18', '1');
+INSERT INTO `tp5_xnav_menus` VALUES ('155', '拓展学习', '0', '/', 'cms/images/icon/cms_expand.png', '1', '6', '2020-12-13 10:02:43', '0');
+INSERT INTO `tp5_xnav_menus` VALUES ('157', 'Test 测试页', '155', 'cms/expand/test', 'cms/images/icon/cms_test.png', '1', '0', '2020-12-13 10:08:14', '0');
+INSERT INTO `tp5_xnav_menus` VALUES ('158', '操作Excel 实例', '155', 'cms/expand/opExcel', 'cms/images/icon/nav_default.png', '1', '3', '2020-12-14 14:50:06', '0');
 
 -- ----------------------------
 -- Table structure for tp5_xorder_details
@@ -1173,8 +1671,8 @@ CREATE TABLE `tp5_xorder_details` (
   `courier_sn` varchar(100) CHARACTER SET utf8 NOT NULL DEFAULT '' COMMENT '快递单号',
   `courier_code` varchar(50) CHARACTER SET utf8 NOT NULL DEFAULT '' COMMENT '快递公司编号 (比如：快递鸟对应 )',
   `customer_name` varchar(20) CHARACTER SET utf8 NOT NULL DEFAULT '' COMMENT 'courier_code 为 JD，必填，对应京东的青龙配送编码，也叫商家编码',
-  `created_at` timestamp NOT NULL DEFAULT '0000-00-00 00:00:00',
-  `updated_at` timestamp NOT NULL DEFAULT '0000-00-00 00:00:00' ON UPDATE CURRENT_TIMESTAMP,
+  `created_at` timestamp NOT NULL DEFAULT '1970-01-01 10:00:00',
+  `updated_at` timestamp NOT NULL DEFAULT '1970-01-01 10:00:00' ON UPDATE CURRENT_TIMESTAMP,
   `delivery_time` int(11) NOT NULL DEFAULT '0' COMMENT '发货时间',
   `status` tinyint(2) NOT NULL DEFAULT '0' COMMENT '订单状态 -1：已取消；0：正常订单； 1：已支付; 2：已发货； 3：已收货 4：已评价 ；5：售后申请中 6：售后已完成  ',
   PRIMARY KEY (`id`),
@@ -1214,9 +1712,9 @@ CREATE TABLE `tp5_xorder_infos` (
   `address` varchar(255) NOT NULL DEFAULT '' COMMENT '收货人的详细地址',
   `pay_time` int(11) NOT NULL DEFAULT '0' COMMENT '付款时间',
   `pay_result_json` text NOT NULL COMMENT '支付结果的json数据，比如微信小程序支付后的 返回信息 json形式,方便后期的退款操作',
-  `created_at` timestamp NOT NULL DEFAULT '0000-00-00 00:00:00',
-  `updated_at` timestamp NOT NULL DEFAULT '0000-00-00 00:00:00' ON UPDATE CURRENT_TIMESTAMP,
-  `deleted_at` timestamp NOT NULL DEFAULT '0000-00-00 00:00:00',
+  `created_at` timestamp NOT NULL DEFAULT '1970-01-01 10:00:00',
+  `updated_at` timestamp NOT NULL DEFAULT '1970-01-01 10:00:00' ON UPDATE CURRENT_TIMESTAMP,
+  `deleted_at` timestamp NOT NULL DEFAULT '1970-01-01 10:00:00',
   `order_status` tinyint(2) NOT NULL DEFAULT '0' COMMENT '订单状态 0:未付款, 1:已付款，2：用户删除',
   PRIMARY KEY (`id`),
   UNIQUE KEY `index_order_sn` (`order_sn`) USING BTREE,
@@ -1265,11 +1763,11 @@ INSERT INTO `tp5_xphotos` VALUES ('5', 'cms/images/headshot/user5.png');
 DROP TABLE IF EXISTS `tp5_xpro_dev_logs`;
 CREATE TABLE `tp5_xpro_dev_logs` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
-  `log_content` varchar(100) DEFAULT NULL COMMENT '日志内容',
-  `log_time` timestamp NULL DEFAULT NULL ON UPDATE CURRENT_TIMESTAMP COMMENT '记录时间',
+  `log_content` varchar(100) NOT NULL COMMENT '日志内容',
+  `log_time` timestamp NOT NULL DEFAULT '1970-01-01 10:00:00' ON UPDATE CURRENT_TIMESTAMP COMMENT '记录时间',
   PRIMARY KEY (`id`),
   KEY `pk_index` (`id`) USING BTREE
-) ENGINE=MyISAM AUTO_INCREMENT=66 DEFAULT CHARSET=utf8mb4 COMMENT='管理平台 开发日志表';
+) ENGINE=MyISAM AUTO_INCREMENT=71 DEFAULT CHARSET=utf8mb4 COMMENT='管理平台 开发日志表';
 
 -- ----------------------------
 -- Records of tp5_xpro_dev_logs
@@ -1339,6 +1837,11 @@ INSERT INTO `tp5_xpro_dev_logs` VALUES ('62', 'React-hooks 引入优化', '2020-
 INSERT INTO `tp5_xpro_dev_logs` VALUES ('63', '角色列表 ，React (类实现)替换', '2020-12-02 00:00:00');
 INSERT INTO `tp5_xpro_dev_logs` VALUES ('64', '商品添加、修改页，使用钩子(函数实现)优化 SKU 操作', '2020-12-02 20:39:12');
 INSERT INTO `tp5_xpro_dev_logs` VALUES ('65', '设计 “开发日志表”，并读取日志信息 ', '2020-12-02 20:47:17');
+INSERT INTO `tp5_xpro_dev_logs` VALUES ('66', '提示信息样式风格统一化', '2020-12-13 09:08:27');
+INSERT INTO `tp5_xpro_dev_logs` VALUES ('67', '小程序登录接口开发', '2020-12-13 09:08:27');
+INSERT INTO `tp5_xpro_dev_logs` VALUES ('68', '管理员权限优化', '2020-12-13 09:08:27');
+INSERT INTO `tp5_xpro_dev_logs` VALUES ('69', '后台登录 IAuth优化，密码 hash', '2020-12-13 09:09:04');
+INSERT INTO `tp5_xpro_dev_logs` VALUES ('70', '集成 phpspreadshee 使用类', '2020-12-13 09:30:12');
 
 -- ----------------------------
 -- Table structure for tp5_xskus
@@ -1353,7 +1856,7 @@ CREATE TABLE `tp5_xskus` (
   `selling_price` decimal(11,2) NOT NULL DEFAULT '0.00' COMMENT '商品售价',
   `stock` int(11) NOT NULL DEFAULT '0' COMMENT '库存',
   `sold_num` int(11) NOT NULL DEFAULT '0' COMMENT '销量',
-  `updated_at` timestamp NOT NULL DEFAULT '0000-00-00 00:00:00' ON UPDATE CURRENT_TIMESTAMP COMMENT '创建时间',
+  `updated_at` timestamp NOT NULL DEFAULT '1970-01-01 10:00:00' ON UPDATE CURRENT_TIMESTAMP COMMENT '创建时间',
   `sku_status` tinyint(2) NOT NULL DEFAULT '1' COMMENT '状态   -1：删除（失效）；0: 下架(未上架)；1:上架',
   PRIMARY KEY (`sku_id`),
   KEY `index_sel` (`goods_id`,`sku_id`,`spec_name`) USING BTREE
@@ -1362,13 +1865,13 @@ CREATE TABLE `tp5_xskus` (
 -- ----------------------------
 -- Records of tp5_xskus
 -- ----------------------------
-INSERT INTO `tp5_xskus` VALUES ('84', '1', 'cms/images/goods/1/1-1.jpg', '26', '桃桃红柚口味400ml 8杯', '49.90', '100', '3', '2020-11-10 19:40:38', '1');
-INSERT INTO `tp5_xskus` VALUES ('85', '1', 'cms/images/goods/1/1-2.jpg', '27', '樱桃莓莓口味400ml 8杯', '49.90', '200', '5', '2020-11-10 19:40:38', '1');
-INSERT INTO `tp5_xskus` VALUES ('86', '1', 'cms/images/goods/1/1-3.jpg', '28', '金桔柠檬口味400ml 8杯', '46.90', '200', '8', '2020-11-10 19:40:38', '0');
+INSERT INTO `tp5_xskus` VALUES ('84', '1', 'cms/images/goods/1/1-1.jpg', '26', '桃桃红柚口味400ml 8杯', '49.90', '99', '4', '2020-12-13 08:58:53', '1');
+INSERT INTO `tp5_xskus` VALUES ('85', '1', 'cms/images/goods/1/1-2.jpg', '27', '樱桃莓莓口味400ml 8杯', '49.90', '202', '5', '2020-12-13 08:58:53', '1');
+INSERT INTO `tp5_xskus` VALUES ('86', '1', 'cms/images/goods/1/1-3.jpg', '28', '金桔柠檬口味400ml 8杯', '46.90', '200', '8', '2020-12-13 08:58:53', '0');
 INSERT INTO `tp5_xskus` VALUES ('87', '3', 'cms/images/goods/2/2-1.jpg', '31-33', '原味奶油,50粒装', '28.90', '200', '121', '2020-12-02 15:18:09', '1');
 INSERT INTO `tp5_xskus` VALUES ('88', '3', 'cms/images/goods/2/2-2.jpg', '32-33', '香浓奶油,50粒装', '39.90', '100', '2', '2020-12-02 15:18:15', '1');
-INSERT INTO `tp5_xskus` VALUES ('89', '2', 'cms/images/goods/3/3-1.jpg', '35', '【健康有机】有机全脂纯牛奶16盒', '94.90', '290', '1212', '2020-12-07 21:39:14', '1');
-INSERT INTO `tp5_xskus` VALUES ('90', '2', 'cms/images/goods/3/3-2.jpg', '36', '【不加糖高蛋白】植选植物奶10瓶', '49.90', '1209', '232', '2020-12-07 21:39:14', '1');
+INSERT INTO `tp5_xskus` VALUES ('89', '2', 'cms/images/goods/3/3-1.jpg', '35', '【健康有机】有机全脂纯牛奶16盒', '94.90', '290', '1212', '2020-12-15 09:32:13', '1');
+INSERT INTO `tp5_xskus` VALUES ('90', '2', 'cms/images/goods/3/3-2.jpg', '36', '【不加糖高蛋白】植选植物奶10瓶', '49.90', '1209', '232', '2020-12-15 09:32:13', '1');
 INSERT INTO `tp5_xskus` VALUES ('91', '4', 'cms/images/goods/4/4-1.jpg', '38', 'T8 Power震动擦地抢购', '3399.00', '1000', '12', '2020-11-10 19:40:11', '1');
 INSERT INTO `tp5_xskus` VALUES ('92', '4', 'cms/images/goods/4/4-2.jpg', '39', '沁宝AVA（蓝色）空气净化机器人', '6999.00', '180', '3', '2020-11-10 19:40:11', '1');
 INSERT INTO `tp5_xskus` VALUES ('93', '6', 'cms/images/goods/5/5-1.jpg', '41', '【经典爆款】小度音箱旗舰版', '129.00', '112', '21', '2020-11-10 19:40:00', '1');
@@ -1438,7 +1941,7 @@ CREATE TABLE `tp5_xtoday_words` (
   `from` varchar(255) CHARACTER SET utf8 COLLATE utf8_unicode_ci NOT NULL DEFAULT '' COMMENT '出处',
   `picture` varchar(255) CHARACTER SET utf8 COLLATE utf8_unicode_ci NOT NULL COMMENT '插图',
   `status` tinyint(4) NOT NULL DEFAULT '1' COMMENT '状态，1：正常，-1：删除',
-  `updated_at` timestamp NOT NULL DEFAULT '0000-00-00 00:00:00' ON UPDATE CURRENT_TIMESTAMP COMMENT '更新时间',
+  `updated_at` timestamp NOT NULL DEFAULT '1970-01-01 10:00:00' ON UPDATE CURRENT_TIMESTAMP COMMENT '更新时间',
   `images_str` varchar(500) NOT NULL COMMENT '多图列表，逗号隔开，建议三张以内',
   PRIMARY KEY (`id`),
   KEY `index_sel` (`id`,`word`)
@@ -1452,8 +1955,8 @@ INSERT INTO `tp5_xtoday_words` VALUES ('2', '想和你重新认识一次 从你�
 INSERT INTO `tp5_xtoday_words` VALUES ('3', '我是一只雁，你是南方云烟。但愿山河宽，相隔只一瞬间.                ', '秦时明月', 'home/images/ps3.png', '1', '2020-06-02 19:57:08', '');
 INSERT INTO `tp5_xtoday_words` VALUES ('4', '人老了的好处，就是可失去的东西越来越少了.', '哈尔的移动城堡', 'home/images/ps4.png', '1', '2020-06-02 19:57:10', '');
 INSERT INTO `tp5_xtoday_words` VALUES ('5', '到底要怎么才能证明自己成长了 那种事情我也不知道啊 但是只要那一抹笑容尚存 我便心无旁骛 ', '声之形', 'home/images/ps5.png', '1', '2020-11-10 19:57:58', '');
-INSERT INTO `tp5_xtoday_words` VALUES ('6', '你觉得被圈养的鸟儿为什么无法自由地翱翔天际？是因为鸟笼不是属于它的东西', '东京食尸鬼A', 'home/images/ps6.png', '1', '2020-12-10 11:41:59', '');
-INSERT INTO `tp5_xtoday_words` VALUES ('7', '我手里拿着刀，没法抱你。我放下刀，没法保护你！！', '死神', 'home/images/ps7.png', '1', '2020-12-08 11:08:49', '');
+INSERT INTO `tp5_xtoday_words` VALUES ('6', '你觉得被圈养的鸟儿为什么无法自由地翱翔天际？是因为鸟笼不是属于它的东西！', '东京食尸鬼A', 'home/images/ps6.png', '1', '2020-12-12 11:27:36', '');
+INSERT INTO `tp5_xtoday_words` VALUES ('7', '我手里拿着刀，没法抱你。我放下刀，没法保护你！！', '死神', 'home/images/ps7.png', '1', '2020-12-12 11:04:14', '');
 INSERT INTO `tp5_xtoday_words` VALUES ('8', '不管前方的路有多苦，只要走的方向正确，不管多么崎岖不平，都比站在原地更接近幸福!', '千与千寻', 'home/images/ps8.png', '-1', '2020-09-08 15:33:00', '');
 
 -- ----------------------------
@@ -1486,5 +1989,5 @@ INSERT INTO `tp5_xusers` VALUES ('2', '大熊', 'https://wx.qlogo.cn/mmopen/vi_3
 INSERT INTO `tp5_xusers` VALUES ('3', '红猪', 'https://wx.qlogo.cn/mmopen/vi_32/Q0j4TwGTfTKGCoCBnXlicTo9DHHJKNgKjiauCXUzVCGRFibIOnEJD4EFibsyLaGFZRKwN58tw5HlUQWTufRKOLjVzQ/132', '15577888878', '2', '1555738881', '0', '0', '0', '1', '', '');
 INSERT INTO `tp5_xusers` VALUES ('4', '卡卡西', 'https://wx.qlogo.cn/mmopen/vi_32/Q0j4TwGTfTLr5yvbicZQjpfvlicja0mBfaSRG4ibnRX3ibUq9Rak1QvzOV8YC6qKeyrapftlSulZdo7PKpGvzHibwag/132', '15112322322', '1', '1555739036', '1', '0', '50', '2', '', '');
 INSERT INTO `tp5_xusers` VALUES ('5', '佐罗', 'https://wx.qlogo.cn/mmopen/vi_32/Q0j4TwGTfTIxAIXQL4JxsoBWf0GP9HFu0RjIPoPymPjuK0qia7ibrI0x34gmvPuZwo6iaXbFkb875b76Kr1CDicZdQ/132', '18988777787', '1', '1555748309', '1', '0', '0', '0', '', '');
-INSERT INTO `tp5_xusers` VALUES ('6', '龙溪', 'https://wx.qlogo.cn/mmhead/dbmbvl7UYS8hcRelNJTkocl0MhM0LLmDlApB27KHLlw/132', '18788777788', '0', '1555748365', '0', '0', '0', '1', '', '');
+INSERT INTO `tp5_xusers` VALUES ('6', '龙溪', 'https://wx.qlogo.cn/mmhead/dbmbvl7UYS8hcRelNJTkocl0MhM0LLmDlApB27KHLlw/132', '18788777788', '0', '1555748365', '0', '0', '0', '0', '', '');
 INSERT INTO `tp5_xusers` VALUES ('7', '安若', 'https://wx.qlogo.cn/mmopen/vi_32/Q0j4TwGTfTIE3lcO5EBP17qaibIT5wwuLxKk5Ccb4anTiaRSKgjqmyPchZ1MkxfkgtOM4V0u5yNytVorqhsKDn2Q/132', '16888777787', '1', '1555748448', '0', '0', '0', '0', '', '');

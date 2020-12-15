@@ -136,8 +136,7 @@ class Xadmins extends BaseModel
                 'status' => isset($input['status'])?intval($input['status']):0,
                 'content' => isset($input['content'])?$input['content']:'',
             ];
-            $tokenData = ['__token__' => isset($input['__token__']) ? $input['__token__'] : '',];
-            $validateRes = $this->validate($this->validate, $addData, $tokenData);
+            $validateRes = $this->validate($this->validate, $addData);
             if ($validateRes['tag']) {
                 $addData['password'] = IAuth::setAdminUsrPassword($input['password']);
                 $tag = $this->allowField(true)->save($addData);
@@ -164,8 +163,7 @@ class Xadmins extends BaseModel
             'picture' => isset($input['picture'])?$input['picture']:'',
             'content' => isset($input['content'])?$input['content']:'',
         ];
-        $tokenData = ['__token__' => isset($input['__token__']) ? $input['__token__'] : '',];
-        $validateRes = $this->validate($this->validate, $saveData, $tokenData, 'cms_admin');
+        $validateRes = $this->validate($this->validate, $saveData, 'cms_admin');
         if ($validateRes['tag']) {
             if ($cmsAID && ($cmsAID != $id)) {
                 $message = "您没有权限进行修改";
@@ -222,14 +220,13 @@ class Xadmins extends BaseModel
                     'status' => isset($input['status'])?intval($input['status']):0,
                     'content' => $input['content'],
                 ];
-                $tokenData = ['__token__' => isset($input['__token__']) ? $input['__token__'] : '',];
                 if ($input['password']) {
                     //TODO 如果输入了新密码
                     $saveData['password'] = $input['password'];
                     $saveData['re_password'] = $input['re_password'];
-                    $validateRes = $this->validate($this->validate, $saveData, $tokenData);
+                    $validateRes = $this->validate($this->validate, $saveData);
                 } else {
-                    $validateRes = $this->validate($this->validate, $saveData, $tokenData, 'edit_admin_no_pwd');
+                    $validateRes = $this->validate($this->validate, $saveData, 'edit_admin_no_pwd');
                 }
 
                 if ($validateRes['tag']) {

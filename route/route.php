@@ -79,7 +79,11 @@ Route::any('cms/login/logout','cms/login/logout');
 Route::post('cms/login/ajaxLogin','cms/login/ajaxLogin');
 Route::post('cms/login/ajaxCheckLoginStatus','cms/login/ajaxCheckLoginStatus');
 
-Route::any('cms/react/index','cms/react/index');
+//拓展学习管理
+Route::any('cms/expand/react','cms/expand/react');
+Route::any('cms/expand/test','cms/expand/test');
+Route::any('cms/expand/opExcel','cms/expand/opExcel');
+
 /**
  * 网站业务
  */

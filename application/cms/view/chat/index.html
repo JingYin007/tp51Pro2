@@ -221,12 +221,13 @@
      * 发送---具体处理方法
      */
     function To_send_message(message, tag,content) {
+        let appendHtml;
+
         if (tag == 'right') {
-            var appendHtml =
-                "<div class=\"chat-text section-right flex\">\n" +
-                "<span class=\"text\"><i class=\"icon icon-sanjiao3 t-32\"></i>" + replace_em(content) + "</span>\n" +
-                "<span class=\"char-img\" style=\"background-image: url(" + from_head + ")\"></span>\n" +
-                "</div>";
+            appendHtml = "<div class=\"chat-text section-right flex\">\n" +
+            "<span class=\"text\"><i class=\"icon icon-sanjiao3 t-32\"></i>" + replace_em(content) + "</span>\n" +
+            "<span class=\"char-img\" style=\"background-image: url(" + from_head + ")\"></span>\n" +
+            "</div>";
             if(isOnlineCurrUser()){
                 $(".chat-content").append(appendHtml);
                 ws.send(message);
@@ -237,10 +238,9 @@
                 dialog.tip("您已离线,重新连接中...");
             }
         }else {
-            var appendHtml =
-                "<div class=\"chat-text section-left flex\">\n" +
-                "<span class=\"char-img\" style=\"background-image: url("+to_head+")\"></span>\n" +
-                "<span class=\"text\"><i class=\"icon icon-sanjiao4 t-32\"></i>"+replace_em(content)+"</span>\n" +
+            appendHtml = "<div class=\"chat-text section-left flex\">\n" +
+                "<span class=\"char-img\" style=\"background-image: url(" + to_head + ")\"></span>\n" +
+                "<span class=\"text\"><i class=\"icon icon-sanjiao4 t-32\"></i>" + replace_em(content) + "</span>\n" +
                 "</div>";
             $(".chat-content").append(appendHtml);
         }
@@ -249,7 +249,7 @@
      * 处理发送人的未读消息
      */
     function changeNoReadLogs() {
-        var URL = "{:url('cms/chat/changeNoRead')}";
+        const URL = "{:url('cms/chat/changeNoRead')}";
         $.post(
             URL,
             {from_id: from_id, to_id: to_id},
@@ -261,7 +261,7 @@
      * 加载聊天记录
      */
     function  message_load() {
-        var URL = "{:url('cms/chat/load')}";
+        const URL = "{:url('cms/chat/load')}";
         $.post(
             URL,
             {from_id: from_id, to_id: to_id},

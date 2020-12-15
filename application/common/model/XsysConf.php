@@ -70,7 +70,7 @@ class XsysConf extends Model
                         'role_id' => 1,
                     ]);
             }
-            $opMessage = $opTag?"更新成功":"Sorry，请稍后重试！";
+            $opMessage = $opTag?"配置更新成功":"Sorry，请稍后重试！";
 
         }
         return ['tag' => $opTag,'message' => $opMessage];
@@ -142,9 +142,7 @@ class XsysConf extends Model
      */
     public function getIpWhites(){
         $res = Db::name('xipWhites')
-            ->field('ip,floor(rand()*6) rand')
-            ->where('status',1)
-            ->select();
+            ->field('ip,floor(rand()*6) rand')->where('status',1)->select();
         return isset($res)? $res:[];
     }
 

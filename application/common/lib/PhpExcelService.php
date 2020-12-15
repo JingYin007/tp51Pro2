@@ -7,7 +7,13 @@
  */
 namespace app\common\lib;
 
-class MTPhpExcel
+/**
+ * Class PhpExcelService
+ * 毕竟 PHPExcel 官方已经不再维护
+ * 如果进行 Excel 相关操作，建议移步：PHPSpreadsheet
+ * @package app\common\lib
+ */
+class PhpExcelService
 {
     /**
      * 测试方法 1

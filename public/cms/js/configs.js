@@ -1,7 +1,7 @@
 layui.use(['upload','form'], function () {
-    var form = layui.form;
+    const form = layui.form;
     form.on('select(sel_type)', function(data){
-        var sel_type = data.value;
+        const sel_type = data.value;
         $(".div-config-type").hide();
         $(".div-config-typeFor-"+sel_type).show();
     });

@@ -74,8 +74,7 @@ class Goods extends CmsBase
     public function add(Request $request)
     {
         if ($request->isPost()) {
-            $input = $request->post();
-            $opRes = $this->model->addGoods($input);
+            $opRes = $this->model->addGoods($request->post());
             return showMsg($opRes['tag'], $opRes['message']);
         } else {
             $categoryList = $this->categoryModel->getCategorySelectListFromJsonFile();

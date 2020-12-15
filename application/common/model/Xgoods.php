@@ -130,10 +130,9 @@ class Xgoods extends BaseModel
     {
         $opTag = isset($input['tag']) ? $input['tag'] : 'edit';
         if ($opTag == 'del') {
-            $status = $this->where('goods_id', $id)
-                ->update(['status' => -1]);
-            $validateRes = ['tag' => 1, 'message' => '记录删除成功'];
-            insertCmsOpLogs($status,'GOODS',$id,'删除商品');
+            $delTag = $this->where('goods_id', $id)->update(['status' => -1]);
+            $validateRes = ['tag' => $delTag, 'message' => $delTag?'记录删除成功':'Sorry,商品删除失败'];
+            insertCmsOpLogs($delTag,'GOODS',$id,'删除商品');
         } else {
             $saveData = [
                 'goods_name' => isset($input['goods_name']) ? $input['goods_name'] : '',
@@ -150,16 +149,13 @@ class Xgoods extends BaseModel
                 'stock' => isset($input['stock']) ? intval($input['stock']) : 0,
                 'status' => isset($input['status']) ? intval($input['status']) : 0,
                 'recommend' => isset($input['recommend']) ? 1 : 0,
-                'updated_at' => date('Y-m-d H:i:s', time()),
+                'updated_at' => date("Y-m-d H:i:s",time())
             ];
-            $tokenData = ['__token__' => isset($input['__token__']) ? $input['__token__'] : '',];
-            $validateRes = $this->validate($this->validate, $saveData, $tokenData);
+            $validateRes = $this->validate($this->validate, $saveData);
             if ($validateRes['tag']) {
-                $saveTag = $this
-                    ->where('goods_id', $id)
-                    ->update($saveData);
+                $saveTag = $this->where('goods_id', $id)->update($saveData);
                 $validateRes['tag'] = $saveTag;
-                $validateRes['message'] = $saveTag ? '数据修改成功' : '数据无变动';
+                $validateRes['message'] = $saveTag ? '数据修改成功' : 'Sorry，数据无变动';
                 if ($saveTag) {
                     //TODO 此时进行 sku库存信息的上传
                     $sku_arr = isset($input['sku_arr']) ? $input['sku_arr'] : [];
@@ -219,8 +215,7 @@ class Xgoods extends BaseModel
             'created_at' => date('Y-m-d H:i:s', time()),
             'updated_at' => date('Y-m-d H:i:s', time()),
         ];
-        $tokenData = ['__token__' => isset($data['__token__']) ? $data['__token__'] : '',];
-        $validateRes = $this->validate($this->validate, $addData, $tokenData);
+        $validateRes = $this->validate($this->validate, $addData);
         if ($validateRes['tag']) {
             $tag = $this->insert($addData);
             $validateRes['tag'] = $tag;

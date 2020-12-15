@@ -3,6 +3,9 @@
 namespace app\common\model;
 
 use app\common\validate\Xconfig;
+use think\db\exception\DataNotFoundException;
+use think\db\exception\ModelNotFoundException;
+use think\exception\DbException;
 use \think\Model;
 
 /**
@@ -24,18 +27,19 @@ class Xconfigs extends BaseModel
     /**
      * 获取全部可修改状态的 数据
      * @param int $id
-     * @return array|null|\PDOStatement|string|Model
+     * @return array|string|Model
+     * @throws DataNotFoundException
+     * @throws ModelNotFoundException
+     * @throws DbException
      */
     public function getConfigByID($id = 0)
     {
         $res = $this
-            ->field('*')
+            ->field('id,title,tag,conf_type,input_type,value,tip,list_order,status')
             ->where('id', $id)
             ->find();
-        if ($res){
-            $res['value'] = imgToServerView($res['value']);
-        }
-        return $res ? $res : [];
+        if (isset($res)){$res['img_full'] = ($res['input_type']==="image")? imgToServerView($res['value']):"/";}
+        return $res ? $res->toArray() : [];
     }
 
     /**
@@ -60,9 +64,9 @@ class Xconfigs extends BaseModel
     public function getEachTypeData()
     {
         $res = $this
-            ->field("*,count(id) count")
+            ->field("count(id) count,input_type")
             ->where([["conf_type", '=', 0],["status", '=', 0]])
-            ->group("input_type")
+            ->group(["input_type",'id'])
             ->select();
         $res  = isset($res) ? $res->toArray() : [];
         $arrCount = ['WB' => 0, 'KG' => 0, 'TP' => 0];
@@ -75,7 +79,7 @@ class Xconfigs extends BaseModel
                 case 'checkbox':
                     $arrCount['KG'] = $value['count'];
                     break;
-                case 'button':
+                case 'image':
                     $arrCount['TP'] = $value['count'];
                     break;
                 default:
@@ -100,7 +104,7 @@ class Xconfigs extends BaseModel
             $where[] = ['title|tag', 'like', '%' . $search . '%'];
         }
         $res = $this
-            ->field('*')
+            ->field('id,title,tag,conf_type,input_type,value,tip,list_order,status,add_time')
             ->where($where)
             ->order(['list_order' => 'asc', 'id' => 'desc'])
             ->limit($limit * ($curr_page - 1), $limit)
@@ -153,7 +157,7 @@ class Xconfigs extends BaseModel
         }elseif ($input_type == "text"){
             $value = isset($data['value_text']) ? $data['value_text'] : '';
         }else{
-            $value = isset($data['value_button']) ? $data['value_button'] : '';
+            $value = isset($data['value_image']) ? $data['value_image'] : '';
         }
         $addData = [
             'title' => isset($data['title']) ? $data['title'] : '',
@@ -164,8 +168,7 @@ class Xconfigs extends BaseModel
             'tip' => isset($data['tip']) ? $data['tip'] : '',
             'add_time' => date("Y-m-d H:i:s", time()),
         ];
-        $tokenData = ['__token__' => isset($data['__token__']) ? $data['__token__'] : '',];
-        $validateRes = $this->validate($this->validate, $addData, $tokenData);
+        $validateRes = $this->validate($this->validate, $addData);
         if ($validateRes['tag']) {
             $insertGetId = $this->allowField(true)->insertGetId($addData);
             $validateRes['tag'] = $insertGetId ? 1 : 0;
@@ -185,10 +188,8 @@ class Xconfigs extends BaseModel
         $opTag = isset($data['tag']) ? $data['tag'] : 'edit';
         $tag = 0;
         if ($opTag == 'del') {
-            $tag = $this
-                ->where('id', $id)
-                ->update(['status' => -1]);
-            $validateRes['message'] = $tag ? '数据删除成功' : '已删除';
+            $tag = $this->where('id', $id)->update(['status' => -1]);
+            $validateRes['message'] = $tag ? '数据删除成功' : 'Sorry，删除失败！';
         } else {
             $input_type = isset($data['input_type']) ? $data['input_type'] : 'text';
 
@@ -198,7 +199,7 @@ class Xconfigs extends BaseModel
             }elseif ($input_type == "text"){
                 $value = isset($data['value_text']) ? $data['value_text'] : '';
             }else{
-                $value = isset($data['value_button']) ? $data['value_button'] : '';
+                $value = isset($data['value_image']) ? $data['value_image'] : '';
             }
 
             $saveData = [
@@ -210,13 +211,10 @@ class Xconfigs extends BaseModel
                 'list_order' => isset($data['list_order']) ? intval($data['list_order']) : 0,
                 'tip' => isset($data['tip']) ? $data['tip'] : '',
             ];
-            $tokenData = ['__token__' => isset($data['__token__']) ? $data['__token__'] : '',];
-            $validateRes = $this->validate($this->validate, $saveData, $tokenData);
+            $validateRes = $this->validate($this->validate, $saveData);
 
             if ($validateRes['tag']) {
-                $tag = $this
-                    ->where('id', $id)
-                    ->update($saveData);
+                $tag = $this->where('id', $id)->update($saveData);
                 $validateRes['message'] = $tag ? '配置修改成功' : 'Sorry，数据无变动';
             }
         }

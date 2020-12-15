@@ -85,9 +85,7 @@ class XspecInfos extends BaseModel
             'list_order' => intval($data['list_order']),
             'mark_msg' => isset($data['mark_msg']) ? $data['mark_msg'] : '',
         ];
-
-        $tokenData = ['__token__' => isset($data['__token__']) ? $data['__token__'] : '',];
-        $validateRes = $this->validate($this->validate, $addData, $tokenData);
+        $validateRes = $this->validate($this->validate, $addData);
         if ($validateRes['tag']) {
             $tag = $this->insert($addData);
             $validateRes['tag'] = $tag;
@@ -122,12 +120,9 @@ class XspecInfos extends BaseModel
     {
         $opTag = isset($input['tag']) ? $input['tag'] : 'edit';
         if ($opTag == 'del') {
-            $this
-                ->where('spec_id', $id)
-                ->update(['status' => -1]);
-            $validateRes = ['tag' => 1, 'message' => '数据删除成功'];
+            $delTag = $this->where('spec_id', $id)->update(['status' => -1]);
+            $validateRes = ['tag' => $delTag, 'message' => $delTag?'规格删除成功':'Sorry,规格删除失败！'];
         } else {
-            $tokenData = ['__token__' => isset($input['__token__']) ? $input['__token__'] : '',];
             if ($level == 1){
                 $saveData = [
                     'spec_name' => isset($input['spec_name']) ? $input['spec_name'] : '',
@@ -135,7 +130,7 @@ class XspecInfos extends BaseModel
                     'list_order' => intval($input['list_order']),
                     'mark_msg' => isset($input['mark_msg']) ? $input['mark_msg'] : '',
                 ];
-                $validateRes = $this->validate($this->validate, $saveData, $tokenData);
+                $validateRes = $this->validate($this->validate, $saveData);
             }else{
                 $saveData = [
                     'spec_name' => isset($input['spec_name']) ? $input['spec_name'] : '',
@@ -146,11 +141,9 @@ class XspecInfos extends BaseModel
             }
 
             if ($validateRes['tag']) {
-                $saveTag = $this
-                    ->where('spec_id', $id)
-                    ->update($saveData);
+                $saveTag = $this->where('spec_id', $id)->update($saveData);
                 $validateRes['tag'] = $saveTag;
-                $validateRes['message'] = $saveTag ? '数据更新成功' : '数据无变动';
+                $validateRes['message'] = $saveTag ? '数据更新成功' : 'Sorry，数据无变动';
             }
         }
         return $validateRes;

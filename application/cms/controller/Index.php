@@ -128,6 +128,4 @@ class Index extends Controller
             return showMsg(0, "Sorry,请求不合法！");
         }
     }
-
-
 }

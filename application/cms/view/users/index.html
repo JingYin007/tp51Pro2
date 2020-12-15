@@ -126,16 +126,18 @@
      * ajax 进行服务请求修改审核状态
      */
     function ajaxUpdateUserStatus(user_id, user_status,updateText) {
-        var toUrl = "{:url('cms/users/ajaxUpdateUserStatus')}";
-        var postData = {user_id: user_id, 'user_status': user_status};
+        const toUrl = "{:url('cms/users/ajaxUpdateUserStatus')}";
+        const postData = {user_id: user_id, 'user_status': user_status};
         $.post(
             toUrl,
             postData,
             function (res) {
                 if(res.status == 1){
+                    dialog.tip_success(res.message);
                     $(".span-user-status-"+user_id).html(updateText);
+                }else {
+                    dialog.tip_error(res.message);
                 }
-                layer.msg(res.message);
             }, 'JSON'
         )
     }

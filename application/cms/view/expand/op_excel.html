@@ -1,0 +1,82 @@
+{extend name="layouts/cms"}
+
+{block name='body-content'}
+
+
+<div class="layui-inline" style="float: right;margin: 30px 10px">
+    <button type="button" onclick="downloadExcel()"
+            class="layui-btn layui-btn-danger">下载Excel表格</button>
+
+    <button type="button"
+            class="layui-btn layui-btn-warm btn_upload_excel">导入Excel文件</button>
+</div>
+<form class="form-download" action="{url('cms/expand/opExcel')}" method="post">
+    <input type="hidden" name="op_tag" value="down">
+</form>
+
+<table class="layui-table table-body" lay-even="" lay-skin="row">
+    <colgroup>
+        <col width="5%">
+        <col width="12%">
+        <col width="10%">
+        <col width="25%">
+        <col width="10%">
+        <col width="20%">
+    </colgroup>
+    <thead>
+    <tr>
+        <th>商品名称</th>
+        <th>thumbnail</th>
+        <th>产地</th>
+        <th>售价</th>
+        <th>状态</th>
+    </tr>
+    </thead>
+
+    <tbody class="table-tbody-normal layui-form">
+        {volist name="loginList" id="vo"}
+        <tr class="tr-normal">
+            <td>{$vo['goods_name']}</td>
+            <td>{$vo['thumbnail']}</td>
+            <td>{$vo['place']}</td>
+            <td>{$vo['reference_price']}</td>
+            <td>{$vo['status']}</td>
+        </tr>
+        {/volist}
+    </tbody>
+</table>
+<div id="demo2-1"></div>
+
+<style>
+
+</style>
+{/block}
+
+{block name='single-content'}
+<script>
+    layui.use('upload', function () {
+        const upload = layui.upload;
+        //普通图片上传
+        upload.render({
+            elem: '.btn_upload_excel'
+            , url: "{:url('cms/expand/opExcel')}"
+            , accept:'file' //上传文件类型
+            , done: function (res) {
+                //如果上传成功
+                layer.msg(res.message);
+            }
+            , error: function () {
+                //演示失败状态，并实现重传
+                return layer.msg('上传失败,请重新上传');
+            }
+        });
+    });
+
+    function downloadExcel(){
+        $(".form-download").submit();
+        layer.msg('数据下载中...',{timer:3500})
+    }
+
+
+</script>
+{/block}

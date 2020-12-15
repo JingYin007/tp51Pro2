@@ -5,10 +5,10 @@ $(document).ready(function () {
      * 左侧导航栏 显示与隐藏的设置
      */
     $(".layui-header .menu-switch").click(function () {
-        var leftView = $(".layui-bg-black");
-        var hidden = leftView.is(':hidden');
-        var layui_body = $(".layui-layout-admin .layui-body");
-        var layui_footer = $(".layui-layout-admin .layui-footer");
+        const leftView = $(".layui-bg-black");
+        const hidden = leftView.is(':hidden');
+        const layui_body = $(".layui-layout-admin .layui-body");
+        const layui_footer = $(".layui-layout-admin .layui-footer");
         leftView.animate({width: 'toggle'});
         if(hidden){
             //如果当前 左侧导航栏是隐藏状态
@@ -25,17 +25,17 @@ $(document).ready(function () {
      * 导航菜单栏 触发事件
      */
     $(".layui-side-scroll .a-to-Url").click(function () {
-        var action = $(this).attr('action');
-        var nav_menu_id = $(this).attr('nav_menu_id');
+        const action = $(this).attr('action');
+        const nav_menu_id = $(this).attr('nav_menu_id');
         //TODO 此处进行判断当前用户是否有权限进入
-        var checkUrl = $("#check_login").attr('url');
-        var loginUrl = $("#check_login").attr('login');
-        var tag_token = $("#check_login").attr('tag_token');
+        const checkUrl = $("#check_login").attr('url');
+        const loginUrl = $("#check_login").attr('login');
+        const tag_token = $("#check_login").attr('tag_token');
         $.post(
             checkUrl,
             {'_token':tag_token,'nav_menu_id':nav_menu_id},
             function (result) {
-                if(result.status == 1){
+                if(result.status === 1){
                     $(".layui-body .iframe-body").attr('src',action);
                 }else{
                     //失败
@@ -75,7 +75,7 @@ $(document).ready(function () {
 
     // 全屏切换
     $("#FullScreen").click(function () {
-        var fullscreenElement =
+        const fullscreenElement =
             document.fullscreenElement ||
             document.mozFullScreenElement ||
             document.webkitFullscreenElement;
@@ -92,21 +92,21 @@ $(document).ready(function () {
     });
 
     $(".mul-to-Url").click(function () {
-        var all_nav = $('.layui-nav-child').parent();
+        const all_nav = $('.layui-nav-child').parent();
         all_nav.removeClass('layui-nav-itemed');
         $(this).parent().parent().parent().addClass('layui-nav-itemed');
     });
     $(".single-to-Url").click(function () {
-        var all_nav = $('.layui-nav-item');
+        const all_nav = $('.layui-nav-item');
         all_nav.removeClass('layui-nav-itemed');
     });
 
 
     $(".form-opAdmins .input-pwd-re").blur(function () {
-        var pwd = $(".form-opAdmins .input-pwd").val();
-        var pwd_re = $(".form-opAdmins .input-pwd-re").val();
-        var tip = '';
-        if ( pwd!='' && (pwd == pwd_re)){
+        const pwd = $(".form-opAdmins .input-pwd").val();
+        const pwd_re = $(".form-opAdmins .input-pwd-re").val();
+        let tip = '';
+        if ( pwd!=='' && (pwd === pwd_re)){
             $(".span-dot").addClass('layui-bg-orange');
             tip = '两次密码输入一致！';
         }else {
@@ -152,16 +152,16 @@ function lockPage(){
  */
 function slide_leftView(viewTag,tag) {
     if (tag){
-        viewTag.animate({left:parseInt(viewTag.css('left'),200) == 200 ? + viewTag.outerWidth() : 200});
+        viewTag.animate({left:parseInt(viewTag.css('left'),200) === 200 ? + viewTag.outerWidth() : 200});
     }else {
-        viewTag.animate({left:parseInt(viewTag.css('left'),10) == 0 ? - viewTag.outerWidth() : 0});
+        viewTag.animate({left:parseInt(viewTag.css('left'),10) === 0 ? - viewTag.outerWidth() : 0});
     }
 }
 
 
 // 进入全屏：
 function entryFullScreen() {
-    var docE = document.documentElement;
+    const docE = document.documentElement;
     if (docE.requestFullScreen) {
         docE.requestFullScreen();
     } else if (docE.mozRequestFullScreen) {
@@ -173,7 +173,7 @@ function entryFullScreen() {
 
 // 退出全屏
 function exitFullScreen() {
-    var docE = document;
+    const docE = document;
     if (docE.exitFullscreen) {
         docE.exitFullscreen();
     } else if (docE.mozCancelFullScreen) {
@@ -191,13 +191,13 @@ function exitFullScreen() {
  * @constructor
  */
 function ToOpenPopups(op_url,title,width,height) {
-    var widthTag = width?width:'70%';
-    var heightTag = height?height:'65%';
-    var openPopus = layer.open({
+    const widthTag = width ? width : '70%';
+    const heightTag = height ? height : '65%';
+    const openPopup = layer.open({
         type: 2,
-        shade:0.61,
-        shadeClose:true,
-        anim:4,
+        shade: 0.61,
+        shadeClose: true,
+        anim: 4,
         moveOut: true,
         title: title,
         maxmin: true, //开启最大化最小化按钮
@@ -205,7 +205,7 @@ function ToOpenPopups(op_url,title,width,height) {
         content: op_url, //可以出现滚动条
         //content: [op_url, 'no'], //如果你不想让iframe出现滚动条
     });
-    layer.style(openPopus, {
+    layer.style(openPopup, {
         background: '#EEEEEE',
     });
 }

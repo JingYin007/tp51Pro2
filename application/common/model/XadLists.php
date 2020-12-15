@@ -97,12 +97,11 @@ class XadLists extends BaseModel
             'start_time' => isset($data['start_time'])?$data['start_time']:'',
             'end_time' => isset($data['end_time'])?$data['end_time']:'',
         ];
-        $tokenData = ['__token__' => isset($data['__token__']) ? $data['__token__'] : '',];
-        $validateRes = $this->validate($this->validate, $addData, $tokenData);
+        $validateRes = $this->validate($this->validate, $addData);
         if ($validateRes['tag']) {
             $insertGetId = $this->insertGetId($addData);
             $validateRes['tag'] = $insertGetId?1:0;
-            $validateRes['message'] = $insertGetId ? '广告添加成功' : '添加失败';
+            $validateRes['message'] = $insertGetId ? '广告添加成功' : 'Sorry,添加失败';
         }
         return $validateRes;
     }
@@ -116,12 +115,10 @@ class XadLists extends BaseModel
     public function editAdvertisement($id, $data)
     {
         $opTag = isset($data['tag']) ? $data['tag'] : 'edit';
-        $tag = 0;
+        $saveTag = 0;
         if ($opTag == 'del') {
-            $tag = $this
-                ->where('id', $id)
-                ->update(['status' => -1]);
-            $validateRes['message'] = $tag ? '数据删除成功' : '已删除';
+            $saveTag = $this->where('id', $id)->update(['status' => -1]);
+            $validateRes['message'] = $saveTag ? '数据删除成功' : 'Sorry，数据已删除';
         } else {
             $saveData = [
                 'ad_name' => isset($data['ad_name']) ? $data['ad_name'] : '',
@@ -132,17 +129,13 @@ class XadLists extends BaseModel
                 'start_time' => isset($data['start_time'])?$data['start_time']:'',
                 'end_time' => isset($data['end_time'])?$data['end_time']:'',
             ];
-            $tokenData = ['__token__' => isset($data['__token__']) ? $data['__token__'] : '',];
-            $validateRes = $this->validate($this->validate, $saveData, $tokenData);
+            $validateRes = $this->validate($this->validate, $saveData);
             if ($validateRes['tag']) {
-                $this
-                    ->where('id', $id)
-                    ->update($saveData);
-                $tag = 1;
-                $validateRes['message'] = $tag ? '广告修改成功' : '数据无变动';
+                $saveTag = $this->where('id', $id)->update($saveData);
+                $validateRes['message'] = $saveTag ? '广告修改成功' : 'Sorry,数据无变动';
             }
         }
-        $validateRes['tag'] = $tag;
+        $validateRes['tag'] = $saveTag;
         return $validateRes;
     }
 

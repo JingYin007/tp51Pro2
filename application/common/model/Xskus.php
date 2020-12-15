@@ -33,7 +33,8 @@ class Xskus extends BaseModel
                 //TODO 判断是否存在
                 $haveTag = $this
                     ->where([['spec_info', '=', $spec_info], ['goods_id', '=', $goodsID]])
-                    ->count();
+                    ->count('sku_id');
+
                 if ($haveTag) {
                     $this
                         ->where([['spec_info', '=', $spec_info], ['goods_id', '=', $goodsID]])

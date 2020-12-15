@@ -92,7 +92,7 @@ class Xusers extends BaseModel
         $status = $this
             ->where("id",$userID)
             ->update(["user_status"=>$user_status]);
-        $message = $status?"更新成功":"Sorry，更新失败";
+        $message = $status?"用户状态更新成功":"Sorry，更新失败";
         return ['status'=>$status,'message'=>$message];
     }
 }

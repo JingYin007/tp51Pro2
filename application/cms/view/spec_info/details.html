@@ -102,24 +102,29 @@
 
     //修改按钮的点击事件
     function updateThemeGoods(id) {
-        var toUrl = "{:url('cms/specInfo/edit',['id'=>'AID'])}";
+        let toUrl = "{:url('cms/specInfo/edit',['id'=>'AID'])}";
         toUrl = toUrl.replace('AID', id);
-        var trClass = ".tr-normal-"+id;
-        var list_order = $(trClass+" .list_order").val();
-        var spec_name = $(trClass+" .spec_name").val();
-        var mark_msg = $(trClass+" .mark_msg").val();
-        var postData = {
-            id:id,
-            spec_name:spec_name,
-            mark_msg:mark_msg,
-            list_order:list_order,
-            level:2
+        const trClass = ".tr-normal-" + id;
+        const list_order = $(trClass + " .list_order").val();
+        const spec_name = $(trClass + " .spec_name").val();
+        const mark_msg = $(trClass + " .mark_msg").val();
+        const postData = {
+            id: id,
+            spec_name: spec_name,
+            mark_msg: mark_msg,
+            list_order: list_order,
+            level: 2
         };
         $.post(
             toUrl,
             postData,
             function (result) {
-                dialog.tip(result.message);
+                if (result.status === 1){
+                    dialog.tip_success(result.message);
+                }else {
+                    dialog.tip_error(result.message);
+                }
+
             },"JSON");
     }
 </script>

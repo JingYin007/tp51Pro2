@@ -2,12 +2,12 @@
  * 公用 table 分页模块
  */
 layui.use(['laypage', 'layer'], function () {
-    var lay_page = layui.laypage;
-    var tbodyTag = $(".table-tbody-normal");
-    var page_limit = tbodyTag.attr('page_limit');
-    var record_num = tbodyTag.attr('record_num');
-    var page_url = tbodyTag.attr('page_url');
-    var ajax_page_fun = eval(tbodyTag.attr('ajax_page_fun'));
+    const lay_page = layui.laypage;
+    const tbodyTag = $(".table-tbody-normal");
+    const page_limit = tbodyTag.attr('page_limit');
+    const record_num = tbodyTag.attr('record_num');
+    const page_url = tbodyTag.attr('page_url');
+    const ajax_page_fun = eval(tbodyTag.attr('ajax_page_fun'));
     lay_page.render({
         elem: 'demo2-1'
         , limit: page_limit
@@ -17,7 +17,7 @@ layui.use(['laypage', 'layer'], function () {
             //obj包含了当前分页的所有参数 首次不执行
             if (!first) {
                 $(".curr_page").val(obj.curr);
-                var postData = $(".form-search").serialize();
+                const postData = $(".form-search").serialize();
                 ajax_page_fun(page_url, postData);
             }
         }
@@ -29,7 +29,7 @@ layui.use(['laypage', 'layer'], function () {
  * 图片资源上传
  */
 layui.use('upload', function () {
-    var upload = layui.upload;
+    const upload = layui.upload;
     //普通图片上传
     upload.render({
         elem: '.btn_upload_img'
@@ -46,7 +46,7 @@ layui.use('upload', function () {
         , done: function (res) {
             dialog.tip(res.message);
             //如果上传成功
-            if (res.status == 1) {
+            if (res.status === 1) {
                 $('.upload_img_url').val(res.data.url);
             }
         }
@@ -62,18 +62,21 @@ layui.use('upload', function () {
  * @param obj
  */
 function opFormPostRecord(obj) {
-    var toUrl = $(obj).attr('op_url');
-    var postData = $(".form-op-normal").serialize();
-    ToPostPopupsDeal(toUrl, postData);
+    const toUrl = $(obj).attr('op_url');
+    const postData = $(".form-op-normal").serialize();
+    new ToPostPopupsDeal(toUrl, postData);
 }
 
 /**
  * 打开添加 操作窗口
  * @param obj
+ * @param title
+ * @param width
+ * @param height
  */
 function addForOpenPopups(obj,title,width,height) {
-    var op_url = $(obj).attr('op_url');
-    ToOpenPopups(op_url, title, width, height);
+    const op_url = $(obj).attr('op_url');
+    new ToOpenPopups(op_url, title, width, height);
 }
 
 /**
@@ -84,9 +87,9 @@ function addForOpenPopups(obj,title,width,height) {
  * @param height
  */
 function editForOpenPopups(title,id,width,height) {
-    var op_url = $(".op_url").val();
+    let op_url = $(".op_url").val();
     op_url = op_url.replace('opid', id);
-    ToOpenPopups(op_url, title, width, height);
+    new ToOpenPopups(op_url, title, width, height);
 }
 
 /**
@@ -95,18 +98,18 @@ function editForOpenPopups(title,id,width,height) {
  * @param id
  */
 function viewLogOpenPopups(title,id) {
-    var op_url = $(".log_url").val();
+    let op_url = $(".log_url").val();
     op_url = op_url.replace('opid', id);
-    ToOpenPopups(op_url, title, '30%', '92%');
+    new ToOpenPopups(op_url, title, '320px', '86%');
 }
 /**
  * 删除记录操作
  * @param id
  */
 function delPostRecord(id) {
-    var toUrl = $(".op_url").val();
+    let toUrl = $(".op_url").val();
     toUrl = toUrl.replace('opid', id);
-    ToDelItem(id, toUrl, '.tr-normal-' + id);
+    new ToDelItem(id, toUrl, '.tr-normal-' + id);
 }
 // 除去页面所显示的记录 传递 div
 function ToRemoveDiv(tag) {
@@ -124,15 +127,14 @@ function ToPostPopupsDeal(toUrl,postData) {
         toUrl,
         postData,
         function (result) {
-            dialog.tip(result.message);
-            if(result.status == 1){
+            if(result.status === 1){
+                dialog.tip_success(result.message);
                 setTimeout(function(){
-                    var index = parent.layer.getFrameIndex(window.name); //先得到当前 iframe层的索引
+                    const index = parent.layer.getFrameIndex(window.name); //先得到当前 iframe层的索引
                     parent.layer.close(index); //再执行关闭
                 },2000);
             }else{
-                //失败
-                //layer.msg(result.message);
+                dialog.tip_error(result.message);
             }
         },"JSON");
 }
@@ -140,11 +142,12 @@ function ToPostPopupsDeal(toUrl,postData) {
  * 删除记录
  * @param id 记录ID
  * @param toUrl 请求 URL
+ * @param remove_class
  * @constructor
  */
 function ToDelItem(id,toUrl,remove_class) {
-    var tag_token = $(".tag_token").val();
-    var postData = {'id':id,'tag':'del','_token':tag_token};
+    const tag_token = $(".tag_token").val();
+    const postData = {'id': id, 'tag': 'del', '_token': tag_token};
     layer.msg('确定要删除此条记录吗？', {
         time: 0 //不自动关闭
         ,btn: ['确定', '离开']
@@ -152,7 +155,7 @@ function ToDelItem(id,toUrl,remove_class) {
         shadeClose:true,
         anim:4,
         moveOut: true
-        ,yes: function(index){
+        ,yes: function(){
             afterDelItem(toUrl,postData,remove_class);
         }
     });
@@ -169,12 +172,11 @@ function afterDelItem(toUrl,postData,remove_class) {
         toUrl,
         postData,
         function (result) {
-            dialog.tip(result.message);
-            if(result.status == 1){
+            if(result.status === 1){
+                dialog.tip_success(result.message);
                 ToRemoveDiv(remove_class);
             }else{
-                //失败
-                layer.msg(result.message);
+                dialog.tip_error(result.message);
             }
         },"JSON");
 }

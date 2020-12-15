@@ -182,36 +182,39 @@ class Xarticles extends BaseModel
     {
         $opTag = isset($input['tag']) ? $input['tag'] : 'edit';
         if ($opTag == 'del') {
-            Db::name('xarticle_points')
-                ->where('article_id', $id)
-                ->update(['status' => -1]);
-            $validateRes = ['tag' => 1, 'message' => '数据删除成功'];
-            insertCmsOpLogs(1,'ARTICLE',$id,'文章删除操作');
+            $delStatus = Db::name('xarticle_points')
+                ->where('article_id', $id)->update(['status' => -1]);
+            $validateRes = ['tag' => $delStatus, 'message' => $delStatus?'数据删除成功':'Sorry，删除失败！'];
+            insertCmsOpLogs($delStatus,'ARTICLE',$id,'文章删除操作');
         } else {
             $saveData = [
                 'title' => isset($input['title'])?$input['title']:'',
+                'picture' => isset($input['picture'])?$input['picture']:'',
+                'abstract' => isset($input['abstract'])?$input['abstract']:'',
                 'list_order' => isset($input['list_order'])?$input['list_order']:0,
                 'content' => isset($input['content']) ? $input['content'] : '',
-                'updated_at' => date('Y-m-d H:i:s', time())
             ];
-            $tokenData = ['__token__' => isset($input['__token__']) ? $input['__token__'] : '',];
-            $validateRes = $this->validate($this->validate, $saveData, $tokenData);
+            $validateRes = $this->validate($this->validate, $saveData);
             if ($validateRes['tag']) {
-                $saveTag = $this
-                    ->where('id', $id)
-                    ->update($saveData);
-                if ($saveTag) {
-                    Db::name('xarticle_points')
-                        ->where('article_id', $id)
-                        ->update([
-                            'picture' => isset($input['picture']) ? $input['picture'] : '',
-                            'abstract' => isset($input['abstract'])?$input['abstract']:'',
-                            'status' => isset($input['status'])?$input['status']:0,
-                        ]);
-                    insertCmsOpLogs($saveTag,'ARTICLE',$id,'文章更新');
-                }
-                $validateRes['tag'] = $saveTag;
-                $validateRes['message'] = $saveTag ? '数据更新成功' : '数据无变动';
+                //$saveTag = $this->allowField(true)->save($saveData,['id'=>$id]);
+                $saveTag = $this->where('id',$id)
+                    ->update([
+                        'title' => isset($input['title'])?$input['title']:'',
+                        'list_order' => isset($input['list_order'])?$input['list_order']:0,
+                        'content' => isset($input['content']) ? $input['content'] : '',
+                    ]);
+
+                $saveTag2 = Db::name('xarticle_points')
+                    ->where('article_id', $id)
+                    ->update([
+                        'picture' => isset($input['picture']) ? $input['picture'] : '',
+                        'abstract' => isset($input['abstract'])?$input['abstract']:'',
+                        'status' => isset($input['status'])?$input['status']:0,
+                    ]);
+
+                insertCmsOpLogs($saveTag||$saveTag2,'ARTICLE',$id,'文章更新');
+                $validateRes['tag'] = intval($saveTag||$saveTag2);
+                $validateRes['message'] = $saveTag||$saveTag2 ? '数据更新成功' : 'Sorry，数据无变动';
             }
         }
         return $validateRes;
@@ -225,18 +228,22 @@ class Xarticles extends BaseModel
 
     public function addArticle($data)
     {
-
-        $addData = [
+        $validData = [
             'title' => isset($data['title'])?$data['title']:'',
-            'list_order' => isset($data['list_order'])?$data['list_order']:0,
+            'picture' => isset($data['picture'])?$data['picture']:'',
+            'abstract' => isset($data['abstract'])?$data['abstract']:'',
             'content' => isset($data['content']) ? $data['content'] : '',
-            'user_id' => 1,
-            'created_at' => date('Y-m-d H:i:s', time()),
-            'updated_at' => date('Y-m-d H:i:s', time())
         ];
-        $tokenData = ['__token__' => isset($data['__token__']) ? $data['__token__'] : '',];
-        $validateRes = $this->validate($this->validate, $addData, $tokenData);
+
+        $validateRes = $this->validate($this->validate, $validData);
         if ($validateRes['tag']) {
+            $addData = [
+                'title' => isset($data['title'])?$data['title']:'',
+                'list_order' => isset($data['list_order'])?$data['list_order']:0,
+                'content' => isset($data['content']) ? $data['content'] : '',
+                'created_at' => date('Y-m-d H:i:s', time()),
+                'updated_at' => date('Y-m-d H:i:s', time())
+            ];
             $tag = $this->insert($addData);
             if ($tag) {
                 Db::name('xarticle_points')
@@ -250,7 +257,7 @@ class Xarticles extends BaseModel
                 insertCmsOpLogs($tag,'ARTICLE',$this->getLastInsID(),'添加文章数据');
             }
             $validateRes['tag'] = $tag;
-            $validateRes['message'] = $tag ? '添加成功' : '添加失败';
+            $validateRes['message'] = $tag ? '文章添加成功' : '文章添加失败';
         }
         return $validateRes;
     }

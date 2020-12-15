@@ -9,7 +9,10 @@
 namespace app\common\model;
 
 
+use PDOStatement;
+use think\Collection;
 use think\Db;
+use think\Model;
 
 class Xchats extends BaseModel
 {
@@ -41,7 +44,7 @@ class Xchats extends BaseModel
     /**
      * 获取管理员信息
      * @param int $admin_id
-     * @return array|null|\PDOStatement|string|\think\Model
+     * @return array|null|PDOStatement|string|Model
      */
     public function getAdminUserInfo($admin_id = 0){
         $userInfo = Db::name('xadmins')
@@ -67,7 +70,7 @@ class Xchats extends BaseModel
     /**
      * 加载聊天记录
      * @param array $postData
-     * @return array|\PDOStatement|string|\think\Collection|void
+     * @return array|PDOStatement|string|Collection|void
      */
     public function loadMessage($postData = []){
         $from_id = $postData['from_id'];
@@ -169,7 +172,7 @@ class Xchats extends BaseModel
      * 根据fromid和toid来获取他们聊天的最后一条数据
      * @param $from_id
      * @param $to_id
-     * @return array|null|\PDOStatement|string|\think\Model
+     * @return array|null|PDOStatement|string|Model
      */
     public function getLastMessage($from_id,$to_id){
         $where = [['from_id','<>','to_id'],['from_id|to_id','=',$from_id],['from_id|to_id','=',$to_id]];
@@ -188,7 +191,7 @@ class Xchats extends BaseModel
     /**
      * 获取管理人员列表
      * @param $curr_id
-     * @return array|\PDOStatement|string|\think\Collection
+     * @return array|PDOStatement|string|Collection
      */
     public function getUserList($curr_id){
         $res = Db::name('xadmins')

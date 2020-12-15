@@ -87,12 +87,11 @@ class Xbrands extends BaseModel
             'list_order' => isset($data['list_order'])?$data['list_order']:0,
             'updated_at' => date('Y-m-d H:i:s',time())
         ];
-        $tokenData = ['__token__' => isset($data['__token__']) ? $data['__token__'] : '',];
-        $validateRes = $this->validate($this->validate, $addData, $tokenData);
+        $validateRes = $this->validate($this->validate, $addData);
         if ($validateRes['tag']) {
             $tag = $this->insert($addData);
             $validateRes['tag'] = $tag;
-            $validateRes['message'] = $tag ? '添加成功' : '添加失败';
+            $validateRes['message'] = $tag ? '品牌添加成功' : 'Sorry，品牌添加失败';
         }
         return $validateRes;
     }
@@ -106,7 +105,7 @@ class Xbrands extends BaseModel
     public function getCmsBrandByID($id)
     {
         $res = $this
-            ->field('*')
+            ->field('id,brand_name,brand_icon,cat_id,list_order,status')
             ->where('id', $id)
             ->find();
         if (isset($res['brand_icon']) && !empty($res['brand_icon'])){
@@ -128,25 +127,20 @@ class Xbrands extends BaseModel
     {
         $opTag = isset($input['tag']) ? $input['tag'] : 'edit';
         if ($opTag == 'del') {
-            $this->where('id', $id)
-                ->update(['status' => -1]);
-            $validateRes = ['tag' => 1, 'message' => '数据删除成功'];
+            $delTag = $this->where('id', $id)->update(['status' => -1]);
+            $validateRes = ['tag' => $delTag, 'message' => $delTag ? '品牌删除成功':'Sorry，品牌删除失败！'];
         } else {
             $saveData = [
                 'brand_name' => isset($input['brand_name'])?$input['brand_name']:'',
                 'brand_icon' => isset($input['brand_icon'])?$input['brand_icon']:'',
                 'cat_id' => isset($input['cat_id'])?$input['cat_id']:null,
                 'list_order' => isset($input['list_order'])?$input['list_order']:0,
-                'updated_at' => date('Y-m-d H:i:s',time())
             ];
-            $tokenData = ['__token__' => isset($input['__token__']) ? $input['__token__'] : '',];
-            $validateRes = $this->validate($this->validate, $saveData, $tokenData);
+            $validateRes = $this->validate($this->validate, $saveData);
             if ($validateRes['tag']) {
-                $saveTag = $this
-                    ->where('id', $id)
-                    ->update($saveData);
+                $saveTag = $this->where('id', $id)->update($saveData);
                 $validateRes['tag'] = $saveTag;
-                $validateRes['message'] = $saveTag ? '数据更新成功' : '数据无变动';
+                $validateRes['message'] = $saveTag ? '数据更新成功' : 'Sorry，数据无变动';
             }
         }
         return $validateRes;

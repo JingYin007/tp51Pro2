@@ -34,9 +34,7 @@ class XtodayWords extends BaseModel
     {
         // 此时，根据ID取出对应的数据
         if ($id) {
-            $res = $this
-                ->where('id', $id)
-                ->find();
+            $res = $this->where('id', $id)->find();
             if ($res){
                 $images_str = $res['images_str'];
                 if ($images_str){$img_list = explode(',',$images_str);}
@@ -134,8 +132,7 @@ class XtodayWords extends BaseModel
             'status' => $data['status'],
             'images_str' => isset($data['images_str'])?$data['images_str']:'',
         ];
-        $tokenData = ['__token__' => isset($data['__token__']) ? $data['__token__'] : '',];
-        $validateRes = $this->validate($this->validate, $addData, $tokenData);
+        $validateRes = $this->validate($this->validate, $addData);
         if ($validateRes['tag']) {
             $tag = $this->insert($addData);
             $validateRes['tag'] = $tag;
@@ -155,27 +152,23 @@ class XtodayWords extends BaseModel
 
         $opTag = isset($data['tag']) ? $data['tag'] : 'edit';
         if ($opTag == 'del') {
-            $this
-                ->where('id', $id)
-                ->update(['status' => -1]);
-            $validateRes = ['tag' => 1, 'message' => '记录删除成功'];
+            $delStatus = $this->where('id', $id)->update(['status' => -1]);
+            $validateRes = ['tag' => $delStatus, 'message' => $delStatus?'记录删除成功':'Sorry，删除失败！'];
         } else {
             $saveData = [
                 'from' => isset($data['from'])?$data['from']:'',
                 'picture' => isset($data['picture'])?$data['picture']:'',
                 'word' => isset($data['word'])?$data['word']:'',
-                'updated_at' => date("Y-m-d H:i:s", time()),
+                //'updated_at' => date("Y-m-d H:i:s", time()),
                 'status' => $data['status'],
                 'images_str' => isset($data['images_str'])?$data['images_str']:'',
             ];
-            $tokenData = ['__token__' => isset($data['__token__']) ? $data['__token__'] : '',];
-            $validateRes = $this->validate($this->validate, $saveData, $tokenData);
+
+            $validateRes = $this->validate($this->validate, $saveData);
             if ($validateRes['tag']) {
-                $saveTag = $this
-                    ->where('id', $id)
-                    ->update($saveData);
+                $saveTag = $this->where('id', $id)->update($saveData);
                 $validateRes['tag'] = $saveTag;
-                $validateRes['message'] = $saveTag ? '数据修改成功' : '数据无变动';
+                $validateRes['message'] = $saveTag ? '数据修改成功' : 'Sorry，数据无变动';
             }
         }
         return $validateRes;

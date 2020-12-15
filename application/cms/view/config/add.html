@@ -24,7 +24,7 @@
             <select name="input_type" lay-filter="sel_type" lay-verify="required">
                 <option value="text" selected>文本</option>
                 <option value="checkbox">开关</option>
-                <option value="button">图片</option>
+                <option value="image">图片</option>
             </select>
         </div>
     </div>
@@ -34,18 +34,18 @@
         <div class="div-config-type div-config-typeFor-text" >
             <div class="layui-input-inline">
                 <input type="text" name="value_text" required lay-verify="required"
-                       value=""
-                       placeholder="请输入取值" autocomplete="off" class="layui-input">
+                       value="" placeholder="请输入取值"
+                       autocomplete="off" class="layui-input">
             </div>
         </div>
-        <div class="div-config-type div-config-typeFor-button" style="display: none">
+        <div class="div-config-type div-config-typeFor-image" style="display: none">
             <div class="layui-upload layui-input-inline">
                 <button type="button" name="img_upload" class="layui-btn btn_upload_img">
                     <i class="layui-icon">&#xe67c;</i>上传图片
                 </button>
                 <img class="layui-upload-img img-upload-preview-small upload_img_preview" src="">
             </div>
-            <input type="hidden" name="value_button" class="upload_img_url" value="">
+            <input type="hidden" name="value_image" class="upload_img_url" value="">
         </div>
         <div class="div-config-type div-config-typeFor-checkbox" style="display: none">
             <div class="layui-input-block">
