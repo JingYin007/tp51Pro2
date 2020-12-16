@@ -12,6 +12,7 @@ namespace app\cms\controller;
 use app\common\controller\CmsBase;
 use app\common\lib\SpreadsheetService;
 use app\common\model\Xmozxx;
+use PhpOffice\PhpSpreadsheet\Exception;
 use think\Request;
 use think\response\View;
 
@@ -30,53 +31,43 @@ class Expand extends CmsBase
         $this->model = new Xmozxx();
     }
 
-    public function test(Request $request){
-        //(new SpreadsheetService())->test();
-        echo 'Test';
-    }
-
-
-
+    /**
+     * Excel 文件操作接口
+     * @param Request $request
+     * @return View|void
+     * @throws Exception
+     * @throws \PhpOffice\PhpSpreadsheet\Writer\Exception
+     */
     public function opExcel(Request $request){
         if ($request->isGet()){
-            $loginList = (new Xmozxx())->getExcelTestLoginData();
+            $loginList = (new Xmozxx())->getExcelTestData();
             return view('op_excel',['loginList' => $loginList]);
         }else{
             $opTag = $request->post('op_tag','up');
 
             if ($opTag == 'down'){
-                $opData = (new Xmozxx())->getExcelTestLoginData();
                 $header = ['商品名称','缩略图','产地','售价','状态'];
-
+                $opData = (new Xmozxx())->getExcelTestData();
                 //此时去下载 Excel文件
                 (new SpreadsheetService())->outputDataToExcelFile($header,$opData,"哎呦喂-数据表");
             }else{
                 $file = $request->file('file');
-                // 移动到框架应用根目录/upload/ 目录下
                 $info = $file->move('upload');
                 if ($info){
-                    //把反斜杠(\)替换成斜杠(/) 因为在 windows下上传路是反斜杠径
+                    //绝对路径，把反斜杠(\)替换成斜杠(/) 因为在 windows下上传路是反斜杠径
                     $file_real_path = str_replace("\\", "/", $info->getRealPath());
-                    unset($info);
-                    $sheetData = (new SpreadsheetService())->readExcelFileToArray($file_real_path,'C12');
-                    var_dump($sheetData);
+                    unset($info); //释放空间（写在这里最好，后面总是不执行！！）
+                    $opRes = (new Xmozxx())->importExcelData($file_real_path);
+                    //TODO 操作完成后，删除文件
                     deleteServerFile($file_real_path);
-                    $opRes['status'] = 1;
-                    $opRes['message'] = "文件导入成功";
                 }else{
                     $opRes['status'] = 0;
                     $opRes['message'] = "文件上传失败 ".$file->getError();
-
                 }
                 return showMsg($opRes['status'],$opRes['message']);
             }
         }
     }
-
-
-
-
-
 
 
     /**

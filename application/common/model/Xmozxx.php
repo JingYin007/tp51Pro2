@@ -4,7 +4,9 @@
 namespace app\common\model;
 
 
+use app\common\lib\SpreadsheetService;
 use PDOStatement;
+use PhpOffice\PhpSpreadsheet\Exception;
 use think\Collection;
 use think\Db;
 use think\db\exception\DataNotFoundException;
@@ -48,11 +50,11 @@ class Xmozxx
         return isset($res)?$res:[];
     }
 
-    public function getExcelTestLoginData(){
-        //$loginList = Db::name('xexcel_log')->select();
-        $loginList = Db::name('xexcel_large')
+    public function getExcelTestData(){
+        $loginList = Db::name('xop_excel')
             ->field('goods_name,thumbnail,place,reference_price,status')
             ->select();
+
         foreach ($loginList as &$vo){
             $status = $vo['status'] ;
             //-1：删除 0：待上架 1：已上架 2：预售
@@ -72,5 +74,31 @@ class Xmozxx
             }
         }
         return $loginList;
+    }
+
+    /**
+     * 导入 excel 表中的数据
+     * @param $file_real_path
+     * @return array
+     */
+    public function importExcelData($file_real_path){
+        $opRes = (new SpreadsheetService())->readExcelFileToArray($file_real_path,"A2");
+        //TODO 根据返回来到数据数组，进行数据向数据库的插入或其他操作 ...
+        if (isset($opRes['data'])){
+            $resultArr = [];
+            foreach ($opRes['data'] as $key => $value) {
+                $resultArr[$key]['goods_name'] = isset($value[0])?$value[0]:'';
+                $resultArr[$key]['thumbnail'] = isset($value[1])?$value[1]:'';
+                $resultArr[$key]['place'] = isset($value[2])?$value[2]:'';
+                $resultArr[$key]['reference_price'] = isset($value[3])?$value[3]:'';
+                $resultArr[$key]['updated_at'] = date("Y-m-d H:i:s",time());
+            }
+            /**
+             * TODO 此时进行数据表记录的遍历插入操作即可
+             * 因为数据量较大，建议使用批量插入的方式,以我的业务需求，代码举例如下：
+             */
+            Db::name('xop_excel')->data($resultArr)->limit(10)->insertAll();
+        }
+        return ['status' => $opRes['status'],'message'=>$opRes['message']];
     }
 }

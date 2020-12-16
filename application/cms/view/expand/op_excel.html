@@ -4,15 +4,16 @@
 
 
 <div class="layui-inline" style="float: right;margin: 30px 10px">
+    <form class="form-download" action="{url('cms/expand/opExcel')}" method="post">
+        <input type="hidden" name="op_tag" value="down">
+    </form>
     <button type="button" onclick="downloadExcel()"
             class="layui-btn layui-btn-danger">下载Excel表格</button>
 
     <button type="button"
             class="layui-btn layui-btn-warm btn_upload_excel">导入Excel文件</button>
 </div>
-<form class="form-download" action="{url('cms/expand/opExcel')}" method="post">
-    <input type="hidden" name="op_tag" value="down">
-</form>
+
 
 <table class="layui-table table-body" lay-even="" lay-skin="row">
     <colgroup>
@@ -26,7 +27,7 @@
     <thead>
     <tr>
         <th>商品名称</th>
-        <th>thumbnail</th>
+        <th>缩略图片</th>
         <th>产地</th>
         <th>售价</th>
         <th>状态</th>
@@ -45,7 +46,7 @@
         {/volist}
     </tbody>
 </table>
-<div id="demo2-1"></div>
+
 
 <style>
 
@@ -76,7 +77,6 @@
         $(".form-download").submit();
         layer.msg('数据下载中...',{timer:3500})
     }
-
 
 </script>
 {/block}

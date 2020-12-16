@@ -3,9 +3,7 @@
 
 namespace app\common\lib;
 
-use app\common\model\Xmozxx;
 use PhpOffice\PhpSpreadsheet\IOFactory;
-use PhpOffice\PhpSpreadsheet\MyReadFilter;
 use PhpOffice\PhpSpreadsheet\Spreadsheet;
 use PhpOffice\PhpSpreadsheet\Writer\Exception;
 use PhpOffice\PhpSpreadsheet\Writer\Xlsx;
@@ -26,8 +24,9 @@ class SpreadsheetService
     }
 
 
-    public function test(){
-        $this->downLoad();
+    public function test()
+    {
+        echo "TEST";
     }
 
     /**
@@ -48,7 +47,7 @@ class SpreadsheetService
                                           $saveFileName = "",
                                           $colStart = "A",$rowStart = 1){
 
-        $saveFileName = $saveFileName ? $saveFileName:  date("Ymd",time())."-".time().".xlsx";
+        $saveFileName = $saveFileName ? $saveFileName:  "moTzxx-".time().".xlsx";
 
         // 获取工作簿
         $work_sheet = self::$spreadsheet->getActiveSheet();
@@ -77,88 +76,58 @@ class SpreadsheetService
      *          excel文件的后缀名不要手动改动，一般为 xls、xlsx
      *          excel文件中的数据尽量整理的规范
      * @return array
-     * @throws \PhpOffice\PhpSpreadsheet\Exception
-     * @throws \PhpOffice\PhpSpreadsheet\Reader\Exception
      */
     public function readExcelFileToArray($excel_file_path = "",
                                          $rangeStart = "A1", $sheetNo = 1){
-        $inputFileType = self::getInputExcelFileType($excel_file_path);
-        $reader = IOFactory::createReader($inputFileType);
-        $reader->setReadDataOnly(true);
-
-        $spreadsheet = $reader->load($excel_file_path);
-        $work_sheet = $spreadsheet->getSheet(intval($sheetNo-1));// 获取工作簿
-
-        if ($work_sheet){
-            # 获取总列数
-            $highestColumn = $work_sheet->getHighestColumn();
-            # 获取总行数
-            $highestRow = $work_sheet->getHighestRow();
-            $sheetData = $work_sheet->rangeToArray($rangeStart.":".$highestColumn.$highestRow);
-            if (!$sheetData){self::tipError('excel 文件中未查到数据！');}
-        }else{self::tipError('excel 文件中没有工作簿！');}
-
-        return isset($sheetData)?$sheetData:[];
-    }
-
-    public function goToUpload($excel_file_path){
-
-        $status = 1;
-        $message = 'goToUpload';
-
-        $inputFileType = self::getInputExcelFileType($excel_file_path);
-        $reader = IOFactory::createReader($inputFileType);
-        $spreadsheet = $reader->load($excel_file_path);
-
-        $sheet = $spreadsheet->getActiveSheet();
-        if ($sheet){
-            # 获取总列数
-            $highestColumn = $sheet->getHighestColumn();
-            # 获取总行数
-            $highestRow = $sheet->getHighestRow();
-            # 列数 改为数字显示
-            $highestColumnIndex = \PhpOffice\PhpSpreadsheet\Cell\Coordinate::columnIndexFromString($highestColumn);
-            for($a = 2;$a<$highestRow;$a++){
-                $title = $sheet->getCellByColumnAndRow(1,$a)->getValue();
-                $cat_fname = $sheet->getCellByColumnAndRow(2,$a)->getValue();
-            }
+        $opStatus = 0;
+        $sheetData = [];
+        $work_sheet = null;
+        if (!file_exists($excel_file_path)){
+            $opMessage = "excel文件不存在,请排查错误！";
         }else{
-            $message = "文件中没有工作簿！";
+            //获取文件类型
+            $inputFileType = self::getInputExcelFileType($excel_file_path);
+            // 创建阅读器
+            try {
+                $reader = IOFactory::createReader($inputFileType);
+                //设置只读
+                $reader->setReadDataOnly(true);
+                $spreadsheet = $reader->load($excel_file_path);
+                // 获取工作簿
+                $work_sheet = $spreadsheet->getSheet(intval($sheetNo-1));
+            } catch (\PhpOffice\PhpSpreadsheet\Reader\Exception $e) {
+                $opMessage = $e->getMessage();
+            } catch (\PhpOffice\PhpSpreadsheet\Exception $e) {
+                $opMessage = $e->getMessage();
+            } catch (\think\Exception $e){
+                $opMessage = $e->getMessage();
+            }
+
+            if ($work_sheet){
+                # 获取总列数
+                $highestColumn = $work_sheet->getHighestColumn();
+                # 获取总行数
+                $highestRow = $work_sheet->getHighestRow();
+                $sheetData = $work_sheet->rangeToArray($rangeStart.":".$highestColumn.$highestRow);
+                if (!$sheetData){
+                    $opMessage = "excel文件中，未查询到数据！";
+                }else{
+                    $opStatus = 1;
+                    $opMessage = "成功获取到数据数组!！";
+                }
+            }else{
+                $opMessage = isset($opMessage) ? $opMessage : "excel文件中，当前工作表不存在！";
+            }
         }
-        return ['status'=> $status,'message' => $message];
-    }
-
-    public function downLoad(){
-        // 获取工作簿
-        $sheet = self::$spreadsheet->getActiveSheet();
-        $sheet->setTitle('moTzxx 学习');
-        $sheet->setCellValue('A1','HELLO WORLD!!xx');
-
-        $sheet->setCellValue('A1','ID');
-        $sheet->setCellValue('B1','姓名');
-        $sheet->setCellValue('C1','年龄');
-        $sheet->setCellValue('D1','身高');
-
-        $sheet->setCellValueByColumnAndRow(1, 2, 1);
-        $sheet->setCellValueByColumnAndRow(2, 2, "黄蓉\n桃花岛");
-        $sheet->setCellValueByColumnAndRow(3, 2, '18岁');
-        $sheet->setCellValueByColumnAndRow(4, 2, '168cm');
-
-        $sheet->getStyle('B2')->getFont()->setBold(true)->setName('宋体')->setSize(25);
-        $sheet->getStyle('C2')->getFont()->getColor()->setRGB('#FFFF00');
-        $sheet->getStyle('B2')->getAlignment()->setWrapText(true);
-
-        // 保存到本地
-        //self::saveExcelFileToLocal('hello_worldz.xls');
-        self::downloadExcelFileToClient('hahah.xlsx');
-        return ['status'=>1,'message'=>'test'];
+        return ['status' => $opStatus,'message' => $opMessage,'data' => $sheetData];
     }
 
 
 
     /**
      * 将生成的 Excel 文件保存到本地
-     * @param string $save_fileUrl 文件保存路径，例如："/mnt/www/hello_world.xlsx"
+     * @param string $save_fileUrl 文件保存路径，
+     *                             一般是在服务器上，例如："/mnt/www/hello_world.xlsx"
      * @throws Exception
      */
     public static function saveExcelFileToLocal($save_fileUrl = ""){
@@ -176,13 +145,13 @@ class SpreadsheetService
     public static function downloadExcelFileToClient($fileName = "muTou.xlsx"){
         $ext_name = (substr($fileName,-3) == 'xls')?"xls":"xlsx";
         if ($ext_name == 'xls'){
-            header('Content-Type:application/vnd.ms-excel');
+            header('Content-Type: application/vnd.ms-excel');
         }else{
             // MIME 协议，文件的类型，不设置，会默认html
-            header('Content-Type:application/vnd.openxmlformats-officedocument.spreadsheetml.sheet');
+            header('Content-Type: application/vnd.openxmlformats-officedocument.spreadsheetml.sheet');
         }
-        header("Content-Disposition:attachment;filename=$fileName"); // MIME 协议的扩展
-        header('Cache-Control:max-age=0'); // 缓存控制
+        header("Content-Disposition: attachment;filename=$fileName"); // MIME 协议的扩展
+        header('Cache-Control: max-age=0'); // 缓存控制
         $writerType = self::getInputExcelFileType($fileName);
         $writer = IOFactory::createWriter(self::$spreadsheet,$writerType);
         $writer->save('php://output');
@@ -194,16 +163,7 @@ class SpreadsheetService
      * @return string
      */
     public static function getInputExcelFileType($fileName = ""){
-        if (file_exists($fileName)){
-            $ext_name = (substr($fileName,-3) == 'xls')?"xls":"xlsx";
-            return ($ext_name == 'xls')?"Xls":"Xlsx";
-        }else{
-            self::tipError('文件不存在,请排查错误！');
-        }
+        $ext_name = (substr($fileName,-3) == 'xls')?"xls":"xlsx";
+        return ($ext_name == 'xls')?"Xls":"Xlsx";
     }
-
-    public static function tipError($message){
-        return showMsg(0,$message);
-    }
-
 }
