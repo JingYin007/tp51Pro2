@@ -56,7 +56,7 @@ class Expand extends CmsBase
                 if ($info){
                     //绝对路径，把反斜杠(\)替换成斜杠(/) 因为在 windows下上传路是反斜杠径
                     $file_real_path = str_replace("\\", "/", $info->getRealPath());
-                    unset($info); //释放空间（写在这里最好，后面总是不执行！！）
+                    unset($info); //释放内存,也可使用 $info = null;(写在这里最好，后面总是不执行！！)
                     $opRes = (new Xmozxx())->importExcelData($file_real_path);
                     //TODO 操作完成后，删除文件
                     deleteServerFile($file_real_path);
@@ -72,7 +72,6 @@ class Expand extends CmsBase
 
     /**
      * React 学习页
-     *
      * @param Request $request
      * @return View|void
      */

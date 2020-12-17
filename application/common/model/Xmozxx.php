@@ -6,7 +6,6 @@ namespace app\common\model;
 
 use app\common\lib\SpreadsheetService;
 use PDOStatement;
-use PhpOffice\PhpSpreadsheet\Exception;
 use think\Collection;
 use think\Db;
 use think\db\exception\DataNotFoundException;
@@ -50,6 +49,13 @@ class Xmozxx
         return isset($res)?$res:[];
     }
 
+    /**
+     * 获取测试 Excel 数据表中的数据
+     * @return array|PDOStatement|string|Collection|\think\model\Collection
+     * @throws DataNotFoundException
+     * @throws DbException
+     * @throws ModelNotFoundException
+     */
     public function getExcelTestData(){
         $loginList = Db::name('xop_excel')
             ->field('goods_name,thumbnail,place,reference_price,status')

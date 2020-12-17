@@ -186,6 +186,7 @@ function getCmsOpViewLogs($video_id = 0,$opTag = ''){
 
 /**
  * 删除本地文件，Linux 上比较适用
+ * 有时不能生效，需要注意释放文件变量的内存，例：unset($info)
  * @param string $file_real_path 一般来说为 绝对路径
  * @return bool
  */
