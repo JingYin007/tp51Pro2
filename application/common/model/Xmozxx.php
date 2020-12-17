@@ -104,6 +104,7 @@ class Xmozxx
              * 因为数据量较大，建议使用批量插入的方式,以我的业务需求，代码举例如下：
              */
             Db::name('xop_excel')->data($resultArr)->limit(10)->insertAll();
+            unset($resultArr);
         }
         return ['status' => $opRes['status'],'message'=>$opRes['message']];
     }

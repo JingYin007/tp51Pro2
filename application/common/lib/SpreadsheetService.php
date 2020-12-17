@@ -155,6 +155,7 @@ class SpreadsheetService
         $writerType = self::getInputExcelFileType($fileName);
         $writer = IOFactory::createWriter(self::$spreadsheet,$writerType);
         $writer->save('php://output');
+        unset($writer);
     }
 
     /**

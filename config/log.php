@@ -15,8 +15,16 @@
 return [
     // 日志记录方式，内置 file socket 支持扩展
     'type'  => 'File',
+
     // 日志保存目录
     'path'  => '',
+
+    //设置某些级别的日志信息单独文件记录
+    'apart_level'   =>  ['error','warning'],
+
     // 日志记录级别
-    'level' => [],
+    'level' => ['warning','error','critical','emergency'],
+
+    //超过数量的最早日志将会自动删除,设置max_files参数后，日志文件将不会分日期子目录存放
+    'max_files'	=>	30,
 ];

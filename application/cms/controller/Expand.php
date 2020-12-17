@@ -31,6 +31,9 @@ class Expand extends CmsBase
         $this->model = new Xmozxx();
     }
 
+    public function test(){
+        echo 'Test 入口';
+    }
     /**
      * Excel 文件操作接口
      * @param Request $request
