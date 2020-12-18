@@ -1,9 +1,7 @@
 .layui-side-scroll .user-info {
     width: 200px;
     height: auto;
-    padding: 0px;
-    padding-top: 15px;
-    padding-bottom: 8px;
+    padding: 15px 0 8px;
 }
 
 .layui-side-scroll .user-info .photo-view {
@@ -32,17 +30,6 @@
     line-height: 25px;
     text-align: center;
     margin-top: 15px;
-}
-
-.layui-header .menu-switch {
-    display: block;
-    width: 27px;
-    height: 30px;
-    margin-left: -20px;
-    background: url(../images/icon/menu.png) center center no-repeat;
-    background-color: #ffffff;
-    background-size: 100%;
-    cursor: pointer;
 }
 
 .layui-tab-title {
@@ -276,7 +263,47 @@
 .layui-upload #div-multiple-img-upload-preview .layui-upload-img:hover {
     cursor: pointer;
 }
+.layui-header .layui-nav span{
+    vertical-align: middle;
+}
 
+.span-cms-bg-icon{
+    display: inline-block;
+    background: url(../images/icon/cms_bg_combine.png) no-repeat;
+    width: 30px;
+    height: 30px;
+}
+.span-cms-bg-icon-menu{
+    background-position: 0 -569px;
+    height: 33px;
+    margin-left: -20px;
+    background-size: 100%;
+    cursor: pointer;
+}
+.span-cms-bg-icon-chat{
+    background-position: 0 3px;
+}
+.span-cms-bg-icon-fullscreen{
+    background-position: 0 -78px;
+}
+
+.span-cms-bg-icon-fullscreen-exit{
+    display: none;
+    background-position: 0 -78px;
+}
+
+.span-cms-bg-icon-lockScreen{
+    background-position: 0 -243px;
+}
+.span-cms-bg-icon-adminInfo{
+    background-position: 0 -324px;
+}
+.span-cms-bg-icon-logout{
+    background-position: 0 -406px;
+}
+.span-cms-bg-icon-home{
+    background-position: 0 -489px;
+}
 /*-END--------------用于图片上传的预览效果------------------------*/
 
 .span-FF9233 {

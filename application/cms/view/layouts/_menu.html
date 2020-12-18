@@ -13,40 +13,36 @@
             <li class="layui-nav-item">
                 <a class="a-to-Url single-to-Url" href="javascript:;"
                    action="{:url('cms/index/home')}">
-                    <i class="layui-icon">
-                        <img src="__CMS__/images/icon/home.png"/>
-                    </i>后台首页
+                    <i class="layui-icon"><img src="cms/images/icon/cms_home.png"/></i>
+                    后台首页
+<!--                <img class="span-cms-bg-icon span-cms-bg-icon-home"/>&nbsp;后台首页-->
                 </a>
             </li>
             <input type="hidden" id="check_login"
                    url="{:url('cms/login/ajaxCheckLoginStatus')}"
-                   login="{:url('cms/login/index')}"
-            >
+                   login="{:url('cms/login/index')}">
 
             {volist name='menus' id='menu'}
             <li class="layui-nav-item">
                 {if($menu['child'])}
-                <a href="javascript:;">
-                    <i class="layui-icon"><img src="{$menu['icon']}"/></i>
-                    {$menu['name']}</a>
+                <a href="javascript:;"><i class="layui-icon"><img src="{$menu.icon}"/></i>
+                    {$menu.name}</a>
                 <dl class="layui-nav-child">
-                    {volist name= "menu['child']" id='vo'}
+                    {volist name= "menu.child" id='vo'}
                     <dd>
                         <a class="a-to-Url mul-to-Url" href="javascript:;"
-                           nav_menu_id="{$vo['id']}" action="{:url($vo['action'])}">
-                            <i class="layui-icon">
-                                <img src="{$vo['icon']}"/>
-                            </i>
-                            {$vo['name']}
+                           nav_menu_id="{$vo.id}" action="{:url($vo.action)}">
+                            <i class="layui-icon"><img src="{$vo.icon}"/></i>
+                            {$vo.name}
                         </a>
                     </dd>
                     {/volist}
                 </dl>
                 {else}
                 <a class="a-to-Url single-to-Url" href="javascript:;"
-                   nav_menu_id="{$vo['id']}" actionx="{:url($menu['action'])}">
-                    <i class="layui-icon"><img src="{$menu['icon']}"/></i>
-                    {$menu['name']}
+                   nav_menu_id="{$vo.id}" actionx="{:url($menu.action)}">
+                    <i class="layui-icon"><img src="{$menu.icon}"/></i>
+                    {$menu.name}
                 </a>
                 {/if}
             </li>

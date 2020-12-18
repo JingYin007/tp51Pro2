@@ -14,6 +14,7 @@ use app\common\model\Xchats;
 use think\App;
 use think\Controller;
 use think\Request;
+use think\response\View;
 
 class Chat extends Controller
 {
@@ -36,7 +37,7 @@ class Chat extends Controller
     /**
      * 聊天列表
      * @param Request $request
-     * @return \think\response\View|void
+     * @return View|void
      */
     public function lists(Request $request){
         $curr_id = $this->cmsAID;
@@ -54,7 +55,7 @@ class Chat extends Controller
     /**
      * 聊天消息入口
      * @param int $to_id
-     * @return \think\response\View
+     * @return View
      */
     public function index(Request $request,$to_id = 0){
         if ($request->isGet()){

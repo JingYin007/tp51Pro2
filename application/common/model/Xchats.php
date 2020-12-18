@@ -134,7 +134,9 @@ class Xchats extends BaseModel
         //TODO 这玩意可得花点时间好好整下 ！！！
         $tab_prefix = config('database.prefix');
         $sql =
-            "SELECT count(is_read = 0 or null) AS countNoRead,receiver,uniTable.content as last_message,log_time,type,user_name,picture 
+            "SELECT count(is_read = 0 or null) AS countNoRead,receiver,
+                    any_value(uniTable.content) as last_message,
+                    any_value(uniTable.log_time) log_time,any_value(uniTable.type) type,user_name,picture
 	            FROM (	
 					SELECT to_id as receiver,content,1 as is_read,log_time,type 
 						FROM ".$tab_prefix."xchat_logs WHERE (from_id = $curr_id) AND (to_id <> $curr_id) 
@@ -142,7 +144,7 @@ class Xchats extends BaseModel
 					SELECT from_id as receiver,content as content,is_read,log_time,type 
 						FROM ".$tab_prefix."xchat_logs WHERE (from_id <> $curr_id) AND (to_id = $curr_id) 
 					ORDER BY log_time DESC) as uniTable 
-	        INNER JOIN ".$tab_prefix."xadmins on receiver = ".$tab_prefix."xadmins.id GROUP BY receiver ORDER BY log_time DESC";
+	        LEFT JOIN ".$tab_prefix."xadmins on receiver = ".$tab_prefix."xadmins.id GROUP BY receiver ORDER BY any_value(log_time) DESC";
 
         $chatList = Db::query($sql);
         //var_dump($chatList);

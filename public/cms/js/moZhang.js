@@ -4,7 +4,7 @@ $(document).ready(function () {
     /**
      * 左侧导航栏 显示与隐藏的设置
      */
-    $(".layui-header .menu-switch").click(function () {
+    $(".layui-header .span-cms-bg-icon-menu").click(function () {
         const leftView = $(".layui-bg-black");
         const hidden = leftView.is(':hidden');
         const layui_body = $(".layui-layout-admin .layui-body");
@@ -82,12 +82,14 @@ $(document).ready(function () {
 
         if (fullscreenElement == null) {
             entryFullScreen();
-            $("#FullScreen span").html('退出全屏');
-            $(".layui-nav-item .img-FullScreen").attr('src','../cms/images/icon/fullscreen_exit.png')
+            $("#FullScreen .span-tip").html('退出全屏');
+            $(".span-cms-bg-icon-fullscreen").hide();
+            $(".span-cms-bg-icon-fullscreen-exit").show();
         } else {
             exitFullScreen();
-            $("#FullScreen span").html('全屏');
-            $(".layui-nav-item .img-FullScreen").attr('src','../cms/images/icon/fullscreen.png')
+            $("#FullScreen .span-tip").html('全屏');
+            $(".span-cms-bg-icon-fullscreen").show();
+            $(".span-cms-bg-icon-fullscreen-exit").hide();
         }
     });
 
