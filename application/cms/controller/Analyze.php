@@ -14,6 +14,7 @@ use app\common\model\Xgoods;
 use app\common\model\Xorders;
 use app\common\model\Xstores;
 use think\Request;
+use think\response\View;
 
 /**
  * 统计分析类
@@ -33,7 +34,7 @@ class Analyze extends CmsBase
     /**
      * 热销商品饼状图
      * @param Request $request
-     * @return \think\response\View|void
+     * @return View|void
      */
     public function hotSale(Request $request){
         $today = date('Y-m-d');
@@ -54,7 +55,7 @@ class Analyze extends CmsBase
     /**
      * 24小时销售折线图
      * @param Request $request
-     * @return \think\response\View|void
+     * @return View|void
      * @throws \think\db\exception\DataNotFoundException
      * @throws \think\db\exception\ModelNotFoundException
      * @throws \think\exception\DbException

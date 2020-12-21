@@ -54,8 +54,9 @@ class Chat extends Controller
 
     /**
      * 聊天消息入口
+     * @param Request $request
      * @param int $to_id
-     * @return View
+     * @return void|view
      */
     public function index(Request $request,$to_id = 0){
         if ($request->isGet()){
