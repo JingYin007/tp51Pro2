@@ -1,6 +1,6 @@
 # ☁ 前言
 
-- 【原创博文】[**`moTzxx-CMS —— [一个基于PHP代码的后台管理系统(ThinkPHP5.1)]`**](https://blog.csdn.net/u011415782/article/details/79307673)
+- 【原创博文】[**`moTzxx-CMS —— [一个基于PHP代码的后台管理系统(ThinkPHP5.1.38)]`**](https://blog.csdn.net/u011415782/article/details/79307673)
 
 > **【重要】**：
 > - 如果你先前已经下载了源码，后期发现存在些许问题时
@@ -8,7 +8,7 @@
 > 或者回来参考我更新的内容，尤其是 `“使用指导”` 部分，或许这时我已经自测并做了补充信息哦.
 
 ```b
-框架版本： ThinkPHP5.1.12
+框架版本： ThinkPHP5.1.38
 后台入口： xxxxx.com/cmsx;
 ```
 - 最新更新：

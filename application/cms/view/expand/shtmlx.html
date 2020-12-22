@@ -1,0 +1,41 @@
+{extend name="layouts/cms"}
+
+{block name='body-content'}
+
+
+<div class="layui-inline" style="margin: 30px 10px">
+
+    <button type="button" class="layui-btn layui-btn-warm">参考前台 article文章页面</button>
+
+    <br/>
+    <div class="layui-card">
+        <div class="layui-card-header">思路</div>
+        <div class="layui-card-body">
+            1.接口化设计 <br/>
+            2.调用 “$this->staticFetch()” 生成静态文件 <br/>
+            3.遍历页面内容，匹配链接替换有效静态URL <br/>
+            4.计划任务/后台更新内容时 ,调用接口,生成即时性的静态文件 <br/>
+            5.可考虑模拟 GET提交，以触发接口
+            6.建议参考成熟框架提供的方法
+        </div>
+    </div>
+
+
+
+</div>
+
+{/block}
+
+{block name='single-content'}
+<script>
+    layui.use('code', function(){ //加载code模块
+        layui.code({
+            elem:  '.layui-code',
+            title: 'PHP参考代码',
+            skin: 'notepad',
+            encode: true
+    }); //引用code方法
+
+    });
+</script>
+{/block}

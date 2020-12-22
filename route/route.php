@@ -152,8 +152,7 @@ Route::any('cms/analyze/timeSale','cms/analyze/timeSale');
 Route::any('cms/expand/react','cms/expand/react');
 Route::any('cms/expand/test','cms/expand/test');
 Route::any('cms/expand/opExcel','cms/expand/opExcel');
-Route::any('cms/expand/shtml','cms/expand/shtml');
-
+Route::any('cms/expand/shtmlx','cms/expand/shtmlx');
 
 /**
  * 工具类
