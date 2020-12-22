@@ -5,6 +5,9 @@ namespace app\common\model;
 
 
 use think\Db;
+use think\db\exception\DataNotFoundException;
+use think\db\exception\ModelNotFoundException;
+use think\exception\DbException;
 
 /**
  * 订单数据操作类
@@ -29,9 +32,9 @@ class Xorders extends BaseModel
      * @param int $page_limit
      * @param null $search
      * @return array|array[]|\array[][]
-     * @throws \think\db\exception\DataNotFoundException
-     * @throws \think\db\exception\ModelNotFoundException
-     * @throws \think\exception\DbException
+     * @throws DataNotFoundException
+     * @throws ModelNotFoundException
+     * @throws DbException
      */
     public function getPayOrdersForPage($curr_page = 1, $page_limit = 1, $search  = null){
         $where = [['pay_time','>',0]];
@@ -80,9 +83,9 @@ class Xorders extends BaseModel
      * 获取订单详情数量
      * @param int $order_id
      * @return array|\PDOStatement|string|\think\Model
-     * @throws \think\db\exception\DataNotFoundException
-     * @throws \think\db\exception\ModelNotFoundException
-     * @throws \think\exception\DbException
+     * @throws DataNotFoundException
+     * @throws ModelNotFoundException
+     * @throws DbException
      */
     public function getOrderDetailsByOrderID($order_id = 0){
         $where = [['status','>',0],['order_id','=',$order_id]];
@@ -117,9 +120,9 @@ class Xorders extends BaseModel
      * @param null $search
      * @param null $orderStatus
      * @return array|array[]|\array[][]
-     * @throws \think\db\exception\DataNotFoundException
-     * @throws \think\db\exception\ModelNotFoundException
-     * @throws \think\exception\DbException
+     * @throws DataNotFoundException
+     * @throws ModelNotFoundException
+     * @throws DbException
      */
     public function getOrderDetailsForPage($curr_page = 1, $page_limit = 1, $search  = null, $orderStatus = null){
         $where = [['pay_time','>',0],['od.status','>',0]];
@@ -213,9 +216,9 @@ class Xorders extends BaseModel
      * 根据订单ID 获取清单列表
      * @param string $order_id
      * @return array|\PDOStatement|string|\think\Collection|\think\model\Collection
-     * @throws \think\db\exception\DataNotFoundException
-     * @throws \think\db\exception\ModelNotFoundException
-     * @throws \think\exception\DbException
+     * @throws DataNotFoundException
+     * @throws ModelNotFoundException
+     * @throws DbException
      */
     public function getShoppingList($order_id = ''){
         $res = Db::name('xorder_details')
@@ -231,9 +234,9 @@ class Xorders extends BaseModel
     /**
      * 获取快递鸟物流公司对应数据
      * @return array|\PDOStatement|string|\think\Collection|\think\model\Collection
-     * @throws \think\db\exception\DataNotFoundException
-     * @throws \think\db\exception\ModelNotFoundException
-     * @throws \think\exception\DbException
+     * @throws DataNotFoundException
+     * @throws ModelNotFoundException
+     * @throws DbException
      */
     public function getBirdExpressList(){
         $birdExpressList = Db::name("xbird_express")
@@ -304,9 +307,9 @@ class Xorders extends BaseModel
      * @param string $date
      * @param string $date2
      * @return array
-     * @throws \think\db\exception\DataNotFoundException
-     * @throws \think\db\exception\ModelNotFoundException
-     * @throws \think\exception\DbException
+     * @throws DataNotFoundException
+     * @throws ModelNotFoundException
+     * @throws DbException
      */
     public function getHotSaleData($date = '',$date2 = ''){
         $date = strtotime($date);
@@ -343,9 +346,9 @@ class Xorders extends BaseModel
      * 获取 24小时销售额数据
      * @param string $date_sel
      * @return array
-     * @throws \think\db\exception\DataNotFoundException
-     * @throws \think\db\exception\ModelNotFoundException
-     * @throws \think\exception\DbException
+     * @throws DataNotFoundException
+     * @throws ModelNotFoundException
+     * @throws DbException
      */
     public function getTimeSaleData($date_sel = ''){
 

@@ -81,8 +81,9 @@ class Index extends Controller
     public function home()
     {
         $xIndexModel = new Xmozxx();
-        $devLogList = $xIndexModel->getDevLogList(null);
         $currLogList = $xIndexModel->getDevLogList(1);
+        $devLogList = $xIndexModel->getDevLogList(null);
+
 
         return view('home',['devLogList' => $devLogList,'currLogList' => $currLogList]);
     }

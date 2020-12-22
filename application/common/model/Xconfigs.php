@@ -66,7 +66,7 @@ class Xconfigs extends BaseModel
         $res = $this
             ->field("count(id) count,input_type")
             ->where([["conf_type", '=', 0],["status", '=', 0]])
-            ->group(["input_type",'id'])
+            ->group(["input_type"])
             ->select();
         $res  = isset($res) ? $res->toArray() : [];
         $arrCount = ['WB' => 0, 'KG' => 0, 'TP' => 0];

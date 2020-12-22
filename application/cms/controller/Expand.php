@@ -13,6 +13,9 @@ use app\common\controller\CmsBase;
 use app\common\lib\SpreadsheetService;
 use app\common\model\Xmozxx;
 use PhpOffice\PhpSpreadsheet\Exception;
+use think\db\exception\DataNotFoundException;
+use think\db\exception\ModelNotFoundException;
+use think\exception\DbException;
 use think\Request;
 use think\response\View;
 
@@ -43,8 +46,17 @@ class Expand extends CmsBase
      */
     public function opExcel(Request $request){
         if ($request->isGet()){
-            $loginList = (new Xmozxx())->getExcelTestData();
-            return view('op_excel',['loginList' => $loginList]);
+            try {
+                $loginList = (new Xmozxx())->getExcelTestData();
+                return view('op_excel',['loginList' => $loginList]);
+            } catch (DataNotFoundException $e) {
+                $message = $e->getMessage();
+            } catch (ModelNotFoundException $e) {
+                $message = $e->getMessage();
+            } catch (DbException $e) {
+                $message = $e->getMessage();
+            }
+            return showMsg(0,$message);
         }else{
             $opTag = $request->post('op_tag','up');
 
@@ -88,5 +100,41 @@ class Expand extends CmsBase
         }
     }
 
+    public function shtml(){
+        ob_start();
+        var_dump('OO');
+        echo 'HAHACWWW';
+        echo 'shtml',PHP_EOL;
+        echo '<br/>';
+
+        file_put_contents('index.shtml',ob_get_contents());
+    }
+    /**
+     * 模板输出重写方法
+     * @access protected
+     * @param  boolean $isStatic 是否保存为静态文件
+     * @param  string $template 模板文件名
+     * @param  array  $vars     模板输出变量
+     * @param  array  $replace  模板替换
+     * @param  array  $config   模板参数
+     * @return mixed
+     */
+    private function staticFetch($isStatic=false,$template = '', $vars = [], $replace = [], $config = [])
+    {
+        $HTML = $this->fetch($template, $vars, $replace, $config);//获得页面HTML代码
+        if ($isStatic){//判断是否需要保存为静态页
+            $thisModule=request()->module();//获取模块
+            $thisController=request()->controller();//获取控制器
+            $thisAction=request()->action();//获取方法
+            $new_file = "{$thisModule}/{$thisController}";
+            if(!file_exists($new_file)){
+                //检查是否有该文件夹，如果没有就创建，并给予最高权限
+                mkdir($new_file, 0777,true);
+            }
+            $new_file.="/{$thisAction}.".config('default_return_type');
+            file_put_contents($new_file,$HTML);//生成静态页
+        }
+        return $HTML;
+    }
 
 }

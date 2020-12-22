@@ -4,6 +4,7 @@ namespace app\index\controller;
 use app\common\lib\IAuth;
 use app\common\model\Xarticles;
 use app\common\model\XtodayWords;
+use think\response\View;
 
 class Index
 {
@@ -18,7 +19,7 @@ class Index
 
     /**
      * PC 端首页
-     * @return \think\response\View
+     * @return View
      */
     public function index()
     {
@@ -39,7 +40,7 @@ class Index
 
     /**
      * 文章列表页
-     * @return \think\response\View
+     * @return View
      */
     public function review(){
 
@@ -57,7 +58,7 @@ class Index
     /**
      * 文章详情页
      * @param $id 文章ID
-     * @return \think\response\View
+     * @return View
      */
     public function article($id)
     {

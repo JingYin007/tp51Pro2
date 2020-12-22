@@ -52,6 +52,7 @@ class Config extends CmsBase
                 'page_limit' => $this->page_limit,
             ];
             return view('index',$data);
+
         }
     }
 

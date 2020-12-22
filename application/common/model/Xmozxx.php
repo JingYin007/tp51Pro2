@@ -25,15 +25,15 @@ class Xmozxx
     public function getDevLogList($currTag = null){
         $count_date = Db::name('xproDevLogs')
             ->field("date_format(log_time,'%Y-%m-%d') date")
-            ->group('date,id')
+            ->group('date')
             ->count('id');
 
         $limit = $currTag ? "0,3" : "3,$count_date";
 
         $res = Db::name('xproDevLogs')
-            ->field("date_format(log_time,'%Y-%m-%d') date")
-            ->group('date,id')
-            ->order(['date'=>'desc','id'=>'desc'])
+            ->field("date_format(log_time,'%Y-%m-%d') date,min(id) min_id")
+            ->group('date')
+            ->order(['date'=>'desc','min_id'=>'desc'])
             ->limit($limit)
             ->select();
 

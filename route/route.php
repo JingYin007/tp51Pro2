@@ -33,16 +33,19 @@ Route::post('cms/chat/ajax_get_user_list','cms/chat/ajax_get_user_list');
 
 Route::any('cms/index/admin/:id','cms/index/admin');
 
+
 //后台导航菜单管理
 Route::any('cms/menu/index','cms/navMenu/index');
 Route::any('cms/menu/add','cms/navMenu/add');
 Route::any('cms/menu/edit/:id','cms/navMenu/edit');
 Route::any('cms/menu/auth/:id','cms/navMenu/auth');
 
+
 //今日赠言管理
 Route::any('cms/todayWord/index','cms/todayWord/index');
 Route::any('cms/todayWord/add','cms/todayWord/add');
 Route::any('cms/todayWord/edit/:id','cms/todayWord/edit');
+
 
 //文章管理
 Route::any('cms/article/index','cms/article/index');
@@ -51,11 +54,13 @@ Route::any('cms/article/edit/:id','cms/article/edit');
 Route::post('cms/article/ajaxForRecommend','cms/article/ajaxForRecommend');
 Route::get('cms/article/viewLogs/:id','cms/article/viewLogs');
 
+
 //配置信息管理
 Route::any('cms/config/index','cms/config/index');
 Route::any('cms/config/add','cms/config/add');
 Route::any('cms/config/edit/:id','cms/config/edit');
 Route::post('cms/config/ajaxUpdateSwitchValue','cms/config/ajaxUpdateSwitchValue');
+
 
 //系统信息配置
 Route::any('cms/sysConf/auth','cms/sysConf/auth');
@@ -68,10 +73,12 @@ Route::any('cms/admin/index','cms/admin/index');
 Route::any('cms/admin/addAdmin','cms/admin/addAdmin');
 Route::any('cms/admin/editAdmin/:id', 'cms/admin/editAdmin');
 
+
 //角色管理
 Route::any('cms/admin/role','cms/admin/role');
 Route::any('cms/admin/addRole','cms/admin/addRole');
 Route::any('cms/admin/editRole/:id', 'cms/admin/editRole');
+
 
 //后台登录管理
 Route::get('cms/login/index','cms/login/index');
@@ -79,10 +86,6 @@ Route::any('cms/login/logout','cms/login/logout');
 Route::post('cms/login/ajaxLogin','cms/login/ajaxLogin');
 Route::post('cms/login/ajaxCheckLoginStatus','cms/login/ajaxCheckLoginStatus');
 
-//拓展学习管理
-Route::any('cms/expand/react','cms/expand/react');
-Route::any('cms/expand/test','cms/expand/test');
-Route::any('cms/expand/opExcel','cms/expand/opExcel');
 
 /**
  * 网站业务
@@ -96,6 +99,7 @@ Route::post('cms/category/ajaxForShow','cms/category/ajaxForShow');
 Route::any('cms/brand/index','cms/brand/index');
 Route::any('cms/brand/add','cms/brand/add');
 Route::any('cms/brand/edit/:id','cms/brand/edit');
+
 
 //商品管理
 Route::any('cms/goods/index','cms/goods/index');
@@ -114,7 +118,6 @@ Route::any('cms/specInfo/index','cms/specInfo/index');
 Route::any('cms/specInfo/add','cms/specInfo/add');
 Route::any('cms/specInfo/edit/:id','cms/specInfo/edit');
 Route::any('cms/specInfo/details','cms/specInfo/details');
-
 
 
 //活动管理
@@ -143,6 +146,13 @@ Route::any('cms/order/lookLogistics/:op_id','cms/order/lookLogistics');
 //统计分析
 Route::any('cms/analyze/hotSale','cms/analyze/hotSale');
 Route::any('cms/analyze/timeSale','cms/analyze/timeSale');
+
+
+//拓展学习管理
+Route::any('cms/expand/react','cms/expand/react');
+Route::any('cms/expand/test','cms/expand/test');
+Route::any('cms/expand/opExcel','cms/expand/opExcel');
+Route::any('cms/expand/shtml','cms/expand/shtml');
 
 
 /**
