@@ -7,7 +7,9 @@ namespace app\common\model;
 use think\Db;
 use think\db\exception\DataNotFoundException;
 use think\db\exception\ModelNotFoundException;
+use think\Exception;
 use think\exception\DbException;
+use think\exception\PDOException;
 
 /**
  * 订单数据操作类
@@ -204,12 +206,11 @@ class Xorders extends BaseModel
         if ($search){
             $where[] = ['order_sn|consignee|mobile|address|goods_name', 'like', '%' . $search . '%'];
         }
-        $count = $this
+        return $this
             ->alias('oi')
             ->join('xorder_details od','od.order_id = oi.id')
             ->where($where)
             ->count('od.id');
-        return $count;
     }
 
     /**
@@ -239,10 +240,9 @@ class Xorders extends BaseModel
      * @throws DbException
      */
     public function getBirdExpressList(){
-        $birdExpressList = Db::name("xbird_express")
+        return Db::name("xbird_express")
             ->field('*')
             ->select();
-        return $birdExpressList;
     }
     /**
      * 根据物流单号，获取其快递公司信息
@@ -270,8 +270,8 @@ class Xorders extends BaseModel
      * 更新物流信息
      * @param array $postData
      * @return array
-     * @throws \think\Exception
-     * @throws \think\exception\PDOException
+     * @throws Exception
+     * @throws PDOException
      */
     public function updateCourierInfo($postData = [])
     {
@@ -338,8 +338,7 @@ class Xorders extends BaseModel
             ->order("value","desc")
             ->limit(10)
             ->select();
-        $resData = ['goodsInfo' => $goodsInfo, 'catInfo' => $catInfo];
-        return $resData;
+        return ['goodsInfo' => $goodsInfo, 'catInfo' => $catInfo];
     }
 
     /**
@@ -388,10 +387,9 @@ class Xorders extends BaseModel
                 }
             }
         }
-        $resData = [
+        return [
             'sale_amount_Res' => $sale_amount_Res,
             'sale_num_Res' => $sale_num_Res,
             'sale_amount_sum' => $sale_amount_sum ? $sale_amount_sum : '0.00',];
-        return $resData;
     }
 }
