@@ -101,6 +101,7 @@ class Expand extends CmsBase
 
     public function shtmlx(){
 
+        var_dump(__FILE__);
         return $this->fetch();
     }
 }
