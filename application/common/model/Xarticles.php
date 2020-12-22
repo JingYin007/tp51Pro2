@@ -35,7 +35,7 @@ class Xarticles extends BaseModel
             ->alias('a')//给主表取别名
             ->join('xarticle_points ap', 'ap.article_id = a.id')//给你要关联的表取别名,并让两个值关联
             ->where('a.id', '>', 0)
-            ->where('ap.status', 1)
+            ->where('ap.status', '1')
             ->select();
         //$data = array_merge($data,$data,$data,$data,$data,$data,$data);
         return isset($res) ? $res->toArray() : [];
@@ -52,7 +52,7 @@ class Xarticles extends BaseModel
             ->alias('a')
             ->join('xarticle_points ap', 'ap.article_id = a.id')
             ->order('ap.view', 'desc')
-            ->where('ap.status', 1)
+            ->where('ap.status', '1')
             ->limit(6)
             ->select();
         return isset($res) ? $res->toArray() : [];
@@ -82,9 +82,9 @@ class Xarticles extends BaseModel
         $res = [];
         if (is_numeric($id)) {
             $res = $this
+                ->field('a.*,ap.seo_title,seo_keywords,seo_description')
                 ->alias('a')
                 ->join('xarticle_points ap', 'ap.article_id = a.id')
-                ->field('a.*')
                 ->where('a.id = ' . $id)
                 ->find();
         }
@@ -100,7 +100,7 @@ class Xarticles extends BaseModel
      */
     public function getCmsArticlesForPage($curr_page, $limit = 1, $search = null)
     {
-        $where[] = ["ap.status",">", -1];
+        $where[] = ["ap.status",">", '-1'];
         if ($search){
             $where[] = ['a.title', 'like', '%' . $search . '%'];
         }
@@ -145,7 +145,7 @@ class Xarticles extends BaseModel
      */
     public function getCmsArticlesCount($search = null)
     {
-        $where[] = ["ap.status",">", -1];
+        $where[] = ["ap.status",">", '-1'];
         if ($search){
             $where[] = ['a.title', 'like', '%' . $search . '%'];
         }
@@ -165,7 +165,7 @@ class Xarticles extends BaseModel
     {
         $res = $this
             ->alias('a')
-            ->field('a.*,title,status,picture,abstract')
+            ->field('a.*,title,status,picture,abstract,seo_title,seo_keywords,seo_description')
             ->join('xarticle_points ap', 'ap.article_id = a.id')
             ->where('a.id', $id)
             ->find();
@@ -183,7 +183,7 @@ class Xarticles extends BaseModel
         $opTag = isset($input['tag']) ? $input['tag'] : 'edit';
         if ($opTag == 'del') {
             $delStatus = Db::name('xarticle_points')
-                ->where('article_id', $id)->update(['status' => -1]);
+                ->where('article_id', $id)->update(['status' => '-1']);
             $validateRes = ['tag' => $delStatus, 'message' => $delStatus?'数据删除成功':'Sorry，删除失败！'];
             insertCmsOpLogs($delStatus,'ARTICLE',$id,'文章删除操作');
         } else {
@@ -209,7 +209,10 @@ class Xarticles extends BaseModel
                     ->update([
                         'picture' => isset($input['picture']) ? $input['picture'] : '',
                         'abstract' => isset($input['abstract'])?$input['abstract']:'',
-                        'status' => isset($input['status'])?$input['status']:0,
+                        'seo_title' => isset($input['seo_title'])?$input['seo_title']:'',
+                        'seo_keywords' => isset($input['seo_keywords'])?$input['seo_keywords']:'',
+                        'seo_description' => isset($input['seo_description'])?$input['seo_description']:'',
+                        'status' => isset($input['status'])?$input['status']:'0',
                     ]);
 
                 insertCmsOpLogs($saveTag||$saveTag2,'ARTICLE',$id,'文章更新');
@@ -250,7 +253,10 @@ class Xarticles extends BaseModel
                     ->data([
                         'picture' => isset($data['picture'])?$data['picture']:'',
                         'abstract' => isset($data['abstract'])?$data['abstract']:'',
-                        'status' => isset($data['status'])?$data['status']:0,
+                        'seo_title' => isset($data['seo_title'])?$data['seo_title']:'',
+                        'seo_keywords' => isset($data['seo_keywords'])?$data['seo_keywords']:'',
+                        'seo_description' => isset($data['seo_description'])?$data['seo_description']:'',
+                        'status' => isset($data['status'])?$data['status']:'0',
                         'article_id' => $this->getLastInsID(),
                     ])
                     ->insert();

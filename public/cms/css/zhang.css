@@ -140,8 +140,16 @@
 }
 
 .form-op-normal .div-form-op{
-    margin-right: 10px;
+    background-color: #99CCCC;
+    position: fixed;
+    bottom: 0px;
+    right: 6px;
+    overflow-y: auto;
+    z-index: 100;
+}
+.form-op-normal .div-form-op .layui-input-block{
     float: right;
+    margin: 7px 12px;
 }
 
 .layui-inline .btn-search-mz {

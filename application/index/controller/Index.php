@@ -67,6 +67,10 @@ class Index
             $data = [
                 'name'=>'MoTzxx',
                 'article'=>$articleInfo,
+                'seo_conf' => [
+                    'seo_title'=>$articleInfo['seo_title'],
+                    'seo_keywords'=>$articleInfo['seo_keywords'],
+                    'seo_description'=>$articleInfo['seo_description']]
             ];
             return view('article',$data);
         }else{

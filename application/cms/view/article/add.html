@@ -53,8 +53,40 @@
         </div>
     </div>
     {:token()}
-    <div class="layui-form-item">
-        <div class="layui-input-block div-form-op">
+    <div class="layui-form-item layui-collapse">
+        <div class="layui-colla-item">
+            <h2 class="layui-colla-title"><b>SEO 设置</b></h2>
+            <div class="layui-colla-content">
+                <div class="layui-form-item">
+                    <label class="layui-form-label">页面 Title：</label>
+                    <div class="layui-input-inline">
+                        <input type="text" name="seo_title"
+                               value=""
+                               autocomplete="off" class="layui-input input-title-mz">
+                    </div>
+                </div>
+                <div class="layui-form-item">
+                    <label class="layui-form-label">关键词：</label>
+                    <div class="layui-input-block">
+                        <input type="text" name="seo_keywords"
+                               placeholder="多个关键词请用“,”隔开"
+                               value=""
+                               autocomplete="off" class="layui-input input-title-mz">
+                    </div>
+                </div>
+                <div class="layui-form-item layui-form-text">
+                    <label class="layui-form-label">描述：</label>
+                    <div class="layui-input-block">
+                        <textarea placeholder="请输入描述内容"
+                                  name="seo_description" class="layui-textarea"></textarea>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="layui-form-item div-form-op">
+        <div class="layui-input-block">
             <button class="layui-btn layui-btn-danger" type="button"
                     op_url="{:url('cms/article/add')}" onclick="opFormPostRecord(this)">提交</button>
             <button type="reset" class="layui-btn layui-btn-primary">重置</button>

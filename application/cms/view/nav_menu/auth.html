@@ -20,8 +20,8 @@
     </div>
     <input type="hidden" class="post-url" value="{:url('cms/NavMenu/auth',['id'=>$parent_id])}">
     {:token()}
-    <div class="layui-form-item">
-        <div class="layui-input-block div-form-op">
+    <div class="layui-form-item div-form-op">
+        <div class="layui-input-block">
             <button class="layui-btn" type="button" onclick="addNewNavMenu()"
                     lay-submit lay-filter="formDemo">添加
             </button>

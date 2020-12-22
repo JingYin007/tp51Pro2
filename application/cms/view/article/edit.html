@@ -32,8 +32,8 @@
     <div class="layui-form-item">
         <label class="layui-form-label">状态：</label>
         <div class="layui-input-block">
-            <input type="radio" name="status" value="1" title="显示" {$article.status==1?"checked":""}>
-            <input type="radio" name="status" value="0" title="隐藏" {$article.status==0?"checked":""}>
+            <input type="radio" name="status" value="1" title="显示" {$article.status=='1'?"checked":""}>
+            <input type="radio" name="status" value="0" title="隐藏" {$article.status=='0'?"checked":""}>
         </div>
     </div>
     <div class="layui-form-item">
@@ -47,21 +47,56 @@
     </div>
 
 
-    <div class="layui-form-item layui-form-text ">
+    <div class="layui-form-item layui-form-text">
         <label class="layui-form-label">文章内容：</label>
         <div class="layui-input-block">
             <textarea  id="mz-tinymce" name="content">{$article.content|htmlspecialchars_decode}</textarea >
         </div>
     </div>
     {:token()}
-    <div class="layui-form-item">
-        <div class="layui-input-block div-form-op">
+
+    <div class="layui-form-item layui-collapse">
+        <div class="layui-colla-item">
+            <h2 class="layui-colla-title"><b>SEO 设置</b></h2>
+            <div class="layui-colla-content">
+                <div class="layui-form-item">
+                    <label class="layui-form-label">页面 Title：</label>
+                    <div class="layui-input-inline">
+                        <input type="text" name="seo_title"
+                               value="{$article.seo_title}"
+                               autocomplete="off" class="layui-input input-title-mz">
+                    </div>
+                </div>
+                <div class="layui-form-item">
+                    <label class="layui-form-label">关键词：</label>
+                    <div class="layui-input-block">
+                        <input type="text" name="seo_keywords"
+                               placeholder="多个关键词请用“,”隔开"
+                               value="{$article.seo_keywords}"
+                               autocomplete="off" class="layui-input input-title-mz">
+                    </div>
+                </div>
+                <div class="layui-form-item layui-form-text">
+                    <label class="layui-form-label">描述：</label>
+                    <div class="layui-input-block">
+                        <textarea placeholder="请输入描述内容"
+                                  name="seo_description" class="layui-textarea">{$article.seo_description}</textarea>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="layui-form-item div-form-op">
+        <div class="layui-input-block">
             <button class="layui-btn layui-btn-danger" type="button"
                     op_url="{:url('cms/article/edit',['id'=>$article.id])}"
                     onclick="opFormPostRecord(this)">提交</button>
             <button type="reset" class="layui-btn layui-btn-primary">重置</button>
         </div>
     </div>
+
+
 </form>
 {/block}
 
