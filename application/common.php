@@ -57,7 +57,7 @@ function set_cms_config($pat =[], $rep =[],$confFileName = 'sys_auth')
 }
 /**
  * 处理显示图片服务器地址,可进行图片服务器地址的处理
- * @param $imgUrl
+ * @param $imgUrl 数据库中的图片存储路径
  * @return string
  */
 function imgToServerView($imgUrl)
@@ -66,12 +66,29 @@ function imgToServerView($imgUrl)
         $imgServerUrl = $imgUrl;
     }else{
         if ($imgUrl){
-            $imgServerUrl = config('ftp.IMG_SERVER_PATH') . $imgUrl;
+            $imgServerPath = config('ftp.IMG_SERVER_PATH');
+            if ($imgServerPath === '/'){
+                //当前包含协议的域名
+                $main = request()->doMain();
+                $imgServerPath = $main.'/';
+            }
+            $imgServerUrl = $imgServerPath . $imgUrl;
         }else{
             $imgServerUrl = "";
         }
     }
     return $imgServerUrl;
+}
+
+/**
+ * 处理显示图片经 Base64编码后的数据
+ * @param $imgUrl 数据库中的图片存储路径
+ * @return string
+ */
+function imgBase64ToServerView($imgUrl){
+    $img_file = imgToServerView($imgUrl);
+    $img_info = getimagesize($img_file);
+    return "data:{$img_info['mime']};base64," . base64_encode(file_get_contents($img_file));
 }
 
 /**

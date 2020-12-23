@@ -37,6 +37,9 @@ class Xarticles extends BaseModel
             ->where('a.id', '>', 0)
             ->where('ap.status', '1')
             ->select();
+        foreach ($res as $key => $v){
+            $res[$key]['picture'] = imgBase64ToServerView($v['picture']);
+        }
         //$data = array_merge($data,$data,$data,$data,$data,$data,$data);
         return isset($res) ? $res->toArray() : [];
     }
@@ -69,6 +72,9 @@ class Xarticles extends BaseModel
             ->order("id", "asc")
             ->limit(9)
             ->select();
+        foreach ($res as $key => $v){
+            $res[$key]['picture'] = imgBase64ToServerView($v['picture']);
+        }
         return isset($res) ? $res : [];
     }
 
@@ -123,7 +129,7 @@ class Xarticles extends BaseModel
             } else {
                 $res[$key]['status_checked'] = "checked";
             }
-            $res[$key]['picture'] = imgToServerView($v['picture']);
+            $res[$key]['picture'] = imgBase64ToServerView($v['picture']);
 
             $allImgs = getPatternMatchImages($v['content']);
             $str_images_view = "";

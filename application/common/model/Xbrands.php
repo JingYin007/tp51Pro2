@@ -42,7 +42,7 @@ class Xbrands extends BaseModel
             ->select();
         foreach ($res as $key => $v) {
             if (isset($v['brand_icon']) && !empty($v['brand_icon'])){
-                $img_url = imgToServerView($v['brand_icon']);
+                $img_url = imgBase64ToServerView($v['brand_icon']);
                 $str_brand_icon = "<img src='$img_url'>";
             }else{
                 $str_brand_icon = "——";
@@ -109,7 +109,7 @@ class Xbrands extends BaseModel
             ->where('id', $id)
             ->find();
         if (isset($res['brand_icon']) && !empty($res['brand_icon'])){
-            $icon_full = imgToServerView($res['brand_icon']);
+            $icon_full = imgBase64ToServerView($res['brand_icon']);
         }else{
             $icon_full = "";
         }
