@@ -4,6 +4,9 @@ namespace app\common\model;
 
 use app\common\validate\XtodayWord;
 use think\Db;
+use think\db\exception\DataNotFoundException;
+use think\db\exception\ModelNotFoundException;
+use think\exception\DbException;
 use \think\Model;
 
 /**
@@ -26,9 +29,9 @@ class XtodayWords extends BaseModel
      * 根据ID 获取赠言数据
      * @param int $id
      * @return array|null|\PDOStatement|string|Model
-     * @throws \think\db\exception\DataNotFoundException
-     * @throws \think\db\exception\ModelNotFoundException
-     * @throws \think\exception\DbException
+     * @throws DataNotFoundException
+     * @throws ModelNotFoundException
+     * @throws DbException
      */
     public function getTodayWord($id = 0)
     {

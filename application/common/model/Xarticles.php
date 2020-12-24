@@ -3,6 +3,8 @@
 namespace app\common\model;
 
 use app\common\validate\Xarticle;
+use think\cache\driver\Memcache;
+use think\cache\driver\Redis;
 use think\Db;
 use \think\Model;
 
@@ -30,6 +32,7 @@ class Xarticles extends BaseModel
      */
     public function getArticleList()
     {
+        phpinfo();
         $res = $this
             ->field("a.*,ap.picture,ap.abstract")
             ->alias('a')//给主表取别名

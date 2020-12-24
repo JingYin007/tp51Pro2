@@ -20,8 +20,8 @@ class Index extends Base
     }
 
     /**
-     * PC 端首页
-     * @return View
+     * PC 端首页 D:\mySoft\cygwin64
+     * @return View D:\mySoft\cygwin64\cydown
      */
     public function index()
     {

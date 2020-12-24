@@ -28,7 +28,10 @@
         "phpoffice/phpspreadsheet": "^1.8",
         "phpoffice/phpexcel": "^1.8",
         "ext-pdo": "*",
-        "ext-iconv": "*"
+        "ext-iconv": "*",
+        "ext-redis": "*",
+        "ext-memcached": "*",
+        "ext-memcache": "*"
     },
     "autoload": {
         "psr-4": {
