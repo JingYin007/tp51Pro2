@@ -17,21 +17,19 @@ return [
     // 缓存配置为复合类型
     'type'   => 'complex',
     'default'	=>	[
+        // 驱动方式
         'type'	=>	'file',
         // 全局缓存有效期（0为永久有效）
-        'expire'=>  7200,
-        // 缓存前缀
-        'prefix'=>  'think-cache',
-        // 缓存目录
-        'path'  =>  '',
+        'expire'=>  7200
     ],
-
+    // 文件缓存
+    'file'   =>  [
+        'type'   => 'file',
+        'prefix'=>  'cache-file',
+    ],
     'redis'	=>	[
         'type'	=>	'redis',
         'host'	=>	'127.0.0.1',
-        // 全局缓存有效期（0为永久有效）
-        'expire'=>  60,
-        // 缓存前缀
-        'prefix'=>  'think-redis',
+        'prefix'=>  'mz-redis',
     ],
 ];

@@ -2,6 +2,7 @@
 namespace app\index\controller;
 
 use app\common\controller\Base;
+use app\common\model\Xmozxx;
 use think\Controller;
 use app\common\model\Xarticles;
 use app\common\model\XtodayWords;
@@ -29,7 +30,7 @@ class Index extends Base
         $articleList = $this->articleModel->getArticleList();
         $recommendList = $this->articleModel->getRecommendList();
         $photos = $this->articleModel->getPhotos();
-
+        
         $data = [
             'name'=>'MoTzxx',
             'list' => $articleList,
@@ -82,4 +83,9 @@ class Index extends Base
         }
     }
 
+    public function test(){
+        (new Xmozxx())->insertTests();
+        die;
+        echo 'TEST';
+    }
 }

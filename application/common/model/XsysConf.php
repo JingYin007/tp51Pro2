@@ -10,6 +10,8 @@ namespace app\common\model;
 
 
 use app\common\lib\IAuth;
+use PDOStatement;
+use think\Collection;
 use think\Db;
 use think\Exception;
 use think\exception\PDOException;
@@ -138,11 +140,13 @@ class XsysConf extends Model
 
     /**
      * 获取正常状态下的 ip
-     * @return array|\PDOStatement|string|\think\Collection
+     * @return array|PDOStatement|string|Collection
      */
     public function getIpWhites(){
         $res = Db::name('xipWhites')
-            ->field('ip,floor(rand()*6) rand')->where('status',1)->select();
+            ->field('inet_ntoa(ip) ip,floor(rand()*6) rand')
+            ->where('status',1)
+            ->select();
         return isset($res)? $res:[];
     }
 
@@ -190,7 +194,7 @@ class XsysConf extends Model
      */
     public function delIpWhite($ipVal = ''){
         if ($ipVal){
-            $tag = Db::name('xipWhites')->where('ip',$ipVal)->update(['status'=>-1]);
+            $tag = Db::name('xipWhites')->where('ip',ip2long($ipVal))->update(['status'=>-1]);
             $message = $tag?'数据删除成功':"删除失败";
         }else{
             $tag = 0;
@@ -210,15 +214,16 @@ class XsysConf extends Model
         }else{
             $ipVal = trim($ipVal);
             if (filter_var($ipVal,FILTER_VALIDATE_IP)){
-                $count = Db::name('xipWhites')->where('ip',$ipVal)->field('status')->find();
+                $saveIp = ip2long($ipVal);
+                $count = Db::name('xipWhites')->where('ip',$saveIp)->field('status')->find();
                 if ($count){
                     if ($count['status'] == 1){
                         $message = "Sorry，该IP地址已存在！";
                     }else{
-                        $tag = Db::name('xipWhites')->where('ip',$ipVal)->update(['status'=>1]);
+                        $tag = Db::name('xipWhites')->where('ip',$saveIp)->update(['status'=>1]);
                     }
                 }else{
-                    $tag = Db::name('xipWhites')->insertGetId(['ip'=>$ipVal]);
+                    $tag = Db::name('xipWhites')->insertGetId(['ip'=>$saveIp]);
                 }
                 $message = isset($message)?$message:"IP 添加成功";
             }else{
@@ -234,7 +239,7 @@ class XsysConf extends Model
      * @return bool
      */
     public function checkIpAuth($ipVal = ''){
-        $ipStatus =  Db::name('xipWhites')->where('ip',$ipVal)->value('status');
+        $ipStatus =  Db::name('xipWhites')->where('ip',ip2long($ipVal))->value('status');
         return $ipStatus == 1;
     }
     /**

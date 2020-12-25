@@ -15,6 +15,7 @@ Route::get('/','index/index/index');
 Route::get('article/:id','index/index/article');
 Route::get('/index/review','index/index/review');
 Route::get('/index/contact','index/index/contact');
+Route::get('/index/test','index/index/test');
 
 /**
  * 后台 CMS配置

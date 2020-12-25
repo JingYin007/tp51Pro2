@@ -32,7 +32,6 @@ class Xarticles extends BaseModel
      */
     public function getArticleList()
     {
-        phpinfo();
         $res = $this
             ->field("a.*,ap.picture,ap.abstract")
             ->alias('a')//给主表取别名

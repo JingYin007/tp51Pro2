@@ -13,6 +13,7 @@ use app\common\controller\CmsBase;
 use app\common\lib\SpreadsheetService;
 use app\common\model\Xmozxx;
 use PhpOffice\PhpSpreadsheet\Exception;
+use think\cache\driver\Redis;
 use think\db\exception\DataNotFoundException;
 use think\db\exception\ModelNotFoundException;
 use think\exception\DbException;
@@ -35,6 +36,35 @@ class Expand extends CmsBase
     }
 
     public function test(){
+
+        $redis = new Redis();
+        $iphone = "15117972683";
+        $redis->set(config('redis_mz.prefix').$iphone,'这是咋了!!',config('redis_mz.expire'));
+
+        $ss = $redis->get(config('redis_mz.prefix').$iphone);
+        //var_dump($ss);
+        
+        $redis2 = new \Redis();
+        $redis2->connect('127.0.0.1',6379);
+        $redis2->sAdd('set-mz',rand(1,6));
+
+
+        // 向队列左侧加入元素
+        //$redis2->lPush('lists', 'Z');
+        //$redis2->lPush('lists', 'z');
+        // 向队列右侧加入元素
+
+        // 从左侧出队一个元素（获取并删除）
+        $x = $redis2->lPop('lists');
+        echo $x . PHP_EOL;
+        // 从右侧出队一个元素（获取并删除）
+        $z = $redis2->rPop('lists');
+        echo $z . PHP_EOL;
+
+        $length = $redis2->lLen('lists');
+        $lists = $redis2->lRange('lists', 0, $length - 1);
+        dump($lists);
+
         echo 'Test 入口';
     }
     /**

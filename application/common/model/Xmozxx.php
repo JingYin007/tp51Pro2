@@ -108,4 +108,15 @@ class Xmozxx
         }
         return ['status' => $opRes['status'],'message'=>$opRes['message']];
     }
+
+    public function insertTests(){
+        $open_id = 'abc_xxx'.rand(100,200);
+        $count = DB::name('xtests')->where('open_id',$open_id)->count();
+        if ($count){
+            return 0;
+        }else{
+             DB::name('xtests')->insert(['open_id'=>$open_id]);
+            return 1;
+        }
+    }
 }

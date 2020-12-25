@@ -15,13 +15,19 @@
 
 return [
     'id'             => '',
-    // SESSION_ID的提交变量,解决flash上传跨域
+    // SESSION_ID 的提交变量,解决 flash 上传跨域
     'var_session_id' => '',
     // SESSION 前缀
     'prefix'         => 'tp5',
-    // 驱动方式 支持redis memcache memcached
+    // 驱动方式 支持 redis memcache memcached
     'type'           => '',
     // 是否自动开启 SESSION
     'auto_start'     => true,
     'expire'    => 40000,
+
+    /*-------- Session+redis 实现会话共享 --------------------------*/
+//    'type'    => 'redis',     // 驱动方式
+//    'host'    => '127.0.0.1', // redis主机
+//    'port'    => 6379,        // redis端口
+    /*------------------------------------------------------------*/
 ];
