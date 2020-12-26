@@ -37,33 +37,77 @@ class Expand extends CmsBase
 
     public function test(){
 
-        $redis = new Redis();
-        $iphone = "15117972683";
-        $redis->set(config('redis_mz.prefix').$iphone,'这是咋了!!',config('redis_mz.expire'));
+        try{
+            $redis = new Redis();
+            $iphone = "15117972683";
+            $redis->set(config('redis_mz.prefix').$iphone,'这是咋了!!',config('redis_mz.expire'));
 
-        $ss = $redis->get(config('redis_mz.prefix').$iphone);
-        //var_dump($ss);
-        
-        $redis2 = new \Redis();
-        $redis2->connect('127.0.0.1',6379);
-        $redis2->sAdd('set-mz',rand(1,6));
+            $ss = $redis->get(config('redis_mz.prefix').$iphone);
+            //var_dump($ss);
+
+            $redis2 = new \Redis();
+            $redis2->connect('127.0.0.1',6379);
+            $redis2->sAdd('set-mz',rand(1,6));
 
 
-        // 向队列左侧加入元素
-        //$redis2->lPush('lists', 'Z');
-        //$redis2->lPush('lists', 'z');
-        // 向队列右侧加入元素
+            $lockTag = 'lockTag';
+            $lockVal = 'HAHHHA';
+            if ($redis2->set($lockTag,$lockVal,['nx','ex'=> 30])){
+                //$redis2->setex($lockTag,22,'');
+                //$redis2->expire($lockTag,20);
+                //执行业务
+                echo $lockTag.'--- oK'.PHP_EOL;
+                //处理完成后
+                if($redis2->get($lockTag) == $lockVal){
+                    //此时还存在
+                    //$redis2->del($lockTag);
+                    echo 'del--oK'.PHP_EOL;
+                }
+            }else{
+                echo $lockTag.'--- Fail'.PHP_EOL;
+            }
 
-        // 从左侧出队一个元素（获取并删除）
-        $x = $redis2->lPop('lists');
-        echo $x . PHP_EOL;
-        // 从右侧出队一个元素（获取并删除）
-        $z = $redis2->rPop('lists');
-        echo $z . PHP_EOL;
+            // 向队列左侧加入元素
+            //$redis2->lPush('lists', 'Z');
+            //$redis2->lPush('lists', 'z');
+            // 向队列右侧加入元素
 
-        $length = $redis2->lLen('lists');
-        $lists = $redis2->lRange('lists', 0, $length - 1);
-        dump($lists);
+            // 从左侧出队一个元素（获取并删除）
+            //$x = $redis2->lPop('lists');
+            //echo $x . PHP_EOL;
+            // 从右侧出队一个元素（获取并删除）
+            //$z = $redis2->rPop('lists');
+            //echo $z . PHP_EOL;
+
+            //$length = $redis2->lLen('lists');
+            //$lists = $redis2->lRange('lists', 0, $length - 1);
+            //dump($lists);
+
+
+//            $redis2->zAdd('lb',23,'mark');
+//            $redis2->zAdd('lb',32,'Niya');
+//            $redis2->zAdd('lb',55,'Wuli');
+//            $redis2->zAdd('lb',32,'Moqi');
+//            $redis2->zAdd('lb',63,'Niya');
+
+//            $score = $redis2->zScore('lb','Wuli');
+//            var_dump($score);
+//            $rank = $redis2->zRevRank('lb','mark');
+//            var_dump($rank);
+//            $range = $redis2->zRangeByScore('lb',0,2,array('withscores' => TRUE));
+//            //$range = $redis2->zRevRange('lb',0,2,true);
+//            var_dump($range);
+
+
+
+
+
+
+
+        }catch (\RedisException $exception){
+            echo $exception->getMessage();
+        }
+
 
         echo 'Test 入口';
     }
