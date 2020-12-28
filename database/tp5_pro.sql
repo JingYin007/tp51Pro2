@@ -10,7 +10,7 @@ Target Server Type    : MYSQL
 Target Server Version : 50726
 File Encoding         : 65001
 
-Date: 2020-12-16 21:12:03
+Date: 2020-12-28 22:47:20
 */
 
 SET FOREIGN_KEY_CHECKS=0;
@@ -176,6 +176,9 @@ CREATE TABLE `tp5_xarticle_points` (
   `abstract` varchar(255) NOT NULL COMMENT '文章摘要',
   `recommend` tinyint(2) NOT NULL DEFAULT '0' COMMENT '推荐标志  0：未推荐   1：推荐',
   `status` tinyint(2) NOT NULL DEFAULT '0' COMMENT '状态标记    ：-1 删除；0：隐藏；1：显示 ',
+  `seo_title` varchar(100) NOT NULL DEFAULT '' COMMENT 'seo 优化 标题设置',
+  `seo_keywords` varchar(200) NOT NULL DEFAULT '' COMMENT 'seo 优化 关键词设置',
+  `seo_description` text NOT NULL COMMENT 'seo 优化 描述信息设置',
   PRIMARY KEY (`id`),
   KEY `index_article` (`article_id`),
   KEY `index_key_words` (`keywords`)
@@ -184,12 +187,12 @@ CREATE TABLE `tp5_xarticle_points` (
 -- ----------------------------
 -- Records of tp5_xarticle_points
 -- ----------------------------
-INSERT INTO `tp5_xarticle_points` VALUES ('1', '1', '2', '', 'home/images/article1.png', '如今科技进步，时代向前，人的平均寿命越来越长了。但长长的一生中，究竟有多少时间真正属于我们自己呢？', '1', '1');
-INSERT INTO `tp5_xarticle_points` VALUES ('2', '2', '12', '', 'home/images/article2.png', '我的小天地，我闯荡的大江湖，我的浩瀚星辰和璀璨日月，再与你无关；而你的天地，你行走的江湖，你的日月和星辰，我也再不惦念。从此，一别两宽，各生欢喜。', '1', '1');
-INSERT INTO `tp5_xarticle_points` VALUES ('4', '4', '0', '', 'home/images/article4.png', '人都是对喜欢的东西最上心。他若真的在乎你，一分一秒都不想失去你的消息，更不会不时玩消失，不会对你忽冷忽热，因为他比你还害怕失去。所有的不主动都是由于不喜欢，喜欢你的人永远不忙。', '0', '1');
-INSERT INTO `tp5_xarticle_points` VALUES ('3', '3', '0', '', 'home/images/article3.png', '因为穷，所以要努力赚钱；努力赚钱，就会没时间找对象；找不到对象就算了，钱也没赚多少，难免开始焦虑；一旦焦虑，每天洗头的时候，掉出来的头发会告诉你什么才是真正的“绝望”。', '1', '1');
-INSERT INTO `tp5_xarticle_points` VALUES ('5', '5', '0', '', 'upload/20201212/af37b747c21ab61d3bba57e32cbe738c.jpg', 'X', '0', '-1');
-INSERT INTO `tp5_xarticle_points` VALUES ('11', '11', '0', '', 'upload/20201212/52642c147048a4cd5d547d10c3addac0.jpg', 'saX', '0', '-1');
+INSERT INTO `tp5_xarticle_points` VALUES ('1', '1', '2', '', 'home/images/article1.png', '如今科技进步，时代向前，人的平均寿命越来越长了。但长长的一生中，究竟有多少时间真正属于我们自己呢？', '1', '1', '', '', '');
+INSERT INTO `tp5_xarticle_points` VALUES ('2', '2', '12', '', 'home/images/article2.png', '我的小天地，我闯荡的大江湖，我的浩瀚星辰和璀璨日月，再与你无关；而你的天地，你行走的江湖，你的日月和星辰，我也再不惦念。从此，一别两宽，各生欢喜。', '1', '1', '', '', '');
+INSERT INTO `tp5_xarticle_points` VALUES ('4', '4', '0', '', 'home/images/article4.png', '人都是对喜欢的东西最上心。他若真的在乎你，一分一秒都不想失去你的消息，更不会不时玩消失，不会对你忽冷忽热，因为他比你还害怕失去。所有的不主动都是由于不喜欢，喜欢你的人永远不忙。', '0', '1', '', '', '');
+INSERT INTO `tp5_xarticle_points` VALUES ('3', '3', '0', '', 'home/images/article3.png', '因为穷，所以要努力赚钱；努力赚钱，就会没时间找对象；找不到对象就算了，钱也没赚多少，难免开始焦虑；一旦焦虑，每天洗头的时候，掉出来的头发会告诉你什么才是真正的“绝望”。', '1', '1', '', '', '');
+INSERT INTO `tp5_xarticle_points` VALUES ('5', '5', '0', '', 'upload/20201212/af37b747c21ab61d3bba57e32cbe738c.jpg', 'X', '0', '-1', '', '', '');
+INSERT INTO `tp5_xarticle_points` VALUES ('11', '11', '0', '', 'upload/20201212/52642c147048a4cd5d547d10c3addac0.jpg', 'saX', '0', '-1', '', '', '');
 
 -- ----------------------------
 -- Table structure for tp5_xbird_express
@@ -1139,9 +1142,9 @@ CREATE TABLE `tp5_xnav_menus` (
 -- Records of tp5_xnav_menus
 -- ----------------------------
 INSERT INTO `tp5_xnav_menus` VALUES ('136', '查看商品操作日志', '50', 'cms/goods/viewLogs', '', '1', '0', '2020-03-09 17:45:57', '1');
-INSERT INTO `tp5_xnav_menus` VALUES ('2', '菜单管理', '1', 'cms/menu/index', 'cms/images/icon/menu_list.png', '1', '0', '2020-06-02 19:54:40', '0');
-INSERT INTO `tp5_xnav_menus` VALUES ('3', '列表管理', '0', '/', 'cms/images/icon/desktop.png', '1', '2', '2020-06-02 19:54:42', '0');
-INSERT INTO `tp5_xnav_menus` VALUES ('4', '今日赠言', '3', 'cms/todayWord/index', 'cms/images/icon/diplom.png', '1', '1', '2020-11-09 14:53:36', '0');
+INSERT INTO `tp5_xnav_menus` VALUES ('2', '菜单管理', '1', 'cms/menu/index', 'cms/images/icon/cms_menu_list.png', '1', '0', '2020-12-28 22:46:24', '0');
+INSERT INTO `tp5_xnav_menus` VALUES ('3', '列表管理', '0', '/', 'cms/images/icon/cms_desktop.png', '1', '2', '2020-12-28 22:46:28', '0');
+INSERT INTO `tp5_xnav_menus` VALUES ('4', '今日赠言', '3', 'cms/todayWord/index', 'cms/images/icon/cms_diplom.png', '1', '1', '2020-12-28 22:46:31', '0');
 INSERT INTO `tp5_xnav_menus` VALUES ('5', '文章列表', '3', 'cms/article/index', 'cms/images/icon/cms_adaptive.png', '1', '2', '2020-11-09 15:00:11', '0');
 INSERT INTO `tp5_xnav_menus` VALUES ('1', '管理分配', '0', '/', 'cms/images/icon/cms_manage.png', '1', '1', '2020-11-09 15:03:41', '0');
 INSERT INTO `tp5_xnav_menus` VALUES ('6', '管理人员', '1', 'cms/admin/index', 'cms/images/icon/cms_admin.png', '1', '3', '2020-11-09 15:03:13', '0');
@@ -1211,7 +1214,7 @@ INSERT INTO `tp5_xnav_menus` VALUES ('156', 'React 学习', '155', 'cms/expand/r
 INSERT INTO `tp5_xnav_menus` VALUES ('153', 'ajax 获取正常状态的分类数据', '50', 'cms/goods/ajaxGetNormalCatList', '/', '1', '0', '2020-11-26 18:34:18', '1');
 INSERT INTO `tp5_xnav_menus` VALUES ('155', '拓展学习', '0', '/', 'cms/images/icon/cms_expand.png', '1', '6', '2020-12-13 10:02:43', '0');
 INSERT INTO `tp5_xnav_menus` VALUES ('157', 'Test 测试页', '155', 'cms/expand/test', 'cms/images/icon/cms_test.png', '1', '0', '2020-12-13 10:08:14', '0');
-INSERT INTO `tp5_xnav_menus` VALUES ('158', '操作Excel 实例', '155', 'cms/expand/opExcel', 'cms/images/icon/nav_default.png', '1', '3', '2020-12-14 14:50:06', '0');
+INSERT INTO `tp5_xnav_menus` VALUES ('158', '操作Excel 实例', '155', 'cms/expand/opExcel', 'cms/images/icon/cms_Excel.png', '1', '3', '2020-12-28 22:47:07', '0');
 
 -- ----------------------------
 -- Table structure for tp5_xop_excel
