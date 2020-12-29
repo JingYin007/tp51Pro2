@@ -57,10 +57,10 @@ function set_cms_config($pat =[], $rep =[],$confFileName = 'sys_auth')
 }
 /**
  * 处理显示图片服务器地址,可进行图片服务器地址的处理
- * @param $imgUrl 数据库中的图片存储路径
+ * @param string $imgUrl 数据库中的图片存储路径
  * @return string
  */
-function imgToServerView($imgUrl)
+function imgToServerView($imgUrl = '')
 {
     if (startsWithStr($imgUrl,'http')){
         $imgServerUrl = $imgUrl;
@@ -82,10 +82,10 @@ function imgToServerView($imgUrl)
 
 /**
  * 处理显示图片经 Base64编码后的数据
- * @param $imgUrl 数据库中的图片存储路径
+ * @param string $imgUrl 数据库中的图片存储路径
  * @return string
  */
-function imgBase64ToServerView($imgUrl){
+function imgBase64ToServerView($imgUrl = ''){
     $img_file = imgToServerView($imgUrl);
     $img_info = getimagesize($img_file);
     return "data:{$img_info['mime']};base64," . base64_encode(file_get_contents($img_file));
@@ -215,6 +215,22 @@ function deleteServerFile($file_real_path = "")
         return true;
     } else {
         return false;
+    }
+}
+//----------------小技能-----公共方法----------------------
+/**
+ * 对二维数组进行指定 KEY 键的排序操作
+ * @param array $result 所操作目标数组
+ * @param string $key   键
+ * @param int $sort     排序方式
+ * @return array|mixed
+ */
+function arrSortByKey($result = [],$key = '',$sort = SORT_DESC){
+    if (empty($result) || !$key){
+        return [];
+    }else{
+        array_multisort(array_column($result,$key),$sort,$result);
+        return  $result;
     }
 }
 

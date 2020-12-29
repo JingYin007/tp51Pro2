@@ -10,7 +10,7 @@ Target Server Type    : MYSQL
 Target Server Version : 50726
 File Encoding         : 65001
 
-Date: 2020-12-28 22:47:20
+Date: 2020-12-29 19:41:07
 */
 
 SET FOREIGN_KEY_CHECKS=0;
@@ -108,7 +108,7 @@ CREATE TABLE `tp5_xadmin_roles` (
 -- ----------------------------
 -- Records of tp5_xadmin_roles
 -- ----------------------------
-INSERT INTO `tp5_xadmin_roles` VALUES ('1', '终级管理员', '138|139|140|141|1|2|7|6|3|4|5|93|61|76|73|49|50|48|142|67|145|146|147|133|134|151|155|157|156|158|', '2020-12-14 14:50:20', '1', '1');
+INSERT INTO `tp5_xadmin_roles` VALUES ('1', '终级管理员', '138|139|140|141|1|2|7|6|3|4|5|93|61|76|73|49|50|48|142|67|145|146|147|133|134|151|155|157|156|158|159|', '2020-12-29 19:36:19', '1', '1');
 INSERT INTO `tp5_xadmin_roles` VALUES ('2', '初级管理员', '1|2|6|3|4|5|', '2020-11-20 18:25:19', '2', '1');
 INSERT INTO `tp5_xadmin_roles` VALUES ('5', '测试管理员', '1|2|3|76|', '2020-11-20 20:36:06', '7', '0');
 INSERT INTO `tp5_xadmin_roles` VALUES ('6', 'xxxx', '139|', '2020-11-20 21:55:19', '7', '-1');
@@ -1136,7 +1136,7 @@ CREATE TABLE `tp5_xnav_menus` (
   PRIMARY KEY (`id`),
   KEY `pk_index` (`id`),
   KEY `index_sel` (`list_order`,`name`) USING BTREE
-) ENGINE=MyISAM AUTO_INCREMENT=159 DEFAULT CHARSET=utf8mb4 COMMENT='菜单导航表';
+) ENGINE=MyISAM AUTO_INCREMENT=160 DEFAULT CHARSET=utf8mb4 COMMENT='菜单导航表';
 
 -- ----------------------------
 -- Records of tp5_xnav_menus
@@ -1215,6 +1215,7 @@ INSERT INTO `tp5_xnav_menus` VALUES ('153', 'ajax 获取正常状态的分类数
 INSERT INTO `tp5_xnav_menus` VALUES ('155', '拓展学习', '0', '/', 'cms/images/icon/cms_expand.png', '1', '6', '2020-12-13 10:02:43', '0');
 INSERT INTO `tp5_xnav_menus` VALUES ('157', 'Test 测试页', '155', 'cms/expand/test', 'cms/images/icon/cms_test.png', '1', '0', '2020-12-13 10:08:14', '0');
 INSERT INTO `tp5_xnav_menus` VALUES ('158', '操作Excel 实例', '155', 'cms/expand/opExcel', 'cms/images/icon/cms_Excel.png', '1', '3', '2020-12-28 22:47:07', '0');
+INSERT INTO `tp5_xnav_menus` VALUES ('159', 'Redis 学习', '155', 'cms/expand/redisTest', 'cms/images/icon/cms_redis_test.png', '1', '4', '2020-12-29 19:38:46', '0');
 
 -- ----------------------------
 -- Table structure for tp5_xop_excel

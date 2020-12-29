@@ -154,7 +154,7 @@ Route::any('cms/expand/react','cms/expand/react');
 Route::any('cms/expand/test','cms/expand/test');
 Route::any('cms/expand/opExcel','cms/expand/opExcel');
 Route::any('cms/expand/shtmlx','cms/expand/shtmlx');
-
+Route::any('cms/expand/redisTest','cms/expand/redisTest');
 /**
  * 工具类
  */

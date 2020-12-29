@@ -142,7 +142,19 @@ class Xmozxx
                 //获取 Redis 中存储的购物车数据
                 //注意：商品的价格一般不存储，取用时，查询数据库对应即时数据，避免争执
                 $cartList = $redis->hGetAll($cartName);
-                $res = $cartList?$cartList:[];
+                $cartResult = [];
+                foreach ($cartList as $key => $v){
+                    //TODO 此处做数据处理，举例如下：
+                    $v = json_decode($v,true);
+                    $v['sku_id'] = $key;
+                    $v['price'] = 22.50;
+                    $cartResult[] = $v;
+                }
+                if (!empty($cartResult)){
+                    //TODO 进行数据按照操作时间先后排序
+                    $cartResult = arrSortByKey($cartResult,'create_time');
+                }
+                $res = $cartResult ? $cartResult : [];
                 break;
             case 'del':
                 //购物车数据删除操作

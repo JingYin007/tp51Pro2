@@ -36,6 +36,10 @@ class Expand extends CmsBase
     }
 
     public function test(){
+        echo 'Test';
+    }
+
+    public function redisTest(){
 
         try{
             $redis = new Redis();
@@ -100,23 +104,22 @@ class Expand extends CmsBase
 
 
             $userID = 225;
-            $goodsSkuID = 22;
-            $goodsNum = 1;
+            $goodsSkuID = 6;
+            $goodsNum = 5;
+            $cartName = 'mall-cart-'.$userID;
+            //$tag = (new Xmozxx())->cartOpRedis('add',$userID,$goodsSkuID,$goodsNum);
+            //var_dump($tag);
 
-            $tag = (new Xmozxx())->cartOpRedis('add',$userID,$goodsSkuID,$goodsNum);
-            var_dump($tag);
 
-            die;
             $cartList = (new Xmozxx())->cartOpRedis('list',$userID);
             var_dump($cartList);
+            $count = $redis2->hLen($cartName);
+            var_dump($count);
 
 
         }catch (\RedisException $exception){
             echo $exception->getMessage();
         }
-
-
-        echo 'Test 入口';
     }
     /**
      * Excel 文件操作接口
