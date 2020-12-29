@@ -84,8 +84,7 @@ class Index extends Base
     }
 
     public function test(){
-        (new Xmozxx())->insertTests();
-        die;
+
         echo 'TEST';
     }
 }

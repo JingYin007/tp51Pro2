@@ -56,15 +56,15 @@ class Expand extends CmsBase
                 //$redis2->setex($lockTag,22,'');
                 //$redis2->expire($lockTag,20);
                 //执行业务
-                echo $lockTag.'--- oK'.PHP_EOL;
+                //echo $lockTag.'--- oK'.PHP_EOL;
                 //处理完成后
                 if($redis2->get($lockTag) == $lockVal){
                     //此时还存在
                     //$redis2->del($lockTag);
-                    echo 'del--oK'.PHP_EOL;
+                    //echo 'del--oK'.PHP_EOL;
                 }
             }else{
-                echo $lockTag.'--- Fail'.PHP_EOL;
+                //echo $lockTag.'--- Fail'.PHP_EOL;
             }
 
             // 向队列左侧加入元素
@@ -99,9 +99,16 @@ class Expand extends CmsBase
 //            var_dump($range);
 
 
+            $userID = 225;
+            $goodsSkuID = 22;
+            $goodsNum = 1;
 
+            $tag = (new Xmozxx())->cartOpRedis('add',$userID,$goodsSkuID,$goodsNum);
+            var_dump($tag);
 
-
+            die;
+            $cartList = (new Xmozxx())->cartOpRedis('list',$userID);
+            var_dump($cartList);
 
 
         }catch (\RedisException $exception){
