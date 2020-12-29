@@ -28,7 +28,8 @@
         "phpoffice/phpspreadsheet": "^1.8",
         "phpoffice/phpexcel": "^1.8",
         "ext-pdo": "*",
-        "ext-iconv": "*"
+        "ext-iconv": "*",
+        "godruoyi/php-snowflake": "^1.0"
     },
     "autoload": {
         "psr-4": {

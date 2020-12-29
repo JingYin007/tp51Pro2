@@ -115,9 +115,10 @@ class Xmozxx
      * @param int $userID       用户ID
      * @param int $goodsSkuID   商品SKU_ID
      * @param int $goodsNum     商品数量
+     * @param string $sku_ids   商品SKU_ID组合，一般用于下订单逻辑，以逗号隔开
      * @return array|bool|int
      */
-    public function cartOpRedis($opTag = 'add',$userID = 0,$goodsSkuID = 0,$goodsNum = 1){
+    public function cartOpRedis($opTag = 'add',$userID = 0,$goodsSkuID = 0,$goodsNum = 1,$sku_ids = '' ){
         $redis = new \Redis();
         $redis->connect('127.0.0.1',6379);
         $cartName = 'mall-cart-'.$userID;
@@ -141,7 +142,16 @@ class Xmozxx
             case 'list':
                 //获取 Redis 中存储的购物车数据
                 //注意：商品的价格一般不存储，取用时，查询数据库对应即时数据，避免争执
-                $cartList = $redis->hGetAll($cartName);
+                if ($sku_ids){
+                    //如果当前指定了 SKU_ID,比如下单前的商品选择
+                    $arrSkuIDs = explode(',',$sku_ids);
+                    $cartList = $redis->hMGet($cartName,$arrSkuIDs);
+                    if (in_array(false,array_values($cartList))){
+                        return [];
+                    }
+                }else{
+                    $cartList = $redis->hGetAll($cartName);
+                }
                 $cartResult = [];
                 foreach ($cartList as $key => $v){
                     //TODO 此处做数据处理，举例如下：

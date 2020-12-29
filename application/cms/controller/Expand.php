@@ -12,6 +12,7 @@ namespace app\cms\controller;
 use app\common\controller\CmsBase;
 use app\common\lib\SpreadsheetService;
 use app\common\model\Xmozxx;
+use Godruoyi\Snowflake\Snowflake;
 use PhpOffice\PhpSpreadsheet\Exception;
 use think\cache\driver\Redis;
 use think\db\exception\DataNotFoundException;
@@ -36,6 +37,9 @@ class Expand extends CmsBase
     }
 
     public function test(){
+        $snowflake = new Snowflake();
+        //$id = $snowflake->id();
+
         echo 'Test';
     }
 
@@ -111,7 +115,7 @@ class Expand extends CmsBase
             //var_dump($tag);
 
 
-            $cartList = (new Xmozxx())->cartOpRedis('list',$userID);
+            $cartList = (new Xmozxx())->cartOpRedis('list',$userID,null,null,'12,13');
             var_dump($cartList);
             $count = $redis2->hLen($cartName);
             var_dump($count);
