@@ -41,14 +41,14 @@ class Base extends Controller
 
         //强制立即转化静态页面
         if ($isStatic){
-            $HTML = $this->fetch($template, $vars);
+            $HTML = $this->fetch($template, $vars)->getContent();
             $this->toMakeNewShtmlFile($shtml_dir,$shtml_url,$HTML);
         }else{
             if(is_file($shtml_url) && (time()-filemtime($shtml_url)) < 60){
                 //如果没有过时，无需再次生成
                 $HTML = file_get_contents($shtml_url);
             }else{
-                $HTML = $this->fetch($template, $vars);
+                $HTML = $this->fetch($template, $vars)->getContent();
                 $this->toMakeNewShtmlFile($shtml_dir,$shtml_url,$HTML);
             }
         }

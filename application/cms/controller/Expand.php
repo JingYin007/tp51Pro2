@@ -46,51 +46,51 @@ class Expand extends CmsBase
 
     public function redisTest(){
 
-        try{
-            $redis = new Redis();
-            $iphone = "15122786683";
-            $redis->set(config('redis_mz.prefix').$iphone,'这是咋了!!',config('redis_mz.expire'));
-
-            $ss = $redis->get(config('redis_mz.prefix').$iphone);
-            //var_dump($ss);
-
-            $redis2 = new \Redis();
-            $redis2->connect('127.0.0.1',6379);
-            $redis2->sAdd('set-mz',rand(1,6));
-
-
-            $lockTag = 'lockTag';
-            $lockVal = 'HAHHHA';
-            if ($redis2->set($lockTag,$lockVal,['nx','ex'=> 30])){
-                //$redis2->setex($lockTag,22,'');
-                //$redis2->expire($lockTag,20);
-                //执行业务
-                //echo $lockTag.'--- oK'.PHP_EOL;
-                //处理完成后
-                if($redis2->get($lockTag) == $lockVal){
-                    //此时还存在
-                    //$redis2->del($lockTag);
-                    //echo 'del--oK'.PHP_EOL;
-                }
-            }else{
-                //echo $lockTag.'--- Fail'.PHP_EOL;
-            }
-
-            // 向队列左侧加入元素
-            //$redis2->lPush('lists', 'Z');
-            //$redis2->lPush('lists', 'z');
-            // 向队列右侧加入元素
-
-            // 从左侧出队一个元素（获取并删除）
-            //$x = $redis2->lPop('lists');
-            //echo $x . PHP_EOL;
-            // 从右侧出队一个元素（获取并删除）
-            //$z = $redis2->rPop('lists');
-            //echo $z . PHP_EOL;
-
-            //$length = $redis2->lLen('lists');
-            //$lists = $redis2->lRange('lists', 0, $length - 1);
-            //dump($lists);
+//        try{
+//            $redis = new Redis();
+//            $iphone = "15122786683";
+//            $redis->set(config('redis_mz.prefix').$iphone,'这是咋了!!',config('redis_mz.expire'));
+//
+//            $ss = $redis->get(config('redis_mz.prefix').$iphone);
+//            //var_dump($ss);
+//
+//            $redis2 = new \Redis();
+//            $redis2->connect('127.0.0.1',6379);
+//            $redis2->sAdd('set-mz',rand(1,6));
+//
+//
+//            $lockTag = 'lockTag';
+//            $lockVal = 'HAHHHA';
+//            if ($redis2->set($lockTag,$lockVal,['nx','ex'=> 30])){
+//                //$redis2->setex($lockTag,22,'');
+//                //$redis2->expire($lockTag,20);
+//                //执行业务
+//                //echo $lockTag.'--- oK'.PHP_EOL;
+//                //处理完成后
+//                if($redis2->get($lockTag) == $lockVal){
+//                    //此时还存在
+//                    //$redis2->del($lockTag);
+//                    //echo 'del--oK'.PHP_EOL;
+//                }
+//            }else{
+//                //echo $lockTag.'--- Fail'.PHP_EOL;
+//            }
+//
+//            // 向队列左侧加入元素
+//            //$redis2->lPush('lists', 'Z');
+//            //$redis2->lPush('lists', 'z');
+//            // 向队列右侧加入元素
+//
+//            // 从左侧出队一个元素（获取并删除）
+//            //$x = $redis2->lPop('lists');
+//            //echo $x . PHP_EOL;
+//            // 从右侧出队一个元素（获取并删除）
+//            //$z = $redis2->rPop('lists');
+//            //echo $z . PHP_EOL;
+//
+//            //$length = $redis2->lLen('lists');
+//            //$lists = $redis2->lRange('lists', 0, $length - 1);
+//            //dump($lists);
 
 
 //            $redis2->zAdd('lb',23,'mark');
@@ -107,24 +107,24 @@ class Expand extends CmsBase
 //            //$range = $redis2->zRevRange('lb',0,2,true);
 //            var_dump($range);
 
-
-            $userID = 225;
-            $goodsSkuID = 6;
-            $goodsNum = 5;
-            $cartName = 'mall-cart-'.$userID;
-            //$tag = (new Xorders())->cartOpRedis('add',$userID,$goodsSkuID,$goodsNum);
-            //var_dump($tag);
-
-
-            //$cartList = (new Xorders())->cartOpRedis('list',$userID,null,null,'12,13');
-            //var_dump($cartList);
-            $count = $redis2->hLen($cartName);
-            //var_dump($count);
-
-
-        }catch (\RedisException $exception){
-            echo $exception->getMessage();
-        }
+//
+//            $userID = 225;
+//            $goodsSkuID = 6;
+//            $goodsNum = 5;
+//            $cartName = 'mall-cart-'.$userID;
+//            //$tag = (new Xorders())->cartOpRedis('add',$userID,$goodsSkuID,$goodsNum);
+//            //var_dump($tag);
+//
+//
+//            //$cartList = (new Xorders())->cartOpRedis('list',$userID,null,null,'12,13');
+//            //var_dump($cartList);
+//            $count = $redis2->hLen($cartName);
+//            //var_dump($count);
+//
+//
+//        }catch (\RedisException $exception){
+//            echo $exception->getMessage();
+//        }
         return view('redis_test');
     }
     /**

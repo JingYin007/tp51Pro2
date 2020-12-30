@@ -468,7 +468,6 @@ class Xorders extends BaseModel
                 $res = false;
                 break;
         }
-        $redis->close();
         return $res;
     }
 

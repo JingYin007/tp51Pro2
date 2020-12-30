@@ -77,7 +77,7 @@ class Index extends Base
                     'seo_description' => $articleInfo['seo_description']]
             ];
             return $this->staticFetch(0,'',$data);
-            //return view('article',$data);
+            return view('article',$data);
         }else{
             return showMsg(1,'当前文章不存在！');
         }
