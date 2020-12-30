@@ -21,7 +21,6 @@ use think\db\exception\ModelNotFoundException;
 use think\exception\DbException;
 use think\Request;
 use think\response\View;
-
 /**
  * 学习拓展类
  * Class Users
