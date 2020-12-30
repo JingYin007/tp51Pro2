@@ -11,5 +11,5 @@
 
 return [
     // 指令名 =》完整的类名
-    'hello-x'	=>	'app\common\command\Hello',
+    'order-wait'	=>	'app\common\command\Order',
 ];

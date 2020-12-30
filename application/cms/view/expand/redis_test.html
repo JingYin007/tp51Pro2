@@ -1,0 +1,86 @@
+{extend name='layouts/cms'}
+
+{block name='body-content'}
+<style>
+    .layui-collapse{
+        width: 60%;
+        margin: 30px 0 0 30px;
+        background-color: #4F4F4F;
+    }
+    .layui-collapse .layui-colla-title{
+        color: #953b39;
+        font-weight: bold;
+    }
+    .layui-collapse .layui-colla-content{
+        color: #00FF00;
+    }
+</style>
+
+<div class="layui-collapse" lay-accordion>
+    <div class="layui-colla-item">
+        <h2 class="layui-colla-title">ThinkPHP5下 redis 的配置使用</h2>
+        <div class="layui-colla-content layui-show">
+            <p>1. 修改配置目录下面的 cache.php 文件,进行缓存驱动的配置</p>
+            <p>2. 注意 Redis 的使用<br/>
+                &emsp;//$redis = new \Redis();<br/>
+                &emsp;//$redis->connect('127.0.0.1',6379);<br/>
+                &emsp;$redis = Cache::store('redis'); //推荐使用
+            </p>
+        </div>
+    </div>
+
+    <div class="layui-colla-item">
+        <h2 class="layui-colla-title">利用 redis 打造高性能购物车模块</h2>
+        <div class="layui-colla-content layui-show">
+            <p>1.首先分析需求<br/>
+                &emsp;SKU 商品数量的添加(add)、减少(sub)、删除(del)、获取展示
+            </p>
+            <p>2. 使用 redis-Hash 操作数据<br/>
+                &emsp;hSet();hGet();hMget();hGetAll();hDel();hLen();
+            </p>
+            <p>提示：<br/>
+                &emsp; 参考代码："Xorders()->cartOpRedis();"<br/>
+                &emsp; foreach 查询数据库耗时长，建议使用 whereIn搜索，批量操作语句<br/>
+                &emsp; 无序列表解决方案， array_multisort()
+            </p>
+        </div>
+    </div>
+    <div class="layui-colla-item">
+        <h2 class="layui-colla-title">redis 对于订单的处理思路</h2>
+        <div class="layui-colla-content layui-show">
+            <p>1.流程分析<br/>
+                &emsp;从购物车选取商品开始->信息确认页面（地址，价格等）->待支付订单...<br/>
+                &emsp;生成订单时
+            </p>
+            <p>2.操作步骤：<br/>
+                &emsp;利用 redis 的 hMget 处理订单确认页面 API<br/>
+                &emsp;分布式发号器生成全局唯一的订单ID 【雪花算法】<br/>
+                &emsp;提交订单 - 从 redis 获取数据进行判断<br/>
+                &emsp;利用 MySQL 事务创建订单-支持减库存操作<br/>
+                &emsp;订单创建完毕之后需要删除购物车-利用 redis-hdel 实现批量删除操作<br/>
+            </p>
+            <p>3.延迟队列处理无效订单<br/>
+                &emsp;进行订单生成时，将订单 ID ，使用 redis-zAdd()放入延迟队列<br/>
+                &emsp;定期检测，已到设置最晚支付时间的订单是否已付<br/>
+                &emsp;&emsp;如果已支付，则 redis-zRem() 移除当前订单索引<br/>
+                &emsp;&emsp;如果未支付，订单状态修改、sku商品数量+、redis-zRem() 移除<br/>
+                <br/>
+            </p>
+            <p>4.创建自定义指令 php think ...<br/>
+                &emsp; 参考开发文档 “命令行-自定义指令”<br/>
+                &emsp; 定时执行，将重要信息写入日志，以便分析<br/>
+                &emsp; 建议：可以多看几个进程<br/>
+                &emsp; 指令：php think order-wait > order-wait.log
+                &emsp; 操作业务，可补充到 application/common/command/Order.php 中的 execute()
+            </p>
+        </div>
+    </div>
+</div>
+
+{/block}
+
+{block name='single-content'}
+{include file="layouts/_reactJs" /}
+
+
+{/block}

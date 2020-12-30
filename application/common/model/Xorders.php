@@ -4,12 +4,15 @@
 namespace app\common\model;
 
 
+use PDOStatement;
+use think\Collection;
 use think\Db;
 use think\db\exception\DataNotFoundException;
 use think\db\exception\ModelNotFoundException;
 use think\Exception;
 use think\exception\DbException;
 use think\exception\PDOException;
+use think\facade\Cache;
 
 /**
  * 订单数据操作类
@@ -84,7 +87,7 @@ class Xorders extends BaseModel
     /**
      * 获取订单详情数量
      * @param int $order_id
-     * @return array|\PDOStatement|string|\think\Model
+     * @return array|PDOStatement|string|\think\Model
      * @throws DataNotFoundException
      * @throws ModelNotFoundException
      * @throws DbException
@@ -216,7 +219,7 @@ class Xorders extends BaseModel
     /**
      * 根据订单ID 获取清单列表
      * @param string $order_id
-     * @return array|\PDOStatement|string|\think\Collection|\think\model\Collection
+     * @return array|PDOStatement|string|Collection|\think\model\Collection
      * @throws DataNotFoundException
      * @throws ModelNotFoundException
      * @throws DbException
@@ -234,7 +237,7 @@ class Xorders extends BaseModel
 
     /**
      * 获取快递鸟物流公司对应数据
-     * @return array|\PDOStatement|string|\think\Collection|\think\model\Collection
+     * @return array|PDOStatement|string|Collection|\think\model\Collection
      * @throws DataNotFoundException
      * @throws ModelNotFoundException
      * @throws DbException
@@ -392,4 +395,122 @@ class Xorders extends BaseModel
             'sale_num_Res' => $sale_num_Res,
             'sale_amount_sum' => $sale_amount_sum ? $sale_amount_sum : '0.00',];
     }
+
+    /*------------ 此处为 购物车操作(Redis) 参考方法------------------------------------*/
+    /**
+     * 一个使用 Redis（Hash） 记录购物车操作信息的定义方法
+     * @param string $opTag     操作标识,分为 ：'add'/'list'/'del'
+     * @param int $userID       用户ID
+     * @param int $goodsSkuID   商品SKU_ID
+     * @param int $goodsNum     商品数量
+     * @param string $sku_ids   商品SKU_ID组合，一般用于下订单逻辑，以逗号隔开
+     * @return array|bool|int
+     */
+    public function cartOpRedis($opTag = 'add',$userID = 0,$goodsSkuID = 0,$goodsNum = 1,$sku_ids = '' ){
+        //$redis = new \Redis();
+        //$redis->connect('127.0.0.1',6379);
+        $redis = Cache::store('redis');
+        $cartName = 'mall-cart-'.$userID;
+        switch ($opTag){
+            case 'add':
+                //数量增加
+            case 'sub':
+                //数量减少
+                //此处为 添加购物车操作逻辑
+                $cartData = $this->updateCartRedis($redis,$opTag,$cartName,$goodsSkuID,$goodsNum);
+                try {
+                    if ($cartData['num'] > 0){
+                        $res = $redis->hSet($cartName,$goodsSkuID,json_encode($cartData,JSON_UNESCAPED_UNICODE));
+                    }else{
+                        $res = [];
+                    }
+                }catch (\Exception $e){
+                    return false;
+                }
+                break;
+            case 'list':
+                //获取 Redis 中存储的购物车数据
+                //注意：商品的价格一般不存储，取用时，查询数据库对应即时数据，避免争执
+                if ($sku_ids){
+                    //如果当前指定了 SKU_ID,比如下单前的商品选择
+                    $arrSkuIDs = explode(',',$sku_ids);
+                    $cartList = $redis->hMGet($cartName,$arrSkuIDs);
+                    if (in_array(false,array_values($cartList))){
+                        return [];
+                    }
+                }else{
+                    $cartList = $redis->hGetAll($cartName);
+                }
+                $cartResult = [];
+                foreach ($cartList as $key => $v){
+                    //TODO 此处做数据处理，举例如下：
+                    $v = json_decode($v,true);
+                    $v['sku_id'] = $key;
+                    $v['price'] = 22.50;
+                    $cartResult[] = $v;
+                }
+                if (!empty($cartResult)){
+                    //TODO 进行数据按照操作时间先后排序
+                    $cartResult = arrSortByKey($cartResult,'create_time');
+                }
+                $res = $cartResult ? $cartResult : [];
+                break;
+            case 'del':
+                //购物车数据删除操作
+                if ($sku_ids){
+                    $arrSkuIDs = explode(',',$sku_ids);
+                    $res = $redis->hDel($cartName,...$arrSkuIDs);
+                }else{
+                    $res = $redis->hDel($cartName,$goodsSkuID);
+                }
+                break;
+            default:
+                $res = false;
+                break;
+        }
+        $redis->close();
+        return $res;
+    }
+
+    /**
+     * 购物车 add/sub 处理操作
+     * @param null $redis
+     * @param string $opTag
+     * @param string $cartName
+     * @param int $goodsSkuID
+     * @param int $goodsNum
+     * @return array
+     */
+    public function updateCartRedis($redis = null,$opTag = 'add',$cartName = '',$goodsSkuID = 0,$goodsNum = 1){
+
+        $cartData = [
+            'title' => '百斯特商品',
+            'num' => $goodsNum,
+            'image' => '/upload/xxx.png',
+            'create_time' => time()
+        ];
+        $cartGet = $redis->hGet($cartName,$goodsSkuID);
+        //注意商品数量的变化
+        if ($cartGet){
+            $cartArr = json_decode($cartGet,true);
+            if ($opTag === 'add'){
+                $cartData['num'] = intval($cartArr['num']+$goodsNum);
+            }else{
+                //$opTag == 'sub'
+                $opNum = $cartArr['num']-$goodsNum;
+                $opNum = ($opNum > 0 ) ? $opNum : 0;
+                $cartData['num'] = $opNum;
+                if ($opNum == 0){
+                    $redis->hDel($cartName,$goodsSkuID);
+                    $cartData = [];
+                }
+            }
+        }else{
+            if ($opTag === 'sub'){
+                $cartData = [];
+            }
+        }
+        return isset($cartData) ? $cartData:[];
+    }
+
 }

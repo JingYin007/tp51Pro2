@@ -12,6 +12,7 @@ namespace app\cms\controller;
 use app\common\controller\CmsBase;
 use app\common\lib\SpreadsheetService;
 use app\common\model\Xmozxx;
+use app\common\model\Xorders;
 use Godruoyi\Snowflake\Snowflake;
 use PhpOffice\PhpSpreadsheet\Exception;
 use think\cache\driver\Redis;
@@ -47,7 +48,7 @@ class Expand extends CmsBase
 
         try{
             $redis = new Redis();
-            $iphone = "15117972683";
+            $iphone = "15122786683";
             $redis->set(config('redis_mz.prefix').$iphone,'这是咋了!!',config('redis_mz.expire'));
 
             $ss = $redis->get(config('redis_mz.prefix').$iphone);
@@ -111,19 +112,20 @@ class Expand extends CmsBase
             $goodsSkuID = 6;
             $goodsNum = 5;
             $cartName = 'mall-cart-'.$userID;
-            //$tag = (new Xmozxx())->cartOpRedis('add',$userID,$goodsSkuID,$goodsNum);
+            //$tag = (new Xorders())->cartOpRedis('add',$userID,$goodsSkuID,$goodsNum);
             //var_dump($tag);
 
 
-            $cartList = (new Xmozxx())->cartOpRedis('list',$userID,null,null,'12,13');
-            var_dump($cartList);
+            //$cartList = (new Xorders())->cartOpRedis('list',$userID,null,null,'12,13');
+            //var_dump($cartList);
             $count = $redis2->hLen($cartName);
-            var_dump($count);
+            //var_dump($count);
 
 
         }catch (\RedisException $exception){
             echo $exception->getMessage();
         }
+        return view('redis_test');
     }
     /**
      * Excel 文件操作接口
