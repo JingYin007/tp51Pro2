@@ -19,6 +19,7 @@ use think\cache\driver\Redis;
 use think\db\exception\DataNotFoundException;
 use think\db\exception\ModelNotFoundException;
 use think\exception\DbException;
+use think\facade\Cache;
 use think\Request;
 use think\response\View;
 /**
@@ -39,6 +40,7 @@ class Expand extends CmsBase
     public function test(){
         $snowflake = new Snowflake();
         //$id = $snowflake->id();
+
 
         echo 'Test';
     }

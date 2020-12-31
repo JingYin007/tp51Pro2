@@ -48,7 +48,7 @@
     </div>
     <div class="layui-colla-item">
         <h2 class="layui-colla-title">redis 对于订单的处理思路</h2>
-        <div class="layui-colla-content layui-show">
+        <div class="layui-colla-content">
             <p>1.流程分析<br/>
                 &emsp;从购物车选取商品开始->信息确认页面（地址，价格等）->待支付订单...<br/>
                 &emsp;生成订单时
@@ -74,6 +74,15 @@
                 &emsp; 指令：php think order-wait > order-wait.log
                 &emsp; 操作业务，可补充到 application/common/command/Order.php 中的 execute()
             </p>
+        </div>
+    </div>
+
+    <div class="layui-colla-item">
+        <h2 class="layui-colla-title">PHP + redis 服务限流</h2>
+        <div class="layui-colla-content">
+            <p>第一种：基于 Redis的 setnx 锁的操作(expire 设置)</p>
+            <p>第二种：基于 Redis的数据结构zset(时间范围内请求数量)</p>
+            <p>第三种：基于 Redis的令牌桶算法 (inc();persist();decr();)</p>
         </div>
     </div>
 </div>
