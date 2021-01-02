@@ -15,6 +15,7 @@
  * @param int $status 状态
  * @param string $message 提示信息
  * @param array $data 返回数据
+ * @return void
  */
 function showMsg($status = 1,$message = '',$data = array()){
     $result = array(
@@ -22,7 +23,7 @@ function showMsg($status = 1,$message = '',$data = array()){
         'message' =>$message,
         'data' =>$data
     );
-    exit(json_encode($result,JSON_UNESCAPED_UNICODE));
+    return exit(json_encode($result,JSON_UNESCAPED_UNICODE));
 }
 
 /**

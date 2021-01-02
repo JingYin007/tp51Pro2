@@ -12,14 +12,11 @@ namespace app\cms\controller;
 use app\common\controller\CmsBase;
 use app\common\lib\SpreadsheetService;
 use app\common\model\Xmozxx;
-use app\common\model\Xorders;
 use Godruoyi\Snowflake\Snowflake;
 use PhpOffice\PhpSpreadsheet\Exception;
-use think\cache\driver\Redis;
 use think\db\exception\DataNotFoundException;
 use think\db\exception\ModelNotFoundException;
 use think\exception\DbException;
-use think\facade\Cache;
 use think\Request;
 use think\response\View;
 /**
@@ -36,6 +33,7 @@ class Expand extends CmsBase
         parent::__construct();
         $this->model = new Xmozxx();
     }
+
 
     public function test(){
         $snowflake = new Snowflake();
@@ -147,6 +145,7 @@ class Expand extends CmsBase
             } catch (DbException $e) {
                 $message = $e->getMessage();
             }
+
             return showMsg(0,$message);
         }else{
             $opTag = $request->post('op_tag','up');

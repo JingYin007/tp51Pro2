@@ -65,7 +65,6 @@
                 &emsp;定期检测，已到设置最晚支付时间的订单是否已付<br/>
                 &emsp;&emsp;如果已支付，则 redis-zRem() 移除当前订单索引<br/>
                 &emsp;&emsp;如果未支付，订单状态修改、sku商品数量+、redis-zRem() 移除<br/>
-                <br/>
             </p>
             <p>4.创建自定义指令 php think ...<br/>
                 &emsp; 参考开发文档 “命令行-自定义指令”<br/>
