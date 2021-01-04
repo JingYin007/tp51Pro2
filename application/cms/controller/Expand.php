@@ -45,6 +45,8 @@ class Expand extends CmsBase
         $snowflake = new Snowflake();
         //$id = $snowflake->id();
 
+        $this->str_rev('azzzxcvbn');
+
         $arr = [11,21,27,3,20,18,24,12,9,32];
         $ss = $this->insertSort2($arr);
         //$ss = sort($arr);
@@ -54,10 +56,49 @@ class Expand extends CmsBase
         for ($i = 2; $i<30;$i++){
             $arrx[$i] = $arrx[$i-1]+$arrx[$i-2];
         }
-        var_dump($arrx);
+        //var_dump($arrx);
 
         $xxxVal = $this->xxx(30);
         var_dump($xxxVal);
+
+        $merArr = $this->array_mer([12,2],[44,3],[9,3]);
+        var_dump($merArr);
+    }
+
+    /**
+     * 自定义实现 array_merge()功能
+     * @return array
+     */
+    private function array_mer(){
+        $newArr = [];
+        $arrs = func_get_args();
+        foreach ($arrs as $arr){
+            if (is_array($arr)){
+                foreach ($arr as $val){
+                  $newArr[] = $val;
+                }
+            }
+        }
+        return $newArr;
+    }
+    /**
+     * 不使用内置函数，实现 strrev()的效果
+     * @param string $str
+     * @return string
+     */
+    private function str_rev($str = ''){
+        //TODO 获取字符串长度
+        for ($i=0;true;$i++){
+            if (!isset($str[$i])){
+                break;
+            }
+        }
+        $okStr = '';
+        for ($j=$i-1;$j>=0;$j--){
+            $okStr .= $str[$j];
+        }
+        var_dump($okStr);
+        return $okStr;
     }
 
     function xxx($index = 0){
