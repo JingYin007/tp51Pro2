@@ -36,13 +36,70 @@ class Expand extends CmsBase
 
 
     public function test(){
-        $snowflake = new Snowflake();
-        //$id = $snowflake->id();
 
-
+        $this->suanFa();
         echo 'Test';
     }
 
+    public function suanFa(){
+        $snowflake = new Snowflake();
+        //$id = $snowflake->id();
+
+        $arr = [11,21,27,3,20,18,24,12,9,32];
+        $ss = $this->insertSort2($arr);
+        //$ss = sort($arr);
+        var_dump($ss);
+
+        $arrx = [1,1];
+        for ($i = 2; $i<30;$i++){
+            $arrx[$i] = $arrx[$i-1]+$arrx[$i-2];
+        }
+        var_dump($arrx);
+
+        $xxxVal = $this->xxx(30);
+        var_dump($xxxVal);
+    }
+
+    function xxx($index = 0){
+        if ($index == 1||$index == 2){
+            return 1;
+        }else{
+            return $this->xxx($index-1)+$this->xxx($index-2);
+        }
+    }
+
+    private function insertSort2($arr){
+        $len = count($arr);
+        if ($len <= 1) {return $arr;}
+        //先默认$array[0]，已经有序，是有序表
+        for($i = 1;$i < $len;$i++){
+            if ($arr[$i] < $arr[$i-1]){
+                $insertVal = $arr[$i]; //$insertVal是准备插入的数
+                //$j 有序表中准备比较的数的下标
+                //$j-- 将下标往前挪，准备与前一个进行比较
+                for ($j = $i-1;$j >= 0 && $insertVal < $arr[$j];$j--){
+                    $arr[$j+1]= $arr[$j];//将数组往后挪
+                }
+                $arr[$j + 1] = $insertVal;
+            }
+        }
+        return $arr;
+    }
+    // 冒泡排序
+    private function buble_sore($arr){
+        $len = count($arr);
+        if ($len < 2){return $arr;}
+        for ($i = 0; $i < $len ;$i++){
+            for ($j = 0; $j < $len-$i-1;$j++){
+                if ($arr[$j] > $arr[$j+1]){
+                    $temp = $arr[$j];
+                    $arr[$j] = $arr[$j+1];
+                    $arr[$j+1] = $temp;
+                }
+            }
+        }
+        return $arr;
+    }
     public function redisTest(){
 
 //        try{
