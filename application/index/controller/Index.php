@@ -6,6 +6,7 @@ use app\common\model\Xmozxx;
 use think\Controller;
 use app\common\model\Xarticles;
 use app\common\model\XtodayWords;
+use think\Db;
 use think\response\View;
 
 class Index extends Base
@@ -84,7 +85,33 @@ class Index extends Base
     }
 
     public function test(){
-
         echo 'TEST';
+        $tag = $this->testMysql();
+         var_dump($tag);
+
+    }
+    function testMysql(){
+        $randID = rand(300,400);
+        $tag = Db::name('xtest_logs')
+            ->where('open_id',$randID)->count('id');
+        if ($tag){
+            return 0;
+        }else{
+            $tag = Db::name('xtest_logs')
+                ->insertGetId(['open_id'=>$randID,'add_time'=>time()]);
+            $this->testPXC($tag);
+            return $tag;
+        }
+    }
+
+    function testPXC($id = 0){
+        $tag = Db::name('xtest_logs')
+            ->where('id',$id)->count('id');
+        if ($tag){
+            Db::name('xtest_logs')
+                ->where('id',$id)
+                ->update(['name' => $id]);
+        }
+        return $tag;
     }
 }

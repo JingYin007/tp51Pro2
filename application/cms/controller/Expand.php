@@ -14,6 +14,7 @@ use app\common\lib\SpreadsheetService;
 use app\common\model\Xmozxx;
 use Godruoyi\Snowflake\Snowflake;
 use PhpOffice\PhpSpreadsheet\Exception;
+use think\Db;
 use think\db\exception\DataNotFoundException;
 use think\db\exception\ModelNotFoundException;
 use think\exception\DbException;
@@ -37,32 +38,48 @@ class Expand extends CmsBase
 
     public function test(){
 
-        $this->suanFa();
-        echo 'Test';
+        $tag = $this->testMysql();
+        //var_dump($tag);
+        //echo 'Test';
     }
 
+    function testMysql(){
+        $randID = rand(100,200);
+        $tag = Db::name('xtest_logs')
+            ->where('open_id',$randID)->count('id');
+        if ($tag){
+            return 0;
+        }else{
+            $tag = Db::name('xtest_logs')
+                ->insert(['open_id'=>$randID,'add_time'=>time()]);
+            return $tag;
+        }
+    }
+    /**
+     * 算法入口
+     */
     public function suanFa(){
         $snowflake = new Snowflake();
         //$id = $snowflake->id();
 
-        $this->str_rev('azzzxcvbn');
-
-        $arr = [11,21,27,3,20,18,24,12,9,32];
-        $ss = $this->insertSort2($arr);
-        //$ss = sort($arr);
-        var_dump($ss);
-
-        $arrx = [1,1];
-        for ($i = 2; $i<30;$i++){
-            $arrx[$i] = $arrx[$i-1]+$arrx[$i-2];
-        }
+//        $this->str_rev('azzzxcvbn');
+//
+//        $arr = [11,21,27,3,20,18,24,12,9,32];
+//        $ss = $this->insertSort2($arr);
+//        var_dump($ss);
+//
+//        $arrx = [1,1];
+//        for ($i = 2; $i<30;$i++){
+//            $arrx[$i] = $arrx[$i-1]+$arrx[$i-2];
+//        }
         //var_dump($arrx);
 
-        $xxxVal = $this->xxx(30);
-        var_dump($xxxVal);
-
-        $merArr = $this->array_mer([12,2],[44,3],[9,3]);
-        var_dump($merArr);
+//
+//        $xxxVal = $this->xxx(30);
+//        var_dump($xxxVal);
+//
+//        $merArr = $this->array_mer([12,2],[44,3],[9,3]);
+//        var_dump($merArr);
     }
 
     /**
@@ -151,8 +168,17 @@ class Expand extends CmsBase
 //            $ss = $redis->get(config('redis_mz.prefix').$iphone);
 //            //var_dump($ss);
 //
-//            $redis2 = new \Redis();
-//            $redis2->connect('127.0.0.1',6379);
+            $redis2 = new \Redis();
+            $redis2->connect('127.0.0.1',6379);
+
+            //$redis2->sAdd('123','1003','1013','1022','1001');
+           // $redis2->sAdd('125','1007','1003','1022','1001');
+            $redis2->sInterStore('xxxx','123','125');
+
+            $redis2->sMembers('xxxx');
+            var_dump($redis2->sMembers('xxxx'));
+
+
 //            $redis2->sAdd('set-mz',rand(1,6));
 //
 //
@@ -222,6 +248,7 @@ class Expand extends CmsBase
 //        }catch (\RedisException $exception){
 //            echo $exception->getMessage();
 //        }
+
         return view('redis_test');
     }
     /**

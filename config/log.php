@@ -20,10 +20,10 @@ return [
     'path'  => '',
 
     //设置某些级别的日志信息单独文件记录
-    'apart_level'   =>  ['error','warning'],
+    'apart_level'   =>  ['error','warning','info','sql'],
 
     // 日志记录级别
-    'level' => ['warning','error','critical','emergency'],
+    'level' => ['info','warning','error','critical','emergency','sql'],
 
     //超过数量的最早日志将会自动删除,设置max_files参数后，日志文件将不会分日期子目录存放
     'max_files'	=>	30,

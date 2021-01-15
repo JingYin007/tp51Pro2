@@ -88,8 +88,14 @@ function imgToServerView($imgUrl = '')
  */
 function imgBase64ToServerView($imgUrl = ''){
     $img_file = imgToServerView($imgUrl);
-    $img_info = getimagesize($img_file);
-    return "data:{$img_info['mime']};base64," . base64_encode(file_get_contents($img_file));
+    if (@file_get_contents($img_file)){
+        $img_info = getimagesize($img_file);
+        $return = "data:{$img_info['mime']};base64," . base64_encode(file_get_contents($img_file));
+    }else{
+        $return = '';
+    }
+
+    return $return;
 }
 
 /**
