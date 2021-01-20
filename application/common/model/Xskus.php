@@ -9,6 +9,8 @@
 namespace app\common\model;
 
 
+use app\common\lib\XunsearchService;
+
 class Xskus extends BaseModel
 {
 
@@ -31,11 +33,11 @@ class Xskus extends BaseModel
                 $stock = isset($value['stock']) ? intval($value['stock']) : 0;
                 $sold_num = isset($value['sold_num']) ? intval($value['sold_num']) : 0;
                 //TODO 判断是否存在
-                $haveTag = $this
+                $sku_ID = $this
                     ->where([['spec_info', '=', $spec_info], ['goods_id', '=', $goodsID]])
-                    ->count('sku_id');
+                    ->value('sku_id');
 
-                if ($haveTag) {
+                if ($sku_ID) {
                     $this
                         ->where([['spec_info', '=', $spec_info], ['goods_id', '=', $goodsID]])
                         ->update([
@@ -47,7 +49,7 @@ class Xskus extends BaseModel
                             'sold_num' => $sold_num,
                             'updated_at' => date('Y-m-d H:i:s', time())]);
                 } else {
-                    $this->insert([
+                    $sku_ID = $this->insertGetId([
                         'goods_id' => $goodsID,
                         'spec_info' => $spec_info,
                         'sku_img' => $sku_img,

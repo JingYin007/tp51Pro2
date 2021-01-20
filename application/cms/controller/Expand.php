@@ -168,20 +168,20 @@ class Expand extends CmsBase
 //            $ss = $redis->get(config('redis_mz.prefix').$iphone);
 //            //var_dump($ss);
 //
+        try{
             $redis2 = new \Redis();
             $redis2->connect('127.0.0.1',6379);
-
             //$redis2->sAdd('123','1003','1013','1022','1001');
-           // $redis2->sAdd('125','1007','1003','1022','1001');
+            // $redis2->sAdd('125','1007','1003','1022','1001');
             $redis2->sInterStore('xxxx','123','125');
 
             $redis2->sMembers('xxxx');
             var_dump($redis2->sMembers('xxxx'));
-
+        }catch (\Exception $e){
+            var_dump($e->getMessage());
+        }
 
 //            $redis2->sAdd('set-mz',rand(1,6));
-//
-//
 //            $lockTag = 'lockTag';
 //            $lockVal = 'HAHHHA';
 //            if ($redis2->set($lockTag,$lockVal,['nx','ex'=> 30])){

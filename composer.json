@@ -29,7 +29,8 @@
         "phpoffice/phpexcel": "^1.8",
         "ext-pdo": "*",
         "ext-iconv": "*",
-        "godruoyi/php-snowflake": "^1.0"
+        "godruoyi/php-snowflake": "^1.0",
+        "hightman/xunsearch": "*@beta"
     },
     "autoload": {
         "psr-4": {
