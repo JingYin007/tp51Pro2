@@ -14,6 +14,7 @@ use app\common\lib\SpreadsheetService;
 use app\common\model\Xmozxx;
 use Godruoyi\Snowflake\Snowflake;
 use PhpOffice\PhpSpreadsheet\Exception;
+use think\cache\driver\Redis;
 use think\Db;
 use think\db\exception\DataNotFoundException;
 use think\db\exception\ModelNotFoundException;
@@ -160,26 +161,36 @@ class Expand extends CmsBase
     }
     public function redisTest(){
 
-//        try{
+        try{
 //            $redis = new Redis();
 //            $iphone = "15122786683";
 //            $redis->set(config('redis_mz.prefix').$iphone,'这是咋了!!',config('redis_mz.expire'));
-//
 //            $ss = $redis->get(config('redis_mz.prefix').$iphone);
-//            //var_dump($ss);
-//
-        try{
-            $redis2 = new \Redis();
-            $redis2->connect('127.0.0.1',6379);
-            //$redis2->sAdd('123','1003','1013','1022','1001');
-            // $redis2->sAdd('125','1007','1003','1022','1001');
-            $redis2->sInterStore('xxxx','123','125');
 
-            $redis2->sMembers('xxxx');
-            var_dump($redis2->sMembers('xxxx'));
-        }catch (\Exception $e){
-            var_dump($e->getMessage());
-        }
+            $redis2 = new \Redis();
+            $redis2->connect('192.168.80.224',6379);
+
+//            $redis2->sAdd('123','1003','1013','1022','1001');
+//            $redis2->sAdd('125','1007','1003','1022','1001');
+//            $redis2->sInterStore('xxxx','123','125');
+//            $redis2->sMembers('xxxx');
+
+/*----------------------- 秒杀测试 ------------------------------------*/
+            //初始化设置商品数量
+            $redis2->set('kill_num',50);
+            //剩余商品数
+            $killNum = $redis2->get('kill_num');
+            if ($killNum > 0){
+                $redis2->watch('kill_num','kill_user');
+                $redis2->multi();
+                $redis2->decr('kill_num');
+                $userID = rand(1111,9999);
+                $redis2->rPush('kill_user',$userID);
+                $redis2->exec();
+            }else{
+                return false;
+            }
+/*--------------------------------------------------------------------------*/
 
 //            $redis2->sAdd('set-mz',rand(1,6));
 //            $lockTag = 'lockTag';
@@ -200,20 +211,21 @@ class Expand extends CmsBase
 //            }
 //
 //            // 向队列左侧加入元素
-//            //$redis2->lPush('lists', 'Z');
-//            //$redis2->lPush('lists', 'z');
-//            // 向队列右侧加入元素
+//            $redis2->lPush('lists', 'Z');
+//            $redis2->lPush('lists', 'z');
+//             //向队列右侧加入元素
 //
-//            // 从左侧出队一个元素（获取并删除）
-//            //$x = $redis2->lPop('lists');
-//            //echo $x . PHP_EOL;
-//            // 从右侧出队一个元素（获取并删除）
-//            //$z = $redis2->rPop('lists');
-//            //echo $z . PHP_EOL;
+//             //从左侧出队一个元素（获取并删除）
+//            $x = $redis2->lPop('lists');
+//            echo $x . PHP_EOL;
+//             //从右侧出队一个元素（获取并删除）
+//            $z = $redis2->rPop('lists');
+//            echo $z . PHP_EOL;
 //
-//            //$length = $redis2->lLen('lists');
-//            //$lists = $redis2->lRange('lists', 0, $length - 1);
-//            //dump($lists);
+//            $length = $redis2->lLen('lists');
+//
+//            $lists = $redis2->lRange('lists', 0, $length - 1);
+//            dump($lists);
 
 
 //            $redis2->zAdd('lb',23,'mark');
@@ -245,9 +257,10 @@ class Expand extends CmsBase
 //            //var_dump($count);
 //
 //
-//        }catch (\RedisException $exception){
-//            echo $exception->getMessage();
-//        }
+        }catch (\RedisException $exception){
+            echo $exception->getMessage();
+        }
+
 
         return view('redis_test');
     }

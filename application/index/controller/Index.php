@@ -85,25 +85,53 @@ class Index extends Base
 
     public function test(){
 
+        return 1;
 
-        $this->testSearch();
-
+        $tag = $this->testFastSale();
+        var_dump($tag);
         //echo 'TEST';
         //$tag = $this->testMysql();
         //$this->testSQL();
         //var_dump($tag);
 
     }
-    public function testSearch(){
-        $xsService = new XunsearchService();
-        try {
-            $message = $xsService::search('我找原味的瓜子和爆款蓝牙', 'goods_sku', true);
-        } catch (\XSException $e) {
-            $message = $e->getMessage();
-        }
-        echo '<br>';
-        var_dump($message);
-    }
+
+   public function testFastSale(){
+       $redis2 = new \Redis();
+       $redis2->connect('192.168.80.224',6379);
+
+       $killNumSet = 100;
+       //初始化设置秒杀商品数量
+       //$redis2->set('kill_num',$killNumSet);
+
+       //模拟发起请求的用户ID
+       $userID = rand(1111,2222);
+
+       $killNum = $redis2->get('kill_num');
+       if ($killNum > 0){
+           //TODO 此时，还有商品可进行抢购
+           if ($redis2->sIsMember('kill_user_que',$userID)){
+               //TODO 此时说明用户已经抢到了
+               $message = 'Sorry，一个账号只能抢一件！';
+           }else{
+               $countCanBuyer = $redis2->sCard('kill_user_que');
+               if ($countCanBuyer >= $killNumSet){
+                   $message = 'Sorry，当前排队已满员！';
+               }else{
+                   $redis2->watch('kill_num','kill_user','kill_user_que');
+                   $redis2->multi(); //开启事务
+                   $redis2->sAdd('kill_user_que',$userID); //加入集合
+                   $redis2->decr('kill_num'); //商品数量减一
+                   $redis2->rPush('kill_user',$userID);//将用户有序的压入队列
+                   $redis2->exec(); //执行事务
+                   $message = "恭喜，抢购成功！";
+               }
+           }
+       }else{
+           $message = "Sorry，商品已售完！";
+       }
+       return $message;
+   }
 
     public function testMysql(){
         $randID = rand(300,400);
