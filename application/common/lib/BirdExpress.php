@@ -138,4 +138,68 @@ class BirdExpress
     {
         return urlencode(base64_encode(md5($data . $appkey)));
     }
+
+    /**
+     * 快递100 物流信息获取 API
+     * 测试代码已完成，后期可使用
+     * @param string $strCom 物流代码
+     * @param string $strNum    物流单号
+     * @param string $strPhone  收、寄件人的电话号码（手机和固定电话均可，只能填写一个，顺丰单号必填，其他快递公司选填。如座机号码有分机号，分机号无需上传。）
+     * @return array
+     */
+    public function getOrderTracesByKd100Json(
+        $strCom = 'shunfeng', $strNum = 'SF1306899205932', $strPhone = 'phone')
+    {
+        //参数设置
+        $key = 'CTjhulIU7xxxx';    //客户授权key
+        $customer = 'B714D3D08F29CFxxxxxxxxxxxxxxxxxxxx';    //查询公司编号
+        $param = array(
+            'com' => $strCom,             //快递公司编码
+            'num' => $strNum,     //快递单号
+            'phone' => $strPhone,                //手机号
+            'from' => '',                 //出发地城市
+            'to' => '',                   //目的地城市
+            'resultv2' => '1'             //开启行政区域解析
+        );
+
+        //请求参数
+        $post_data = array();
+        $post_data["customer"] = $customer;
+        $post_data["param"] = json_encode($param);
+        $sign = md5($post_data["param"] . $key . $post_data["customer"]);
+        $post_data["sign"] = strtoupper($sign);
+
+        $url = 'http://poll.kuaidi100.com/poll/query.do';    //实时查询请求地址
+        $params = "";
+        foreach ($post_data as $k => $v) {
+            $params .= "$k=" . urlencode($v) . "&";  //默认UTF-8编码格式
+        }
+        $post_data = substr($params, 0, -1);
+
+        //发送post请求
+        $ch = curl_init();
+        curl_setopt($ch, CURLOPT_POST, 1);
+        curl_setopt($ch, CURLOPT_HEADER, 0);
+        curl_setopt($ch, CURLOPT_URL, $url);
+        curl_setopt($ch, CURLOPT_POSTFIELDS, $post_data);
+        curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
+        $result = curl_exec($ch);
+
+        $data = str_replace("\"", '"', $result);
+        //TODO 物流信息都在 $data 中，根据自己的需求进行提取
+        $data = json_decode($data, true);
+
+        if ($data['status'] == '200') {
+            $xxxData = $data['data'];
+            foreach ($xxxData as $key => $val) {
+                $xxxData[$key]['AcceptTime'] = $val['time'];
+                $xxxData[$key]['AcceptStation'] = $val['context'];
+            }
+            $opResult['Traces'] = $xxxData;
+        } else {
+            $opResult['Traces'] = null;
+        }
+        //var_dump($opResult);
+        return $opResult;
+    }
 }
