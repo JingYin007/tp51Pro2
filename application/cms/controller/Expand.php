@@ -39,9 +39,13 @@ class Expand extends CmsBase
 
     public function test(){
 
-        $tag = $this->testMysql();
-        //var_dump($tag);
+        //$tag = $this->testMysql();
         //echo 'Test';
+        $arr = pathinfo("/wwsaswroot/include/page.class.php");
+        $str = substr($arr['basename'],strrpos($arr['basename'],'.'));
+        var_dump($arr);
+        var_dump(strrpos($arr['basename'],'.'));
+        var_dump($str);
     }
 
     function testMysql(){
@@ -115,7 +119,6 @@ class Expand extends CmsBase
         for ($j=$i-1;$j>=0;$j--){
             $okStr .= $str[$j];
         }
-        var_dump($okStr);
         return $okStr;
     }
 
@@ -126,29 +129,56 @@ class Expand extends CmsBase
             return $this->xxx($index-1)+$this->xxx($index-2);
         }
     }
-
-    private function insertSort2($arr){
+    public function quick_sort($arr) {
+        $length = count($arr);
+        //先判断是否需要继续进行 递归出口:数组长度为1，直接返回数组
+        if(!is_array($arr)||$length <= 1) {return $arr;}
+        //选择第一个元素作为基准
+        $baseValue = $arr[0];
+        //遍历除了标尺外的所有元素，按照大小关系放入两个数组内
+        //初始化两个数组
+        $leftArr = array();  //小于基准的
+        $rightArr = array();  //大于基准的
+        //使用for循环进行遍历，把选定的基准当做比较的对象
+        for($i = 1; $i<$length; $i++) {
+            if( $arr[$i] < $baseValue) {
+                //放入左边数组
+                $leftArr[] = $arr[$i];
+            } else {
+                //放入右边数组
+                $rightArr[] = $arr[$i];
+            }
+        }
+        //再分别对左边和右边的数组进行相同的排序处理方式递归调用这个函数
+        $leftArr = $this->quick_sort($leftArr);
+        $rightArr = $this->quick_sort($rightArr);
+        //合并 左边 标尺 右边， 注意：array($baseValue),关联着重复数据
+        return array_merge($leftArr, array($baseValue), $rightArr);
+    }
+    private function insertSort($arr){
         $len = count($arr);
         if ($len <= 1) {return $arr;}
         //先默认$array[0]，已经有序，是有序表
         for($i = 1;$i < $len;$i++){
-            if ($arr[$i] < $arr[$i-1]){
+            if ( $arr[$i-1] > $arr[$i]){
                 $insertVal = $arr[$i]; //$insertVal是准备插入的数
-                //$j 有序表中准备比较的数的下标
-                //$j-- 将下标往前挪，准备与前一个进行比较
-                for ($j = $i-1;$j >= 0 && $insertVal < $arr[$j];$j--){
-                    $arr[$j+1]= $arr[$j];//将数组往后挪
+                $insertIndex = $i - 1; //有序表中准备比较的数的下标
+                while($insertIndex >= 0 && $insertVal < $arr[$insertIndex]){
+                    $arr[$insertIndex + 1] = $arr[$insertIndex]; //将数组往后挪
+                    $insertIndex--; //将下标往前挪，准备与前一个进行比较
                 }
-                $arr[$j + 1] = $insertVal;
+                if($insertIndex + 1 !== $i){
+                    $arr[$insertIndex + 1] = $insertVal;
+                }
             }
         }
         return $arr;
     }
     // 冒泡排序
-    private function buble_sore($arr){
+    private function bubble_sort($arr){
         $len = count($arr);
-        if ($len < 2){return $arr;}
-        for ($i = 0; $i < $len ;$i++){
+        if ($len <= 1){return $arr;}
+        for ($i = 0; $i < $len-1 ;$i++){
             for ($j = 0; $j < $len-$i-1;$j++){
                 if ($arr[$j] > $arr[$j+1]){
                     $temp = $arr[$j];
@@ -160,6 +190,8 @@ class Expand extends CmsBase
         return $arr;
     }
     public function redisTest(){
+        
+        return view('redis_test');
 
         try{
 //            $redis = new Redis();
