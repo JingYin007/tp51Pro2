@@ -190,7 +190,7 @@ class Expand extends CmsBase
         return $arr;
     }
     public function redisTest(){
-        
+
         return view('redis_test');
 
         try{
