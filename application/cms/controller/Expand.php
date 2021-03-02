@@ -12,6 +12,7 @@ namespace app\cms\controller;
 use app\common\controller\CmsBase;
 use app\common\lib\SpreadsheetService;
 use app\common\model\Xmozxx;
+use app\common\validate\Xcategory;
 use Godruoyi\Snowflake\Snowflake;
 use PhpOffice\PhpSpreadsheet\Exception;
 use think\cache\driver\Redis;
@@ -36,16 +37,47 @@ class Expand extends CmsBase
         $this->model = new Xmozxx();
     }
 
-
+    /**
+     * 测试接口
+     */
     public function test(){
 
         //$tag = $this->testMysql();
         //echo 'Test';
-        $arr = pathinfo("/wwsaswroot/include/page.class.php");
-        $str = substr($arr['basename'],strrpos($arr['basename'],'.'));
-        var_dump($arr);
-        var_dump(strrpos($arr['basename'],'.'));
-        var_dump($str);
+
+
+    }
+
+    /**
+     * 递归获取，全部树状分类数据
+     * 测试方式：
+     * $map = [['status', '=', 1]];
+     * $res = Db::name('xcategorys')
+     * ->field('cat_id,cat_name,parent_id')
+     * ->where($map)
+     * ->order(["list_order"=>"asc","cat_id"=>'asc'])
+     * ->select();
+     * $result = $this->tree($res,0);
+     *
+     * @param array $arr 分类数组
+     * @param int $pid 父ID
+     * @return array
+     */
+    public function tree($arr = [], $pid = 0){
+        $list = [];
+        foreach ($arr as $key=> $val){
+            if ($val['parent_id'] == $pid){
+                //把这个节点从数组中移除,减少后续递归消耗
+                unset($arr[$key]);
+                //开始递归,查找父ID为该节点ID的节点,级别则为原级别+1
+                $child = $this->tree($arr,$val['cat_id']);
+                if ($child){
+                    $val['child'] = $child;
+                }
+                $list[] = $val;
+            }
+        }
+        return $list;
     }
 
     function testMysql(){

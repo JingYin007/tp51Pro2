@@ -189,7 +189,7 @@ class BirdExpress
         //TODO 物流信息都在 $data 中，根据自己的需求进行提取
         $data = json_decode($data, true);
 
-        if ($data['status'] == '200') {
+        if (isset($data['status']) && $data['status'] == '200') {
             $xxxData = $data['data'];
             foreach ($xxxData as $key => $val) {
                 $xxxData[$key]['AcceptTime'] = $val['time'];
