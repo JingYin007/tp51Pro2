@@ -326,7 +326,7 @@
                     if (res.status == 1) {
                         $(".chat-content").append('<div class="chat-text section-right flex"><span class="text"><i class="icon icon-sanjiao3 t-32"></i><img width="120em" height="auto" src="'+res.data.full_url+'"></span> <span class="char-img" style="background-image: url('+to_head+')"></span> </div>');
                         $(".chat-content").scrollTop(3000);
-                        var message = '{"data":"'+res.data.full_url+'","from_id":"'+from_id+'","to_id":"'+to_id+'","type":"say_img"}';
+                        const message = '{"data":"' + res.data.full_url + '","from_id":"' + from_id + '","to_id":"' + to_id + '","type":"say_img"}';
                         ws.send(message);
                     }
                 }
