@@ -46,6 +46,7 @@
      function createOrConnectWebSocket(){
         if(!ws){
             //TODO ws 不存在
+            console.log('!ws');
             ws = new WebSocket(wsUrl);
             websocketInit();
         }else {
@@ -56,6 +57,7 @@
         }
         init_start_timer();
     }
+
 
     /**
      * websocket 的初始化
@@ -81,12 +83,33 @@
                     }
                     return;
                 case "say":
-                    To_receive_message('txt',message);
+                    if (to_id == message.from_id) {
+                        const messagexx = '{"tag":"left","content":"' + message.content + '","type":"say","from_id":"' + from_id + '","to_id":"' + to_id + '"}';
+                        To_send_message(messagexx, 'left',message.content);
+                        if (message.is_read == 1) {
+                            set_online_status(true);
+                        } else {
+                            set_online_status(false);
+                        }
+                        changeNoReadLogs();
+                    }
+                    save_message(message);
                     $(".chat-content").scrollTop(3000);
                     return;
                 case "say_img":
-                    To_receive_message('img',message);
-                    $(".chat-content").scrollTop(15000);
+                    if(from_id == message.to_id){
+                        $(".chat-content").append(' <div class="chat-text section-left flex"><span class="char-img" style="background-image: url('+to_head+')"></span> <span class="text"><i class="icon icon-sanjiao4 t-32"></i><img width="120em" height="auto" src="'+message.content+'"></span> </div>');
+                        $(".chat-content").scrollTop(3000);
+                        changeNoReadLogs();
+                    }
+                    if (to_id == message.to_id) {
+                        if (message.is_read == 1) {
+                            set_online_status(true);
+                        } else {
+                            set_online_status(false);
+                        }
+                    }
+                    save_message(message);
                     return;
             }
         };
@@ -140,15 +163,8 @@
     $(".send-btn").click(function () {
         const text = $(".send-input").val();
         if (text) {
-            if(isOnlineCurrUser()){
-                const message = '{"content":"' + text + '","type":"say","from_id":"' + from_id + '","to_id":"' + to_id + '"}';
-                ws.send(message);
-                save_message($.parseJSON( message ));
-                $(".send-input").val("");
-            }else {
-                createOrConnectWebSocket();
-                dialog.tip("您已离线,重新连接中...");
-            }
+            const message = '{"tag":"right","content":"' + text + '","type":"say","from_id":"' + from_id + '","to_id":"' + to_id + '"}';
+            To_send_message(message, 'right',text);
         }
     });
     //回车事件绑定
@@ -188,8 +204,11 @@
     function isOnlineCurrUser() {
         if(ws){
             if(ws.readyState == WebSocket.OPEN){
+                console.log('open',ws.readyState);
+                init_start_timer();
                 return true;
             }else {
+                console.log('close',ws.readyState);
                 return false;
             }
         }else {
@@ -198,35 +217,32 @@
     }
 
     /**
-     * 接收信息 ---具体处理方法
+     * 发送---具体处理方法
      */
-    function To_receive_message(tag,message) {
+    function To_send_message(message, tag,content) {
         let appendHtml;
-        if (message.to_id == from_id) {
-            if (tag == 'txt'){
-                appendHtml = "<div class=\"chat-text section-left flex\">\n" +
-                    "<span class=\"char-img\" style=\"background-image: url(" + to_head + ")\"></span>\n" +
-                    "<span class=\"text\"><i class=\"icon icon-sanjiao4 t-32\"></i>" + replace_em(message.content) + "</span>\n" +
-                    "</div>";
-                $(".chat-content").append(appendHtml);
-            }else {
-                $(".chat-content").append(' <div class="chat-text section-left flex"><span class="char-img" style="background-image: url('+to_head+')"></span> <span class="text"><i class="icon icon-sanjiao4 t-32"></i><img width="120em" height="auto" src="'+message.content+'"></span> </div>');
-            }
-        }
 
-        if (message.from_id == from_id) {
-            if (tag == 'txt'){
-                appendHtml = "<div class=\"chat-text section-right flex\">\n" +
-                    "<span class=\"text\"><i class=\"icon icon-sanjiao3 t-32\"></i>" + replace_em(message.content) + "</span>\n" +
-                    "<span class=\"char-img\" style=\"background-image: url(" + from_head + ")\"></span>\n" +
-                    "</div>";
+        if (tag == 'right') {
+            appendHtml = "<div class=\"chat-text section-right flex\">\n" +
+            "<span class=\"text\"><i class=\"icon icon-sanjiao3 t-32\"></i>" + replace_em(content) + "</span>\n" +
+            "<span class=\"char-img\" style=\"background-image: url(" + from_head + ")\"></span>\n" +
+            "</div>";
+            if(isOnlineCurrUser()){
                 $(".chat-content").append(appendHtml);
+                ws.send(message);
+                $(".send-input").val("");
+                $(".chat-content").scrollTop(3000);
             }else {
-                $(".chat-content").append('<div class="chat-text section-right flex"><span class="text"><i class="icon icon-sanjiao3 t-32"></i><img width="120em" height="auto" src="'+message.content+'"></span> <span class="char-img" style="background-image: url('+to_head+')"></span> </div>');
+                createOrConnectWebSocket();
+                dialog.tip("您已离线,重新连接中...");
             }
+        }else {
+            appendHtml = "<div class=\"chat-text section-left flex\">\n" +
+                "<span class=\"char-img\" style=\"background-image: url(" + to_head + ")\"></span>\n" +
+                "<span class=\"text\"><i class=\"icon icon-sanjiao4 t-32\"></i>" + replace_em(content) + "</span>\n" +
+                "</div>";
+            $(".chat-content").append(appendHtml);
         }
-        changeNoReadLogs();
-        init_start_timer();
     }
     /**
      * 处理发送人的未读消息
@@ -306,8 +322,9 @@
                 , done: function (res) {
                     //如果上传成功
                     if (res.status == 1) {
-                        const message = '{"content":"' + res.data.full_url + '","from_id":"' + from_id + '","to_id":"' + to_id + '","type":"say_img"}';
-                        save_message($.parseJSON( message ));
+                        $(".chat-content").append('<div class="chat-text section-right flex"><span class="text"><i class="icon icon-sanjiao3 t-32"></i><img width="120em" height="auto" src="'+res.data.full_url+'"></span> <span class="char-img" style="background-image: url('+to_head+')"></span> </div>');
+                        $(".chat-content").scrollTop(3000);
+                        const message = '{"data":"' + res.data.full_url + '","from_id":"' + from_id + '","to_id":"' + to_id + '","type":"say_img"}';
                         ws.send(message);
                     }
                 }

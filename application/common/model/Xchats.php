@@ -34,6 +34,7 @@ class Xchats extends BaseModel
         }else{
             $addData['type'] = 2;
         }
+        $addData['log_time'] = time();
         $status = Db::name('xchat_logs')->insert($addData);
 
         $message = $status ? "聊天记录保存成功" : "聊天记录保存失败！";

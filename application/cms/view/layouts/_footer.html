@@ -1,12 +1,13 @@
 <script>
-    var from_id ='{$admin.id}';
-    var ws =  new WebSocket("{$web_socket_url}");
+    const from_id = '{$admin.id}';
+    const ws = new WebSocket("{$web_socket_url}");
+
     ws.onmessage = function(e){
-        var message = eval('(' + e.data + ')');
+        const message = eval('(' + e.data + ')');
         console.log('message', message);
         switch (message.type){
             case  "init":
-                var bild = '{"type":"bind","from_id":"'+from_id+'"}';
+                const bild = '{"type":"bind","from_id":"' + from_id + '"}';
                 ws.send(bild);
                 refresh_header_chat();
                 return;
@@ -23,7 +24,7 @@
             {},function (result) {
                 console.log(result);
                 if(result.data.noReadCount > 0){
-                    var replaceStr = "<span class=\"layui-badge\">"+result.data.noReadCount+"</span>";
+                    const replaceStr = "<span class=\"layui-badge\">" + result.data.noReadCount + "</span>";
                     $(".span-header-chat").html(replaceStr);
                 }else {
                     $(".span-header-chat").html('');
@@ -35,14 +36,14 @@
      */
     $(".refreshHome").click(function () {
         $(this).addClass('title-selected');
-        var url = $(this).attr('url');
+        const url = $(this).attr('url');
         $(".layui-body .iframe-body").attr('src',url);
     });
     /**
      * 当前页面刷新事件
      */
     $(".refreshThis").click(function () {
-        var mkTag = $(this).hasClass("refreshTag");
+        const mkTag = $(this).hasClass("refreshTag");
         if (mkTag) {
             $(this).removeClass("refreshTag");
             $(".layui-layout-admin .layui-body").find("iframe")[0].contentWindow.location.reload(true);
@@ -55,8 +56,8 @@
     });
 
     $(document).ready(function () {
-        var allH = $(".layui-body").height();
-        var titleH = $(".layui-tab-title").height();
+        const allH = $(".layui-body").height();
+        const titleH = $(".layui-tab-title").height();
         //$(".iframe-body").css("height", allH - titleH - 10);
         $(".iframe-body").css("height", '99%');
     });
@@ -66,7 +67,7 @@
      * @param adminID
      */
     function viewAdminMsg(adminID) {
-        var toUrl = "{:url('cms/index/admin',['id'=>'AdminID'])}";
+        let toUrl = "{:url('cms/index/admin',['id'=>'AdminID'])}";
         toUrl = toUrl.replace('AdminID',adminID);
         ToOpenPopups(toUrl,'✎ 基本资料','40%','65%');
     }
@@ -76,7 +77,7 @@
      * @param adminID
      */
     function viewChatWindow() {
-        var toUrl = "{:url('cms/chat/lists')}";
+        const toUrl = "{:url('cms/chat/lists')}";
         ToOpenPopups(toUrl,'✉','380px','680px');
     }
 </script>

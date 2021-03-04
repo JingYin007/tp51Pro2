@@ -86,34 +86,101 @@
 
 {block name='single-content'}
 <script>
-    var from_id ='{$from_id}';
-    var ws =  new WebSocket("{$web_socket_url}");
-    ws.onmessage = function(e){
-        var message = eval('(' + e.data + ')');
-        console.log('message', message);
-        switch (message.type){
-            case  "init":
-                var bild = '{"type":"bind","from_id":"'+from_id+'"}';
-                ws.send(bild);
-                return;
-            case "say":
-                refresh_list();
-                return;
-            case "say_img":
-                refresh_list();
-                return;
+    const from_id = '{$from_id}';
+    const wsUrl = "{$web_socket_url}";
+    let ws;
+    let interval_timer = null;//计时器
+    let timer_count = 0;
+    createOrConnectWebSocket();	// 创建websocket
+    /**
+     * 创建websocket或掉线重连
+     */
+    function createOrConnectWebSocket(){
+        if(!ws){
+            //TODO ws 不存在
+            ws = new WebSocket(wsUrl);
+            websocketInit();
+        }else {
+            if (!isOnlineCurrUser()){
+                ws = null;
+                createOrConnectWebSocket();
+            }
         }
-    };
+        init_start_timer();
+    }
+    /**
+     * 判断当前用户是否 还在线
+     */
+    function isOnlineCurrUser() {
+        if(ws){
+            if(ws.readyState == WebSocket.OPEN){
+                console.log('open',ws.readyState);
+                return true;
+            }else {
+                console.log('close',ws.readyState);
+                return false;
+            }
+        }else {
+            return false;
+        }
+    }
+    function websocketInit(){
+        ws.onmessage = function(e){
+            const message = eval('(' + e.data + ')');
+            console.log('message', message);
+            switch (message.type){
+                case  "init":
+                    const bild = '{"type":"bind","from_id":"' + from_id + '"}';
+                    ws.send(bild);
+                    return;
+                case "say":
+                    refresh_list();
+                    return;
+                case "say_img":
+                    refresh_list();
+                    return;
+            }
+        };
+    }
+
+    /**
+     * 设置一个 30秒的轮询监听方法，避免页面关闭
+     */
+    function init_start_timer() {
+        //重置计数器
+        timer_count = 0;
+        if(interval_timer != null){
+            clearInterval(interval_timer);
+            interval_timer = null;
+        }
+        interval_timer = setInterval(function(){ myTimer() }, 30000);
+    }
+    /**
+     *定时器具体实现方法
+     */
+    function myTimer() {
+        //TODO 如果超过半小时没有交互，则关闭计时器
+        if(timer_count >= 1800){
+            //timer_count >= 1800
+            clearInterval(interval_timer);
+        }else {
+            timer_count += 30;
+            const online = '{"type":"timer","from_id":"' + from_id + '"}';
+            ws.send(online);
+            console.log('timer_count',timer_count);
+        }
+    }
+
     $(".layui-icon-help").click(function () {
-        var content_html =
+        const content_html =
             '<div class="div-chat-help">' +
-                '【启动条件】<br>'+
-                '<p>1. 默认需要保证【8282】端口的开放</p>'+
-                '<p>2. windows环境下，需要单击运行文件：“\\extend\\GatewayWorker\\start_for_win.bat”</p>'+
-                '<p>3. Linux环境下，命令行进入目录：“\\extend\\GatewayWorker”' +
-                '然后，执行命令—— “ php start.php start -d”</p>'+
-                '<p>4.请管理员在“config\\workerman.php”中，配置连接地址 "WEB_SOCKET_URL"</p>'+
-                '<p>5.如果是 Https 网站，请参考开发手册创建 wss服务</p>'+
+            '【启动条件】<br>' +
+            '<p>1. 默认需要保证【8282】端口的开放</p>' +
+            '<p>2. windows环境下，需要单击运行文件：“\\extend\\GatewayWorker\\start_for_win.bat”</p>' +
+            '<p>3. Linux环境下，命令行进入目录：“\\extend\\GatewayWorker”' +
+            '然后，执行命令—— “ php start.php start -d”</p>' +
+            '<p>4.请管理员在“config\\workerman.php”中，配置连接地址 "WEB_SOCKET_URL"</p>' +
+            '<p>5.如果是 Https 网站，请参考开发手册创建 wss服务</p>' +
             '</div>';
         layer.open({
             type: 1,
@@ -143,7 +210,7 @@
         );
     });
     function ToOpenUserList(user_list_result) {
-        var content_html = '<div class="div-user-list">请选择管理员<br>' + '<ul>\n' ;
+        let content_html = '<div class="div-user-list">请选择管理员<br>' + '<ul>\n';
         $.each(user_list_result,function (index,user) {
             content_html += '<li onclick=redi("'+user.redi_url+'")>'+
                             '<img class="img-user-head layui-circle" src="'+user.picture+'">'+
@@ -176,18 +243,19 @@
             function(res){
                 console.log(res);
                 $.each(res.data,function(index,content){
-                    var appendStr1 =
-                        '<div onclick=redi("'+content.redi_url+'") class="chat-list flex" >' +
-                        '<div class="chat-img"  style="background-image: url('+content.head_url+')">';
+                    const appendStr1 =
+                        '<div onclick=redi("' + content.redi_url + '") class="chat-list flex" >' +
+                        '<div class="chat-img"  style="background-image: url(' + content.head_url + ')">';
 
-                    var appendStr2 =
-                        '</div> '+
+                    const appendStr2 =
+                        '</div> ' +
                         '<div class="chat-info"> <p class="chat-merch flex"> ' +
-                        '<span class="title t-28">'+content.user_name+'</span> ' +
-                        '<span class="time">'+mydate(content.last_message.log_time)+'</span> </p> ' +
-                        '<p class="chat-text">'+content.last_message.content+'</p> </div>' +
+                        '<span class="title t-28">' + content.user_name + '</span> ' +
+                        '<span class="time">' + mydate(content.log_time) + '</span> </p> ' +
+                        '<p class="chat-text">' + content.last_message + '</p> </div>' +
                         '</div>';
-                    var appendBade = '<span class="badge">'+content.countNoRead+'</span>';
+                    const appendBade = '<span class="badge">' + content.countNoRead + '</span>';
+
                     if(content.countNoRead == 0){
                         $(".chat-fui-content").append(appendStr1+appendStr2);
                     }else{
@@ -203,7 +271,7 @@
      *根据时间戳格式化为日期形式
      */
     function mydate(time_stamp) {
-        var date = new Date(parseInt(time_stamp) * 1000).toLocaleString('zh',{hour12:false});
+        let date = new Date(parseInt(time_stamp) * 1000).toLocaleString('zh', {hour12: false});
         date = date.replace(/年|月/g, "/").replace(/日/g, " ");
         return date;
     }
