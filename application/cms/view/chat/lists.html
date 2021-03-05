@@ -14,7 +14,7 @@
 
         <div class="fui-content navbar chat-fui-content" style="padding-bottom: 2rem;">
             {volist name="chatList" id="vo"}
-            <div class="chat-list flex" onclick="redi('{$vo.redi_url}')">
+            <div class="chat-list flex" onclick="redirectToUrl('{$vo.redi_url}')">
                 <div class="chat-img" style="background-image: url('{$vo.head_url}')">
                     {gt name="vo.countNoRead" value="0"}<span class="badge">{$vo.countNoRead}</span>{/gt}
                 </div>
@@ -212,7 +212,7 @@
     function ToOpenUserList(user_list_result) {
         let content_html = '<div class="div-user-list">请选择管理员<br>' + '<ul>\n';
         $.each(user_list_result,function (index,user) {
-            content_html += '<li onclick=redi("'+user.redi_url+'")>'+
+            content_html += '<li onclick=redirectToUrl("'+user.redi_url+'")>'+
                             '<img class="img-user-head layui-circle" src="'+user.picture+'">'+
                             '<span class="span-user-name" title="'+user.user_name+'">'+user.user_name+'</span>' +
                             '</li>';
@@ -241,10 +241,10 @@
             "{:url('cms/chat/lists')}",
             {id:from_id},
             function(res){
-                console.log(res);
+                //console.log(res);
                 $.each(res.data,function(index,content){
                     const appendStr1 =
-                        '<div onclick=redi("' + content.redi_url + '") class="chat-list flex" >' +
+                        '<div onclick=redirectToUrl("' + content.redi_url + '") class="chat-list flex" >' +
                         '<div class="chat-img"  style="background-image: url(' + content.head_url + ')">';
 
                     const appendStr2 =
@@ -275,7 +275,7 @@
         date = date.replace(/年|月/g, "/").replace(/日/g, " ");
         return date;
     }
-    function redi(url){
+    function redirectToUrl(url){
         window.location.href = url;
     }
 </script>

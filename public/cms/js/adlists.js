@@ -21,7 +21,7 @@ layui.use(['form'], function () {
         var checked = data.elem.checked;
         var okStatus = 0;
         if (checked) {
-            okStatus = 1
+            okStatus = 1;
         }
         //获取所需属性值
         var switch_act_id = data.elem.attributes['switch_act_id'].nodeValue;
