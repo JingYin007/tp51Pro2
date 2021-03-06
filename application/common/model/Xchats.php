@@ -131,7 +131,7 @@ class Xchats extends BaseModel
      * @param $curr_id
      * @return array
      */
-    public function getChatList($curr_id){
+    public function getChatList($curr_id,$str_online_list = ''){
         //TODO 这玩意可得花点时间好好整下 ！！！
         $tab_prefix = config('database.prefix');
         $sql =
@@ -148,12 +148,23 @@ class Xchats extends BaseModel
 	        LEFT JOIN ".$tab_prefix."xadmins on receiver = ".$tab_prefix."xadmins.id GROUP BY receiver ORDER BY any_value(log_time) DESC";
 
         $chatList = Db::query($sql);
+        $online_list = json_decode($str_online_list,true);
         //var_dump($chatList);
         foreach ($chatList as $key => $value){
             $head_id = $value['receiver'];
             $chatList[$key]['head_url'] = imgToServerView($value['picture']);
             $chatList[$key]['last_message'] = (intval($value['type']) == 2)? "【图片】" : $value['last_message'];
             $chatList[$key]['redi_url'] = url("/cms/chat/index/$head_id");
+            $chatList[$key]['online'] = 0;
+            if(is_array($online_list)){
+                foreach ($online_list as $onlineUid){
+                    if (intval($chatList[$key]['receiver']) == $onlineUid){
+                        $chatList[$key]['online'] = 1;
+                        break;
+                    }
+                }
+            }
+
         }
         return $chatList;
     }

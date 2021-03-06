@@ -21,11 +21,17 @@
 .chat-page .chat-list .chat-info .chat-merch{
     justify-content: space-between;
 }
-.chat-page .chat-list .chat-info .chat-merch .title{
+.chat-page .chat-list .chat-info .chat-merch .title-0{
     margin-bottom: 0.3rem;
     overflow: hidden;
     font-weight: bold;
     color: #666699;
+}
+.chat-page .chat-list .chat-info .chat-merch .title-1{
+    margin-bottom: 0.3rem;
+    overflow: hidden;
+    font-weight: bold;
+    color: #039702;
 }
 .chat-page .chat-list .chat-info .chat-merch .time{
     margin-top: 0.05rem;

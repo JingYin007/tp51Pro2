@@ -41,7 +41,7 @@ class Chat extends Controller
      */
     public function lists(Request $request){
         $curr_id = $this->cmsAID;
-        $chatList = $this->chatModel->getChatList($curr_id);
+        $chatList = $this->chatModel->getChatList($curr_id,$request->post('online_list'));
         if ($request->isGet()){
             return view('lists', [
                 'from_id' => $curr_id,

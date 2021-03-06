@@ -82,7 +82,8 @@ class Events
                        'type' => 'say',
                        'content' => $text,
                        'from_id' => $from_id,
-                       'to_id' => $to_id
+                       'to_id' => $to_id,
+                       'online_list' => json_encode(Gateway::getAllUidList()),
                    ];
                    if (Gateway::isUidOnline($to_id)){
                        $sayData['is_read'] = 1;
@@ -98,7 +99,8 @@ class Events
                        'type'=>'say_img',
                        'from_id'=>$from_id,
                        'to_id'=>$to_id,
-                       'content'=>$message_data['content']
+                       'content'=>$message_data['content'],
+                       'online_list' => json_encode(Gateway::getAllUidList()),
                    ];
                    if (Gateway::isUidOnline($to_id)){
                        Gateway::sendToUid($to_id,json_encode($sayData));

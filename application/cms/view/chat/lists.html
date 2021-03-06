@@ -13,20 +13,20 @@
         </div>
 
         <div class="fui-content navbar chat-fui-content" style="padding-bottom: 2rem;">
-            {volist name="chatList" id="vo"}
-            <div class="chat-list flex" onclick="redirectToUrl('{$vo.redi_url}')">
-                <div class="chat-img" style="background-image: url('{$vo.head_url}')">
-                    {gt name="vo.countNoRead" value="0"}<span class="badge">{$vo.countNoRead}</span>{/gt}
-                </div>
-                <div class="chat-info">
-                    <p class="chat-merch flex">
-                        <span class="title t-28">{$vo.user_name}</span>
-                        <span class="time">{$vo.log_time|date="Y/m/d H:i:s"}</span>
-                    </p>
-                    <p class="chat-text">{$vo.last_message}</p>
-                </div>
-            </div>
-            {/volist}
+<!--            {volist name="chatList" id="vo"}-->
+<!--            <div class="chat-list flex" onclick="redirectToUrl('{$vo.redi_url}')">-->
+<!--                <div class="chat-img" style="background-image: url('{$vo.head_url}')">-->
+<!--                    {gt name="vo.countNoRead" value="0"}<span class="badge">{$vo.countNoRead}</span>{/gt}-->
+<!--                </div>-->
+<!--                <div class="chat-info">-->
+<!--                    <p class="chat-merch flex">-->
+<!--                        <span class="title t-28">{$vo.user_name}</span>-->
+<!--                        <span class="time">{$vo.log_time|date="Y/m/d H:i:s"}</span>-->
+<!--                    </p>-->
+<!--                    <p class="chat-text">{$vo.last_message}</p>-->
+<!--                </div>-->
+<!--            </div>-->
+<!--            {/volist}-->
         </div>
     </div>
 </div>
@@ -132,14 +132,21 @@
                 case  "init":
                     const bild = '{"type":"bind","from_id":"' + from_id + '"}';
                     ws.send(bild);
+                    const online = '{"type":"say","from_id":"' + from_id + '"}';
+                    ws.send(online);
+                    return;
+                case "online":
+                    var str = '{"type":"say","from_id":"' + from_id + '"}';
+                    ws.send(str);
                     return;
                 case "say":
-                    refresh_list();
+                    refresh_list(message.online_list);
                     return;
                 case "say_img":
-                    refresh_list();
+                    refresh_list(message.online_list);
                     return;
             }
+
         };
     }
 
@@ -235,11 +242,11 @@
     /**
      * 刷新对话列表
      */
-    function refresh_list(){
+    function refresh_list(online_list){
         $(".chat-fui-content").html("");
         $.post(
             "{:url('cms/chat/lists')}",
-            {id:from_id},
+            {id:from_id,online_list:online_list},
             function(res){
                 //console.log(res);
                 $.each(res.data,function(index,content){
@@ -250,8 +257,8 @@
                     const appendStr2 =
                         '</div> ' +
                         '<div class="chat-info"> <p class="chat-merch flex"> ' +
-                        '<span class="title t-28">' + content.user_name + '</span> ' +
-                        '<span class="time">' + mydate(content.log_time) + '</span> </p> ' +
+                        '<span class="title-'+content.online+' t-28">' + content.user_name + '</span> ' +
+                        '<span class="time">' + my_date(content.log_time) + '</span> </p> ' +
                         '<p class="chat-text">' + content.last_message + '</p> </div>' +
                         '</div>';
                     const appendBade = '<span class="badge">' + content.countNoRead + '</span>';
@@ -270,7 +277,7 @@
     /**
      *根据时间戳格式化为日期形式
      */
-    function mydate(time_stamp) {
+    function my_date(time_stamp) {
         let date = new Date(parseInt(time_stamp) * 1000).toLocaleString('zh', {hour12: false});
         date = date.replace(/年|月/g, "/").replace(/日/g, " ");
         return date;
