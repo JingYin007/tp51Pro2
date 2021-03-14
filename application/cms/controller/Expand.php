@@ -22,6 +22,7 @@ use think\db\exception\ModelNotFoundException;
 use think\exception\DbException;
 use think\Request;
 use think\response\View;
+
 /**
  * 学习拓展类
  * Class Users
@@ -40,12 +41,73 @@ class Expand extends CmsBase
     /**
      * 测试接口
      */
-    public function test(){
+    public function test()
+    {
 
-        //$tag = $this->testMysql();
+        $tag = $this->testMT3();
         //echo 'Test';
 
 
+
+    }
+
+    public function testMT3(){
+        global $var1,$var2;
+        $var1 = 5;
+        $var2 = 10;
+        $c = 3;
+        function foo(&$my_val){
+            global $var1;
+            $var1 += 2;
+            unset($var1);
+            $var2 = 4;
+            $my_val += 3;
+            return $var2;
+        }
+        $my_val = 5;
+        echo foo($my_val)."\n";//4
+        echo $var1."\n";//5
+        echo $var2."\n";//10
+        $bar = "foo";
+        $my_val = 10;
+        var_dump($GLOBALS['var1']);
+    }
+
+    public function testMT2()
+    {
+        function &test()
+        {
+            static $b = 5;
+            $b = $b+1;
+            return $b;
+        }
+
+        $a = test();
+        echo $a, "\n";//1
+        $a = 3;
+        $a = test();//2
+        echo $a, "\n";
+
+        $a = &test();//3
+        echo $a,"\n";
+        $a= 10;
+        $a= &test();
+        echo $a,"\n";//11
+    }
+
+    public function testMT()
+    {
+         $count = 5;
+        function get_count()
+        {
+            static $count = 10;
+            return $count++;
+        }
+
+        echo $count . "\n";
+        ++$count;
+        echo get_count() . "\n";
+        echo get_count() . "\n";
     }
 
     /**
@@ -63,15 +125,16 @@ class Expand extends CmsBase
      * @param int $pid 父ID
      * @return array
      */
-    public function tree($arr = [], $pid = 0){
+    public function tree($arr = [], $pid = 0)
+    {
         $list = [];
-        foreach ($arr as $key=> $val){
-            if ($val['parent_id'] == $pid){
+        foreach ($arr as $key => $val) {
+            if ($val['parent_id'] == $pid) {
                 //把这个节点从数组中移除,减少后续递归消耗
                 unset($arr[$key]);
                 //开始递归,查找父ID为该节点ID的节点,级别则为原级别+1
-                $child = $this->tree($arr,$val['cat_id']);
-                if ($child){
+                $child = $this->tree($arr, $val['cat_id']);
+                if ($child) {
                     $val['child'] = $child;
                 }
                 $list[] = $val;
@@ -80,22 +143,25 @@ class Expand extends CmsBase
         return $list;
     }
 
-    function testMysql(){
-        $randID = rand(100,200);
+    function testMysql()
+    {
+        $randID = rand(100, 200);
         $tag = Db::name('xtest_logs')
-            ->where('open_id',$randID)->count('id');
-        if ($tag){
+            ->where('open_id', $randID)->count('id');
+        if ($tag) {
             return 0;
-        }else{
+        } else {
             $tag = Db::name('xtest_logs')
-                ->insert(['open_id'=>$randID,'add_time'=>time()]);
+                ->insert(['open_id' => $randID, 'add_time' => time()]);
             return $tag;
         }
     }
+
     /**
      * 算法入口
      */
-    public function suanFa(){
+    public function suanFa()
+    {
         $snowflake = new Snowflake();
         //$id = $snowflake->id();
 
@@ -123,48 +189,56 @@ class Expand extends CmsBase
      * 自定义实现 array_merge()功能
      * @return array
      */
-    private function array_mer(){
+    private function array_mer()
+    {
         $newArr = [];
         $arrs = func_get_args();
-        foreach ($arrs as $arr){
-            if (is_array($arr)){
-                foreach ($arr as $val){
-                  $newArr[] = $val;
+        foreach ($arrs as $arr) {
+            if (is_array($arr)) {
+                foreach ($arr as $val) {
+                    $newArr[] = $val;
                 }
             }
         }
         return $newArr;
     }
+
     /**
      * 不使用内置函数，实现 strrev()的效果
      * @param string $str
      * @return string
      */
-    private function str_rev($str = ''){
+    private function str_rev($str = '')
+    {
         //TODO 获取字符串长度
-        for ($i=0;true;$i++){
-            if (!isset($str[$i])){
+        for ($i = 0; true; $i++) {
+            if (!isset($str[$i])) {
                 break;
             }
         }
         $okStr = '';
-        for ($j=$i-1;$j>=0;$j--){
+        for ($j = $i - 1; $j >= 0; $j--) {
             $okStr .= $str[$j];
         }
         return $okStr;
     }
 
-    function xxx($index = 0){
-        if ($index == 1||$index == 2){
+    function xxx($index = 0)
+    {
+        if ($index == 1 || $index == 2) {
             return 1;
-        }else{
-            return $this->xxx($index-1)+$this->xxx($index-2);
+        } else {
+            return $this->xxx($index - 1) + $this->xxx($index - 2);
         }
     }
-    public function quick_sort($arr) {
+
+    public function quick_sort($arr)
+    {
         $length = count($arr);
         //先判断是否需要继续进行 递归出口:数组长度为1，直接返回数组
-        if(!is_array($arr)||$length <= 1) {return $arr;}
+        if (!is_array($arr) || $length <= 1) {
+            return $arr;
+        }
         //选择第一个元素作为基准
         $baseValue = $arr[0];
         //遍历除了标尺外的所有元素，按照大小关系放入两个数组内
@@ -172,8 +246,8 @@ class Expand extends CmsBase
         $leftArr = array();  //小于基准的
         $rightArr = array();  //大于基准的
         //使用for循环进行遍历，把选定的基准当做比较的对象
-        for($i = 1; $i<$length; $i++) {
-            if( $arr[$i] < $baseValue) {
+        for ($i = 1; $i < $length; $i++) {
+            if ($arr[$i] < $baseValue) {
                 //放入左边数组
                 $leftArr[] = $arr[$i];
             } else {
@@ -187,74 +261,84 @@ class Expand extends CmsBase
         //合并 左边 标尺 右边， 注意：array($baseValue),关联着重复数据
         return array_merge($leftArr, array($baseValue), $rightArr);
     }
-    private function insertSort($arr){
+
+    private function insertSort($arr)
+    {
         $len = count($arr);
-        if ($len <= 1) {return $arr;}
+        if ($len <= 1) {
+            return $arr;
+        }
         //先默认$array[0]，已经有序，是有序表
-        for($i = 1;$i < $len;$i++){
-            if ( $arr[$i-1] > $arr[$i]){
+        for ($i = 1; $i < $len; $i++) {
+            if ($arr[$i - 1] > $arr[$i]) {
                 $insertVal = $arr[$i]; //$insertVal是准备插入的数
                 $insertIndex = $i - 1; //有序表中准备比较的数的下标
-                while($insertIndex >= 0 && $insertVal < $arr[$insertIndex]){
+                while ($insertIndex >= 0 && $insertVal < $arr[$insertIndex]) {
                     $arr[$insertIndex + 1] = $arr[$insertIndex]; //将数组往后挪
                     $insertIndex--; //将下标往前挪，准备与前一个进行比较
                 }
-                if($insertIndex + 1 !== $i){
+                if ($insertIndex + 1 !== $i) {
                     $arr[$insertIndex + 1] = $insertVal;
                 }
             }
         }
         return $arr;
     }
+
     // 冒泡排序
-    private function bubble_sort($arr){
+    private function bubble_sort($arr)
+    {
         $len = count($arr);
-        if ($len <= 1){return $arr;}
-        for ($i = 0; $i < $len-1 ;$i++){
-            for ($j = 0; $j < $len-$i-1;$j++){
-                if ($arr[$j] > $arr[$j+1]){
+        if ($len <= 1) {
+            return $arr;
+        }
+        for ($i = 0; $i < $len - 1; $i++) {
+            for ($j = 0; $j < $len - $i - 1; $j++) {
+                if ($arr[$j] > $arr[$j + 1]) {
                     $temp = $arr[$j];
-                    $arr[$j] = $arr[$j+1];
-                    $arr[$j+1] = $temp;
+                    $arr[$j] = $arr[$j + 1];
+                    $arr[$j + 1] = $temp;
                 }
             }
         }
         return $arr;
     }
-    public function redisTest(){
+
+    public function redisTest()
+    {
 
         return view('redis_test');
 
-        try{
+        try {
 //            $redis = new Redis();
 //            $iphone = "15122786683";
 //            $redis->set(config('redis_mz.prefix').$iphone,'这是咋了!!',config('redis_mz.expire'));
 //            $ss = $redis->get(config('redis_mz.prefix').$iphone);
 
             $redis2 = new \Redis();
-            $redis2->connect('192.168.80.224',6379);
+            $redis2->connect('192.168.80.224', 6379);
 
 //            $redis2->sAdd('123','1003','1013','1022','1001');
 //            $redis2->sAdd('125','1007','1003','1022','1001');
 //            $redis2->sInterStore('xxxx','123','125');
 //            $redis2->sMembers('xxxx');
 
-/*----------------------- 秒杀测试 ------------------------------------*/
+            /*----------------------- 秒杀测试 ------------------------------------*/
             //初始化设置商品数量
-            $redis2->set('kill_num',50);
+            $redis2->set('kill_num', 50);
             //剩余商品数
             $killNum = $redis2->get('kill_num');
-            if ($killNum > 0){
-                $redis2->watch('kill_num','kill_user');
+            if ($killNum > 0) {
+                $redis2->watch('kill_num', 'kill_user');
                 $redis2->multi();
                 $redis2->decr('kill_num');
-                $userID = rand(1111,9999);
-                $redis2->rPush('kill_user',$userID);
+                $userID = rand(1111, 9999);
+                $redis2->rPush('kill_user', $userID);
                 $redis2->exec();
-            }else{
+            } else {
                 return false;
             }
-/*--------------------------------------------------------------------------*/
+            /*--------------------------------------------------------------------------*/
 
 //            $redis2->sAdd('set-mz',rand(1,6));
 //            $lockTag = 'lockTag';
@@ -321,13 +405,14 @@ class Expand extends CmsBase
 //            //var_dump($count);
 //
 //
-        }catch (\RedisException $exception){
+        } catch (\RedisException $exception) {
             echo $exception->getMessage();
         }
 
 
         return view('redis_test');
     }
+
     /**
      * Excel 文件操作接口
      * @param Request $request
@@ -335,11 +420,12 @@ class Expand extends CmsBase
      * @throws Exception
      * @throws \PhpOffice\PhpSpreadsheet\Writer\Exception
      */
-    public function opExcel(Request $request){
-        if ($request->isGet()){
+    public function opExcel(Request $request)
+    {
+        if ($request->isGet()) {
             try {
                 $loginList = (new Xmozxx())->getExcelTestData();
-                return view('op_excel',['loginList' => $loginList]);
+                return view('op_excel', ['loginList' => $loginList]);
             } catch (DataNotFoundException $e) {
                 $message = $e->getMessage();
             } catch (ModelNotFoundException $e) {
@@ -348,30 +434,30 @@ class Expand extends CmsBase
                 $message = $e->getMessage();
             }
 
-            return showMsg(0,$message);
-        }else{
-            $opTag = $request->post('op_tag','up');
+            return showMsg(0, $message);
+        } else {
+            $opTag = $request->post('op_tag', 'up');
 
-            if ($opTag == 'down'){
-                $header = ['商品名称','缩略图','产地','售价','状态'];
+            if ($opTag == 'down') {
+                $header = ['商品名称', '缩略图', '产地', '售价', '状态'];
                 $opData = (new Xmozxx())->getExcelTestData();
                 //此时去下载 Excel文件
-                (new SpreadsheetService())->outputDataToExcelFile($header,$opData,"哎呦喂-数据表");
-            }else{
+                (new SpreadsheetService())->outputDataToExcelFile($header, $opData, "哎呦喂-数据表");
+            } else {
                 $file = $request->file('file');
                 $info = $file->move('upload');
-                if ($info){
+                if ($info) {
                     //绝对路径，把反斜杠(\)替换成斜杠(/) 因为在 windows下上传路是反斜杠径
                     $file_real_path = str_replace("\\", "/", $info->getRealPath());
                     unset($info); //释放内存,也可使用 $info = null;(写在这里最好，后面总是不执行！！)
                     $opRes = (new Xmozxx())->importExcelData($file_real_path);
                     //TODO 操作完成后，删除文件
                     deleteServerFile($file_real_path);
-                }else{
+                } else {
                     $opRes['status'] = 0;
-                    $opRes['message'] = "文件上传失败 ".$file->getError();
+                    $opRes['message'] = "文件上传失败 " . $file->getError();
                 }
-                return showMsg($opRes['status'],$opRes['message']);
+                return showMsg($opRes['status'], $opRes['message']);
             }
         }
     }
@@ -382,7 +468,8 @@ class Expand extends CmsBase
      * @param Request $request
      * @return View|void
      */
-    public function react(Request $request){
+    public function react(Request $request)
+    {
         if ($request->isPost()) {
             return showMsg(1, 'success', []);
         } else {
@@ -391,7 +478,8 @@ class Expand extends CmsBase
         }
     }
 
-    public function shtmlx(){
+    public function shtmlx()
+    {
 
         var_dump(__FILE__);
         return $this->fetch();
