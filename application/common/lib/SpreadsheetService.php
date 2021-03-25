@@ -36,7 +36,8 @@ class SpreadsheetService
      *                              注意数据顺序要和 $headerArr 对应！
      *
      * @param string $excelTitle    设置的工作簿标题
-     * @param string $saveFileName  保存到桌面的文件名称，例如："moTzxx.xlsx"
+     * @param string $saveFileName  保存到桌面的文件名称(不加文件扩展名！)，例如："moTzxx"
+     * @param int $bigTag           是否导出大量数据，5w+,10w+,100w+,默认否：0
      * @param string $colStart      数据从哪一列开始导出，默认为 “A”列
      * @param int $rowStart         数据从第几行开始导出，默认为第一行
      * @throws Exception
@@ -45,9 +46,15 @@ class SpreadsheetService
     public function outputDataToExcelFile($header = [],$opData = [],
                                           $excelTitle = "moTzxx",
                                           $saveFileName = "",
+                                          $bigTag = 0,
                                           $colStart = "A",$rowStart = 1){
 
-        $saveFileName = $saveFileName ? $saveFileName:  "moTzxx-".time().".xlsx";
+        if ($bigTag){
+            $saveFileName = $saveFileName ? $saveFileName.".csv":  "moTzxx-".time().".csv";
+        }else{
+            $saveFileName = $saveFileName ? $saveFileName.".xlsx":  "moTzxx-".time().".xlsx";
+        }
+
 
         // 获取工作簿
         $work_sheet = self::$spreadsheet->getActiveSheet();
@@ -64,7 +71,12 @@ class SpreadsheetService
         }
         $work_sheet->fromArray($opData, null, $colStart . intval($rowStart + 1));
         //此处选择将文件下载到 客户端
-        self::downloadExcelFileToClient($saveFileName);
+        if ($bigTag){
+            self::downloadBigExcelFileToClient($saveFileName,$opData,$header);
+        }else{
+            self::downloadExcelFileToClient($saveFileName);
+        }
+
     }
 
     /**
@@ -139,6 +151,7 @@ class SpreadsheetService
 
     /**
      * 将文件下载到 客户端
+     * （数据量不能太多，相对来说，建议正常数据最多 1万条）
      * @param string $fileName 文件名 (推荐扩展名为 "xlsx")
      * @throws Exception
      */
@@ -159,12 +172,66 @@ class SpreadsheetService
     }
 
     /**
+     * 下载大量的数据到 excel中，此处以 .csv 文件存储
+     * @param string $fileName 文件名称
+     * @param array $opData 需要下载的数据
+     * @param array $header 表格标题栏数据
+     */
+    public static function downloadBigExcelFileToClient($fileName = "muTou.csv",$opData = [],$header = []){
+        set_time_limit(0);
+        //$writerType = self::getInputExcelFileType($fileName);
+        //$writer = IOFactory::createWriter(self::$spreadsheet, $writerType);
+
+        header('Content-Description: File Transfer');
+        header('Expires: 0');
+        header('Cache-Control: must-revalidate');
+        header('Pragma: public');
+        header('Content-Type: application/vnd.ms-excel/csv');
+        header("Content-Disposition: attachment;filename=$fileName"); // MIME 协议的扩展
+        header('Cache-Control: max-age=0'); // 缓存控制
+
+        //$writer->setSheetIndex(0);
+        //$writer->save('php://output');
+
+        $fp = fopen('php://output', 'a');//打开output流
+        fputcsv($fp, $header);//将数据格式化为 csv 格式并写入到output流中
+
+        $dataNum = count( $opData );
+        $perSize = 500;//每次导出的条数
+        $pages = ceil($dataNum / $perSize);
+
+        for ($i = 0; $i < $pages; $i++) {
+            $opList = array_slice($opData,$perSize*$i,$perSize);
+            foreach ($opList as $item) {
+                fputcsv($fp, $item);
+            }
+            //刷新输出缓冲到浏览器
+            ob_flush();
+            flush();//必须同时使用 ob_flush() 和flush() 函数来刷新输出缓冲。
+        }
+        fclose($fp);
+        unset($writer);
+        exit;
+    }
+
+    /**
      * 获取 excel 文件的类型
      * @param string $fileName
      * @return string
      */
     public static function getInputExcelFileType($fileName = ""){
-        $ext_name = (substr($fileName,-3) == 'xls')?"xls":"xlsx";
-        return ($ext_name == 'xls')?"Xls":"Xlsx";
+        $ext_name = substr($fileName,-3);
+        switch ($ext_name){
+            case 'xls':
+                $fileType = 'Xls';
+                break;
+            case 'csv':
+                $fileType = 'Csv';
+                break;
+            default:
+                $fileType = 'Xlsx';
+                break;
+        }
+        return $fileType;
     }
 }

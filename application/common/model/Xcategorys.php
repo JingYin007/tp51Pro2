@@ -90,7 +90,7 @@ class Xcategorys extends BaseModel
         if ($search){
             $where[] = ['cat_name', 'like', '%' . $search . '%'];
         }
-        return $this->where($where)->count('cat_id');
+        return $this->where($where)->count(1);
     }
 
     /**

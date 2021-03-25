@@ -43,146 +43,70 @@ class Expand extends CmsBase
      */
     public function test()
     {
+        echo 'Test';
 
-        $tag = $this->testMT3();
-        //echo 'Test';
-
-
-
-    }
-
-    public function testMT3(){
-        global $var1,$var2;
-        $var1 = 5;
-        $var2 = 10;
-        $c = 3;
-        function foo(&$my_val){
-            global $var1;
-            $var1 += 2;
-            unset($var1);
-            $var2 = 4;
-            $my_val += 3;
-            return $var2;
-        }
-        $my_val = 5;
-        echo foo($my_val)."\n";//4
-        echo $var1."\n";//5
-        echo $var2."\n";//10
-        $bar = "foo";
-        $my_val = 10;
-        var_dump($GLOBALS['var1']);
-    }
-
-    public function testMT2()
-    {
-        function &test()
-        {
-            static $b = 5;
-            $b = $b+1;
-            return $b;
-        }
-
-        $a = test();
-        echo $a, "\n";//1
-        $a = 3;
-        $a = test();//2
-        echo $a, "\n";
-
-        $a = &test();//3
-        echo $a,"\n";
-        $a= 10;
-        $a= &test();
-        echo $a,"\n";//11
-    }
-
-    public function testMT()
-    {
-         $count = 5;
-        function get_count()
-        {
-            static $count = 10;
-            return $count++;
-        }
-
-        echo $count . "\n";
-        ++$count;
-        echo get_count() . "\n";
-        echo get_count() . "\n";
     }
 
     /**
      * 递归获取，全部树状分类数据
-     * 测试方式：
-     * $map = [['status', '=', 1]];
-     * $res = Db::name('xcategorys')
-     * ->field('cat_id,cat_name,parent_id')
-     * ->where($map)
-     * ->order(["list_order"=>"asc","cat_id"=>'asc'])
-     * ->select();
-     * $result = $this->tree($res,0);
-     *
-     * @param array $arr 分类数组
-     * @param int $pid 父ID
+     * @param array $arr
+     * @param int $pid
      * @return array
      */
-    public function tree($arr = [], $pid = 0)
+    function mkTree($arr = [],$pid = 0)
     {
-        $list = [];
-        foreach ($arr as $key => $val) {
-            if ($val['parent_id'] == $pid) {
+        $resultArr = [];
+        foreach ($arr as $key => $val){
+            if ($val['pid'] == $pid){
                 //把这个节点从数组中移除,减少后续递归消耗
                 unset($arr[$key]);
+                unset($val['pid']);
                 //开始递归,查找父ID为该节点ID的节点,级别则为原级别+1
-                $child = $this->tree($arr, $val['cat_id']);
-                if ($child) {
+                $child = $this->mkTree($arr,$val['id']);
+                if ($child){
+
                     $val['child'] = $child;
                 }
-                $list[] = $val;
+                $resultArr[] = $val;
             }
         }
-        return $list;
+
+        return $resultArr;
     }
 
-    function testMysql()
-    {
-        $randID = rand(100, 200);
-        $tag = Db::name('xtest_logs')
-            ->where('open_id', $randID)->count('id');
-        if ($tag) {
-            return 0;
-        } else {
-            $tag = Db::name('xtest_logs')
-                ->insert(['open_id' => $randID, 'add_time' => time()]);
-            return $tag;
+    public function readBigFile(){
+        /**
+         * 取文件最后$n行
+         * @param string $filename
+         * @param int $n 最后几行
+         * @return mixed false
+         */
+        function ReadLastLines($filename, $n)
+        {
+            if (!$fp = fopen($filename, 'r')) {
+                echo "打开文件失败，请检查文件路径是否正确，路径和文件名不要包含中文";
+                return false;
+            }
+            $pos = -2;
+            $eof = "";
+            $str = "";
+            while ($n > 0) {
+
+                while ($eof != "\n") {
+                    if (!fseek($fp, $pos, SEEK_END)) {
+                        $eof = fgetc($fp);
+                        $pos--;
+                    } else {
+                        break;
+                    }
+                }
+                $str = fgets($fp) . $str;
+                $eof = "";
+                $n--;
+            }
+            return $str;
         }
-    }
-
-    /**
-     * 算法入口
-     */
-    public function suanFa()
-    {
-        $snowflake = new Snowflake();
-        //$id = $snowflake->id();
-
-//        $this->str_rev('azzzxcvbn');
-//
-//        $arr = [11,21,27,3,20,18,24,12,9,32];
-//        $ss = $this->insertSort2($arr);
-//        var_dump($ss);
-//
-//        $arrx = [1,1];
-//        for ($i = 2; $i<30;$i++){
-//            $arrx[$i] = $arrx[$i-1]+$arrx[$i-2];
-//        }
-        //var_dump($arrx);
-
-//
-//        $xxxVal = $this->xxx(30);
-//        var_dump($xxxVal);
-//
-//        $merArr = $this->array_mer([12,2],[44,3],[9,3]);
-//        var_dump($merArr);
+        echo nl2br(ReadLastLines('cms/file/loginVideo.mp4', 5));
     }
 
     /**
@@ -223,44 +147,8 @@ class Expand extends CmsBase
         return $okStr;
     }
 
-    function xxx($index = 0)
-    {
-        if ($index == 1 || $index == 2) {
-            return 1;
-        } else {
-            return $this->xxx($index - 1) + $this->xxx($index - 2);
-        }
-    }
 
-    public function quick_sort($arr)
-    {
-        $length = count($arr);
-        //先判断是否需要继续进行 递归出口:数组长度为1，直接返回数组
-        if (!is_array($arr) || $length <= 1) {
-            return $arr;
-        }
-        //选择第一个元素作为基准
-        $baseValue = $arr[0];
-        //遍历除了标尺外的所有元素，按照大小关系放入两个数组内
-        //初始化两个数组
-        $leftArr = array();  //小于基准的
-        $rightArr = array();  //大于基准的
-        //使用for循环进行遍历，把选定的基准当做比较的对象
-        for ($i = 1; $i < $length; $i++) {
-            if ($arr[$i] < $baseValue) {
-                //放入左边数组
-                $leftArr[] = $arr[$i];
-            } else {
-                //放入右边数组
-                $rightArr[] = $arr[$i];
-            }
-        }
-        //再分别对左边和右边的数组进行相同的排序处理方式递归调用这个函数
-        $leftArr = $this->quick_sort($leftArr);
-        $rightArr = $this->quick_sort($rightArr);
-        //合并 左边 标尺 右边， 注意：array($baseValue),关联着重复数据
-        return array_merge($leftArr, array($baseValue), $rightArr);
-    }
+
 
     private function insertSort($arr)
     {
@@ -285,24 +173,6 @@ class Expand extends CmsBase
         return $arr;
     }
 
-    // 冒泡排序
-    private function bubble_sort($arr)
-    {
-        $len = count($arr);
-        if ($len <= 1) {
-            return $arr;
-        }
-        for ($i = 0; $i < $len - 1; $i++) {
-            for ($j = 0; $j < $len - $i - 1; $j++) {
-                if ($arr[$j] > $arr[$j + 1]) {
-                    $temp = $arr[$j];
-                    $arr[$j] = $arr[$j + 1];
-                    $arr[$j + 1] = $temp;
-                }
-            }
-        }
-        return $arr;
-    }
 
     public function redisTest()
     {
@@ -442,7 +312,7 @@ class Expand extends CmsBase
                 $header = ['商品名称', '缩略图', '产地', '售价', '状态'];
                 $opData = (new Xmozxx())->getExcelTestData();
                 //此时去下载 Excel文件
-                (new SpreadsheetService())->outputDataToExcelFile($header, $opData, "哎呦喂-数据表");
+                (new SpreadsheetService())->outputDataToExcelFile($header, $opData, "哎呦喂-数据表",'',1);
             } else {
                 $file = $request->file('file');
                 $info = $file->move('upload');

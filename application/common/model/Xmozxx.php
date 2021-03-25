@@ -57,11 +57,11 @@ class Xmozxx
      * @throws ModelNotFoundException
      */
     public function getExcelTestData(){
-        $loginList = Db::name('xop_excel')
+        $downList = Db::name('xop_excel')
             ->field('goods_name,thumbnail,place,reference_price,status')
             ->select();
 
-        foreach ($loginList as &$vo){
+        foreach ($downList as &$vo){
             $status = $vo['status'] ;
             //-1：删除 0：待上架 1：已上架 2：预售
             switch ($status){
@@ -79,7 +79,7 @@ class Xmozxx
                     break;
             }
         }
-        return $loginList;
+        return $downList;
     }
 
     /**
