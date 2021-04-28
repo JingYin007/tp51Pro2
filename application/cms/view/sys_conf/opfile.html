@@ -274,15 +274,15 @@
 {block name='single-content'}
 <script>
     $(".tr-normal .layui-input").click(function () {
-        var auth_tag = $(this).parent().parent().attr('tag');
+        const auth_tag = $(this).parent().parent().attr('tag');
         $(".tr-normal input").css('background','#ebcccc');
         $(".tr-normal-"+auth_tag+" input").css('background','#fff');
     });
 
     layui.use(['form', 'layer'], function () {
-        var form = layui.form;
+        const form = layui.form;
         form.on('radio(radioSEL)', function (data) {
-            var toUrl = "{:url('cms/sysConf/opfile')}";
+            const toUrl = "{:url('cms/sysConf/opfile')}";
             $.post(
                 toUrl,
                 {op_val: data.value,op_tag:'USE_SEL'},
@@ -296,11 +296,11 @@
     });
 
     $(".tr-normal button").click(function () {
-        var conf_tag = $(this).parent().parent().attr('conf');
-        var op_tag = $(this).parent().parent().attr('tag');
-        var op_val = $(".tr-normal-"+op_tag+" .layui-input").val();
-        var toUrl = "{:url('cms/sysConf/opfile')}";
-        var postData = {conf_tag:conf_tag,op_tag:op_tag,op_val:op_val};
+        const conf_tag = $(this).parent().parent().attr('conf');
+        const op_tag = $(this).parent().parent().attr('tag');
+        const op_val = $(".tr-normal-" + op_tag + " .layui-input").val();
+        const toUrl = "{:url('cms/sysConf/opfile')}";
+        const postData = {conf_tag: conf_tag, op_tag: op_tag, op_val: op_val};
         $.post(
             toUrl,
             postData,

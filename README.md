@@ -1,28 +1,26 @@
 # ☁ 前言
 
-- 【原创博文】[**`moTzxx-CMS —— [一个基于PHP代码的后台管理系统(ThinkPHP5.1.38)]`**](https://blog.csdn.net/u011415782/article/details/79307673)
 
-> **【重要】**：
-> - 如果你先前已经下载了源码，后期发现存在些许问题时
+- **【重要】**
+>  如果你先前已经下载了源码，后期发现存在些许问题时
 > 请及时反馈给我，以便及时更新；
 > 或者回来参考我更新的内容，尤其是 `“使用指导”` 部分，或许这时我已经自测并做了补充信息哦.
 
 ```b
-框架版本： ThinkPHP5.1.38
+框架版本： ThinkPHP5.1.40
 后台入口： xxxxx.com/cmsx;
 ```
-- 最新更新：
+- 最新更新
 
 ```php
-2020-05-21
- 	> 优化用户登录信息的加密保存
-	> 设计商品、文章操作日志记录功能
-	> 整合公用 CSS、JS 代码
-	> 设计商品管理功能、优化 SKU编辑
-	> 完善代码注释，优化数据库,更新 .sql文件
+2020-12-02
+ 	> 设计 “开发日志表”，并读取日志信息
+	> 商品添加、修改页，使用钩子(函数实现)优化 SKU 操作
+	> 角色列表 ，React (类实现)替换
+	> React-hooks 引入优化
 ```
 
-> 推荐一款正在优化中CMS管理系统 —— [**Lin-CMS**](http://doc.cms.7yue.pro/)
+> 【推荐】一款正在优化中CMS管理系统 —— [**`Lin-CMS`**](http://doc.cms.7yue.pro/)
 
 ## ①. 闲话闲说
 ```b
@@ -44,7 +42,8 @@
 > 近期抽出时间，正在优化 ThinkPHP5  这个框架的代码，可用，也希望多给指点，进行后期的优化升级
 > 后期的更新优化记录，会补充到后面的附录中 ...
 ```
-![](https://img-blog.csdnimg.cn/20200521171114356.jpg?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3UwMTE0MTU3ODI=,size_16,color_FFFFFF,t_70#pic_center)
+![](https://img-blog.csdnimg.cn/20201203104316146.jpg?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3UwMTE0MTU3ODI=,size_16,color_FFFFFF,t_70#pic_center)
+
 
 # ☁ 一 主要功能
 > 毕竟一个人瞎折腾，能力有限，暂且展示已完成的主要功能，欢迎指摘以及技术指导，道友参上！
@@ -63,6 +62,7 @@
 ## ②. 管理员列表
 
 > 后期如果添加更多的信息，可自行扩展，此处是主要的属性信息
+
 ![](https://img-blog.csdnimg.cn/20191126092930510.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3UwMTE0MTU3ODI=,size_16,color_FFFFFF,t_70)
 - ***说明信息***
 ```b
@@ -80,6 +80,7 @@
 
 ## ④. 权限配置
 > 此处，最近参考 `ThinkPHP` 之前框架对权限的设计，进行了补充优化
+
 ![](https://img-blog.csdnimg.cn/20191126093809534.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3UwMTE0MTU3ODI=,size_16,color_FFFFFF,t_70)
 - ***说明信息***
 ```b
@@ -89,8 +90,9 @@
 ```
 ## ⑤. 文章管理
 > 这是常规的后台信息管理功能，其次还有个`“今日赠言”`，也是大同小异
+
 ![](https://img-blog.csdnimg.cn/2019112609395817.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3UwMTE0MTU3ODI=,size_16,color_FFFFFF,t_70)
-- 此处较为亮点的功能即为 `layer文件上传`、`UEditor富文本编辑器` 的使用
+- 此处较为亮点的功能即为 `layer文件上传`、`TinyMCE 富文本编辑器` 的使用
 
 > [***Laravel+Layer 图片上传功能整理***](http://blog.csdn.net/u011415782/article/details/78961365)
 
@@ -102,7 +104,14 @@
 composer install
 ```
 ![](https://img-blog.csdnimg.cn/20181126191857684.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3UwMTE0MTU3ODI=,size_16,color_FFFFFF,t_70)
+`【补充—— 2020-12-11】:`
+
+> 最近发现，使用 `composer2.0` 会造成很多已安装拓展包的冲突，这里建议不要升级  composer ！
+
+![](https://img-blog.csdnimg.cn/20201211191704327.jpg#pic_center)
+
 - 此时，请确认一下文件 `\vendor\topthink\think-captcha\src\helper.php` 中的 `captcha_img（）` 方法，并进行覆写如下：
+
 ```php
 function captcha_img($id = '')
 {
@@ -111,11 +120,14 @@ function captcha_img($id = '')
     //return '<img src="' . captcha_src($id) . '" alt="captcha" />';
 }
 ```
+【注】:
+- 上面的源码中，注意  ***"οnclick"***  一词，需要手动输入以防止输入法影响 （`已经跟CSDN 提了建议，明明依然存在问题，非说已经改好了！也是无语了！！！`）
 > 此处操作，保证登录验证码的正常使用，可参看文章 :【[ ***`ThinkPHP5.0+ 验证码功能实现`***](https://blog.csdn.net/u011415782/article/details/77367280)】
 
 - ## 第二步. 获取数据库数据
 
 > 为了操作方便，建议打开 `MySql `管理工具，直接运行所提供的  `"database/tp5_pro.sql"`  数据库文件
+> 
 ![](https://img-blog.csdnimg.cn/20191126094349789.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3UwMTE0MTU3ODI=,size_16,color_FFFFFF,t_70)
 - ***说明信息***
 ```b
@@ -126,19 +138,6 @@ function captcha_img($id = '')
 ```
 > 无聊的话，也可以试看一下之前写的一篇 `Composer` 简单使用 ——   [Composer de涉水初探](https://blog.csdn.net/u011415782/article/details/77198390)
 
-- ## 第三步. 修改开源框架 `Ueditor` 的配置项
-
->  可参考之前的文章 —— 【[***Laravel 框架集成 UEditor 编辑器的方法***](http://blog.csdn.net/u011415782/article/details/78909750)】 ,为保证项目的正常使用，示例图如下：
-![](https://img-blog.csdnimg.cn/20181128122623711.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3UwMTE0MTU3ODI=,size_16,color_FFFFFF,t_70)
-- ***说明信息***
-```b
-> 为了图片的正常显示，建议修改 "public/ueditor-mz/php/config.json" 文件
-> 当然，如果将参数 “imageUrlPrefix” 什么都不填写；
-> 同一域名下自然是可以访问到静态图片的；
-> 但是，如果向外提供数据，就无法获取图片资源；
-> 比如我进行小程序设计时（不在一个域），接口数据中无法捕获图片资源，自然就无法正确使用
-> 另外，如果涉及到不同的资源服务器，更要考虑到 FTP上传，可要好好优化咯.
-```
 ## Ⅲ. 浏览器访问
 > 对于配置完成后的访问，一般都是需要自行配置虚拟域名的哦
 
@@ -187,7 +186,7 @@ function captcha_img($id = '')
 
 #  ✎ 附录
 ## ①. GitHub 源码下载
-- [ ***`moTzxx-CMS-ThinkPHP5.1.2`***](https://github.com/JingYin007/tp51Pro2.git)
+- [ ***`moTzxx-CMS-ThinkPHP5.1.40`***](https://github.com/JingYin007/tp51Pro2.git)
 
 ## ②. 好说歹说
 ```b
@@ -204,7 +203,7 @@ function captcha_img($id = '')
 ```
 ## ③. 功能扩展日志
 - `2018/12/03` 补充添加了 **登录验证码** 的功能 
-> 方法请参考： [***ThinkPHP5 验证码功能实现***](https://blog.csdn.net/u011415782/article/details/77367280),请自行补充`验证码点击刷新`功能的代码！
+> 方法请参考： [***ThinkPHP5 验证码功能实现***](https://blog.csdn.net/u011415782/article/details/77367280), 请自行补充`验证码点击刷新`功能的代码！
 
 ## ④. FTP文件上传操作的扩展配置
 - 相信成型的网站基本都需要一个或几个图片资源服务器，这时，考虑使用的便是 FTP文件上传功能的扩展
@@ -212,20 +211,29 @@ function captcha_img($id = '')
 - 本项目做了处理，如果道友已经创建好了FTP信息，可以打开文件 "/config/ftp.php"
 - 对应填写 FTP 配置信息
 - 设置 "FTP_USE" 参数为 true
-- 并配置 "IMG_SERVER_PATH" 参数为图片服务器地址
+- 并配置 "IMG_SERVER_PUBLIC" 参数为图片服务器地址
 ```
 ![](https://img-blog.csdnimg.cn/20191129172531248.jpg)
 ## ⑤. 优化登录信息加密保存 [`2020-05-21`]
 - 相对而言，后台项目的开发触及数据的操作，对于登录信息的保存要求自然严格一些;
   近期，优化设计了这一模块，可在后台进行配置
   
-![](https://img-blog.csdnimg.cn/2020052817083945.jpg?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3UwMTE0MTU3ODI=,size_16,color_FFFFFF,t_70#pic_center)
+![](https://img-blog.csdnimg.cn/2020120310410668.jpg?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3UwMTE0MTU3ODI=,size_16,color_FFFFFF,t_70#pic_center)
+
 ```b
 	> 其对应的配置文件为： "/config/sys_auth.php" ;
 	> 注意截图中的提示信息，方便后期安全性的更新操作！
  ```
-【 **`补充`**】：
-- 管理员的登录失效时间，请到 `session.php` 配置文件中进行修改哦
-- 推荐参考【 [***php如何openssl_encrypt加密解密***](https://blog.csdn.net/zhemejinnameyuanxc/article/details/83383434)】
- 文档—— [**`php openssl_encrypt`**](https://www.php.net/manual/zh/function.openssl-encrypt.php)
  
+【 **`补充`**】：
+
+- 管理员的登录失效时间，请到 `session.php` 配置文件中进行修改哦
+
+- 推荐参考【 [ ***`php如何openssl_encrypt加密解密`***](https://blog.csdn.net/zhemejinnameyuanxc/article/details/83383434)】
+
+  文档 —— [**`php openssl_encrypt`**](https://www.php.net/manual/zh/function.openssl-encrypt.php)
+ 
+- 过路大侠，若是欣赏可随意施舍 ...
+
+![](https://img-blog.csdnimg.cn/20200918170656202.jpg?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3UwMTE0MTU3ODI=,size_16,color_FFFFFF,t_70#pic_center)
+

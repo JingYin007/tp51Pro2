@@ -110,18 +110,18 @@
 <script>
 
     $(".tr-normal .layui-input").click(function () {
-        var auth_tag = $(this).parent().parent().attr('tag');
+        const auth_tag = $(this).parent().parent().attr('tag');
         $(".tr-normal input").css('background','#ebcccc');
         $(".tr-normal-"+auth_tag+" input").css('background','#fff');
         if(auth_tag == 'PWD_PRE_HALT'){
-            var tipMsg = "注意！更新后,后台管理员暂时只能以【moTzxx@admin:admin】进行登录，后期密码需再次更新哦";
+            const tipMsg = "注意！更新后,后台管理员暂时只能以【moTzxx@admin:admin】进行登录，后期密码需再次更新哦";
             layer.tips(tipMsg, '.tr-normal-PWD_PRE_HALT .layui-word-aux',{timer:8000});
         }
     });
 
     $(".btn-form-submit").click(function (){
-        var toUrl = "{:url('cms/sysConf/auth')}";
-        var postData = $(".form-auth-data").serialize();
+        const toUrl = "{:url('cms/sysConf/auth')}";
+        const postData = $(".form-auth-data").serialize();
         $.post(
             toUrl,
             postData,

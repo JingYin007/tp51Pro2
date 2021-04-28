@@ -188,8 +188,9 @@ function exitFullScreen() {
 /**
  * 导航菜单处理函数 包括 "添加"、"修改"
  * @param op_url URL 地址
- * @param tag 操作标识：add / edit
- * @param title
+ * @param title 弹框标题
+ * @param width 宽度
+ * @param height 高度
  * @constructor
  */
 function ToOpenPopups(op_url,title,width,height) {

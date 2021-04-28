@@ -11,7 +11,7 @@ layui.use(['upload','form'], function () {
     form.render();//细节！这个好像要渲染一下！
 });
 layui.use(['form', 'layer'], function () {
-    var form = layui.form;
+    const form = layui.form;
     form.on('switch(switchConfigID)', function (data) {
         //开关是否开启，true或者false
         var checked = data.elem.checked;

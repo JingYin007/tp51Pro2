@@ -6,7 +6,7 @@
 <!--<script src="https://code.jquery.com/jquery-3.2.1.min.js"></script>-->
 
 <!--引入 Echarts js文件 -->
-<script type='text/javascript' charset='utf-8'  src="__ECHARTS__/echarts.js"></script>
+<script type='text/javascript' charset='utf-8' src="__ECHARTS__/echarts.js"></script>
 <!-- 关于layUI的配置 可使用“dialog.fun()”调用 -->
 <script>
 
@@ -24,16 +24,35 @@
         },
         /*用于弹出框提示*/
         tip: function (message, timer) {
-            if (!timer) {timer = 2;}
+            if (!timer) {
+                timer = 2;
+            }
             layer.msg(message, {time: timer * 1000});
         },
-        tip_success : function (message, timer){
-            if (!timer) {timer = 2;}
-            layer.msg(message,{icon: 6,time: timer * 1000});
+        tip_success: function (message, jump_url, timer) {
+            if (!timer) {
+                timer = 2;
+            }
+            layer.msg(message,
+                {
+                    icon: 6, time: timer * 1000, end: function () {
+                        if (jump_url) {
+                            location.href = jump_url;
+                        }
+                    }
+                });
         },
-        tip_error : function (message, timer){
-            if (!timer) {timer = 2;}
-            layer.msg(message,{icon: 5,anim: 6,time: timer * 1000});
+        tip_error: function (message, jump_url, timer) {
+            if (!timer) {
+                timer = 2;
+            }
+            layer.msg(message, {
+                icon: 5, anim: 6, time: timer * 1000, end: function () {
+                    if (jump_url) {
+                        location.href = jump_url;
+                    }
+                }
+            });
         },
         /*显示加载的效果 type:样式 [null,1,2] */
         loading: function (type) {

@@ -73,9 +73,9 @@
 <script>
     $(".div-ips button").click(function () {
 
-        var _this = $(this);
-        var ipVal = _this.html();
-        var toUrl = "{:url('cms/sysConf/ipWhite')}";
+        const _this = $(this);
+        const ipVal = _this.html();
+        const toUrl = "{:url('cms/sysConf/ipWhite')}";
         layer.msg('确定要删除此IP吗？', {
             time: 0 //不自动关闭
             ,btn: ['确定', '离开']
@@ -103,20 +103,20 @@
 
 
     layui.use(['form', 'layer'], function () {
-        var form = layui.form;
-        var tipMsg = "\"开启\" 状态下，只有白名单中的 IP 地址可访问后台； \"关闭\"状态下，则无此限制 ！";
+        const form = layui.form;
+        const tipMsg = "\"开启\" 状态下，只有白名单中的 IP 地址可访问后台； \"关闭\"状态下，则无此限制 ！";
         layer.tips(tipMsg, '.layui-unselect', {
             tips: [2, "#b94a48"],time:20000
         });
         form.on('switch(switchIP)', function (data) {
             //开关是否开启，true或者false
-            var checked = data.elem.checked;
-            var okStatus = 0;
+            const checked = data.elem.checked;
+            let okStatus = 0;
             if (checked) {
                 okStatus = 1
             }
             //TODO 此时进行ajax的服务器访问，如果返回数据正常，则进行后面代码的调用
-            var toUrl = "{:url('cms/sysConf/ipWhite')}";
+            const toUrl = "{:url('cms/sysConf/ipWhite')}";
             $.post(
                 toUrl,
                 {val: okStatus,tag:'S'},
@@ -138,14 +138,14 @@
             title: '请输入IP地址，并确认...',
             formType: 0,shade:0.6,shadeClose:true
         }, function(pass, index){
-            var toUrl = "{:url('cms/sysConf/ipWhite')}";
+            const toUrl = "{:url('cms/sysConf/ipWhite')}";
             $.post(
                 toUrl,
                 {val: pass,tag:'A'},
                 function (result) {
                     if (result.status > 0) {
-                        var ipStr = "<button type=\"button\" class=\"layui-btn\n" +
-                            "        layui-btn-sm layui-btn-radius\">"+pass+"</button>";
+                        const ipStr = "<button type=\"button\" class=\"layui-btn\n" +
+                            "        layui-btn-sm layui-btn-radius\">" + pass + "</button>";
                         $(".div-ips").append(ipStr);
                         layer.close(index);
 

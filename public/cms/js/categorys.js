@@ -7,9 +7,9 @@ $(".btn-clear-icon").click(function (){
 });
 
 layui.use(['form'], function () {
-    var form = layui.form;
+    const form = layui.form;
     form.on('radio(levelM)', function(data){
-        var level = data.value;//被点击的radio的value值
+        const level = data.value;//被点击的radio的value值
         $(".sel-parent-msg").hide();
         $(".sel-parent-msg-"+level).show();
     });

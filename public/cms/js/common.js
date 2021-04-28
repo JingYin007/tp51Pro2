@@ -60,11 +60,12 @@ layui.use('upload', function () {
 /**
  * 通用化 添加/更新数据操作
  * @param obj
+ * @param jumpUrl 跳转链接可不传
  */
-function opFormPostRecord(obj) {
+function opFormPostRecord(obj,jumpUrl) {
     const toUrl = $(obj).attr('op_url');
     const postData = $(".form-op-normal").serialize();
-    new ToPostPopupsDeal(toUrl, postData);
+    new ToPostPopupsDeal(toUrl, postData,jumpUrl);
 }
 
 /**
@@ -120,9 +121,10 @@ function ToRemoveDiv(tag) {
  * 对导航菜单的 ajax请求处理
  * @param toUrl
  * @param postData
+ * @param jumpUrl 跳转链接可不传
  * @constructor
  */
-function ToPostPopupsDeal(toUrl,postData) {
+function ToPostPopupsDeal(toUrl,postData,jumpUrl) {
     $.post(
         toUrl,
         postData,
@@ -132,6 +134,11 @@ function ToPostPopupsDeal(toUrl,postData) {
                 setTimeout(function(){
                     const index = parent.layer.getFrameIndex(window.name); //先得到当前 iframe层的索引
                     parent.layer.close(index); //再执行关闭
+                    if (jumpUrl){
+                        location.href = jumpUrl;
+                    }else {
+                        parent.location.reload();
+                    }
                 },2000);
             }else{
                 dialog.tip_error(result.message);
