@@ -58,6 +58,34 @@ layui.use('upload', function () {
 });
 
 /**
+ * 多图片切换查看的操作
+ * 此处添加五个 够用了 ...
+ */
+layui.use('layer', function() {
+    const layer = layui.layer;
+    layer.photos({
+        photos: '.photos-view-mz',//img的父级
+        anim: 0 //0-6的选择，指定弹出图片动画类型，默认随机（请注意，3.0之前的版本用shift参数）
+    });
+    layer.photos({
+        photos: '.photos-view-mz-2',//img的父级
+        anim: 0 //0-6的选择，指定弹出图片动画类型，默认随机（请注意，3.0之前的版本用shift参数）
+    });
+    layer.photos({
+        photos: '.photos-view-mz-3',//img的父级
+        anim: 0 //0-6的选择，指定弹出图片动画类型，默认随机（请注意，3.0之前的版本用shift参数）
+    });
+    layer.photos({
+        photos: '.photos-view-mz-4',//img的父级
+        anim: 0 //0-6的选择，指定弹出图片动画类型，默认随机（请注意，3.0之前的版本用shift参数）
+    });
+    layer.photos({
+        photos: '.photos-view-mz-5',//img的父级
+        anim: 0 //0-6的选择，指定弹出图片动画类型，默认随机（请注意，3.0之前的版本用shift参数）
+    });
+});
+
+/**
  * 通用化 添加/更新数据操作
  * @param obj
  * @param jumpUrl 跳转链接可不传
