@@ -49,7 +49,7 @@
     {:token()}
     <div class="layui-form-item div-form-op">
         <div class="layui-input-block">
-            <button class="layui-btn" type="button" onclick="addCourierNum()">提交</button>
+            <button class="layui-btn" type="button" onclick="addCourierNum(this)">提交</button>
             <button type="reset" class="layui-btn layui-btn-primary">放弃</button>
         </div>
     </div>
@@ -67,11 +67,11 @@
 </style>
 <script src="__CMS__/js/moZhang.js"></script>
 <script>
-    function addCourierNum() {
-        var toUrl = "{:url('cms/order/opCourierSn',['id'=>'AID'])}";
+    function addCourierNum(obj) {
+        let toUrl = "{:url('cms/order/opCourierSn',['id'=>'AID'])}";
         toUrl = toUrl.replace('AID', 0);
-        var postData = $(".form-op-normal").serialize();
-        ToPostPopupsDeal(toUrl, postData);
+        const postData = $(".form-op-normal").serialize();
+        ToPostPopupsDeal(obj,toUrl, postData);
     }
     function tipMsg() {
         layui.use(['layer'], function () {

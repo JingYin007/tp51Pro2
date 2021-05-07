@@ -93,7 +93,7 @@ layui.use('layer', function() {
 function opFormPostRecord(obj,jumpUrl) {
     const toUrl = $(obj).attr('op_url');
     const postData = $(".form-op-normal").serialize();
-    new ToPostPopupsDeal(toUrl, postData,jumpUrl);
+    new ToPostPopupsDeal(obj,toUrl, postData,jumpUrl);
 }
 
 /**
@@ -147,12 +147,16 @@ function ToRemoveDiv(tag) {
 
 /**
  * 对导航菜单的 ajax请求处理
+ * @param obj
  * @param toUrl
  * @param postData
  * @param jumpUrl 跳转链接可不传
  * @constructor
  */
-function ToPostPopupsDeal(toUrl,postData,jumpUrl) {
+function ToPostPopupsDeal(obj,toUrl,postData,jumpUrl) {
+    $(obj).addClass('layui-btn-disabled');
+    $(obj).attr("disabled",true);
+
     $.post(
         toUrl,
         postData,
@@ -171,6 +175,8 @@ function ToPostPopupsDeal(toUrl,postData,jumpUrl) {
             }else{
                 dialog.tip_error(result.message);
             }
+            $(obj).removeClass('layui-btn-disabled');
+            $(obj).attr("disabled",false);
         },"JSON");
 }
 /**

@@ -57,7 +57,7 @@
     {:token()}
     <div class="layui-form-item div-form-op">
         <div class="layui-input-block">
-            <button class="layui-btn layui-btn-danger" type="button" onclick="addNewRole()"
+            <button class="layui-btn layui-btn-danger" type="button" onclick="addNewRole(this)"
                     lay-submit lay-filter="formDemo">添加
             </button>
             <button type="reset" class="layui-btn layui-btn-primary">重置</button>
@@ -73,11 +73,11 @@
     /**
      * 添加新角色
      */
-    function addNewRole() {
+    function addNewRole(obj) {
         dealSelNavMenuIDs();
-        var postData = $(".form-op-normal").serialize();
-        var toUrl = "{:url('cms/admin/addRole')}";
-        ToPostPopupsDeal(toUrl, postData);
+        const postData = $(".form-op-normal").serialize();
+        const toUrl = "{:url('cms/admin/addRole')}";
+        ToPostPopupsDeal(obj,toUrl, postData);
     }
 </script>
 {/block}

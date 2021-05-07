@@ -22,7 +22,7 @@
     {:token()}
     <div class="layui-form-item div-form-op">
         <div class="layui-input-block">
-            <button class="layui-btn" type="button" onclick="addNewNavMenu()"
+            <button class="layui-btn" type="button" onclick="addNewNavMenu(this)"
                     lay-submit lay-filter="formDemo">添加
             </button>
             <button type="reset" class="layui-btn layui-btn-primary">重置</button>
@@ -67,15 +67,15 @@
     /**
      * 添加新的导航菜单
      */
-    function addNewNavMenu() {
-        var postData = $(".form-op-normal").serialize();
-        var toUrl = $(".post-url").val();
-        ToPostPopupsDeal(toUrl, postData);
+    function addNewNavMenu(obj) {
+        const postData = $(".form-op-normal").serialize();
+        const toUrl = $(".post-url").val();
+        ToPostPopupsDeal(obj,toUrl, postData);
     }
 
     //根据菜单ID 删除菜单记录
     function delNavMenu(id) {
-        var toUrl = "{:url('cms/navMenu/edit',['id'=>'NMID'])}";
+        let toUrl = "{:url('cms/navMenu/edit',['id'=>'NMID'])}";
         toUrl = toUrl.replace("NMID", id);
         ToDelItem(id, toUrl, '.tr-normal-' + id);
     }

@@ -74,7 +74,7 @@
     {:token()}
     <div class="layui-form-item div-form-op">
         <div class="layui-input-block">
-            <button class="layui-btn layui-btn-danger" type="button" onclick="editRole('{$role.id}')"
+            <button class="layui-btn layui-btn-danger" type="button" onclick="editRole(this,'{$role.id}')"
                     lay-submit lay-filter="formDemo">提交
             </button>
             <button type="reset" class="layui-btn layui-btn-primary">重置</button>
@@ -88,12 +88,12 @@
 <script src="__CMS__/js/roles.js"></script>
 <script>
 
-    function editRole(id) {
+    function editRole(obj,id) {
         dealSelNavMenuIDs();
-        var postData = $(".form-op-normal").serialize();
-        var toUrl = "{:url('cms/admin/editRole',['id'=>'RoleID'])}";
+        const postData = $(".form-op-normal").serialize();
+        let toUrl = "{:url('cms/admin/editRole',['id'=>'RoleID'])}";
         toUrl = toUrl.replace('RoleID', id);
-        ToPostPopupsDeal(toUrl, postData);
+        ToPostPopupsDeal(obj,toUrl, postData);
     }
 </script>
 {/block}
