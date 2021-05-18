@@ -33,7 +33,7 @@ class Order extends CmsBase
         $search = $request->param('str_search',null);
         if ($request->isPost()) {
             $list = $this->orderModel->getPayOrdersForPage($curr_page, $this->page_limit, $search);
-            return showMsg(1, 'success', $list);
+            showMsg(1, 'success', $list);
         } else {
             $users = $this->orderModel->getPayOrdersForPage($curr_page, $this->page_limit, $search);
             $record_num = $this->orderModel->getPayOrdersCount($search);
@@ -53,7 +53,7 @@ class Order extends CmsBase
         $orderStatus = $request->param('orderStatus',null);
         if ($request->isPost()) {
             $list = $this->orderModel->getOrderDetailsForPage($curr_page, $this->page_limit, $search,$orderStatus);
-            return showMsg(1, 'success', $list);
+            showMsg(1, 'success', $list);
         } else {
             $detailList = $this->orderModel->getOrderDetailsForPage($curr_page, $this->page_limit, $search,$orderStatus);
             $record_num = $this->orderModel->getOrderDetailsCount($search,$orderStatus);
@@ -77,9 +77,9 @@ class Order extends CmsBase
         if ($request->isPost()) {
             $order_id = $request->post('order_id');
             $opRes = $this->orderModel->getShoppingList($order_id);
-            return showMsg(1, 'shoppingList', $opRes);
+            showMsg(1, 'shoppingList', $opRes);
         } else {
-            return showMsg(0, '请求不合法');
+            showMsg(0, '请求不合法');
         }
     }
 
@@ -95,7 +95,7 @@ class Order extends CmsBase
     public function opCourierSn(Request $request,$id){
         if ($request->isPost()) {
             $opRes = $this->orderModel->updateCourierInfo($request->post());
-            return showMsg($opRes['status'], $opRes['message']);
+            showMsg($opRes['status'], $opRes['message']);
         } else {
             $courierInfo = $this->orderModel->getCourierInfoByODID($id);
             $birdExpList = $this->orderModel->getBirdExpressList();

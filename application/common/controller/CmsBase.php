@@ -68,7 +68,7 @@ class CmsBase extends Base
                 }
             }
         }
-        if (!$authFlag) {return showMsg(intval($authFlag), $message);}
+        if (!$authFlag) {showMsg(intval($authFlag), $message);}
     }
 
     /**

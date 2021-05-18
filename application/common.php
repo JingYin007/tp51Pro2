@@ -10,6 +10,8 @@
 // +----------------------------------------------------------------------
 
 // 应用公共文件
+use JetBrains\PhpStorm\NoReturn;
+
 /**
  * 公用的方法  返回json数据，进行信息的提示
  * @param int $status 状态
@@ -17,7 +19,8 @@
  * @param array $data 返回数据
  * @return void
  */
-function showMsg($status = 1,$message = '',$data = array()){
+#[NoReturn]
+function showMsg($status = 1, $message = '', $data = array()){
     $result = array(
         'status' => $status,
         'message' =>$message,

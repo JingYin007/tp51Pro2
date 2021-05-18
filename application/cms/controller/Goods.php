@@ -61,7 +61,7 @@ class Goods extends CmsBase
             return view('index', $data);
         }else{
             $list = $this->model->getCmsGoodsForPage($curr_page, $this->page_limit, $search, $SelStatus, $CatType, $OrderType);
-            return showMsg(1, 'success', $list);
+            showMsg(1, 'success', $list);
         }
 
     }
@@ -75,7 +75,7 @@ class Goods extends CmsBase
     {
         if ($request->isPost()) {
             $opRes = $this->model->addGoods($request->post());
-            return showMsg($opRes['tag'], $opRes['message']);
+            showMsg($opRes['tag'], $opRes['message']);
         } else {
             $categoryList = $this->categoryModel->getCategorySelectListFromJsonFile();
             return view('add_react', ['categoryList' => $categoryList,]);
@@ -92,7 +92,7 @@ class Goods extends CmsBase
     {
         if ($request->isPost()) {
             $opRes = $this->model->updateCmsGoodsData($request->post(),$id);
-            return showMsg($opRes['tag'], $opRes['message']);
+            showMsg($opRes['tag'], $opRes['message']);
         } else {
             $goodsMsg = $this->model->getCmsGoodsByID($id);
             $categoryList = $this->categoryModel->getCategorySelectListFromJsonFile();
@@ -113,7 +113,7 @@ class Goods extends CmsBase
     {
         $opRes = $this->model
             ->updatePutaway($request->post('goods_id'), $request->post('okStatus'));
-        return showMsg($opRes['tag'], $opRes['message']);
+        showMsg($opRes['tag'], $opRes['message']);
     }
 
     /**
@@ -129,9 +129,9 @@ class Goods extends CmsBase
     public function ajaxGetNormalCatList(Request $request){
         if ($request->isPost()){
             $categoryList = $this->categoryModel->getCategorySelectListFromJsonFile();
-            return showMsg(1,'GetNormalCatList',$categoryList);
+            showMsg(1,'GetNormalCatList',$categoryList);
         }else{
-            return showMsg(0,'Sorry,请求不合法！');
+            showMsg(0,'Sorry,请求不合法！');
         }
     }
 
@@ -151,7 +151,7 @@ class Goods extends CmsBase
                 $status = 0;
                 $message = "未查到品牌和父级属性数据";
             }
-            return showMsg($status, $message, ['specList'=>$specList,'brandList'=>$brandList]);
+            showMsg($status, $message, ['specList'=>$specList,'brandList'=>$brandList]);
         }else{
             return  showMsg(0,'Sorry，請求不合法！');
         }
@@ -168,7 +168,7 @@ class Goods extends CmsBase
             $specInfoList = (new XspecInfos())->getSpecInfoBySpecFst($selSpecFstID);
             $status = (!$specInfoList) ? 0 : 1;
             $message = (!$specInfoList) ? "未查到子级属性数据" : "SUCCESS";
-            return showMsg($status, $message, $specInfoList);
+            showMsg($status, $message, $specInfoList);
         }else{
             return  showMsg(0,'Sorry,请求不合法！');
         }

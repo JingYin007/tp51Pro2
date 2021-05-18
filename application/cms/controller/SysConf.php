@@ -31,7 +31,7 @@ class SysConf extends CmsBase
     public function auth(Request $request){
         if ($request->isPost()){
             $opRes = $this->model->updateAuthConf($request->post());
-            return showMsg($opRes['tag'], $opRes['message']);
+            showMsg($opRes['tag'], $opRes['message']);
         }else{
             $authConf = config('sys_auth.');
             return view('auth',['authConf' => $authConf]);
@@ -49,7 +49,7 @@ class SysConf extends CmsBase
             $op_tag = $request->post('op_tag',null);
             $op_val = $request->post('op_val',null);
             $opRes = $this->model->updateOpFileConf($conf_tag,$op_tag,$op_val);
-            return showMsg($opRes['tag'],$opRes['message']);
+            showMsg($opRes['tag'],$opRes['message']);
         }else{
             $ftpConf = config('ftp.');
             $qnConf = config('qiniu.');
@@ -66,7 +66,7 @@ class SysConf extends CmsBase
     public function ipWhite(Request $request){
         if ($request->isPost()){
             $opRes = $this->model->ajaxUpdateIpData($request->post());
-            return showMsg($opRes['tag'],$opRes['message']);
+            showMsg($opRes['tag'],$opRes['message']);
         }else{
             $IP_WHITE = config('sys_auth.IP_WHITE');
             $ipWhites = $this->model->getIpWhites();

@@ -40,7 +40,7 @@ class Category extends CmsBase
             return view('index', $data);
         } else {
             $list = $this->model->getCmsCategoryForPage($curr_page, $this->page_limit, $search, $catType);
-            return showMsg(1, 'success', $list);
+            showMsg(1, 'success', $list);
         }
     }
 
@@ -54,7 +54,7 @@ class Category extends CmsBase
         if ($request->isPost()) {
             $input = $request->post();
             $opRes = $this->model->addCategory($input);
-            return showMsg($opRes['tag'], $opRes['message']);
+            showMsg($opRes['tag'], $opRes['message']);
         } else {
             $cat_list = $this->model->getCategorySelectListFromJsonFile();
             $data = [
@@ -74,7 +74,7 @@ class Category extends CmsBase
     {
         if ($request->isPost()) {
             $opRes = $this->model->updateCmsCategoryData($request->post(),$id);
-            return showMsg($opRes['tag'], $opRes['message']);
+            showMsg($opRes['tag'], $opRes['message']);
         } else {
             $cat = $this->model->getCmsCategoryByID($id);
             $cat_list = $this->model->getCategorySelectListFromJsonFile();
@@ -94,6 +94,6 @@ class Category extends CmsBase
     public function ajaxForShow(Request $request)
     {
         $opRes = $this->model->updateForShow($request->post('cat_id'), $request->post('okStatus'));
-        return showMsg($opRes['tag'], $opRes['message']);
+        showMsg($opRes['tag'], $opRes['message']);
     }
 }

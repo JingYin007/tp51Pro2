@@ -40,7 +40,7 @@ class Users extends CmsBase
         $user_type = $request->param('user_type',0);
         if ($request->isPost()) {
             $list = $this->model->getCmsUsersForPage($curr_page, $this->page_limit, $search,$user_type);
-            return showMsg(1, 'success', $list);
+            showMsg(1, 'success', $list);
         } else {
             $users = $this->model->getCmsUsersForPage($curr_page, $this->page_limit, $search,$user_type);
             $record_num = $this->model->getCmsUsersCount($search,$user_type);
@@ -64,9 +64,9 @@ class Users extends CmsBase
             $user_id = $request->post('user_id', 0);
             $user_status = $request->post('user_status',0);
             $opRes = $this->model->updateUserStatus($user_id, $user_status);
-            return showMsg($opRes['status'], $opRes['message']);
+            showMsg($opRes['status'], $opRes['message']);
         } else {
-            return showMsg(0, 'sorry，请求不合法');
+            showMsg(0, 'sorry，请求不合法');
         }
     }
 }

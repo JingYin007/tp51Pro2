@@ -33,7 +33,7 @@ class Article extends CmsBase
         $search = $request->param('str_search');
         if ($request->isPost()) {
             $list = $this->model->getCmsArticlesForPage($curr_page, $this->page_limit, $search);
-            return showMsg(1, 'success', $list);
+            showMsg(1, 'success', $list);
         } else {
             $articles = $this->model->getCmsArticlesForPage($curr_page, $this->page_limit, $search);
             $record_num = $this->model->getCmsArticlesCount($search);
@@ -57,7 +57,7 @@ class Article extends CmsBase
         if ($request->isPost()) {
             $input = $request->param();
             $opRes = $this->model->addArticle($input);
-            return showMsg($opRes['tag'], $opRes['message']);
+            showMsg($opRes['tag'], $opRes['message']);
         } else {
             return view('add');
         }
@@ -73,7 +73,7 @@ class Article extends CmsBase
     {
         if ($request->isPost()) {
             $opRes = $this->model->updateCmsArticleData($request->post(),$id);
-            return showMsg($opRes['tag'], $opRes['message']);
+            showMsg($opRes['tag'], $opRes['message']);
         } else {
             $article = $this->model->getCmsArticleByID($id);
             $comments = [];
@@ -93,7 +93,7 @@ class Article extends CmsBase
     public function ajaxForRecommend(Request $request)
     {
         $opRes = $this->model->updateForRecommend($request->post('article_id'), $request->post('okStatus'));
-        return showMsg($opRes['tag'], $opRes['message']);
+        showMsg($opRes['tag'], $opRes['message']);
     }
 
     /**

@@ -38,7 +38,7 @@ class Config extends CmsBase
         $curr_page = $request->param('curr_page',1);
         if ($request->isPost()){
             $list = $this->confModel->getConfigsForPage($curr_page,$this->page_limit,$search,$input_type);
-            return showMsg(1,'success',$list);
+            showMsg(1,'success',$list);
         }else{
             $configs = $this->confModel->getConfigsForPage($curr_page, $this->page_limit, $search,$input_type);
             $record_num = $this->confModel->getConfigsCount($search, $input_type);
@@ -65,7 +65,7 @@ class Config extends CmsBase
         if ($request->isPost()) {
             $input = $request->post();
             $opRes = $this->confModel->addConfig($input);
-            return showMsg($opRes['tag'], $opRes['message']);
+            showMsg($opRes['tag'], $opRes['message']);
         } else {
             return view('add');
         }
@@ -83,7 +83,7 @@ class Config extends CmsBase
             //TODO 修改对应的配置
             $input = $request->post();
             $opRes = $this->confModel->editConfig($id,$input);
-            return showMsg($opRes['tag'],$opRes['message']);
+            showMsg($opRes['tag'],$opRes['message']);
         }else{
             $confData = $this->confModel->getConfigByID($id);
             return view('edit',['confData'   => $confData,]);
@@ -97,6 +97,6 @@ class Config extends CmsBase
     public function ajaxUpdateSwitchValue(Request $request){
         $opRes = $this->confModel
             ->updateSwitchValue($request->post('config_id'), $request->post('okStatus'));
-        return showMsg($opRes['tag'], $opRes['message']);
+        showMsg($opRes['tag'], $opRes['message']);
     }
 }

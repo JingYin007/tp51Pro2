@@ -76,7 +76,6 @@ class SpreadsheetService
         }else{
             self::downloadExcelFileToClient($saveFileName);
         }
-
     }
 
     /**

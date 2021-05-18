@@ -48,7 +48,7 @@ class Chat extends Controller
                 'chatList' => $chatList,
                 'web_socket_url' => $this->web_socket_url]);
         }else{
-            return showMsg(1,'get_list',$chatList);
+            showMsg(1,'get_list',$chatList);
         }
     }
 
@@ -85,9 +85,9 @@ class Chat extends Controller
         if ($request->isPost()){
             $message = $request->post();
             $opRes = $this->chatModel->saveMessage($message);
-            return showMsg($opRes['status'],$opRes['message']);
+            showMsg($opRes['status'],$opRes['message']);
         }else{
-            return showMsg(0,'请求不合法！');
+            showMsg(0,'请求不合法！');
         }
     }
 
@@ -98,36 +98,36 @@ class Chat extends Controller
     public function load(Request $request){
         if ($request->isPost()){
             $opRes = $this->chatModel->loadMessage($request->post());
-            return showMsg(1,'load',$opRes);
+            showMsg(1,'load',$opRes);
         }else{
-            return showMsg(0,'请求不合法！');
+            showMsg(0,'请求不合法！');
         }
     }
 
     public function changeNoRead(Request $request){
         if ($request->isPost()){
             $this->chatModel->changeNoRead($request->post());
-            return showMsg(1,'changeNoRead');
+            showMsg(1,'changeNoRead');
         }else{
-            return showMsg(0,'请求不合法！');
+            showMsg(0,'请求不合法！');
         }
     }
 
     public function ajax_get_noReadCount(Request $request){
         if ($request->isPost()){
             $count = $this->chatModel->getNoReadCount($this->cmsAID);
-            return showMsg(1,'getNoReadCount',['noReadCount' => $count]);
+            showMsg(1,'getNoReadCount',['noReadCount' => $count]);
         }else{
-            return showMsg(0,'请求不合法！');
+            showMsg(0,'请求不合法！');
         }
     }
 
     public function ajax_get_user_list(Request $request){
         if ($request->isPost()){
             $userList = $this->chatModel->getUserList($this->cmsAID);
-            return showMsg(1,'getUserList',$userList);
+            showMsg(1,'getUserList',$userList);
         }else{
-            return showMsg(0,'请求不合法！');
+            showMsg(0,'请求不合法！');
         }
     }
 }

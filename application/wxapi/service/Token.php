@@ -157,7 +157,7 @@ class Token
 
         $key = self::generateToken();
         $request = cache($key,$value,$expire_in);
-        if(!$request){return showMsg(0,'服务器缓存异常');}
+        if(!$request){showMsg(0,'服务器缓存异常');}
         return $key;
     }
 
@@ -201,7 +201,7 @@ class Token
         if ($opStatus){
             return $message;
         }else{
-            return showMsg(0,$message);
+            showMsg(0,$message);
         }
     }
 

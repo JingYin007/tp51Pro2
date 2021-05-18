@@ -44,7 +44,7 @@ class Brand extends CmsBase
             return view('index', $data);
         } else {
             $list = $this->model->getCmsBrandForPage($curr_page, $this->page_limit, $search, $catID);
-            return showMsg(1, 'success', $list);
+            showMsg(1, 'success', $list);
         }
     }
 
@@ -58,7 +58,7 @@ class Brand extends CmsBase
         if ($request->isPost()) {
             $input = $request->post();
             $opRes = $this->model->addCmsBrand($input);
-            return showMsg($opRes['tag'], $opRes['message']);
+            showMsg($opRes['tag'], $opRes['message']);
         } else {
             $categoryList = (new Xcategorys())->getCategorySelectListFromJsonFile();
             $data = ['categoryList' => $categoryList];
@@ -76,7 +76,7 @@ class Brand extends CmsBase
     {
         if ($request->isPost()) {
             $opRes = $this->model->updateCmsBrandData($request->post(),$id);
-            return showMsg($opRes['tag'], $opRes['message']);
+            showMsg($opRes['tag'], $opRes['message']);
         } else {
             $brand = $this->model->getCmsBrandByID($id);
             $categoryList = (new Xcategorys())->getCategorySelectListFromJsonFile();

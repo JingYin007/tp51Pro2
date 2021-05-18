@@ -74,9 +74,9 @@ class Login extends Controller
                 $tagRes = ['tag'=>0,'message'=>'Sorry,Your IP is abnormal, please contact the administrator!'];
             }
 
-            return showMsg($tagRes['tag'], $tagRes['message']);
+            showMsg($tagRes['tag'], $tagRes['message']);
         } else {
-            return showMsg(0, 'sorry,您的请求不合法！');
+            showMsg(0, 'sorry,您的请求不合法！');
         }
     }
 
@@ -91,12 +91,12 @@ class Login extends Controller
             $nav_menu_id = $request->param('nav_menu_id');
             //TODO 判断当前菜单是否属于他的权限内
             if ($cmsAID && IAuth::ckPasswordNoChangedCurrLogged($cmsAID) && $this->navMenuModel->checkNavMenuMan($nav_menu_id, $cmsAID)) {
-                return showMsg(1, '正在登录状态');
+                showMsg(1, '正在登录状态');
             } else {
-                return showMsg(0, '未在登录状态');
+                showMsg(0, '未在登录状态');
             }
         } else {
-            return showMsg(0, 'sorry,您的请求不合法！');
+            showMsg(0, 'sorry,您的请求不合法！');
         }
     }
 }

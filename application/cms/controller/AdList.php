@@ -31,7 +31,7 @@ class AdList extends CmsBase
         $curr_page = $request->param('curr_page',1);
         if ($request->isPost()){
             $list = $this->adModel->getAdsForPage($curr_page,$this->page_limit,$search);
-            return showMsg(1,'success',$list);
+            showMsg(1,'success',$list);
         }else{
             $record_num = $this->adModel->getAdsCount($search);
             $list = $this->adModel->getAdsForPage($curr_page,$this->page_limit,$search);
@@ -54,7 +54,7 @@ class AdList extends CmsBase
         if ($request->isPost()){
             $input = $request->post();
             $opRes = $this->adModel->addAdvertisement($input);
-            return showMsg($opRes['tag'],$opRes['message']);
+            showMsg($opRes['tag'],$opRes['message']);
         }else{
             return view('add');
         }
@@ -71,7 +71,7 @@ class AdList extends CmsBase
         if ($request->isPost()){
             $input = $request->post();
             $opRes = $this->adModel->editAdvertisement($id,$input);
-            return showMsg($opRes['tag'],$opRes['message']);
+            showMsg($opRes['tag'],$opRes['message']);
         }else{
             return view('edit',[
                 'adData'   => $actData,
@@ -85,7 +85,7 @@ class AdList extends CmsBase
      */
     public function ajaxForShow(Request $request){
         $opRes = $this->adModel->updateForShow( $request->post('act_id'),$request->post('okStatus'));
-        return showMsg($opRes['tag'],$opRes['message']);
+        showMsg($opRes['tag'],$opRes['message']);
     }
 
 }

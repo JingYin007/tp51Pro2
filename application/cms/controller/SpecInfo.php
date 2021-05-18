@@ -46,7 +46,7 @@ class SpecInfo extends CmsBase
             return view('index', $data);
         }else{
             $list = $this->model->getCmsSpecInfoForPage($curr_page, $this->page_limit, $search, intval($catID));
-            return showMsg(1, 'success', $list);
+            showMsg(1, 'success', $list);
         }
     }
 
@@ -61,7 +61,7 @@ class SpecInfo extends CmsBase
         if ($request->isPost()) {
             $input = $request->post();
             $opRes = $this->model->addSpecInfo($input);
-            return showMsg($opRes['tag'], $opRes['message']);
+            showMsg($opRes['tag'], $opRes['message']);
         } else {
             $categoryList = $this->categoryModel->getCategorySelectListFromJsonFile();
             $data = [
@@ -84,7 +84,7 @@ class SpecInfo extends CmsBase
         if ($request->isPost()) {
             $level = $request->post('level',1);
             $opRes = $this->model->updateCmsSpecInfoData($id,$request->post(),$level);
-            return showMsg($opRes['tag'], $opRes['message']);
+            showMsg($opRes['tag'], $opRes['message']);
         } else {
             $categoryList = $this->categoryModel->getCategorySelectListFromJsonFile();
             $specInfo = $this->model->getCmsSpecInfoByID($id);
@@ -119,7 +119,7 @@ class SpecInfo extends CmsBase
             ]);
         }else{
             $details = $this->model->getSpecDetailsBySpecIDForPage($curr_page,$this->page_limit,$search,$spec_id);
-            return showMsg(1,'success',$details);
+            showMsg(1,'success',$details);
         }
     }
 }

@@ -35,7 +35,7 @@ class NavMenu extends CmsBase
         $navType = $request->param("navType","F");
         if ($request->isPost()) {
             $list = $this->menuModel->getNavMenusForPage($curr_page, $this->page_limit, $search,$navType);
-            return showMsg(1, 'success', $list);
+            showMsg(1, 'success', $list);
         } else {
             $record_num = $this->menuModel->getNavMenusCount($search,$navType);
             $list = $this->menuModel->getNavMenusForPage($curr_page, $this->page_limit, $search,$navType);
@@ -64,7 +64,7 @@ class NavMenu extends CmsBase
         if ($request->isPost()) {
             $input = $request->param();
             $opRes = $this->menuModel->addNavMenu($input);
-            return showMsg($opRes['tag'], $opRes['message']);
+            showMsg($opRes['tag'], $opRes['message']);
         } else {
             $rootMenus = $this->menuModel->getAllVisibleMenus();
             return view('add', [
@@ -85,7 +85,7 @@ class NavMenu extends CmsBase
         if ($request->isPost()) {
             $input = $request->param();
             $opRes = $this->menuModel->addNavMenu($input, $id,1);
-            return showMsg($opRes['tag'], $opRes['message']);
+            showMsg($opRes['tag'], $opRes['message']);
         } else {
             return view('auth', [
                 'authMenus' => $authMenus,
@@ -106,7 +106,7 @@ class NavMenu extends CmsBase
             //TODO 修改对应的菜单
             $input = $request->post();
             $opRes = $this->menuModel->editNavMenu($id, $input);
-            return showMsg($opRes['tag'], $opRes['message']);
+            showMsg($opRes['tag'], $opRes['message']);
         } else {
             $menuData = $this->menuModel->getNavMenuByID($id);
             $rootMenus = $this->menuModel->getAllVisibleMenus();

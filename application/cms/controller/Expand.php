@@ -304,7 +304,7 @@ class Expand extends CmsBase
                 $message = $e->getMessage();
             }
 
-            return showMsg(0, $message);
+            showMsg(0, $message);
         } else {
             $opTag = $request->post('op_tag', 'up');
 
@@ -312,7 +312,7 @@ class Expand extends CmsBase
                 $header = ['商品名称', '缩略图', '产地', '售价', '状态'];
                 $opData = (new Xmozxx())->getExcelTestData();
                 //此时去下载 Excel文件
-                (new SpreadsheetService())->outputDataToExcelFile($header, $opData, "哎呦喂-数据表",'',1);
+                (new SpreadsheetService())->outputDataToExcelFile($header, $opData, "哎呦喂-数据表",'',0);
             } else {
                 $file = $request->file('file');
                 $info = $file->move('upload');
@@ -327,7 +327,7 @@ class Expand extends CmsBase
                     $opRes['status'] = 0;
                     $opRes['message'] = "文件上传失败 " . $file->getError();
                 }
-                return showMsg($opRes['status'], $opRes['message']);
+                showMsg($opRes['status'], $opRes['message']);
             }
         }
     }
@@ -341,7 +341,7 @@ class Expand extends CmsBase
     public function react(Request $request)
     {
         if ($request->isPost()) {
-            return showMsg(1, 'success', []);
+            showMsg(1, 'success', []);
         } else {
             // 也可展示 react_hook 页面
             return view('react');

@@ -79,7 +79,7 @@ class Index extends Base
             return $this->staticFetch(0,'',$data);
             return view('article',$data);
         }else{
-            return showMsg(1,'当前文章不存在！');
+            showMsg(1,'当前文章不存在！');
         }
     }
 

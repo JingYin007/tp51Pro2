@@ -35,9 +35,9 @@ class WxBase
     public function getAuthToken(Request $request,$code = ''){
         if ($request->isPost()){
             $opRes = (new Token())->getServerToken($code);
-            return showMsg($opRes['status'],$opRes['message']);
+            showMsg($opRes['status'],$opRes['message']);
         }else{
-            return showMsg(0,'请求不合法！');
+            showMsg(0,'请求不合法！');
         }
     }
 
@@ -49,9 +49,9 @@ class WxBase
     public function verifyToken(Request $request,$token = ''){
         if ($request->isPost()){
             $verifyRes = (new Token())->verifyServerToken($token);
-            return showMsg($verifyRes['status'],$verifyRes['message']);
+            showMsg($verifyRes['status'],$verifyRes['message']);
         }else{
-            return showMsg(0,'请求不合法！');
+            showMsg(0,'请求不合法！');
         }
     }
 
@@ -64,7 +64,7 @@ class WxBase
     public function address(){
         $accessToken = (new Token())->getAccessToken();
         $userID = Token::getCurrentUserID();
-        return showMsg(1,'address',['user_id'=> $userID]);
+        showMsg(1,'address',['user_id'=> $userID]);
     }
 
     /**
@@ -76,6 +76,6 @@ class WxBase
     {
         $article_id = 1;
         $articleInfo = (new Xarticles())->getInfoByID(intval($article_id));
-        return showMsg(1, 'getArticleInfo', $articleInfo);
+        showMsg(1, 'getArticleInfo', $articleInfo);
     }
 }

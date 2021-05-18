@@ -41,7 +41,7 @@ class Index extends Controller
                 //TODO 后台入口路径 处理方法！
                 $this->redirect('cms/login/index');
             }else{
-                return showMsg(0,'You are offline,please logon again!');
+                showMsg(0,'You are offline,please logon again!');
             }
         }else{
             $this->menuModel = new XnavMenus();
@@ -67,7 +67,7 @@ class Index extends Controller
                 ];
                 return view('index', $data);
         }else{
-            return showMsg(0,'Sorry,您的请求不合法！');
+            showMsg(0,'Sorry,您的请求不合法！');
         }
     }
 
@@ -101,13 +101,13 @@ class Index extends Controller
                 $adminData = $this->adminModel->getAdminData($id);
                 return view('admin', ['admin' => $adminData,]);
             }else{
-                return showMsg(0,'Sorry, 您无权修改其他用户信息！');
+                showMsg(0,'Sorry, 您无权修改其他用户信息！');
             }
         } else {
             //当前用户对个人账号的修改
             $input = $request->post();
             $opRes = $this->adminModel->editCurrAdmin($id, $input, $this->cmsAID);
-            return showMsg($opRes['tag'], $opRes['message']);
+            showMsg($opRes['tag'], $opRes['message']);
         }
     }
 
@@ -124,9 +124,9 @@ class Index extends Controller
             }else{
                 $opRes = Upload::singleFile($request);
             }
-            return showMsg($opRes['status'], $opRes['message'],$opRes['data']);
+            showMsg($opRes['status'], $opRes['message'],$opRes['data']);
         }else{
-            return showMsg(0, "Sorry,请求不合法！");
+            showMsg(0, "Sorry,请求不合法！");
         }
     }
 }

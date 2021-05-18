@@ -45,7 +45,7 @@ class Activity extends CmsBase
                 ]);
         }else{
             $list = $this->actModel->getActsForPage($curr_page,$this->page_limit,$search,$OrderType,$actType);
-            return showMsg(1,'success',$list);
+            showMsg(1,'success',$list);
         }
     }
     /**
@@ -57,7 +57,7 @@ class Activity extends CmsBase
         if ($request->isPost()){
             $input = $request->post();
             $opRes = $this->actModel->addActivity($input);
-            return showMsg($opRes['tag'],$opRes['message']);
+            showMsg($opRes['tag'],$opRes['message']);
         }else{
             $categoryList = (new Xcategorys())->getCategorySelectListFromJsonFile();
             return view('add',['categoryList' => $categoryList]);
@@ -77,7 +77,7 @@ class Activity extends CmsBase
             //TODO 修改对应的菜单
             $input = $request->post();
             $opRes = $this->actModel->editActivity($id,$input);
-            return showMsg($opRes['tag'],$opRes['message']);
+            showMsg($opRes['tag'],$opRes['message']);
         }else{
             $categoryList = (new Xcategorys())->getCategorySelectListFromJsonFile();
             return view('edit',[
@@ -102,7 +102,7 @@ class Activity extends CmsBase
             $status = 0;
             $message = "未查到商品数据";
         }
-        return showMsg($status, $message, $goodsList);
+        showMsg($status, $message, $goodsList);
     }
     /**
      * ajax 更改首页显示状态
@@ -110,6 +110,6 @@ class Activity extends CmsBase
      */
     public function ajaxForShow(Request $request){
         $opRes = $this->actModel->updateForShow( $request->post('act_id'),$request->post('okStatus'));
-        return showMsg($opRes['tag'],$opRes['message']);
+        showMsg($opRes['tag'],$opRes['message']);
     }
 }

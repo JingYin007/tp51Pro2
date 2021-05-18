@@ -46,7 +46,7 @@ class Analyze extends CmsBase
         if ($request->isPost()) {
             $arrDate = explode(" - ", $date_sel);
             $resData = $this->orderModel->getHotSaleData($arrDate[0], $arrDate[1]);
-            return showMsg(1, 'success', $resData);
+            showMsg(1, 'success', $resData);
         } else {
             return view('hot_sale', ['date_sel' => $date_sel]);
         }
@@ -70,7 +70,7 @@ class Analyze extends CmsBase
         $date_sel = $request->param('date_sel', $default_date);
         if ($request->isPost()) {
             $resData = $this->orderModel->getTimeSaleData($date_sel);
-            return showMsg(1, 'success', $resData);
+            showMsg(1, 'success', $resData);
         } else {
             return view('time_sale', ['date_sel' => $date_sel]);
         }

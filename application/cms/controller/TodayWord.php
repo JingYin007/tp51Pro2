@@ -34,7 +34,7 @@ class TodayWord extends CmsBase
         if ($request->isPost()) {
             //TODO ajax 获取新一页的赠言数据
             $list = $this->model->getTodayWordsForPage($curr_page, $this->page_limit,$search);
-            return showMsg(1, 'success', $list);
+            showMsg(1, 'success', $list);
         } else {
             $list = $this->model->getTodayWordsForPage($curr_page, $this->page_limit, $search);
             $record_num = $this->model->getTodayWordsCount($search);
@@ -58,7 +58,7 @@ class TodayWord extends CmsBase
         if ($request->isPost()) {
             $input = $request->post();
             $opRes = $this->model->addTodayWord($input);
-            return showMsg($opRes['tag'], $opRes['message']);
+            showMsg($opRes['tag'], $opRes['message']);
         } else {
             return view('add');
         }
@@ -77,7 +77,7 @@ class TodayWord extends CmsBase
             //TODO 修改对应的菜单
             $input = $request->post();
             $opRes = $this->model->editTodayWord($opID, $input);
-            return showMsg($opRes['tag'], $opRes['message']);
+            showMsg($opRes['tag'], $opRes['message']);
         } else {
             $todayWordData = $this->model->getTodayWord($opID);
             return view('edit', [
