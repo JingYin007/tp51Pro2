@@ -102,16 +102,13 @@ class Admin extends CmsBase
      */
     public function role(Request $request)
     {
+        $adminRoles = $this->ar_model->getAllRoleList();
         if ($request->isGet()){
-            //$adminRoles = $this->ar_model->getAllRoleList();
-            $adminRoles = [];
+            //$adminRoles = [];
             return view('role_react', ['roles' => $adminRoles]);
         }else{
-            $adminRoles = $this->ar_model->getAllRoleList();
             showMsg(1,'roleList',$adminRoles);
         }
-
-
     }
 
     /**
@@ -127,9 +124,10 @@ class Admin extends CmsBase
             showMsg($opRes['tag'], $opRes['message']);
         } else {
             //TODO 获取所有可以分配的权限菜单
-            $viewMenus = $this->menuModel->getAllNavMenus();
+            //$viewMenus = $this->menuModel->getAllNavMenus();
+            $roleMenu = $this->ar_model->getCurrRoleMenuList();
             return view('add_role', [
-                'menus' => $viewMenus,
+                'menus' => $roleMenu,
             ]);
         }
     }
@@ -138,9 +136,9 @@ class Admin extends CmsBase
      * 更新 角色数据
      * @param Request $request
      * @param $id
-     * @return View|void
+     * @return View
      */
-    public function editRole(Request $request, $id)
+    public function editRole(Request $request, $id): View
     {
         $roleData = $this->ar_model->getRoleInfo($id);
         if ($request->isPost()) {
@@ -149,14 +147,11 @@ class Admin extends CmsBase
             showMsg($opRes['tag'], $opRes['message']);
         } else {
             //TODO 获取所有可以分配的权限菜单
-            $viewMenus = $this->menuModel->getAllNavMenus();
-            $arrMenuSelf = explode('|', $roleData['nav_menu_ids']);
+            $roleMenu = $this->ar_model->getCurrRoleMenuList($id);
             return view('edit_role', [
                 'role' => $roleData,
-                'menus' => $viewMenus,
-                'menuSelf' => $arrMenuSelf,
+                'roleMenu' => $roleMenu
             ]);
         }
     }
-
 }

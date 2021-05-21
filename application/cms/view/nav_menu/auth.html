@@ -30,10 +30,10 @@
     </div>
 </form>
 
-<table class="layui-table" lay-size="sm">
+<table class="layui-table table-body-mz" lay-size="sm">
     <colgroup>
-        <col width="41%">
-        <col width="43%">
+        <col width="45%">
+        <col width="45%">
         <col>
     </colgroup>
     <thead>
@@ -46,11 +46,17 @@
     <tbody class="table-tbody-normal">
     {volist name="authMenus" id="vo"}
     <tr class="tr-normal-{$vo.id}">
-        <td>{$vo.name}</td>
-        <td>{$vo.action}</td>
+        <td>
+            <span onclick="opNavMenu(this,'{$vo.id}',1,'{$vo.name}')"
+                    class="layui-btn layui-btn-radius layui-btn-primary layui-btn-sm">{$vo.name}</span>
+        </td>
+        <td>
+            <span onclick="opNavMenu(this,'{$vo.id}',2,'{$vo.action}')"
+                    class="layui-btn layui-btn-primary layui-btn-sm">{$vo.action}</span>
+        </td>
         <td>
             <div class="layui-btn-group">
-                <button class="layui-btn layui-btn-primary layui-btn-sm"
+                <button class="layui-btn layui-btn-danger layui-btn-sm"
                         onclick="delNavMenu('{$vo.id}')">
                     <i class="layui-icon">&#xe640;</i>
                 </button>
@@ -78,6 +84,38 @@
         let toUrl = "{:url('cms/navMenu/edit',['id'=>'NMID'])}";
         toUrl = toUrl.replace("NMID", id);
         ToDelItem(id, toUrl, '.tr-normal-' + id);
+    }
+
+    //根据菜单ID 编辑权限
+    function opNavMenu(obj,id,btnTag,valEver){
+        let btnName = (btnTag === 1)?'更新权限名称':'权限路径更新';
+        layer.prompt(
+            {
+                title:false,
+                value:valEver,
+                formType:0,
+                shadeClose:true,
+                closeBtn : 0,
+                btn: [btnName],
+            },
+            function(value, index){
+                let toUrl = "{:url('cms/navMenu/updateAuth',['id'=>'NMID'])}";
+                toUrl = toUrl.replace("NMID", id);
+                const postData = {op_tag:btnTag,op_val:value};
+
+                $.post(
+                    toUrl,
+                    postData,
+                    function (result) {
+                        if(result.status === 1){
+                            dialog.tip_success(result.message);
+                            $(obj).html(value);
+                            layer.close(index);
+                        }else{
+                            dialog.tip_error(result.message);
+                        }
+                    },"JSON");
+        });
     }
 </script>
 {/block}

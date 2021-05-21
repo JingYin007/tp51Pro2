@@ -56,11 +56,7 @@ class CmsBase extends Base
                     try {
                         $authFlag = $this->checkCmsAdminAuth($cmsAID);
                         $message = $authFlag ? "权限正常" : "Sorry,You don't have permission!";
-                    } catch (DataNotFoundException $e) {
-                        $message = $e->getMessage();
-                    } catch (ModelNotFoundException $e) {
-                        $message = $e->getMessage();
-                    } catch (DbException $e) {
+                    } catch (DataNotFoundException | DbException $e) {
                         $message = $e->getMessage();
                     }
                 }else{
@@ -75,11 +71,8 @@ class CmsBase extends Base
      * 检查权限
      * @param int $adminID
      * @return bool
-     * @throws DataNotFoundException
-     * @throws ModelNotFoundException
-     * @throws DbException
      */
-    public function checkCmsAdminAuth($adminID = 0)
+    public function checkCmsAdminAuth($adminID = 0): bool
     {
         $action = trim(strtolower(request()->action()));
         $request_url = trim(strtolower($_SERVER["REQUEST_URI"]));

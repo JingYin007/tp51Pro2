@@ -189,7 +189,7 @@ function ToPostPopupsDeal(obj,toUrl,postData,jumpUrl) {
 function ToDelItem(id,toUrl,remove_class) {
     const tag_token = $(".tag_token").val();
     const postData = {'id': id, 'tag': 'del', '_token': tag_token};
-    layer.msg('确定要删除此条记录吗？', {
+    layer.msg('确定要删除此记录吗？', {
         time: 0 //不自动关闭
         ,btn: ['确定', '离开']
         ,shade:0.61,
@@ -220,4 +220,40 @@ function afterDelItem(toUrl,postData,remove_class) {
                 dialog.tip_error(result.message);
             }
         },"JSON");
+}
+
+/**
+ * 设计一个 通用公告层
+ * @param title
+ * @param content 可以是 html，样式自行使用css设计
+ * @param postUrl
+ * @param postData
+ * @constructor
+ */
+function ToOpenNoticePopups(title,content,postUrl,postData,jumpUrl){
+    const content_new =
+        '<div style="padding: 20px 30px; line-height: 22px; ' +
+        'background-color: #393D49; color: #fff; font-weight: 300;">' +
+        '<p style="font-weight: bold;font-size: larger;text-align:center;">'+title+'</p>'
+        + content+
+        '</div>';
+
+    layer.open({
+        type: 1
+        ,title: false //不显示标题栏
+        ,closeBtn: false
+        ,area: '300px;'
+        ,shade: 0.4
+        ,shadeClose: true
+        ,anim:4
+        ,resize: false
+        ,btn: ['确定', '取消']
+        ,btnAlign: 'c'
+        ,moveType: 1 //拖拽模式，0或者1
+        ,content: content_new
+        ,yes: function(index){
+            layer.close(index);
+            ToPostPopupsDeal('',postUrl, postData);
+        }
+    });
 }

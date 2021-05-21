@@ -30,7 +30,7 @@
     <div class="layui-form-item layui-form-text">
 
         <label class="layui-form-label">权限分配：</label>
-        <input type="hidden" name="nav_menu_ids" class="nav_menu_ids" value="{$role['nav_menu_ids']}">
+        <input type="hidden" name="nav_menu_ids" class="nav_menu_ids" value="{$role.nav_menu_ids}">
         <div class="layui-input-block">
             <table class="layui-table table-nav-menus">
                 <colgroup>
@@ -38,30 +38,34 @@
                     <col>
                 </colgroup>
                 <tbody>
-                {volist name="menus" id="vo"}
+                {volist name="roleMenu" id="vo"}
                 <tr>
                     <td class="td-menu-parent td-nav-menu">
-                        <p>{$vo['name']}</p>
-                        <input type="checkbox" class="cb-nav-menu" value="{$vo['id']}"
-                               lay-skin="switch" lay-text="ON|OFF"
-                               {php}
-                               if(in_array($vo['id'],$menuSelf))
-                        {
-                        echo " checked";
-                        }
-                        {/php}
-                        >
+                        <p>{$vo.name}</p>
+                        <input type="checkbox" class="cb-nav-menu" value="{$vo.id}"
+                               lay-skin="switch" lay-text="ON|OFF" {$vo.sel==1?'checked':''}>
                     </td>
                     <td class="td-menu-child td-nav-menu">
                         {volist name="vo.child" id="voi"}
-                        <input type="checkbox" class="cb-nav-menu" value="{$voi['id']}"
-                               title="{$voi['name']}"
-                               {php}
-                               if(in_array($voi['id'],$menuSelf)){
-                        echo " checked";
-                        }
-                        {/php}
-                        >
+
+                        <ul class="layui-nav layui-inline" style="margin-right: 1px;">
+                            <li class="layui-nav-item layui-nav-itemedx">
+                                <input style="margin: 3px 2px" type="checkbox" class="cb-nav-menu cb-nav-menu_list" value="{$voi.id}"
+                                       title="{$voi.name}" {$voi.sel==1?'checked':''}>
+                                {gt name="voi['child']|count" value="0"}
+                                    <dl class="layui-nav-child">
+                                        {volist name="voi.child" id="voj"}
+                                            <dd>
+                                                <input type="checkbox" name="{$voj.name}" title="{$voj.name}"
+                                                       class="cb-nav-menu cb-nav-menu_auth" value="{$voj.id}"
+                                                       lay-skin="primary" {$voj.sel==1?'checked':''}>
+                                            </dd>
+                                        {/volist}
+                                    </dl>
+                                {/gt}
+                            </li>
+                        </ul>
+
                         {/volist}
                     </td>
                 </tr>
@@ -81,7 +85,14 @@
         </div>
     </div>
 </form>
-
+<style>
+    .td-menu-child .layui-nav{
+        background-color: #FFFFFF;
+    }
+    .td-menu-child .layui-nav:hover{
+        background-color: #fab27b;
+    }
+</style>
 {/block}
 
 {block name='single-content'}
@@ -95,6 +106,7 @@
         toUrl = toUrl.replace('RoleID', id);
         ToPostPopupsDeal(obj,toUrl, postData);
     }
+
 </script>
 {/block}
 

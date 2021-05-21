@@ -24,7 +24,8 @@ class IAuth
      * @param string $confTag
      * @return string
      */
-    public static function AUTH_CONF($confTag = ''){
+    public static function AUTH_CONF($confTag = ''): string
+    {
         return config("sys_auth.".$confTag);
     }
 
@@ -33,7 +34,8 @@ class IAuth
      * @param string $password 明文
      * @return string
      */
-    public static function setAdminUsrPassword($password = ''){
+    public static function setAdminUsrPassword($password = ''): string
+    {
         $pws_pre_halt = self::AUTH_CONF('PWD_PRE_HALT');
         $md5_hash = strrev(md5($password.$pws_pre_halt));
         return password_hash($md5_hash,PASSWORD_DEFAULT );
@@ -41,11 +43,12 @@ class IAuth
 
     /**
      * 检查后台管理员的登录密码是否合法
-     * @param $password
+     * @param string $password
      * @param string $password_hash
      * @return bool
      */
-    public static function checkAdminUsrPassword($password,$password_hash = ''){
+    public static function checkAdminUsrPassword($password = '',$password_hash = ''): bool
+    {
         $pws_pre_halt = self::AUTH_CONF('PWD_PRE_HALT');
         $md5_hash = strrev(md5($password.$pws_pre_halt));
         return password_verify ($md5_hash, $password_hash);
@@ -74,13 +77,14 @@ class IAuth
      * 获取当前登录状态下的管理员 ID信息
      * @return int
      */
-    public static function getAdminIDCurrLogged(){
+    public static function getAdminIDCurrLogged(): int
+    {
         $cmsRes = self::getDecryCmsRes();
 
-        $time_stamp = isset($cmsRes['time_stamp'])?$cmsRes['time_stamp']:0;
+        $time_stamp = $cmsRes['time_stamp'] ?? 0;
         //检查 登录 Session 的有效时间
         if ($time_stamp + config('session.expire') > time()){
-            $cmsAID = isset($cmsRes['op_id'])? $cmsRes['op_id'] : 0;
+            $cmsAID = $cmsRes['op_id'] ?? 0;
         }
         return isset($cmsAID)?intval($cmsAID):0;
     }
@@ -90,18 +94,20 @@ class IAuth
      * @param int $cmsAID 用户 ID
      * @return bool true:无变化；false: 有变化
      */
-    public static function ckPasswordNoChangedCurrLogged($cmsAID = 0){
+    public static function ckPasswordNoChangedCurrLogged($cmsAID = 0): bool
+    {
         $cmsRes = self::getDecryCmsRes();
-        $op_password = isset($cmsRes['op_password']) ? $cmsRes['op_password']: '';
+        $op_password = $cmsRes['op_password'] ?? '';
         $curr_password = (new Xadmins())->getPasswordByID($cmsAID);
         return $op_password === $curr_password;
     }
 
     /**
      * 获取 加密数据的 原始数组形式
-     * @return array|mixed
+     * @return array
      */
-    public static function getDecryCmsRes(){
+    public static function getDecryCmsRes(): array
+    {
         if (Session::has(self::AUTH_CONF('SESSION_CMS_TAG'),self::AUTH_CONF('SESSION_CMS_SCOPE'))
             && Session::get(self::AUTH_CONF('SESSION_CMS_TAG'),self::AUTH_CONF('SESSION_CMS_SCOPE'))){
 
@@ -110,7 +116,7 @@ class IAuth
 
             $cmsRes = json_decode($cms_decrypt,1);
         }
-        return isset($cmsRes)?$cmsRes:[];
+        return $cmsRes ?? [];
     }
     /**
      * 管理员账号退出操作
@@ -128,7 +134,8 @@ class IAuth
      * @param String $aes_key   解密的key
      * @return string
      */
-    public static  function encrypt($input = '',$aes_key = '') {
+    public static  function encrypt($input = '',$aes_key = ''): string
+    {
         $data = openssl_encrypt(
                             $input,
                             'AES-256-CBC',
@@ -144,7 +151,8 @@ class IAuth
      * @param String $aes_key   解密的key
      * @return String
      */
-    public static function decrypt($sStr,$aes_key) {
+    public static function decrypt($sStr,$aes_key): string
+    {
         return openssl_decrypt(
                         base64_decode($sStr),
                         'AES-256-CBC',
