@@ -94,11 +94,8 @@ class Xadmins extends BaseModel
      * 根据ID 获取管理员数据
      * @param int $id
      * @return array
-     * @throws DataNotFoundException
-     * @throws DbException
-     * @throws ModelNotFoundException
      */
-    public function getAdminData($id = 0)
+    public function getAdminData($id = 0): array
     {
         $res = $this
             ->alias('a')
@@ -196,11 +193,11 @@ class Xadmins extends BaseModel
      * 根据ID 修改管理员数据
      * @param $id
      * @param $input
-     * @return void|static|array
+     * @return array
      */
-    public function editAdmin($id, $input)
+    public function editAdmin($id, $input): array
     {
-        $opTag = isset($input['tag']) ? $input['tag'] : 'edit';
+        $opTag = $input['tag'] ?? 'edit';
         if ($opTag == 'del') {
             $tag = $this
                 ->where('id', $id)
@@ -214,8 +211,8 @@ class Xadmins extends BaseModel
                 $validateRes['message'] = '此昵称已被占用，请换一个！';
             } else {
                 $saveData = [
-                    'user_name' => isset($input['user_name'])?$input['user_name']:'',
-                    'picture' => isset($input['picture']) ? $input['picture'] : '',
+                    'user_name' => $input['user_name'] ?? '',
+                    'picture' => $input['picture'] ?? '',
                     'role_id' => isset($input['role_id'])?intval($input['role_id']):0,
                     'status' => isset($input['status'])?intval($input['status']):0,
                     'content' => $input['content'],
@@ -238,16 +235,17 @@ class Xadmins extends BaseModel
                 }
             }
         }
+        $validateRes['tag'] = intval($validateRes['tag']);
         return $validateRes;
     }
 
     /**
      * 判断当前数据库中是否有重名的管理员
-     * @param $user_name
+     * @param string $user_name
      * @param int $id
-     * @return mixed
+     * @return Xadmins
      */
-    public function chkSameUserName($user_name, $id = 0)
+    public function chkSameUserName($user_name = '', $id = 0)
     {
         return $this
             ->field('user_name')
@@ -259,33 +257,28 @@ class Xadmins extends BaseModel
     /**
      * 获取当前管理员权限下的 导航菜单
      * @param int $admin_id
-     * @return mixed
      */
     public function getAdminNavMenus($admin_id = 1)
     {
-        $nav_menu_ids = $this
+        return $this
             ->alias('a')
             ->join('xadmin_roles ar', 'ar.id = a.role_id')
             ->where([['a.id', '=', $admin_id], ['a.status', '=', 1]])
             ->value('nav_menu_ids');
-        return $nav_menu_ids;
     }
 
     /**
      * 管理员登录 反馈
      * @param $input
      * @return array
-     * @throws DataNotFoundException
-     * @throws DbException
-     * @throws ModelNotFoundException
      */
     public function checkAdminLogin($input)
     {
         $flag = false;
         $message = null;
-        $userName = isset($input['user_name']) ? $input['user_name'] : '';
-        $pwd = isset($input['password']) ? $input['password'] : '';
-        $verifyCode = isset($input['login_verifyCode']) ? $input['login_verifyCode'] : '';
+        $userName = $input['user_name'] ?? '';
+        $pwd = $input['password'] ?? '';
+        $verifyCode = $input['login_verifyCode'] ?? '';
         //TODO 首先判断验证码是否可用
         if (!captcha_check($verifyCode)) {
             $message = "验证码填写有误或已过期";
@@ -317,47 +310,16 @@ class Xadmins extends BaseModel
      * @param int $adminID
      * @param string $authUrl
      * @return bool
-     * @throws DataNotFoundException
-     * @throws ModelNotFoundException
-     * @throws DbException
      */
-    public function checkAdminAuth($adminID = 0, $authUrl = '')
+    public function checkAdminAuth($adminID = 0, $authUrl = ''): bool
     {
         $checkTag = false;
         $nav_menu_ids = $this->getAdminNavMenus($adminID);
         if (is_string($nav_menu_ids)) {
             $arrMenus = explode("|", $nav_menu_ids);
-            foreach ($arrMenus as $key => $menu_id) {
-                if ($menu_id) {
-                    $checkTag = $this->checkAuthUrlForMenuID(intval($menu_id), $authUrl);
-                    if ($checkTag) {
-                        break;
-                    } else {
-                        //此时判断 下级权限中是否满足 当前访问的权限
-                        $childMenus = Db::name('xnav_menus')
-                            ->field("n2.id")
-                            ->alias('n1')
-                            ->join("xnav_menus n2", "n1.id = n2.parent_id")
-                            ->where(
-                                [
-                                    ["n2.parent_id", '=', $menu_id],
-                                    ['n2.status', '=', 1],
-                                    ['n2.type', '=', 1]
-                                ])
-                            ->select();
-                        foreach ($childMenus as $key2 => $child_menu) {
-                            $checkTag = $this->checkAuthUrlForMenuID(intval($child_menu['id']), $authUrl);
-                            if ($checkTag) {
-                                break;
-                            } else {
-                                continue;
-                            }
-                        }
-                        if ($checkTag) {
-                            break;
-                        }
-                    }
-                }
+            $currNavID = $this->getNavIDByAuthUrl($authUrl).'';
+            if (in_array($currNavID,$arrMenus,true)){
+                $checkTag = true;
             }
         }
         return $checkTag;
@@ -366,10 +328,10 @@ class Xadmins extends BaseModel
     /**
      * 忽略 因操作系统不同对链接字符串大小写的敏感
      * @param int $menu_id
-     * @param $authUrl
+     * @param string $authUrl
      * @return bool
      */
-    public function checkAuthUrlForMenuID($menu_id = 0, $authUrl)
+    public function checkAuthUrlForMenuID($menu_id = 0, $authUrl =''): bool
     {
         $checkTag = false;
         $menuAction = Db::name('xnav_menus')
@@ -381,6 +343,21 @@ class Xadmins extends BaseModel
         return $checkTag;
     }
 
+    /**
+     * 获取当前链接的 菜单ID
+     * mysql ，默认查询是不区分大消息的
+     * @param string $authUrl
+     * @return int
+     */
+    public function getNavIDByAuthUrl($authUrl = ''): int
+    {
+        $authUrl = substr($authUrl,1);
+
+        $navID = Db::name('xnav_menus')
+            ->where([["action",'=', $authUrl], ['status','=', 1]])
+            ->value('id');
+        return $navID ? intval($navID):0;
+    }
     /**
      * 获取登录密码
      * @param int $adminID

@@ -40,6 +40,7 @@ Route::any('cms/menu/index','cms/navMenu/index');
 Route::any('cms/menu/add','cms/navMenu/add');
 Route::any('cms/menu/edit/:id','cms/navMenu/edit');
 Route::any('cms/menu/auth/:id','cms/navMenu/auth');
+Route::any('cms/menu/updateAuth/:id','cms/navMenu/updateAuth');
 
 
 //今日赠言管理

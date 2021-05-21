@@ -3,7 +3,7 @@
 {block name='body-content'}
 
 <button class="layui-btn layui-btn-normal" op_url="{:url('cms/admin/addRole')}"
-        onclick="addForOpenPopups(this,'✚ 添加新角色','67%','')">
+        onclick="addForOpenPopups(this,'✚ 添加新角色','88%','88%')">
     <i class="layui-icon">&#xe608;</i> 添加角色
 </button>
 <div class="layui-inline">
@@ -14,7 +14,7 @@
     </div>
 </div>
 
-<table class="layui-table table-body" lay-even="" lay-skin="row">
+<table class="layui-table table-body-mz" lay-even="" lay-skin="row">
     <colgroup>
         <col width="5%">
         <col width="20%">
@@ -36,13 +36,13 @@
     {volist name="roles" id="vo"}
     <tr class="tr-normal-{$vo['id']}">
         <td>{$vo['id']}</td>
-        <td class="title">{php} echo $vo['role_tip']{/php}</td>
+        <td class="title">{$vo.user_name}</td>
         <td><span class="span-updated_at">{$vo['updated_at']}</span></td>
         <td>{php} echo $vo['status_tip']{/php}</td>
         <td>
             <div class="layui-btn-group">
                 <button class="layui-btn layui-btn-sm layui-btn-normal" title="编辑"
-                        onclick="editForOpenPopups('✎ 角色信息修改','{$vo.id}', '67%', '')">
+                        onclick="editForOpenPopups('✎ 角色信息修改','{$vo.id}', '88%', '88%')">
                     <i class="layui-icon">&#xe642;</i>
                 </button>
                 <button class="layui-btn layui-btn-sm layui-btn-danger" title="删除"
@@ -56,7 +56,7 @@
     </tbody>
 </table>
 <style>
-    .table-body{
+    .table-body-mz{
         width: 66%;
         margin: auto;
     }

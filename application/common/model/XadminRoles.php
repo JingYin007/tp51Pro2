@@ -18,7 +18,7 @@ class XadminRoles extends BaseModel
 
     /**
      * 获取正常角色列表
-     * @return mixed
+     * @return array|array[]|\array[][]|\array[][][]
      */
     public function getNormalRoles()
     {
@@ -31,7 +31,7 @@ class XadminRoles extends BaseModel
     /*
      * 获取所有的角色列表
      */
-    public function getAllRoleList()
+    public function getAllRoleList(): array
     {
         $res = $this
             ->field('id,user_name,updated_at,list_order,status')
@@ -51,11 +51,11 @@ class XadminRoles extends BaseModel
     /**
      * 添加新角色
      * @param $input
-     * @return mixed
+     * @return array
      */
     public function addRole($input)
     {
-        $user_name = isset($input['user_name']) ? $input['user_name'] : '';
+        $user_name = $input['user_name'] ?? '';
         $checkSameTag = $this->chkSameUserName($user_name);
         if ($checkSameTag) {
             $validateRes['tag'] = 0;
@@ -86,7 +86,7 @@ class XadminRoles extends BaseModel
      */
     public function editRole($id, $input)
     {
-        $opTag = isset($input['tag']) ? $input['tag'] : 'edit';
+        $opTag = $input['tag'] ?? 'edit';
         if ($opTag == 'del') {
             $tag = $this->where('id', $id)->update(['status' => -1]);
             $validateRes['tag'] = $tag;
@@ -122,27 +122,39 @@ class XadminRoles extends BaseModel
      */
     public function chkSameUserName($user_name, $id = 0)
     {
-        $tagCount = $this
+        return $this
             ->field('user_name')
             ->where('user_name', $user_name)
             ->where('id', '<>', $id)
             ->count();
-        return $tagCount;
     }
 
     /**
      * 获取不同角色对应的数据
      * @param $id
-     * @return array|null|\PDOStatement|string|Model
      */
-    public function getRoleInfo($id)
+    public function getRoleInfo($id): array
     {
-        $res = $this
+        $list =  $this
             ->field('id,user_name,status,list_order,nav_menu_ids')
             ->where('id', $id)
             ->find();
-        return $res;
+        return $list?$list->toArray():[];
     }
 
+    /**
+     * 获取当前角色的 菜单/权限信息
+     * @param int $role_id
+     * @return array
+     */
+    public function getCurrRoleMenuList($role_id = 0): array
+    {
+        $nav_menu_ids = $this->where('id',$role_id)->value('nav_menu_ids');
+        $roleMenuList = explode('|',$nav_menu_ids);
+
+        $currRoleMenu = (new XnavMenus())->dealForRoleShowMenus(null,$roleMenuList);
+        //var_dump($currRoleMenu);
+        return $currRoleMenu??[];
+    }
 
 }

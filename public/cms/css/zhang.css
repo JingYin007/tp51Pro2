@@ -116,8 +116,10 @@
 .layui-logo span {
     color: white;
 }
-
-.table-body th, .table-body td {
+.div-body-show .table-body-mz,.div-body-show #demo2-1 {
+    margin: 15px auto;
+}
+.table-body-mz th, .table-body-mz td {
     text-align: center;
 }
 
@@ -131,7 +133,7 @@
 }
 
 .div-body-show {
-    margin: 5px 5px;
+    margin: 10px 12px;
 }
 
 .form-op-normal {

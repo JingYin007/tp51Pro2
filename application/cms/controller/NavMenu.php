@@ -26,9 +26,9 @@ class NavMenu extends CmsBase
     /**
      * 菜单导航列表页
      * @param Request $request
-     * @return View|void
+     * @return View
      */
-    public function index(Request $request)
+    public function index(Request $request): View
     {
         $curr_page = $request->param('curr_page', 1);
         $search = $request->param('str_search');
@@ -53,10 +53,7 @@ class NavMenu extends CmsBase
     /**
      * 增加新导航标题 功能
      * @param Request $request
-     * @return View|void
-     * @throws \think\db\exception\DataNotFoundException
-     * @throws \think\db\exception\ModelNotFoundException
-     * @throws \think\exception\DbException
+     * @return View
      */
     public function add(Request $request)
     {
@@ -76,17 +73,18 @@ class NavMenu extends CmsBase
     /**
      * 赋予权限
      * @param Request $request
-     * @param $id 菜单ID
-     * @return View|void
+     * @param $id int 菜单ID
+     * @return View
      */
-    public function auth(Request $request, $id)
+    public function auth(Request $request, int $id): View
     {
-        $authMenus = $this->menuModel->getAuthChildNavMenus($id);
+
         if ($request->isPost()) {
             $input = $request->param();
             $opRes = $this->menuModel->addNavMenu($input, $id,1);
             showMsg($opRes['tag'], $opRes['message']);
         } else {
+            $authMenus = $this->menuModel->getAuthChildNavMenus($id);
             return view('auth', [
                 'authMenus' => $authMenus,
                 'parent_id' => $id
@@ -97,10 +95,10 @@ class NavMenu extends CmsBase
     /**
      * 编辑导航菜单数据
      * @param Request $request
-     * @param $id 菜单ID
-     * @return View|void
+     * @param $id int 菜单ID
+     * @return View
      */
-    public function edit(Request $request, $id)
+    public function edit(Request $request, int $id): View
     {
         if ($request->isPost()) {
             //TODO 修改对应的菜单
@@ -116,4 +114,23 @@ class NavMenu extends CmsBase
             ]);
         }
     }
+
+    /**
+     * 更新权限信息
+     * @param Request $request
+     * @param int $id
+     */
+    public function updateAuth(Request $request, int $id)
+    {
+        if ($request->isPost()) {
+            //TODO 修改对应的菜单
+            $input = $request->post();
+            list($status,$message) = $this->menuModel->editNavMenuForAuth($id, $input);
+            showMsg($status, $message);
+        } else {
+           showMsg(0,'请求不合法！');
+        }
+    }
+
+
 }

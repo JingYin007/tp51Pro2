@@ -3,7 +3,7 @@
 {block name='body-content'}
 
 <button class="layui-btn layui-btn-normal" op_url="{:url('cms/admin/addRole')}"
-        onclick="addForOpenPopups(this,'✚ 添加新角色','67%','')">
+        onclick="addForOpenPopups(this,'✚ 添加新角色','88%','88%')">
     <i class="layui-icon">&#xe608;</i> 添加角色
 </button>
 <div class="layui-inline">
@@ -14,7 +14,7 @@
     </div>
 </div>
 
-<table class="layui-table table-body" lay-even="" lay-skin="row">
+<table class="layui-table table-body-mz" lay-even="" lay-skin="row">
     <colgroup>
         <col width="20%">
         <col width="20%">
@@ -37,7 +37,7 @@
     <tbody id="table-tbody-normal" class="table-tbody-normal"> </tbody>
 </table>
 <style>
-    .table-body{
+    .table-body-mz{
         width: 66%;
         margin: auto;
     }
@@ -67,7 +67,7 @@
         //修改按钮点击事件
         editForOpenPopups(){
             const role_id = this.props.role_id;
-            editForOpenPopups('✎ 角色信息修改',role_id, '67%', '');
+            editForOpenPopups('✎ 角色信息修改',role_id, '88%', '88%');
 
         }
         //删除按钮的点击事件
