@@ -34,7 +34,7 @@ class Index extends Controller
     public function __construct()
     {
         parent::__construct();
-        $this->cmsAID = IAuth::getAdminIDCurrLogged();
+        list($this->cmsAID) = IAuth::getAdminIDCurrLogged();
         if (!$this->cmsAID || !IAuth::ckPasswordNoChangedCurrLogged($this->cmsAID)) {
             $action = trim(strtolower(request()->action()));
             if ($action == 'index'){

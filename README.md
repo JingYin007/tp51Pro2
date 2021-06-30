@@ -9,6 +9,7 @@
 ```b
 框架版本： ThinkPHP5.1.40
 后台入口： xxxxx.com/cmsx;
+PHP版本：  >=7.1
 ```
 - 最新更新
 

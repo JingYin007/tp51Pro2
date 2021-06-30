@@ -10,7 +10,9 @@
 // +----------------------------------------------------------------------
 
 // 应用公共文件
+use app\common\lib\IAuth;
 use JetBrains\PhpStorm\NoReturn;
+use think\Db;
 
 /**
  * 公用的方法  返回json数据，进行信息的提示
@@ -177,16 +179,16 @@ function insertCmsOpLogs($opStatus = 0,$opTag = '',
     if (!$opStatus){
         return false;
     }else{
+        list($cmsAID) = IAuth::getAdminIDCurrLogged();
         $opData = [
             'op_id' => $op_id,
             'tag' => $opTag,
-            'admin_id' => \app\common\lib\IAuth::getAdminIDCurrLogged(),
+            'admin_id' => $cmsAID,
             'add_time' => date('Y-m-d H:i:s',time()),
             'op_msg' => $op_msg
         ];
         if ($opTag){
-            $opStatus = \think\Db::name('xcmsLogs')
-                ->insert($opData);
+            $opStatus = Db::name('xcmsLogs')->insert($opData);
         }else{
             return false;
         }
@@ -202,7 +204,7 @@ function insertCmsOpLogs($opStatus = 0,$opTag = '',
  * @return array|PDOStatement|string|\think\Collection
  */
 function getCmsOpViewLogs($video_id = 0,$opTag = ''){
-    $logs = \think\Db::name('xcmsLogs l')
+    $logs = Db::name('xcmsLogs l')
         ->field('l.*,a.user_name')
         ->join('xadmins a','a.id = l.admin_id')
         ->where([['tag','=',$opTag],['op_id','=',$video_id]])
@@ -239,7 +241,8 @@ function arrSortByKey($result = [],$key = '',$sort = SORT_DESC){
     if (empty($result) || !$key){
         return [];
     }else{
-        array_multisort(array_column($result,$key),$sort,$result);
+        $deal_result = array_column($result,$key);
+        array_multisort($deal_result,$sort,$result);
         return  $result;
     }
 }

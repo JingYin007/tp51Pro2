@@ -73,11 +73,12 @@ class IAuth
             Session::set(self::AUTH_CONF('SESSION_CMS_TAG'), $cms_encrypt,self::AUTH_CONF('SESSION_CMS_SCOPE'));
         }
     }
+
     /**
      * 获取当前登录状态下的管理员 ID信息
-     * @return int
+     * @return array
      */
-    public static function getAdminIDCurrLogged(): int
+    public static function getAdminIDCurrLogged()
     {
         $cmsRes = self::getDecryCmsRes();
 
@@ -86,7 +87,9 @@ class IAuth
         if ($time_stamp + config('session.expire') > time()){
             $cmsAID = $cmsRes['op_id'] ?? 0;
         }
-        return isset($cmsAID)?intval($cmsAID):0;
+        $cmsAID = isset($cmsAID)?intval($cmsAID):0;
+        $cmsAName = (new Xadmins())->getAdminNameByID($cmsAID??0);
+        return [$cmsAID,$cmsAName];
     }
 
     /**

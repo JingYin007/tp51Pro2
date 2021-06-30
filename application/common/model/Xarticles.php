@@ -3,10 +3,7 @@
 namespace app\common\model;
 
 use app\common\validate\Xarticle;
-use think\cache\driver\Memcache;
-use think\cache\driver\Redis;
 use think\Db;
-use \think\Model;
 
 /**
  * Created by PhpStorm.
@@ -222,7 +219,6 @@ class Xarticles extends BaseModel
                         'seo_description' => isset($input['seo_description'])?$input['seo_description']:'',
                         'status' => isset($input['status'])?$input['status']:'0',
                     ]);
-
                 insertCmsOpLogs($saveTag||$saveTag2,'ARTICLE',$id,'文章更新');
                 $validateRes['tag'] = intval($saveTag||$saveTag2);
                 $validateRes['message'] = $saveTag||$saveTag2 ? '数据更新成功' : 'Sorry，数据无变动';

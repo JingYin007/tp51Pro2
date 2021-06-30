@@ -4,6 +4,7 @@ namespace app\cms\controller;
 
 use app\common\controller\CmsBase;
 use app\common\model\Xarticles;
+use think\facade\Hook;
 use think\Request;
 use think\response\View;
 
@@ -57,6 +58,7 @@ class Article extends CmsBase
         if ($request->isPost()) {
             $input = $request->param();
             $opRes = $this->model->addArticle($input);
+            Hook::listen('cms_op',"新增了一篇文章");
             showMsg($opRes['tag'], $opRes['message']);
         } else {
             return view('add');
@@ -73,6 +75,7 @@ class Article extends CmsBase
     {
         if ($request->isPost()) {
             $opRes = $this->model->updateCmsArticleData($request->post(),$id);
+            Hook::listen('cms_op',"更新了id为 {$id} 的文章");
             showMsg($opRes['tag'], $opRes['message']);
         } else {
             $article = $this->model->getCmsArticleByID($id);
@@ -93,6 +96,7 @@ class Article extends CmsBase
     public function ajaxForRecommend(Request $request)
     {
         $opRes = $this->model->updateForRecommend($request->post('article_id'), $request->post('okStatus'));
+        Hook::listen('cms_op',"更新了id为 {$request->post('article_id')} 的文章推荐状态");
         showMsg($opRes['tag'], $opRes['message']);
     }
 

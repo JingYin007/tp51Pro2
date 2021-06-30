@@ -25,4 +25,9 @@ return [
     'log_write'    => [],
     // 应用结束
     'app_end'      => [],
+
+    // 记录后台管理员操作日志
+    'cms_op'      => [
+        'app\\cms\\behavior\\CmsLogger'
+    ],
 ];

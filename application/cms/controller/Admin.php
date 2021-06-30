@@ -6,6 +6,7 @@ use app\common\controller\CmsBase;
 use app\common\model\XadminRoles;
 use app\common\model\Xadmins;
 use app\common\model\XnavMenus;
+use think\facade\Hook;
 use think\Request;
 use think\response\View;
 
@@ -105,7 +106,7 @@ class Admin extends CmsBase
         $adminRoles = $this->ar_model->getAllRoleList();
         if ($request->isGet()){
             //$adminRoles = [];
-            return view('role_react', ['roles' => $adminRoles]);
+            return view('role', ['roles' => $adminRoles]);
         }else{
             showMsg(1,'roleList',$adminRoles);
         }
@@ -144,6 +145,7 @@ class Admin extends CmsBase
         if ($request->isPost()) {
             $input = $request->param();
             $opRes = $this->ar_model->editRole($id, $input);
+            Hook::listen('cms_op',"更新了id为 {$id} 的角色信息");
             showMsg($opRes['tag'], $opRes['message']);
         } else {
             //TODO 获取所有可以分配的权限菜单

@@ -366,4 +366,13 @@ class Xadmins extends BaseModel
     public function getPasswordByID($adminID = 0){
         return $this->where('id',$adminID)->value('password');
     }
+
+    /**
+     * 获取管理员昵称
+     * @param int $adminID
+     * @return mixed|string
+     */
+    public function getAdminNameByID($adminID = 0){
+        return $this->where('id',$adminID)->value('user_name')??'';
+    }
 }

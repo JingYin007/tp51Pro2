@@ -41,7 +41,7 @@ class CmsBase extends Base
     public function initAuth()
     {
         $authFlag = false;
-        $cmsAID = IAuth::getAdminIDCurrLogged();
+        list($cmsAID) = IAuth::getAdminIDCurrLogged();
         if (!$cmsAID) {
             $message = "You are offline,please logon again！";
         } else {

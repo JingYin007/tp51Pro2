@@ -25,7 +25,7 @@ class Chat extends Controller
     public function __construct()
     {
         parent::__construct();
-        $this->cmsAID = IAuth::getAdminIDCurrLogged();
+        list($this->cmsAID) = IAuth::getAdminIDCurrLogged();
         if (!$this->cmsAID) {
             echo "Sorry，您已离线！";die;
         }else{

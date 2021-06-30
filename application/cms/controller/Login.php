@@ -11,8 +11,8 @@ use think\Controller;
 use think\db\exception\DataNotFoundException;
 use think\db\exception\ModelNotFoundException;
 use think\exception\DbException;
+use think\facade\Hook;
 use think\Request;
-use think\response\Redirect;
 use think\response\View;
 
 /**
@@ -38,7 +38,7 @@ class Login extends Controller
      */
     public function index()
     {
-        $cmsAID = IAuth::getAdminIDCurrLogged();
+        list($cmsAID) = IAuth::getAdminIDCurrLogged();
 
         if ($cmsAID && IAuth::ckPasswordNoChangedCurrLogged($cmsAID)) {
             $this->redirect('cms/index/index');
@@ -52,6 +52,7 @@ class Login extends Controller
      */
     public function logout()
     {
+        Hook::listen('cms_op',"退出了系统");
         IAuth::logoutAdminCurrLogged();
         $this->redirect('cms/login/index');
     }
@@ -70,10 +71,10 @@ class Login extends Controller
             $sysConf = new XsysConf();
             if ($sysConf->checkCmsIpAuth()){
                 $tagRes = $this->adminModel->checkAdminLogin($input);
+                Hook::listen('cms_op',"登录了系统");
             }else{
                 $tagRes = ['tag'=>0,'message'=>'Sorry,Your IP is abnormal, please contact the administrator!'];
             }
-
             showMsg($tagRes['tag'], $tagRes['message']);
         } else {
             showMsg(0, 'sorry,您的请求不合法！');
@@ -87,7 +88,7 @@ class Login extends Controller
     public function ajaxCheckLoginStatus(Request $request)
     {
         if ($request->isPost()) {
-            $cmsAID = IAuth::getAdminIDCurrLogged();
+            list($cmsAID) = IAuth::getAdminIDCurrLogged();
             $nav_menu_id = $request->param('nav_menu_id');
             //TODO 判断当前菜单是否属于他的权限内
             if ($cmsAID && IAuth::ckPasswordNoChangedCurrLogged($cmsAID) && $this->navMenuModel->checkNavMenuMan($nav_menu_id, $cmsAID)) {
