@@ -198,16 +198,16 @@ function insertCmsOpLogs($opStatus = 0,$opTag = '',
 
 /**
  * 获取操作日志
- * @param int $video_id
+ * @param int $op_id
  * @param string $opTag  所记录业务日志确定的标签
  *               当前定义 ———— "ARTICLE": 文章操作业务；"TODAY":今日赠言业务；"GOODS":商品操作业务
  * @return array|PDOStatement|string|\think\Collection
  */
-function getCmsOpViewLogs($video_id = 0,$opTag = ''){
+function getCmsOpViewLogs($op_id = 0,$opTag = ''){
     $logs = Db::name('xcmsLogs l')
         ->field('l.*,a.user_name')
         ->join('xadmins a','a.id = l.admin_id')
-        ->where([['tag','=',$opTag],['op_id','=',$video_id]])
+        ->where([['tag','=',$opTag],['op_id','=',$op_id]])
         ->order('id','desc')
         ->select();
     return isset($logs)?$logs:[];

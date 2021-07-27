@@ -1,6 +1,5 @@
 <?php
 
-
 namespace app\cms\behavior;
 
 use app\common\lib\BaseException;
