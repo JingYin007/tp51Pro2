@@ -166,4 +166,45 @@ class Upload
             }
         }
     }
+
+    /**
+     * 服务端文件，上传到七牛云服务器
+     * @param string $file_name 文件名称（无扩展名后缀）
+     * @param string $file_from_path 服务端所需上传文件的绝对地址 参考： app()->getRootPath().'public'.$word_file_url;
+     * @param string $file_to_path  七牛云服务器中，要存储的目录 例：'task_words/'.$task_idstr??'';
+     * @param string $ext_name 文件扩展名： txt 、docx
+     * @return mixed|string
+     * @throws \Exception
+     */
+    public static function qiNiuForServerSingleFile($file_name = '',$file_from_path = '',$file_to_path = '',$ext_name = 'txt'){
+        $config = config('qiniu.');
+        //构建一个鉴权对象
+        $auth = new Auth($config['AK'],$config['SK']);
+        //生成上传的token
+        $token = $auth->uploadToken($config['BUCKET']);
+        // 构建 UploadManager 对象
+        $uploadMgr = new UploadManager();
+        // 上传文件到七牛
+        if (empty($file_name)){
+            $file_name = md5(uniqid(microtime(true),true));
+        }
+
+        if (empty($file_to_path)){}
+
+        $qiNiu_saveFileName = $file_to_path.'/'.$file_name.'.'.$ext_name;
+
+
+        $opRes = $uploadMgr->putFile($token, $qiNiu_saveFileName, $file_from_path);
+        if ($opRes[1] !== null) {
+            $opTag = false;
+            $message = '上传七牛云,失败';
+        } else {
+            $opTag = true;
+            $message = '上传七牛云,成功';
+            //删除临时服务器 文件
+            unlink($file_from_path);
+            $data['url'] = $config['IMAGE_URL']. $qiNiu_saveFileName;
+        }
+        return ['status' => $opTag,'message' => $message,'data' => $data??[]];
+    }
 }
