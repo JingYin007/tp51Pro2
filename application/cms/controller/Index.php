@@ -84,7 +84,6 @@ class Index extends Controller
         $currLogList = $xIndexModel->getDevLogList(1);
         $devLogList = $xIndexModel->getDevLogList(null);
 
-
         return view('home',['devLogList' => $devLogList,'currLogList' => $currLogList]);
     }
 

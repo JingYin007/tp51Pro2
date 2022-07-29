@@ -1,0 +1,19 @@
+{extend name='layouts/cms'}
+
+{block name='body-content'}
+
+<div class="layui-card">
+    <div class="layui-card-body">
+        <span class="span-log_content">{$log_data|raw}</span>
+    </div>
+</div>
+
+
+<style>
+    .span-log_content{
+        color: #483D8B;
+    }
+</style>
+{/block}
+
+{block name='single-content'}{/block}

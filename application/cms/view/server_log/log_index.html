@@ -1,0 +1,52 @@
+{extend name='layouts/cms'}
+
+{block name='body-content'}
+
+<div class="layui-inline">
+    <div class="layui-input-inline">
+        <form class="form-search">
+            <input type="hidden" name="curr_page" class="curr_page" value="1">
+        </form>
+    </div>
+</div>
+
+<table class="layui-table table-body-mz" lay-even="" lay-skin="row">
+    <colgroup>
+        <col width="20%">
+        <col width="50%">
+        <col width="30%">
+    </colgroup>
+    <thead>
+    <tr>
+        <th>序号</th>
+        <th>{eq name="type" value="1"}文件夹{else/}文件{/eq}</th>
+        <th>大小</th>
+    </tr>
+    </thead>
+    <tbody class="table-tbody-normal">
+    {volist name="log_data" id="vo"}
+    <tr class="tr-normal">
+        <td>{$key + 1}</td>
+        <td class="title">
+            <a href="{:url('cms/serverLog/log_index', array('name'=>$name.'-'.$vo.file_name))}">{$vo.file_name}</a>
+        </td>
+        <td><span class="span-file_size">{$vo.file_size}</span></td>
+    </tr>
+    {/volist}
+    </tbody>
+</table>
+<style>
+    .table-body-mz{
+        width: 66%;
+        margin: auto;
+    }
+    .table-tbody-normal .title a{
+        color: #7274A7;
+    }
+    .span-file_size{
+        color: #f8b9b7;
+    }
+</style>
+{/block}
+
+{block name='single-content'}{/block}

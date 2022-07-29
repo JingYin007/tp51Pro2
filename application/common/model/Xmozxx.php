@@ -28,7 +28,7 @@ class Xmozxx
             ->group('date')
             ->count('id');
 
-        $limit = $currTag ? "0,3" : "3,$count_date";
+        $limit = $currTag ? "0,5" : "5,$count_date";
 
         $res = Db::name('xproDevLogs')
             ->field("date_format(log_time,'%Y-%m-%d') date,min(id) min_id")

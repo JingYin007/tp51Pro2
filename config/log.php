@@ -26,5 +26,14 @@ return [
     'level' => ['info','warning','error','critical','emergency','sql'],
 
     //超过数量的最早日志将会自动删除,设置max_files参数后，日志文件将不会分日期子目录存放
-    'max_files'	=>	30,
+    //'max_files'	=>	30,
+
+    // 日志的时间格式，默认是` c `
+    'time_format'   =>  'Y-m-d H:i:s',
+
+    //'format' => '[%s][%s] %s',
+
+    'file_size' => 1024*1024*2,
+
+    'realtime_write' => true,
 ];

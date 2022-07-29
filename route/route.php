@@ -34,6 +34,8 @@ Route::post('cms/chat/ajax_get_user_list','cms/chat/ajax_get_user_list');
 
 Route::any('cms/index/admin/:id','cms/index/admin');
 
+//日志管理
+Route::any('cms/serverLog/log_index','cms/serverLog/log_index');
 
 //后台导航菜单管理
 Route::any('cms/menu/index','cms/navMenu/index');

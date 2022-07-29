@@ -99,6 +99,7 @@ class Admin extends CmsBase
 
     /**
      * 读取角色列表
+     * @param Request $request
      * @return View
      */
     public function role(Request $request)
