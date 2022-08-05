@@ -11,5 +11,5 @@
 
 return [
     // 指令名 =》完整的类名
-    'order-wait'	=>	'app\common\command\Order',
+    'order_cron_hello' => 'app\common\command\OrderCron',
 ];

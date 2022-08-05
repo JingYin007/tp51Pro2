@@ -42,9 +42,7 @@ class BirdExpress
         $LogisticCode = "640041334612";
 
         //TODO 调用查询物流轨迹 这里我得到了一个数组
-        $expressMsg = $this->getOrderTracesByJson($ShipperCode, $LogisticCode, 1);
-        //var_dump($expressMsg);
-        return $expressMsg;
+        return $this->getOrderTracesByJson($ShipperCode, $LogisticCode, 1);
     }
 
     /**
@@ -93,7 +91,7 @@ class BirdExpress
      *  post提交数据
      * @param  string $url 请求Url
      * @param  array $datas 提交的数据
-     * @return url 响应返回的 html
+     * @return string
      */
     public function sendPost($url, $datas)
     {
@@ -132,7 +130,7 @@ class BirdExpress
      * 电商Sign签名生成
      * @param $data 内容
      * @param $appkey Appkey
-     * @return DataSign签名
+     * @return string
      */
     public function encrypt($data, $appkey)
     {
@@ -199,7 +197,6 @@ class BirdExpress
         } else {
             $opResult['Traces'] = null;
         }
-        //var_dump($opResult);
         return $opResult;
     }
 }

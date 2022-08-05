@@ -4,6 +4,7 @@ namespace app\cms\controller;
 
 use app\common\controller\CmsBase;
 use app\common\model\XtodayWords;
+use think\Console;
 use think\Request;
 use think\response\View;
 

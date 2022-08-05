@@ -148,7 +148,7 @@ class FtpServer
      * @param string $filename 文件名
      * @return bool
      */
-    public function delete($filename) {
+    public function f_delete($filename) {
         if (!$this->link) {
             $this->err_code = 2;
             return false;
@@ -222,8 +222,7 @@ class FtpServer
      */
     private function ck_dirname($url) {
         $url = str_replace('', '/', $url);
-        $urls = explode('/', $url);
-        return $urls;
+        return explode('/', $url);
     }
 
     /**

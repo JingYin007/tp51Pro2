@@ -4,7 +4,6 @@ namespace app\common\command;
 use think\console\Command;
 use think\console\Input;
 use think\console\input\Argument;
-use think\console\input\Option;
 use think\console\Output;
 
 /**
@@ -12,13 +11,12 @@ use think\console\Output;
  * Class Order
  * @package app\common\command
  */
-class Order extends Command
+class OrderCron extends Command
 {
     protected function configure()
     {
-        $this->setName('hello')
-            ->addArgument('name', Argument::OPTIONAL, "your name")
-            ->addOption('city', null, Option::VALUE_REQUIRED, 'city name')
+        $this->setName('order_cron_hello')
+            ->addArgument('op_name', Argument::OPTIONAL, "your name")
             ->setDescription('Say Hello');
     }
 
@@ -30,8 +28,9 @@ class Order extends Command
      */
     protected function execute(Input $input, Output $output)
     {
-        $obj = null;
-        while (true){
+        $op_name = trim($input->getArgument('op_name'));
+        //示例代码
+        while (false){
             /**
              * 1. 获取 redis-sorted set 排序集合中最早的一条订单ID
              * 2. 到数据库查询此订单是否已支付
@@ -43,7 +42,8 @@ class Order extends Command
             $output->writeln("Hello,order-second ...!" );
             sleep(2);
         }
-        //指令输出
-       // $output->writeln("Hello,second ...!" );
+        // 指令输出
+        $date_stamp = date('Y-m-d H:i:s',time());
+        $output->writeln("$date_stamp order_cron-$op_name");
     }
 }

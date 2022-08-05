@@ -30,7 +30,8 @@
         "ext-pdo": "*",
         "ext-iconv": "*",
         "godruoyi/php-snowflake": "^1.0",
-        "hightman/xunsearch": "*@beta"
+        "hightman/xunsearch": "*@beta",
+        "ext-ftp": "*"
     },
     "autoload": {
         "psr-4": {
