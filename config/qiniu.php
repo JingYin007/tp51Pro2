@@ -10,7 +10,7 @@
  * 七牛云账号配置 [TODO 请改成自己的账号数据]
  */
 return [
-    'QN_USE'=>'OPEN',
+    'QN_USE'=>'CLOSE',
     'AK' => 'SljXmBloaYvZRWyfvCQr3Z8ib6ljOWkUad6AMR2n',//Access_Key
     'SK' => 'gCO3lxjjfYFTyKFWW1J-oads1RdnoncDO8giQhFa',//Secret_Key
     'BUCKET' => 'mz-cheng',//空间名称
