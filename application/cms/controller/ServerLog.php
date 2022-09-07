@@ -21,6 +21,72 @@ class ServerLog extends CmsBase
         $this->log_path = "../runtime/";
     }
 
+    public function deleteRuntimeFile(Request $request){
+        $opFlag = 1;
+        $opMessage = '过期日志删除,完成';
+
+        $runtime_dir = app()->getRootPath() . 'runtime/';
+        $runtime_dir=str_replace("\\","/",$runtime_dir);
+        try {
+            self::delServerDir($runtime_dir);
+        }catch (\Exception $e){
+            $opFlag = 0;
+            $opMessage = '删除失败：'. $e->getMessage();
+        }
+        showMsg($opFlag,$opMessage);
+    }
+
+    /**
+     * 删除对应目录下的所有文件
+     * @param string $path 传入目录
+     * 举例： delServerDir("/mnt/www/Application/Runtime/Logs/");
+     */
+    public static function delServerDir($path = ''){
+        //如果是目录则继续
+        if(is_dir($path)){
+            $empty_dir = false;
+            //扫描一个文件夹内的所有文件夹和文件并返回数组
+            $p = scandir($path);
+            $last_month_time = strtotime('-1 month');
+            foreach($p as $val){
+                //排除目录中的.和..
+                if($val !="." && $val !=".."){
+                    $file_path = $path.$val;
+                    $empty_dir = true;
+                    //如果是目录则递归子目录，继续操作
+                    if(is_dir($file_path)){
+                        //子目录中操作删除文件夹和文件
+                        self::delServerDir($file_path.'/');
+                    }else{
+                        //如果修改文件时间 大于一个月
+                        $finish_time = filemtime($file_path);
+                        if ($finish_time < $last_month_time){
+                            //如果是文件直接删除
+                            self::deleteServerFile($file_path);
+                        }
+                    }
+                }
+            }
+            if(!$empty_dir){
+                //目录清空后删除空文件夹
+                @rmdir($path);
+            }
+        }
+    }
+    /**
+     * PHP 删除指定的图片
+     * @param $filename 目标图片路径
+     * @return bool
+     */
+    public static function deleteServerFile($filename)
+    {
+        if (file_exists($filename)) { //检查图片文件是否存在
+            $result = @unlink($filename);
+            return true;
+        } else {
+            return false;
+        }
+    }
     /**
      * 读取服务器日志列表
      * @param Request $request

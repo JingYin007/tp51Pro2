@@ -10,7 +10,7 @@ Target Server Type    : MYSQL
 Target Server Version : 50726
 File Encoding         : 65001
 
-Date: 2022-07-29 16:30:25
+Date: 2022-09-07 18:27:35
 */
 
 SET FOREIGN_KEY_CHECKS=0;
@@ -108,7 +108,7 @@ CREATE TABLE `tp5_xadmin_roles` (
 -- ----------------------------
 -- Records of tp5_xadmin_roles
 -- ----------------------------
-INSERT INTO `tp5_xadmin_roles` VALUES ('1', '终级管理员', '138|139|140|141|1|2|29|30|31|161|7|41|42|6|38|39|162|3|4|33|34|5|36|37|92|135|93|94|95|137|61|66|62|63|65|76|77|80|78|73|75|49|50|136|54|55|58|70|72|153|48|51|52|53|59|142|143|144|67|68|69|99|145|146|148|147|149|150|133|134|151|155|157|156|158|159|', '2022-07-27 19:00:04', '1', '1');
+INSERT INTO `tp5_xadmin_roles` VALUES ('1', '终级管理员', '138|139|140|141|1|2|29|30|31|161|7|41|42|6|38|39|162|163|3|4|33|34|5|36|37|92|135|93|94|95|137|61|66|62|63|65|76|77|80|78|73|75|49|50|136|54|55|58|70|72|153|48|51|52|53|59|142|143|144|67|68|69|99|145|146|148|147|149|150|133|134|151|155|157|156|158|159|', '2022-09-07 18:13:04', '1', '1');
 INSERT INTO `tp5_xadmin_roles` VALUES ('2', '初级管理员', '1|2|30|6|3|4|5|68|', '2021-05-20 11:59:34', '2', '1');
 INSERT INTO `tp5_xadmin_roles` VALUES ('5', '测试管理员', '139|1|2|29|30|31|7|42|61|66|62|65|77|50|68|69|145|133|134|151|157|156|', '2021-06-21 19:08:53', '7', '0');
 
@@ -1058,7 +1058,7 @@ CREATE TABLE `tp5_xcms_op_logs` (
   `message` varchar(300) NOT NULL DEFAULT '',
   `create_time` datetime(3) NOT NULL COMMENT '创建时间',
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=19 DEFAULT CHARSET=utf8mb4 COMMENT='CMS 行为日志记录表';
+) ENGINE=InnoDB AUTO_INCREMENT=24 DEFAULT CHARSET=utf8mb4 COMMENT='CMS 行为日志记录表';
 
 -- ----------------------------
 -- Records of tp5_xcms_op_logs
@@ -1081,6 +1081,11 @@ INSERT INTO `tp5_xcms_op_logs` VALUES ('15', '1', 'moTzxx@admin', '200', 'GET', 
 INSERT INTO `tp5_xcms_op_logs` VALUES ('16', '1', 'moTzxx@admin', '200', 'POST', '/cms/login/ajaxLogin', '登录了系统', '2022-07-27 17:46:46.828');
 INSERT INTO `tp5_xcms_op_logs` VALUES ('17', '1', 'moTzxx@admin', '200', 'POST', '/cms/admin/editRole/1', '更新了id为 1 的角色信息', '2022-07-27 19:00:04.758');
 INSERT INTO `tp5_xcms_op_logs` VALUES ('18', '1', 'moTzxx@admin', '200', 'POST', '/cms/login/ajaxLogin', '登录了系统', '2022-07-29 11:34:11.733');
+INSERT INTO `tp5_xcms_op_logs` VALUES ('19', '1', 'moTzxx@admin', '200', 'POST', '/cms/login/ajaxLogin', '登录了系统', '2022-08-04 18:03:07.422');
+INSERT INTO `tp5_xcms_op_logs` VALUES ('20', '1', 'moTzxx@admin', '200', 'POST', '/cms/login/ajaxLogin', '登录了系统', '2022-08-05 11:47:26.649');
+INSERT INTO `tp5_xcms_op_logs` VALUES ('21', '1', 'moTzxx@admin', '200', 'POST', '/cms/login/ajaxLogin', '登录了系统', '2022-09-07 17:44:26.687');
+INSERT INTO `tp5_xcms_op_logs` VALUES ('22', '1', 'moTzxx@admin', '200', 'POST', '/cms/admin/editRole/1', '更新了id为 1 的角色信息', '2022-09-07 18:12:37.268');
+INSERT INTO `tp5_xcms_op_logs` VALUES ('23', '1', 'moTzxx@admin', '200', 'POST', '/cms/admin/editRole/1', '更新了id为 1 的角色信息', '2022-09-07 18:13:04.475');
 
 -- ----------------------------
 -- Table structure for tp5_xconfigs
@@ -1191,7 +1196,7 @@ CREATE TABLE `tp5_xnav_menus` (
   PRIMARY KEY (`id`),
   KEY `pk_index` (`id`),
   KEY `index_sel` (`list_order`,`name`) USING BTREE
-) ENGINE=MyISAM AUTO_INCREMENT=163 DEFAULT CHARSET=utf8mb4 COMMENT='菜单导航表';
+) ENGINE=MyISAM AUTO_INCREMENT=164 DEFAULT CHARSET=utf8mb4 COMMENT='菜单导航表';
 
 -- ----------------------------
 -- Records of tp5_xnav_menus
@@ -1274,6 +1279,7 @@ INSERT INTO `tp5_xnav_menus` VALUES ('159', 'Redis 学习', '155', 'cms/expand/r
 INSERT INTO `tp5_xnav_menus` VALUES ('160', '先核实一下', '146', '这四个试试', '/', '-1', '0', '2021-05-21 09:34:58', '1');
 INSERT INTO `tp5_xnav_menus` VALUES ('161', '更新权限链接数据', '2', 'cms/menu/updateAuth', '/', '1', '0', '2021-05-20 19:48:35', '1');
 INSERT INTO `tp5_xnav_menus` VALUES ('162', '日志查看', '1', 'cms/serverLog/log_index', 'cms/images/icon/cms_log.png', '1', '4', '2022-07-29 16:07:43', '0');
+INSERT INTO `tp5_xnav_menus` VALUES ('163', '删除一个月前的runtime文件', '162', 'cms/serverLog/deleteRuntimeFile', '/', '1', '0', '2022-09-07 18:12:14', '1');
 
 -- ----------------------------
 -- Table structure for tp5_xop_excel
@@ -1423,7 +1429,7 @@ CREATE TABLE `tp5_xpro_dev_logs` (
   `log_time` timestamp NOT NULL DEFAULT '1970-01-01 10:00:00' ON UPDATE CURRENT_TIMESTAMP COMMENT '记录时间',
   PRIMARY KEY (`id`),
   KEY `pk_index` (`id`) USING BTREE
-) ENGINE=MyISAM AUTO_INCREMENT=77 DEFAULT CHARSET=utf8mb4 COMMENT='管理平台 开发日志表';
+) ENGINE=MyISAM AUTO_INCREMENT=78 DEFAULT CHARSET=utf8mb4 COMMENT='管理平台 开发日志表';
 
 -- ----------------------------
 -- Records of tp5_xpro_dev_logs
@@ -1503,7 +1509,8 @@ INSERT INTO `tp5_xpro_dev_logs` VALUES ('72', 'Redis-hash 记录购物车操作:
 INSERT INTO `tp5_xpro_dev_logs` VALUES ('73', '角色权限配置 显示优化', '2021-05-21 11:02:46');
 INSERT INTO `tp5_xpro_dev_logs` VALUES ('74', '菜单，对于权限添加编辑重写', '2021-05-21 11:02:35');
 INSERT INTO `tp5_xpro_dev_logs` VALUES ('75', '链接访问，权限设置整理逻辑', '2021-05-21 11:02:52');
-INSERT INTO `tp5_xpro_dev_logs` VALUES ('76', '服务器日志查看', '2022-07-29 16:17:34');
+INSERT INTO `tp5_xpro_dev_logs` VALUES ('76', '服务器日志查看', '2022-09-07 18:26:21');
+INSERT INTO `tp5_xpro_dev_logs` VALUES ('77', '补充：删除一个月前的runtime临时文件', '2022-09-07 18:26:31');
 
 -- ----------------------------
 -- Table structure for tp5_xskus

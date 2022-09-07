@@ -2,6 +2,10 @@
 
 {block name='body-content'}
 
+<button class="layui-btn layui-btn-normal" onclick="deleteServerLogs()">
+    <i class="layui-icon">&#xe640;</i> 清除一个月前的文件
+</button>
+
 <div class="layui-inline">
     <div class="layui-input-inline">
         <form class="form-search">
@@ -49,4 +53,38 @@
 </style>
 {/block}
 
-{block name='single-content'}{/block}
+{block name='single-content'}
+<script>
+    function deleteServerLogs() {
+        layer.msg('确定要删除一个月前的runtime文件吗？', {
+            time: 0 //不自动关闭
+            ,btn: ['确定', '离开']
+            ,shade:0.61,
+            shadeClose:true,
+            anim:4,
+            moveOut: true
+            ,yes: function(){
+                ToDeleteLogFiles();
+            }
+        });
+    }
+
+    /**
+     * 删除文件
+     * @constructor
+     */
+    function ToDeleteLogFiles() {
+        const toUrl = "{:url('cms/serverLog/deleteRuntimeFile')}";
+        $.post(
+            toUrl,
+            {},
+            function (result) {
+                if(result.status === 1){
+                    dialog.tip_success(result.message);
+                }else{
+                    dialog.tip_error(result.message);
+                }
+            },"JSON");
+    }
+</script>
+{/block}

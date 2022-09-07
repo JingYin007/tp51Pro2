@@ -36,7 +36,7 @@ Route::any('cms/index/admin/:id','cms/index/admin');
 
 //日志管理
 Route::any('cms/serverLog/log_index','cms/serverLog/log_index');
-
+Route::any('cms/serverLog/deleteRuntimeFile','cms/serverLog/deleteRuntimeFile');
 //后台导航菜单管理
 Route::any('cms/menu/index','cms/navMenu/index');
 Route::any('cms/menu/add','cms/navMenu/add');
