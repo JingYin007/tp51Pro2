@@ -21,6 +21,10 @@ class ServerLog extends CmsBase
         $this->log_path = "../runtime/";
     }
 
+    /**
+     * 过期日志删除
+     * @param Request $request
+     */
     public function deleteRuntimeFile(Request $request){
         $opFlag = 1;
         $opMessage = '过期日志删除,完成';
