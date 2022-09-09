@@ -16,15 +16,17 @@
 
 <table class="layui-table table-body-mz" lay-even="" lay-skin="row">
     <colgroup>
-        <col width="20%">
-        <col width="50%">
-        <col width="30%">
+        <col width="10%">
+        <col width="40%">
+        <col width="25%">
+        <col width="25%">
     </colgroup>
     <thead>
     <tr>
         <th>序号</th>
         <th>{eq name="type" value="1"}文件夹{else/}文件{/eq}</th>
         <th>大小</th>
+        <th>最近修改时间</th>
     </tr>
     </thead>
     <tbody class="table-tbody-normal">
@@ -35,6 +37,7 @@
             <a href="{:url('cms/serverLog/log_index', array('name'=>$name.'-'.$vo.file_name))}">{$vo.file_name}</a>
         </td>
         <td><span class="span-file_size">{$vo.file_size}</span></td>
+        <td><span class="span-last_mtime">{$vo.last_mtime}</span></td>
     </tr>
     {/volist}
     </tbody>
@@ -49,6 +52,9 @@
     }
     .span-file_size{
         color: #f8b9b7;
+    }
+    .span-last_mtime{
+        color: seagreen;
     }
 </style>
 {/block}

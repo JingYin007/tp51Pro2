@@ -191,8 +191,11 @@ class ServerLog extends CmsBase
         $lists = array();
         while (false !== ($file = readdir($handle))) {
             if ($file != "." && $file != "..") {
+                $file_path = $dir . "/" . $file;
                 $lists[$i]['file_name'] = $file;
-                $lists[$i]['file_size'] = $this->getRealSize($this->getDirSize($dir . "/" . $file));
+                $lists[$i]['file_size'] = $this->getRealSize($this->getDirSize($file_path));
+                $last_mtime = filemtime($file_path);
+                $lists[$i]['last_mtime'] = $last_mtime?date('Y-m-d H:i:s',$last_mtime):'';
                 $i++;
             }
         }
